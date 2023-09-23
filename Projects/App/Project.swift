@@ -17,10 +17,10 @@ let scripts: [TargetScript] = generateEnvironment.scripts
 
 let targets: [Target] = [
     .init(
-        name: env.name,
+        name: env.targetName,
         platform: env.platform,
         product: .app,
-        bundleId: "\(env.organizationName)",
+        bundleId: "\(env.organizationName).\(env.targetName)",
         deploymentTarget: env.deploymentTarget,
         infoPlist: .file(path: "Support/Info.plist"),
         sources: ["Sources/**"],
@@ -33,27 +33,27 @@ let targets: [Target] = [
 
 let schemes: [Scheme] = [
     .init(
-        name: "\(env.name)-DEV",
+        name: "\(env.targetName)-DEV",
         shared: true,
-        buildAction: .buildAction(targets: ["\(env.name)"]),
+        buildAction: .buildAction(targets: ["\(env.targetName)"]),
         runAction: .runAction(configuration: .dev),
         archiveAction: .archiveAction(configuration: .dev),
         profileAction: .profileAction(configuration: .dev),
         analyzeAction: .analyzeAction(configuration: .dev)
     ),
     .init(
-        name: "\(env.name)-STAGE",
+        name: "\(env.targetName)-STAGE",
         shared: true,
-        buildAction: .buildAction(targets: ["\(env.name)"]),
+        buildAction: .buildAction(targets: ["\(env.targetName)"]),
         runAction: .runAction(configuration: .stage),
         archiveAction: .archiveAction(configuration: .stage),
         profileAction: .profileAction(configuration: .stage),
         analyzeAction: .analyzeAction(configuration: .stage)
     ),
     .init(
-        name: "\(env.name)-PROD",
+        name: "\(env.targetName)-PROD",
         shared: true,
-        buildAction: .buildAction(targets: ["\(env.name)"]),
+        buildAction: .buildAction(targets: ["\(env.targetName)"]),
         runAction: .runAction(configuration: .prod),
         archiveAction: .archiveAction(configuration: .prod),
         profileAction: .profileAction(configuration: .prod),
