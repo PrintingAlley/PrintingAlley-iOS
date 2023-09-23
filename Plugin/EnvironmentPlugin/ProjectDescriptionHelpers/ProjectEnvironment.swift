@@ -3,6 +3,7 @@ import ProjectDescription
 
 public struct ProjectEnvironment {
     public let name: String
+    public let targetName:String
     public let organizationName: String
     public let deploymentTarget: DeploymentTarget
     public let platform: Platform
@@ -10,9 +11,10 @@ public struct ProjectEnvironment {
 }
 
 public let env = ProjectEnvironment(
-    name: "",
-    organizationName: "",
-    deploymentTarget: .iOS(targetVersion: "16.0", devices: [.iphone, .ipad]),
+    name: "인쇄골목",
+    targetName: "PrintingAlley",
+    organizationName: "com",
+    deploymentTarget: .iOS(targetVersion: "15.0", devices: [.iphone]),
     platform: .iOS,
     baseSetting: [:]
 )
