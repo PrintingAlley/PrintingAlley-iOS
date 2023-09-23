@@ -5,6 +5,8 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.SPM {
+
+    static let Needle = TargetDependency.external(name: "NeedleFoundation")
 }
 
 public extension Package {
