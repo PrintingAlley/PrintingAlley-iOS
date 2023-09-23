@@ -27,7 +27,10 @@ let targets: [Target] = [
         sources: ["Sources/**"],
         resources: ["Resources/**"],
         scripts:  generateEnvironment == .dev ? projectDevScripts : scripts, // 니들로 인하여 기본 스크립트와 분리 
-        dependencies: [],
+        dependencies: [
+            
+            .feature(target: .RooFuture)
+        ],
         settings: .settings(base: env.baseSetting)
     )
 ]
