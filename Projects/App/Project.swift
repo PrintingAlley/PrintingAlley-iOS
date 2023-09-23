@@ -15,17 +15,18 @@ let settings: Settings = .settings(
 
 let scripts: [TargetScript] = generateEnvironment.scripts
 
+let projectDevScripts: [TargetScript] = [.needleScript,.swiftLint]
 let targets: [Target] = [
     .init(
-        name: env.targetName,
+        name: env.name,
         platform: env.platform,
         product: .app,
-        bundleId: "\(env.organizationName).\(env.targetName)",
+        bundleId: "\(env.organizationName).\(env.name)",
         deploymentTarget: env.deploymentTarget,
         infoPlist: .file(path: "Support/Info.plist"),
         sources: ["Sources/**"],
         resources: ["Resources/**"],
-        scripts: scripts,
+        scripts:  generateEnvironment == .dev ? projectDevScripts : scripts, // 니들로 인하여 기본 스크립트와 분리 
         dependencies: [],
         settings: .settings(base: env.baseSetting)
     )
@@ -33,27 +34,27 @@ let targets: [Target] = [
 
 let schemes: [Scheme] = [
     .init(
-        name: "\(env.targetName)-DEV",
+        name: "\(env.name)-DEV",
         shared: true,
-        buildAction: .buildAction(targets: ["\(env.targetName)"]),
+        buildAction: .buildAction(targets: ["\(env.name)"]),
         runAction: .runAction(configuration: .dev),
         archiveAction: .archiveAction(configuration: .dev),
         profileAction: .profileAction(configuration: .dev),
         analyzeAction: .analyzeAction(configuration: .dev)
     ),
     .init(
-        name: "\(env.targetName)-STAGE",
+        name: "\(env.name)-STAGE",
         shared: true,
-        buildAction: .buildAction(targets: ["\(env.targetName)"]),
+        buildAction: .buildAction(targets: ["\(env.name)"]),
         runAction: .runAction(configuration: .stage),
         archiveAction: .archiveAction(configuration: .stage),
         profileAction: .profileAction(configuration: .stage),
         analyzeAction: .analyzeAction(configuration: .stage)
     ),
     .init(
-        name: "\(env.targetName)-PROD",
+        name: "\(env.name)-PROD",
         shared: true,
-        buildAction: .buildAction(targets: ["\(env.targetName)"]),
+        buildAction: .buildAction(targets: ["\(env.name)"]),
         runAction: .runAction(configuration: .prod),
         archiveAction: .archiveAction(configuration: .prod),
         profileAction: .profileAction(configuration: .prod),

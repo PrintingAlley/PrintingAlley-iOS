@@ -1,0 +1,10 @@
+
+  
+  # 린트 과정에서 무시할 파일 경로.
+  excluded:
+  - "Sources/Application/NeedleGenerated"
+  - "Tuist"
+
+  disabled_rules: # Default Rules에서 비활성화할 규칙
+   # 라인 뒤에 공백이 없어야 합니다. https://realm.github.io/SwiftLint/trailing_whitespace.html
+    - trailing_whitespace
