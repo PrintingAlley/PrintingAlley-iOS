@@ -9,7 +9,8 @@ let project = Project.module(
             .SPM.Needle,
             .SPM.FirebaseAnalytics,
             .SPM.FirebaseCrashlytics,
-            .SPM.NaverLogin
+            .SPM.NaverLogin,
+            .SPM.GoogleLogin
         ])
     ]
 )
