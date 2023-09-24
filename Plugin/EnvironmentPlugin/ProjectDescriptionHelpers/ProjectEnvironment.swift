@@ -14,5 +14,7 @@ public let env = ProjectEnvironment(
     organizationName: "com",
     deploymentTarget: .iOS(targetVersion: "15.0", devices: [.iphone]),
     platform: .iOS,
-    baseSetting: [:]
+    baseSetting: SettingsDictionary()
+        .debugInformationFormat(DebugInformationFormat.dwarfWithDsym)
+        .otherLinkerFlags(["-ObjC"])
 )
