@@ -15,7 +15,7 @@ let settings: Settings = .settings(
 
 let scripts: [TargetScript] = generateEnvironment.scripts
 
-let projectDevScripts: [TargetScript] = [.needleScript,.swiftLint]
+let projectDevScripts: [TargetScript] = [.needleScript,.swiftLint,.firebaseCrashlytics]
 let targets: [Target] = [
     .init(
         name: env.name,

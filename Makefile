@@ -1,6 +1,6 @@
 generate:
 	tuist fetch
-	tuist generate
+	TUIST_ROOT_DIR=${PWD} tuist generate
 
 ci_generate:
 	tuist fetch
