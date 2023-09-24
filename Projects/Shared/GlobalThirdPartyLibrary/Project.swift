@@ -8,7 +8,8 @@ let project = Project.module(
         .implements(module: .shared(.GlobalThirdPartyLibrary), product: .framework, dependencies: [
             .SPM.Needle,
             .SPM.FirebaseAnalytics,
-            .SPM.FirebaseCrashlytics
+            .SPM.FirebaseCrashlytics,
+            .SPM.NaverLogin
         ])
     ]
 )
