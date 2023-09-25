@@ -25,6 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>kakao549a4a1b1ef17480cb7bccfdb7681237</string>
 				<string>com.googleusercontent.apps.10103037013-vqi4lthbm4vrl03jgsga6q3fd02d3j51</string>
 			</array>
 		</dict>
@@ -32,7 +33,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
-	<true/>
+	<false/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -50,6 +51,13 @@
 			</array>
 		</dict>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaokompassauth</string>
+		<string>kakao</string>
+		<string>kakaolink</string>
+		<string>kakao549a4a1b1ef17480cb7bccfdb7681237</string>
+	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
