@@ -8,7 +8,7 @@ import ProjectDescriptionHelpers
 let configurations: [Configuration] = .default
 
 let settings: Settings = .settings(
-    base: env.baseSetting,
+    base: env.baseSetting.merging(.headerSearchPaths),
     configurations: configurations,
     defaultSettings: .recommended
 )
