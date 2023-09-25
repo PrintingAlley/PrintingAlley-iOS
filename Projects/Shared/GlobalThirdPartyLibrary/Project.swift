@@ -11,7 +11,8 @@ let project = Project.module(
             .SPM.FirebaseCrashlytics,
             .SPM.NaverLogin,
             .SPM.KakaoLogin,
-            .SPM.GoogleLogin
+            .SPM.GoogleLogin,
+            .SPM.KakaoAuth
         ])
     ]
 )
