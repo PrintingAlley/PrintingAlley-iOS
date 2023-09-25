@@ -1,10 +1,196 @@
 
-  
-  # 린트 과정에서 무시할 파일 경로.
-  excluded:
-  - "Sources/Application/NeedleGenerated"
-  - "Tuist"
-
-  disabled_rules: # Default Rules에서 비활성화할 규칙
-   # 라인 뒤에 공백이 없어야 합니다. https://realm.github.io/SwiftLint/trailing_whitespace.html
+disabled_rules: # Default Rules에서 비활성화할 규칙
+    
+    # 라인 뒤에 공백이 없어야 합니다. https://realm.github.io/SwiftLint/trailing_whitespace.html
     - trailing_whitespace
+    
+    # 강제 캐스팅은 피해야합니다. https://realm.github.io/SwiftLint/force_cast.html
+    - force_cast
+    
+    # 강제 언래핑은 피해야합니다. https://realm.github.io/SwiftLint/force_unwrapping.html
+    - force_unwrapping
+    
+    - line_length
+
+opt_in_rules:
+    - accessibility_trait_for_button
+    - closure_body_length
+    - contains_over_filter_count
+    - discouraged_none_name
+    - empty_count
+    - empty_string
+    - fatal_error_message
+    - file_name
+    - implicit_return
+    - multiline_arguments_brackets
+    - multiline_function_chains
+    - multiline_literal_brackets
+    - multiline_parameters
+    - multiline_parameters_brackets
+    - static_operator
+    - vertical_whitespace_between_cases
+    - vertical_parameter_alignment_on_call
+    - vertical_whitespace_closing_braces
+    - vertical_whitespace_opening_braces
+    
+analyzer_rules:
+    - unused_import
+    - unused_declaration
+
+# 괄호 닫을 때 공백 없어야 한다. https://realm.github.io/SwiftLint/closing_brace.html
+closing_brace:
+    severity: warning
+
+# 콜론 옆에 공백 없어야 한다. https://realm.github.io/SwiftLint/colon.html
+colon:
+    severity: warning
+    flexible_right_spacing: false
+    apply_to_dictionaries: true
+
+# 콤마 옆에 공백 없어야 한다. https://realm.github.io/SwiftLint/comma.html
+comma:
+    severity: warning
+
+# if 구문등의 조건 부분을 소괄호로 묶지 않아도 된다. https://realm.github.io/SwiftLint/control_statement.html
+control_statement:
+    severity: warning
+
+# Prefer () -> over Void ->. https://realm.github.io/SwiftLint/empty_parameters.html
+empty_parameters:
+        severity: warning
+
+# 함수 line 길이 제한. https://realm.github.io/SwiftLint/function_body_length.html
+function_body_length:
+    warning: 300
+    error: 500
+
+#파일에 leading whitespace 없어야 한다. https://realm.github.io/SwiftLint/leading_whitespace.html
+leading_whitespace:
+    severity: warning
+
+# 여는 괄호 앞에 space 있어야 한다. https://realm.github.io/SwiftLint/opening_brace.html
+opening_brace:
+    severity: warning
+    allow_multiline_func: fasle
+
+# 코드 사이는 한 줄씩만 띄어야 한다. https://realm.github.io/SwiftLint/vertical_whitespace.html
+vertical_whitespace:
+    severity: warning
+    max_empty_lines: 1
+
+# 파라미터 앞에 모두 같은 indent. https://realm.github.io/SwiftLint/vertical_parameter_alignment.html
+vertical_parameter_alignment:
+    severity: warning
+
+# else, catch 는 이전 괄호와 동일한 줄에 표시함. 괄호 뒤에는 한칸의 공백이 필요하다. https://realm.github.io/SwiftLint/statement_position.html
+statement_position:
+    severity: warning
+    statement_mode: default
+
+# 반환타입을 주는 화살표 ->와 반환 타입 사이에 공백이 한 칸 필요하다. https://realm.github.io/SwiftLint/return_arrow_whitespace.html
+return_arrow_whitespace:
+    severity: warning
+
+# 옵셔널 변수라면 최초에 자동으로 nil로 초기화 되기 때문에 명시해주지 않아도 된다. https://realm.github.io/SwiftLint/redundant_set_access_control.html
+redundant_set_access_control:
+    severity: warning
+
+# ====================================== Opt-in Rules =====================================
+#Tap gesture 있는거면 버튼으로 만들어야 한다. https://realm.github.io/SwiftLint/accessibility_trait_for_button.html
+accessibility_trait_for_button:
+     severity: warning
+
+# 클로저 바디의 길이가 너무 길면 안된다. https://realm.github.io/SwiftLint/closure_body_length.html
+closure_body_length:
+    warning: 300
+    error: 500
+
+# filter(where:).count 이랑 0 비교할 때는 contains를 써야 한다. https://realm.github.io/SwiftLint/contains_over_filter_count.html
+contains_over_filter_count:
+    severity: warning
+
+# 변수,함수명 none으로 명명하지 않아야 한다. https://realm.github.io/SwiftLint/discouraged_none_name.html
+discouraged_none_name:
+    severity: warning
+
+# count 0 하지말고 isEmpty 써야한다. https://realm.github.io/SwiftLint/empty_count.html
+empty_count:
+    severity: error
+    only_after_dot: false
+
+#string == “” 하지 말고 .isEmpty 써야한다. https://realm.github.io/SwiftLint/empty_string.html
+empty_string:
+    severity: error
+
+# fatal msg는 “”면 안된다. https://realm.github.io/SwiftLint/fatal_error_message.html
+fatal_error_message:
+    severity: warning
+
+## file 이름 명명 규칙 (같이 얘기 해봅시다). https://realm.github.io/SwiftLint/file_name.html
+#file_name:
+#    severity: warning
+#    excluded: [“LinuxMain.swift”, “main.swift”]
+#    prefix_pattern
+#    suffix_pattern
+#    nested_type_seperator
+
+# closure, function, getter에서 굳이 return 쓰지 않는다. https://realm.github.io/SwiftLint/implicit_return.html
+implicit_return:
+    severity: warning
+    included: [closure, function, getter]
+
+# Argument를 여러줄로 쓸 때는 여는 괄호와 닫는 괄호가 분리되어있어야 한다. https://realm.github.io/SwiftLint/multiline_arguments_brackets.html
+multiline_arguments_brackets:
+    severity: warning
+
+# 연속으로 함수 호출 시 한 줄에 하나씩이거나 모두 같은 줄이어야 한다. https://realm.github.io/SwiftLint/multiline_function_chains.html
+multiline_function_chains:
+    severity: warning
+
+# 여러줄 literal은 여는, 닫는 괄호 한줄 띄우고 써야 한다. https://realm.github.io/SwiftLint/multiline_literal_brackets.html
+multiline_literal_brackets:
+    severity: warning
+
+# 파라미터는 모두 같은줄이거나 한 줄에 하나씩이어야 한다. https://realm.github.io/SwiftLint/multiline_parameters.html
+multiline_parameters:
+    severity: warning
+    allows_single_line: true
+
+# 파라미터 여러줄이라면 괄호는 그 다음줄에 써야 한다. https://realm.github.io/SwiftLint/multiline_parameters_brackets.html
+multiline_parameters_brackets:
+    severity: warning
+
+# 연산자는 static으로 선언한다. https://realm.github.io/SwiftLint/static_operator.html
+static_operator:
+    severity: warning
+
+# case 사이사이에 한 줄 씩 빈 줄 포함해야 한다. https://realm.github.io/SwiftLint/vertical_whitespace_between_cases.html
+vertical_whitespace_between_cases:
+    severity: warning
+
+# 함수 호출할 때 파라미터를 여러 줄에 걸쳐 작성하는 거면 indent가 동일해야 한다. https://realm.github.io/SwiftLint/vertical_parameter_alignment_on_call.html
+vertical_parameter_alignment_on_call:
+    severity: warning
+
+# 중괄호 닫기 전에 공백 줄 포함하면 안된다. https://realm.github.io/SwiftLint/vertical_whitespace_closing_braces.html
+vertical_whitespace_closing_braces:
+    severity: warning
+    only_enforce_before_trivial_lines: false
+
+#중괄호 열고 공백 줄 포함하면 안된다. https://realm.github.io/SwiftLint/vertical_whitespace_opening_braces.html
+vertical_whitespace_opening_braces:
+    severity: warning
+
+#사용 안된 import 있으면 안된다. https://realm.github.io/SwiftLint/unused_import.html
+unused_import:
+    severity: error
+    require_explicit_imports: false
+    allowed_transitive_imports: []
+    always_keep_imports: []
+
+#사용 안된 선언 있으면 안된다. https://realm.github.io/SwiftLint/unused_declaration.html
+unused_declaration:
+    severity: error
+    include_public_and_open: fasle
+    related_usrs_to_skip: [“s:7SwiftUI15PreviewProviderP”]
+    
