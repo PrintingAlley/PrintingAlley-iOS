@@ -17,6 +17,7 @@ let dependencies = Dependencies(
                 .release(name: .prod)
             ]
         )
+        
     ),
     platforms: [.iOS]
 )
