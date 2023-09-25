@@ -23,28 +23,28 @@ public class RootViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-    @IBAction func crashButtonTapped(_ sender: AnyObject) {
-        let id = "10103037013-vqi4lthbm4vrl03jgsga6q3fd02d3j51.apps.googleusercontent.com" // 여기서는 반전시키지 말고 ID값 그대로 적용한다.
-        let signInConfig = GIDConfiguration(clientID: id)
-        
-        GIDSignIn.sharedInstance.configuration = signInConfig
-        
-        GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
-            guard error == nil else { return }
-            guard let signInResult = signInResult else { return }
-
-            let user = signInResult.user
-
-            let emailAddress = user.profile?.email
-
-            let fullName = user.profile?.name
-            let givenName = user.profile?.givenName
-            let familyName = user.profile?.familyName
-
-           // let profilePicUrl = user.profile?.imageURL(withDimension: 320)
-            
-            print(user)
-        }
-    }
+//    @IBAction func crashButtonTapped(_ sender: AnyObject) {
+//        let id =  // 여기서는 반전시키지 말고 ID값 그대로 적용한다.
+//        let signInConfig = GIDConfiguration(clientID: id)
+//        
+//        GIDSignIn.sharedInstance.configuration = signInConfig
+//        
+//        GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
+//            guard error == nil else { return }
+//            guard let signInResult = signInResult else { return }
+//
+//            let user = signInResult.user
+//
+//            let emailAddress = user.profile?.email
+//
+//            let fullName = user.profile?.name
+//            let givenName = user.profile?.givenName
+//            let familyName = user.profile?.familyName
+//
+//           // let profilePicUrl = user.profile?.imageURL(withDimension: 320)
+//            
+//            print(user)
+//        }
+//    }
     
 }
