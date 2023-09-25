@@ -11,6 +11,7 @@ public extension TargetDependency.SPM {
     static let FirebaseCrashlytics = TargetDependency.external(name: "FirebaseCrashlytics")
     static let NaverLogin = TargetDependency.external(name: "naveridlogin-ios-sp")
     static let GoogleLogin = TargetDependency.external(name: "GoogleSignIn")
+    static let KakaoLogin = TargetDependency.external(name: "KakaoSDKUser")
 }
 
 public extension Package {
