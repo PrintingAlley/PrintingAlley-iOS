@@ -37,6 +37,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Core: String, MicroTargetPathConvertable {
+        case UtilityModule
         case CoreKit
     }
 }
