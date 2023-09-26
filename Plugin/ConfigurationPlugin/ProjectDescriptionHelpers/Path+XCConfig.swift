@@ -7,4 +7,13 @@ public extension ProjectDescription.Path {
     static var shared: Self {
         return .relativeToRoot("XCConfig/Shared.xcconfig")
     }
+    
+    static var dev: Self {
+        return .relativeToRoot("XCConfig/DEV/Dev.xcconfig")
+    }
+    
+    static var prod: Self {
+        return .relativeToRoot("XCConfig/PROD/Prod.xcconfig")
+    }
+    
 }
