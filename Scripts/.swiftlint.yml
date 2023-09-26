@@ -13,7 +13,6 @@ disabled_rules: # Default Rules에서 비활성화할 규칙
     - line_length
 
 opt_in_rules:
-    - accessibility_trait_for_button
     - closure_body_length
     - contains_over_filter_count
     - discouraged_none_name
@@ -96,9 +95,6 @@ redundant_set_access_control:
     severity: warning
 
 # ====================================== Opt-in Rules =====================================
-#Tap gesture 있는거면 버튼으로 만들어야 한다. https://realm.github.io/SwiftLint/accessibility_trait_for_button.html
-accessibility_trait_for_button:
-     severity: warning
 
 # 클로저 바디의 길이가 너무 길면 안된다. https://realm.github.io/SwiftLint/closure_body_length.html
 closure_body_length:
@@ -125,14 +121,6 @@ empty_string:
 # fatal msg는 “”면 안된다. https://realm.github.io/SwiftLint/fatal_error_message.html
 fatal_error_message:
     severity: warning
-
-## file 이름 명명 규칙 (같이 얘기 해봅시다). https://realm.github.io/SwiftLint/file_name.html
-#file_name:
-#    severity: warning
-#    excluded: [“LinuxMain.swift”, “main.swift”]
-#    prefix_pattern
-#    suffix_pattern
-#    nested_type_seperator
 
 # closure, function, getter에서 굳이 return 쓰지 않는다. https://realm.github.io/SwiftLint/implicit_return.html
 implicit_return:
