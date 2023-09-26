@@ -79,5 +79,19 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>Dev</key>
+	<dict>
+		<key>GOOGLE_CLIENT_ID</key>
+		<string>$(GOOGLE_CLIENT_ID)</string>
+		<key>KAKAO_NATIVE_KEY</key>
+		<string>$(KAKAO_NATIVE_KEY)</string>
+	</dict>
+	<key>Prod</key>
+	<dict>
+		<key>GOOGLE_CLIENT_ID</key>
+		<string>$(GOOGLE_CLIENT_ID)</string>
+		<key>KAKAO_NATIVE_KEY</key>
+		<string>$(KAKAO_NATIVE_KEY)</string>
+	</dict>
 </dict>
 </plist>
