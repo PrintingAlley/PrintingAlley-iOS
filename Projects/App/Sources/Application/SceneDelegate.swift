@@ -1,8 +1,8 @@
 import UIKit
 import GoogleSignIn
 import KakaoSDKAuth
-
 import RxKakaoSDKAuth
+import UtilityModule
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,8 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-                     
-             
+                    
         registerProviderFactories()
         let  root = AppComponent()
         window?.rootViewController = root.makeRootView()

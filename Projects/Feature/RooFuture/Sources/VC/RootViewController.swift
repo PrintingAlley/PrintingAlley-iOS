@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UtilityModule
 
 public class RootViewController: UIViewController {
 

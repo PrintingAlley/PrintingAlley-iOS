@@ -27,3 +27,15 @@ public func CONFIG() -> [String:Any] {
     
     #endif
 }
+
+public func GOOGLE_CLIENT_ID() -> String {
+    
+    CONFIG()["GOOGLE_CLIENT_ID"] as? String ?? ""
+    
+}
+
+public func KAKAO_NATIVE_KEY() -> String {
+    
+    CONFIG()["KAKAO_NATIVE_KEY"] as? String ?? ""
+    
+}
