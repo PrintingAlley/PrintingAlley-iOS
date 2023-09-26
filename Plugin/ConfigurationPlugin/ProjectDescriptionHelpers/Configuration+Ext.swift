@@ -8,8 +8,8 @@ public extension ConfigurationName {
 
 public extension Array where Element == Configuration {
     static let `default`: [Configuration] = [
-        .debug(name: .dev, xcconfig: .shared),
+        .debug(name: .dev, xcconfig: .dev),
         .debug(name: .stage, xcconfig: .shared),
-        .release(name: .prod, xcconfig: .shared),
+        .release(name: .prod, xcconfig: .prod),
     ]
 }
