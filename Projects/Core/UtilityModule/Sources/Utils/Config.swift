@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-public func CONFIG() -> [String:Any] {
+public func CONFIG() -> [String: Any] {
     
     #if DEV
     guard let config = Bundle.main.object(forInfoDictionaryKey: "Dev") as? [String: Any] else {
@@ -23,7 +22,6 @@ public func CONFIG() -> [String:Any] {
         return [:]
     }
     return config
-    
     
     #endif
 }
