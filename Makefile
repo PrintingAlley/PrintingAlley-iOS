@@ -19,6 +19,9 @@ reset:
 	rm -rf **/*.xcodeproj
 	rm -rf *.xcworkspace
 
+graph:
+	tuist graph -d
+
 module:
 	swift Scripts/GenerateModule.swift
 
