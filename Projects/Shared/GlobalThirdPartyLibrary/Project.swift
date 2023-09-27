@@ -12,7 +12,11 @@ let project = Project.module(
             .SPM.NaverLogin,
             .SPM.KakaoLogin,
             .SPM.GoogleLogin,
-            .SPM.KakaoAuth
+            .SPM.KakaoAuth,
+            .SPM.Moya,
+            .SPM.SnapKit,
+            .SPM.Then,
+            .SPM.Kingfisher
         ])
     ]
 )
