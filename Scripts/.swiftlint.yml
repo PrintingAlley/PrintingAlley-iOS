@@ -13,6 +13,12 @@ disabled_rules: # Default Rules에서 비활성화할 규칙
     - line_length
 
 opt_in_rules:
+    - closing_brace
+    - control_statement
+    - leading_whitespace
+    - statement_position
+    - return_arrow_whitespace
+
     - closure_body_length
     - contains_over_filter_count
     - discouraged_none_name
@@ -29,29 +35,19 @@ opt_in_rules:
     - static_operator
     - vertical_whitespace_between_cases
     - vertical_parameter_alignment_on_call
-    - vertical_whitespace_closing_braces
-    - vertical_whitespace_opening_braces
     
 analyzer_rules:
     - unused_import
     - unused_declaration
 
-# 괄호 닫을 때 공백 없어야 한다. https://realm.github.io/SwiftLint/closing_brace.html
-closing_brace:
-    severity: warning
-
 # 콜론 옆에 공백 없어야 한다. https://realm.github.io/SwiftLint/colon.html
-colon:
+colon: 
     severity: warning
     flexible_right_spacing: false
     apply_to_dictionaries: true
 
 # 콤마 옆에 공백 없어야 한다. https://realm.github.io/SwiftLint/comma.html
 comma:
-    severity: warning
-
-# if 구문등의 조건 부분을 소괄호로 묶지 않아도 된다. https://realm.github.io/SwiftLint/control_statement.html
-control_statement:
     severity: warning
 
 # Prefer () -> over Void ->. https://realm.github.io/SwiftLint/empty_parameters.html
@@ -62,10 +58,6 @@ empty_parameters:
 function_body_length:
     warning: 300
     error: 500
-
-#파일에 leading whitespace 없어야 한다. https://realm.github.io/SwiftLint/leading_whitespace.html
-leading_whitespace:
-    severity: warning
 
 # 여는 괄호 앞에 space 있어야 한다. https://realm.github.io/SwiftLint/opening_brace.html
 opening_brace:
@@ -81,6 +73,33 @@ vertical_whitespace:
 vertical_parameter_alignment:
     severity: warning
 
+# 옵셔널 변수라면 최초에 자동으로 nil로 초기화 되기 때문에 명시해주지 않아도 된다. https://realm.github.io/SwiftLint/redundant_set_access_control.html
+redundant_set_access_control:
+    severity: warning
+
+# 중괄호 닫기 전에 공백 줄 포함하면 안된다. https://realm.github.io/SwiftLint/vertical_whitespace_closing_braces.html
+vertical_whitespace_closing_braces:
+    severity: warning
+    only_enforce_before_trivial_lines: false
+
+#중괄호 열고 공백 줄 포함하면 안된다. https://realm.github.io/SwiftLint/vertical_whitespace_opening_braces.html
+vertical_whitespace_opening_braces:
+    severity: warning
+
+# ====================================== Opt-in Rules =====================================
+
+# 괄호 닫을 때 공백 없어야 한다. https://realm.github.io/SwiftLint/closing_brace.html
+closing_brace:
+    severity: warning
+
+# if 구문등의 조건 부분을 소괄호로 묶지 않아도 된다. https://realm.github.io/SwiftLint/control_statement.html
+control_statement:
+    severity: warning
+
+#파일에 leading whitespace 없어야 한다. https://realm.github.io/SwiftLint/leading_whitespace.html
+leading_whitespace:
+    severity: warning
+
 # else, catch 는 이전 괄호와 동일한 줄에 표시함. 괄호 뒤에는 한칸의 공백이 필요하다. https://realm.github.io/SwiftLint/statement_position.html
 statement_position:
     severity: warning
@@ -89,12 +108,6 @@ statement_position:
 # 반환타입을 주는 화살표 ->와 반환 타입 사이에 공백이 한 칸 필요하다. https://realm.github.io/SwiftLint/return_arrow_whitespace.html
 return_arrow_whitespace:
     severity: warning
-
-# 옵셔널 변수라면 최초에 자동으로 nil로 초기화 되기 때문에 명시해주지 않아도 된다. https://realm.github.io/SwiftLint/redundant_set_access_control.html
-redundant_set_access_control:
-    severity: warning
-
-# ====================================== Opt-in Rules =====================================
 
 # 클로저 바디의 길이가 너무 길면 안된다. https://realm.github.io/SwiftLint/closure_body_length.html
 closure_body_length:
@@ -158,15 +171,6 @@ vertical_whitespace_between_cases:
 
 # 함수 호출할 때 파라미터를 여러 줄에 걸쳐 작성하는 거면 indent가 동일해야 한다. https://realm.github.io/SwiftLint/vertical_parameter_alignment_on_call.html
 vertical_parameter_alignment_on_call:
-    severity: warning
-
-# 중괄호 닫기 전에 공백 줄 포함하면 안된다. https://realm.github.io/SwiftLint/vertical_whitespace_closing_braces.html
-vertical_whitespace_closing_braces:
-    severity: warning
-    only_enforce_before_trivial_lines: false
-
-#중괄호 열고 공백 줄 포함하면 안된다. https://realm.github.io/SwiftLint/vertical_whitespace_opening_braces.html
-vertical_whitespace_opening_braces:
     severity: warning
 
 #사용 안된 import 있으면 안된다. https://realm.github.io/SwiftLint/unused_import.html
