@@ -33,7 +33,7 @@ public func DEBUG_LOG(_ msg: Any, file: String = #file, function: String = #func
     #endif
     
 }
-func CONFIG() -> [String: Any] {
+public func CONFIG() -> [String: Any] {
 
     #if DEV
     guard let config = Bundle.main.object(forInfoDictionaryKey: "Dev") as? [String: Any] else {
@@ -51,25 +51,25 @@ func CONFIG() -> [String: Any] {
     #endif
 }
 
-func GOOGLE_CLIENT_ID() -> String {
+public func GOOGLE_CLIENT_ID() -> String {
     
     CONFIG()["GOOGLE_CLIENT_ID"] as? String ?? ""
     
 }
 
-func KAKAO_NATIVE_KEY() -> String {
+public func KAKAO_NATIVE_KEY() -> String {
     
     CONFIG()["KAKAO_NATIVE_KEY"] as? String ?? ""
     
 }
   
-func NAVER_CLIENT_ID() -> String {
+public func NAVER_CLIENT_ID() -> String {
     
     CONFIG()["NAVER_CLIENT_ID"] as? String ?? ""
     
 }
 
-func NAVER_SECRET() -> String {
+public func NAVER_SECRET() -> String {
     
     CONFIG()["NAVER_SECRET"] as? String ?? ""
     

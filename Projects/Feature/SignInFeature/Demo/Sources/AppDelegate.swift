@@ -1,4 +1,6 @@
 import UIKit
+import KakaoSDKCommon
+import UtilityModule
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,11 +11,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .yellow
+        let viewController = SignInViewController()
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 
+        KakaoSDK.initSDK(appKey: KAKAO_NATIVE_KEY() )
+        
         return true
     }
+    
 }
