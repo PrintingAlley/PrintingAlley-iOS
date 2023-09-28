@@ -11,14 +11,15 @@ import UIKit
 
 // use: colorFromRGB(0xffffff)
 public func colorFromRGB(_ rgbValue: UInt, alpha: CGFloat = 1.0) -> UIColor {
-    return UIColor(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-                   green: CGFloat((rgbValue & 0xFF00) >> 8) / 255.0,
-                   blue: CGFloat(rgbValue & 0xFF) / 255.0, alpha: alpha)
+    UIColor(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0xFF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0xFF) / 255.0, alpha: alpha)
 }
 
 // use: colorFromRGB("ffffff")
 public func colorFromRGB(_ hexString: String, alpha: CGFloat = 1.0) -> UIColor {
     let hexToInt = UInt32(Float64("0x" + hexString) ?? 0)
+    
     return UIColor(red: CGFloat((hexToInt & 0xFF0000) >> 16) / 255.0,
                    green: CGFloat((hexToInt & 0xFF00) >> 8) / 255.0,
                    blue: CGFloat(hexToInt & 0xFF) / 255.0, alpha: alpha)
