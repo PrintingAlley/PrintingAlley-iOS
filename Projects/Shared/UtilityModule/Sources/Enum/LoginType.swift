@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 public enum LoginType {
     
@@ -16,24 +16,24 @@ public enum LoginType {
     case google
     case apple
     
-    var image: UIImage {
+    public var image: UIImage {
         switch self {
             
         case .kakao:
-            return UIImage(systemName: "home")!
+            return UIImage(systemName: "house")!
             
         case .naver:
-            return UIImage(systemName: "home")!
+            return UIImage(systemName: "house")!
             
         case .google:
-            return UIImage(systemName: "home")!
+            return UIImage(systemName: "house")!
             
         case .apple:
-            return UIImage(systemName: "home")!
+            return UIImage(systemName: "house")!
         }
     }
     
-    var text: String {
+    public var text: String {
         switch self {
             
         case .kakao:
@@ -49,4 +49,21 @@ public enum LoginType {
             return "Apple 로그인"
         }
     }
+    
+    public var color:UIColor {
+        switch self {
+        case .kakao:
+            return .yellow
+            
+        case .naver:
+            return .green
+            
+        case .google:
+            return .white
+            
+        case .apple:
+            return .blue
+        }
+    }
+    
 }
