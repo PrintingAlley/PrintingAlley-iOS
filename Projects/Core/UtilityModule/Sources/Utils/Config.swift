@@ -37,3 +37,15 @@ public func KAKAO_NATIVE_KEY() -> String {
     CONFIG()["KAKAO_NATIVE_KEY"] as? String ?? ""
     
 }
+
+public func NAVER_CLIENT_ID() -> String {
+    
+    CONFIG()["NAVER_CLIENT_ID"] as? String ?? ""
+    
+}
+
+public func AVER_SECRET() -> String {
+    
+    CONFIG()["NAVER_SECRET"] as? String ?? ""
+    
+}
