@@ -9,38 +9,6 @@
 import Foundation
 import UIKit
 
-public func CONFIG() -> [String:Any] {
-    
-    #if DEV
-    guard let config = Bundle.main.object(forInfoDictionaryKey: "Dev") as? [String: Any] else {
-        
-        return [:]
-    }
-    return config
-    
-    #else
-    guard let config = Bundle.main.object(forInfoDictionaryKey: "Prod") as? [String: Any] else {
-        return [:]
-    }
-    return config
-    
-    
-    #endif
-}
-
-public func GOOGLE_CLIENT_ID() -> String {
-    
-    CONFIG()["GOOGLE_CLIENT_ID"] as? String ?? ""
-    
-}
-
-public func KAKAO_NATIVE_KEY() -> String {
-    
-    CONFIG()["KAKAO_NATIVE_KEY"] as? String ?? ""
-    
-}
-
-
 // use: colorFromRGB(0xffffff)
 public func colorFromRGB(_ rgbValue: UInt, alpha: CGFloat = 1.0) -> UIColor {
     return UIColor(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
@@ -62,4 +30,46 @@ public func DEBUG_LOG(_ msg: Any, file: String = #file, function: String = #func
         let funcName = function.split(separator: "(").first ?? ""
         print("[\(fileName)] \(funcName)(\(line)): \(msg)")
     #endif
+
+  
+public func CONFIG() -> [String: Any] {
+
+    #if DEV
+    guard let config = Bundle.main.object(forInfoDictionaryKey: "Dev") as? [String: Any] else {
+        
+        return [:]
+    }
+    return config
+    
+    #else
+    guard let config = Bundle.main.object(forInfoDictionaryKey: "Prod") as? [String: Any] else {
+        return [:]
+    }
+    return config
+    
+    #endif
+}
+
+public func GOOGLE_CLIENT_ID() -> String {
+    
+    CONFIG()["GOOGLE_CLIENT_ID"] as? String ?? ""
+    
+}
+
+public func KAKAO_NATIVE_KEY() -> String {
+    
+    CONFIG()["KAKAO_NATIVE_KEY"] as? String ?? ""
+    
+}
+  
+public func NAVER_CLIENT_ID() -> String {
+    
+    CONFIG()["NAVER_CLIENT_ID"] as? String ?? ""
+    
+}
+
+public func NAVER_SECRET() -> String {
+    
+    CONFIG()["NAVER_SECRET"] as? String ?? ""
+    
 }

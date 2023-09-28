@@ -85,6 +85,10 @@
 		<string>$(GOOGLE_CLIENT_ID)</string>
 		<key>KAKAO_NATIVE_KEY</key>
 		<string>$(KAKAO_NATIVE_KEY)</string>
+		<key>NAVER_CLIENT_ID</key>
+		<string>$(NAVER_CLIENT_ID)</string>
+		<key>NAVER_SECRET</key>
+		<string>$(NAVER_SECRET)</string>
 	</dict>
 	<key>Prod</key>
 	<dict>
@@ -92,6 +96,10 @@
 		<string>$(GOOGLE_CLIENT_ID)</string>
 		<key>KAKAO_NATIVE_KEY</key>
 		<string>$(KAKAO_NATIVE_KEY)</string>
+		<key>NAVER_CLIENT_ID</key>
+		<string>$(NAVER_CLIENT_ID)</string>
+		<key>NAVER_SECRET</key>
+		<string>$(NAVER_SECRET)</string>
 	</dict>
 </dict>
 </plist>
