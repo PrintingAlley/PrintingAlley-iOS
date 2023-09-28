@@ -30,9 +30,9 @@ public func DEBUG_LOG(_ msg: Any, file: String = #file, function: String = #func
         let funcName = function.split(separator: "(").first ?? ""
         print("[\(fileName)] \(funcName)(\(line)): \(msg)")
     #endif
-
-  
-public func CONFIG() -> [String: Any] {
+    
+}
+func CONFIG() -> [String: Any] {
 
     #if DEV
     guard let config = Bundle.main.object(forInfoDictionaryKey: "Dev") as? [String: Any] else {
@@ -50,25 +50,25 @@ public func CONFIG() -> [String: Any] {
     #endif
 }
 
-public func GOOGLE_CLIENT_ID() -> String {
+func GOOGLE_CLIENT_ID() -> String {
     
     CONFIG()["GOOGLE_CLIENT_ID"] as? String ?? ""
     
 }
 
-public func KAKAO_NATIVE_KEY() -> String {
+func KAKAO_NATIVE_KEY() -> String {
     
     CONFIG()["KAKAO_NATIVE_KEY"] as? String ?? ""
     
 }
   
-public func NAVER_CLIENT_ID() -> String {
+func NAVER_CLIENT_ID() -> String {
     
     CONFIG()["NAVER_CLIENT_ID"] as? String ?? ""
     
 }
 
-public func NAVER_SECRET() -> String {
+func NAVER_SECRET() -> String {
     
     CONFIG()["NAVER_SECRET"] as? String ?? ""
     
