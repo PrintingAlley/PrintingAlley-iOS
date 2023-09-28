@@ -11,6 +11,7 @@ disabled_rules: # Default Rules에서 비활성화할 규칙
     - force_unwrapping
     
     - line_length
+    - multiline_arguments_brackets
 
 opt_in_rules:
     - closing_brace
@@ -27,7 +28,6 @@ opt_in_rules:
     - fatal_error_message
     - file_name
     - implicit_return
-    - multiline_arguments_brackets
     - multiline_function_chains
     - multiline_literal_brackets
     - multiline_parameters
@@ -86,6 +86,10 @@ vertical_whitespace_closing_braces:
 vertical_whitespace_opening_braces:
     severity: warning
 
+# Argument를 여러줄로 쓸 때는 여는 괄호와 닫는 괄호가 분리되어있어야 한다. https://realm.github.io/SwiftLint/multiline_arguments_brackets.html
+multiline_arguments_brackets:
+    severity: warning
+
 # ====================================== Opt-in Rules =====================================
 
 # 괄호 닫을 때 공백 없어야 한다. https://realm.github.io/SwiftLint/closing_brace.html
@@ -139,10 +143,6 @@ fatal_error_message:
 implicit_return:
     severity: warning
     included: [closure, function, getter]
-
-# Argument를 여러줄로 쓸 때는 여는 괄호와 닫는 괄호가 분리되어있어야 한다. https://realm.github.io/SwiftLint/multiline_arguments_brackets.html
-multiline_arguments_brackets:
-    severity: warning
 
 # 연속으로 함수 호출 시 한 줄에 하나씩이거나 모두 같은 줄이어야 한다. https://realm.github.io/SwiftLint/multiline_function_chains.html
 multiline_function_chains:
