@@ -38,13 +38,13 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Core: String, MicroTargetPathConvertable {
-        case UtilityModule
         case CoreKit
     }
 }
 
 public extension ModulePaths {
     enum Shared: String, MicroTargetPathConvertable {
+        case UtilityModule
         case GlobalThirdPartyLibrary
     }
 }

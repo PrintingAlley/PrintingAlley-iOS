@@ -3,8 +3,8 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.module(
-    name: ModulePaths.Core.UtilityModule.rawValue,
+    name: ModulePaths.Shared.UtilityModule.rawValue,
     targets: [
-        .implements(module: .core(.UtilityModule))
+        .implements(module: .shared(.UtilityModule))
     ]
 )
