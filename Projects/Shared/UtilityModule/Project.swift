@@ -5,6 +5,8 @@ import ProjectDescriptionHelpers
 let project = Project.module(
     name: ModulePaths.Shared.UtilityModule.rawValue,
     targets: [
-        .implements(module: .shared(.UtilityModule))
+        .implements(module: .shared(.UtilityModule),dependencies: [
+            .SPM.RxSwift,
+        ])
     ]
 )
