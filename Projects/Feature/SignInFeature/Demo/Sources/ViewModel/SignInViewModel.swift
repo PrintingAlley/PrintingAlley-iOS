@@ -12,6 +12,8 @@ import RxSwift
 import UtilityModule
 import NaverThirdPartyLogin
 import AuthenticationServices
+import KakaoSDKAuth
+
 
 final class SignInViewModel: NSObject, ViewModelType {
 
@@ -59,20 +61,33 @@ final class SignInViewModel: NSObject, ViewModelType {
 }
 
 extension SignInViewModel: NaverThirdPartyLoginConnectionDelegate {
+    
+    // 접근 토큰 갱신
     func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
+        DEBUG_LOG("NAVER SUCESS")
+        guard let accessToken = naverLoginInstance?.isValidAccessTokenExpireTimeNow() else { return }
+        if !accessToken { return }
         
+        
+
     }
     
+    // 로그인에 성공했을 경우 호출
     func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
+        DEBUG_LOG("NAVER SUCESS")
+        guard let accessToken = naverLoginInstance?.isValidAccessTokenExpireTimeNow() else { return }
+        if !accessToken { return }
         
+        
+
     }
     
     func oauth20ConnectionDidFinishDeleteToken() {
-        
+        DEBUG_LOG("NAVER LOG OUT")
     }
     
     func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
-        
+        DEBUG_LOG("NAVER EEROR: \(error)")
     }
     
 }

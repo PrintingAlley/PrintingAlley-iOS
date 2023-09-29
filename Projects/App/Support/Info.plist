@@ -23,16 +23,18 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>kakao</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kakao549a4a1b1ef17480cb7bccfdb7681237</string>
-				<string>com.googleusercontent.apps.10103037013-vqi4lthbm4vrl03jgsga6q3fd02d3j51</string>
-				<string>naverlogin</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>google</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.10103037013-vqi4lthbm4vrl03jgsga6q3fd02d3j51</string>
@@ -41,6 +43,8 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>naverlogin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>naverlogin</string>
@@ -65,7 +69,8 @@
 		<string>kakaokompassauth</string>
 		<string>kakao</string>
 		<string>kakaolink</string>
-		<string>kakao549a4a1b1ef17480cb7bccfdb7681237</string>
+		<string>naversearchthirdlogin</string>
+		<string>naversearchapp</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<false/>
