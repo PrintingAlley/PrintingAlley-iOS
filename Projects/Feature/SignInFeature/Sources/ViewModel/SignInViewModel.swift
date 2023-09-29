@@ -39,8 +39,7 @@ final class SignInViewModel: NSObject, ViewModelType {
                 switch type {
                     
                 case .kakao:
-                    DEBUG_LOG("KAKAO")
-            
+                    
                     // 카카오톡 실행 가능 여부 확인
                     // 카카오톡 실행 가능 여부 확인
                     if  UserApi.isKakaoTalkLoginAvailable() {
@@ -57,7 +56,14 @@ final class SignInViewModel: NSObject, ViewModelType {
                     DEBUG_LOG("Google")
                     
                 case .apple:
-                    DEBUG_LOG("Apple")
+                    
+                    let appleIdProvider = ASAuthorizationAppleIDProvider()
+                    let request = appleIdProvider.createRequest()
+                    request.requestedScopes = [.fullName,.email]
+                    let auth = ASAuthorizationController(authorizationRequests: [request])
+                    auth.delegate = self
+                    auth.presentationContextProvider = self
+                    auth.performRequests()
                     
                 }
                 
@@ -133,6 +139,7 @@ extension SignInViewModel:ASAuthorizationControllerDelegate,ASAuthorizationContr
         UIApplication.shared.windows.last!
      }
 
+    // 성공하여 로그인 
      public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
          if let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
             let rawData =  credential.identityToken {
