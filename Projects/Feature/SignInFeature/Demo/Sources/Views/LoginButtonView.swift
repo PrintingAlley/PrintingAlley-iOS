@@ -27,7 +27,9 @@ class LoginButtonView: UIView {
         $0.contentMode = .scaleAspectFill
     }
     
-    var label: UILabel = UILabel()
+    var label: UILabel = UILabel().then{
+        $0.backgroundColor = .white
+    }
     
     init(type: LoginType) {
         super.init(frame: .zero)
@@ -73,15 +75,16 @@ extension LoginButtonView {
             $0.left.right.top.bottom.equalToSuperview()
         }
         
-        label.snp.makeConstraints{
+        label.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(17)
-            $0.centerX.equalToSuperview().offset(13)
+            $0.centerX.equalToSuperview()
         }
         
-        imageView.snp.makeConstraints{
+        imageView.snp.makeConstraints {
             $0.width.height.equalTo(20)
-            $0.centerY.equalTo(label)
-            $0.right.equalTo(label.snp.left).offset(-13)
+            $0.left.equalToSuperview().inset(20)
+            $0.centerY.equalTo(label.snp.centerY)
+           
         }
         
     }

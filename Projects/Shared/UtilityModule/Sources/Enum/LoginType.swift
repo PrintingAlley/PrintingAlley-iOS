@@ -59,7 +59,7 @@ public enum LoginType {
             return .green
             
         case .google:
-            return .white
+            return .red
             
         case .apple:
             return .blue
