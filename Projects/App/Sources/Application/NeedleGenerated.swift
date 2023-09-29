@@ -3,6 +3,9 @@
 import Foundation
 import NeedleFoundation
 import RooFuture
+import SignInFeature
+import SignInFeatureInterface
+import UIKit
 
 // swiftlint:disable unused_declaration
 private let needleDependenciesHash : String? = nil
@@ -28,6 +31,17 @@ private class RootDependency3944cc797a4a88956fb5Provider: RootDependency {
 private func factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return RootDependency3944cc797a4a88956fb5Provider()
 }
+private class SignInDependency5dda0dd015447272446cProvider: SignInDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->SignInComponent
+private func factoryda2925fd76da866a652ae3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return SignInDependency5dda0dd015447272446cProvider()
+}
 
 #else
 extension AppComponent: Registration {
@@ -37,6 +51,11 @@ extension AppComponent: Registration {
     }
 }
 extension RootComponent: Registration {
+    public func registerItems() {
+
+    }
+}
+extension SignInComponent: Registration {
     public func registerItems() {
 
     }
@@ -59,6 +78,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
 @inline(never) private func register1() {
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652ae3b0c44298fc1c149afb)
 }
 #endif
 

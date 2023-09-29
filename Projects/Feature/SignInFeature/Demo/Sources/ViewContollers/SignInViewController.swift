@@ -12,7 +12,7 @@ import Then
 import UtilityModule
 import KakaoSDKCommon
 
-class SignInViewController: UIViewController {
+public class SignInViewController: UIViewController {
 
     var viewModel: SignInViewModel!
     var input: SignInViewModel.Input!
@@ -42,7 +42,7 @@ class SignInViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         kakaoButton.delegate = self
@@ -112,7 +112,7 @@ extension SignInViewController {
 }
 
 extension SignInViewController: LoginButtonViewDelegate {
-    func action(type: LoginType) {
+    public func action(type: LoginType) {
         input.tapLoginButton.accept(type)
     }
     
