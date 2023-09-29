@@ -14,18 +14,21 @@ import NaverThirdPartyLogin
 import AuthenticationServices
 import KakaoSDKUser
 import KakaoSDKAuth
+    
 
 final class SignInViewModel: NSObject, ViewModelType {
 
     let disposeBag = DisposeBag()
     let naverLoginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
+    let oauthToken: PublishRelay<Void> = PublishRelay()
+    
     
     struct Input {
         let tapLoginButton: PublishRelay<LoginType> = .init()
     }
     
     struct Output {
-        
+        let runGoogleLogin: PublishRelay<Void> = .init()
     }
 
     func transform(input: Input) -> Output {
@@ -49,21 +52,13 @@ final class SignInViewModel: NSObject, ViewModelType {
                     }
                     
                 case .naver:
-                    owner.naverLoginInstance?.delegate = self
-                    owner.naverLoginInstance?.requestThirdPartyLogin()
+                    owner.naverLogin()
                     
                 case .google:
-                    DEBUG_LOG("Google")
+                    output.runGoogleLogin.accept(())
                     
                 case .apple:
-                    
-                    let appleIdProvider = ASAuthorizationAppleIDProvider()
-                    let request = appleIdProvider.createRequest()
-                    request.requestedScopes = [.fullName,.email]
-                    let auth = ASAuthorizationController(authorizationRequests: [request])
-                    auth.delegate = self
-                    auth.presentationContextProvider = self
-                    auth.performRequests()
+                    owner.appleLogin()
                     
                 }
                 
@@ -100,6 +95,21 @@ extension SignInViewModel {
                 _ = oauthToken
             }
         }
+    }
+    
+    func naverLogin() {
+        self.naverLoginInstance?.delegate = self
+        self.naverLoginInstance?.requestThirdPartyLogin()
+    }
+    
+    func appleLogin() {
+        let appleIdProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIdProvider.createRequest()
+        request.requestedScopes = [.fullName]
+        let auth = ASAuthorizationController(authorizationRequests: [request])
+        auth.delegate = self
+        auth.presentationContextProvider = self
+        auth.performRequests()
     }
     
 }
@@ -139,7 +149,7 @@ extension SignInViewModel:ASAuthorizationControllerDelegate,ASAuthorizationContr
         UIApplication.shared.windows.last!
      }
 
-    // 성공하여 로그인 
+    // 성공하여 로그인
      public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
          if let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
             let rawData =  credential.identityToken {
