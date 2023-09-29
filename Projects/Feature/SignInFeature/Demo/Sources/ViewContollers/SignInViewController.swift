@@ -14,12 +14,15 @@ import KakaoSDKCommon
 
 class SignInViewController: UIViewController {
 
+    var viewModel: SignInViewModel!
+    var input: SignInViewModel.Input!
+    
     let versionLabel: UILabel = UILabel().then {
         $0.text = "버전정보 \(APP_VERSION())"
         $0.textAlignment = .center
     }
     
-    let stackView: UIStackView = UIStackView().then{
+    let stackView: UIStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 8
     }
@@ -28,6 +31,16 @@ class SignInViewController: UIViewController {
     let naverButton: LoginButtonView = LoginButtonView(type: .naver)
     let appleButton: LoginButtonView = LoginButtonView(type: .apple)
     let googleButton: LoginButtonView = LoginButtonView(type: .google)
+
+    init(viewModel: SignInViewModel!) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+        self.input = SignInViewModel.Input()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +51,7 @@ class SignInViewController: UIViewController {
         googleButton.delegate = self
         addSubviews()
         makeConstraints()
-        DEBUG_LOG("HELLO")
+        bindViewModel()
         
         // Do any additional setup after loading the view.
     }
@@ -92,11 +105,15 @@ extension SignInViewController {
         }
     }
     
+    func bindViewModel() {
+        let output = viewModel.transform(input: input)
+    }
+    
 }
 
-extension SignInViewController:LoginButtonViewDelegate {
+extension SignInViewController: LoginButtonViewDelegate {
     func action(type: LoginType) {
-        DEBUG_LOG(type)
+        input.tapLoginButton.accept(type)
     }
     
 }
