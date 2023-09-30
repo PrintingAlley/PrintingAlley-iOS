@@ -1,6 +1,7 @@
 
 
 import Foundation
+import MyPageModuleInterface
 import NeedleFoundation
 import RooFuture
 import SignInFeature

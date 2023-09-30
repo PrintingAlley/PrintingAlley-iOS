@@ -11,12 +11,12 @@ import NeedleFoundation
 import MyPageModuleInterface
 import UIKit
 
-public protocol MyPageDependency: Dependency {
+public protocol MyPageContentDependency: Dependency {
 
 }
 
-public final class MyPageComponent: Component<MyPageDependency>,MyPageFactory {
+public final class MyPageContentComponent: Component<MyPageContentDependency>,MyPageContentFactory {
     public func makeView() -> UIViewController {
-        MyPageViewController()
+        MyPageContentViewController()
     }
 }
