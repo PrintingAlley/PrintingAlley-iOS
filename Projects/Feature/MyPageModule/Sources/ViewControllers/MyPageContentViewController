@@ -1,5 +1,5 @@
 //
-//  MyPageViewController.swift
+//  MyPageContainerViewController.swift
 //  MyPageModule
 //
 //  Created by yongbeomkwak on 2023/09/30.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyPageViewController: UIViewController {
+class MyPageContainerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
