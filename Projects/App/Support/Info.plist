@@ -23,17 +23,68 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>kakao</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kakao549a4a1b1ef17480cb7bccfdb7681237</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>google</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
 				<string>com.googleusercontent.apps.10103037013-vqi4lthbm4vrl03jgsga6q3fd02d3j51</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>naverlogin</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>naverlogin</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Dev</key>
+	<dict>
+		<key>GOOGLE_CLIENT_ID</key>
+		<string>$(GOOGLE_CLIENT_ID)</string>
+		<key>KAKAO_NATIVE_KEY</key>
+		<string>$(KAKAO_NATIVE_KEY)</string>
+		<key>NAVER_CLIENT_ID</key>
+		<string>$(NAVER_CLIENT_ID)</string>
+		<key>NAVER_SECRET</key>
+		<string>$(NAVER_SECRET)</string>
+	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaokompassauth</string>
+		<string>kakao</string>
+		<string>kakaolink</string>
+		<string>naversearchthirdlogin</string>
+		<string>naversearchapp</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<false/>
+	<key>Prod</key>
+	<dict>
+		<key>GOOGLE_CLIENT_ID</key>
+		<string>$(GOOGLE_CLIENT_ID)</string>
+		<key>KAKAO_NATIVE_KEY</key>
+		<string>$(KAKAO_NATIVE_KEY)</string>
+		<key>NAVER_CLIENT_ID</key>
+		<string>$(NAVER_CLIENT_ID)</string>
+		<key>NAVER_SECRET</key>
+		<string>$(NAVER_SECRET)</string>
+	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -51,13 +102,6 @@
 			</array>
 		</dict>
 	</dict>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>kakaokompassauth</string>
-		<string>kakao</string>
-		<string>kakaolink</string>
-		<string>kakao549a4a1b1ef17480cb7bccfdb7681237</string>
-	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -79,27 +123,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>Dev</key>
-	<dict>
-		<key>GOOGLE_CLIENT_ID</key>
-		<string>$(GOOGLE_CLIENT_ID)</string>
-		<key>KAKAO_NATIVE_KEY</key>
-		<string>$(KAKAO_NATIVE_KEY)</string>
-		<key>NAVER_CLIENT_ID</key>
-		<string>$(NAVER_CLIENT_ID)</string>
-		<key>NAVER_SECRET</key>
-		<string>$(NAVER_SECRET)</string>
-	</dict>
-	<key>Prod</key>
-	<dict>
-		<key>GOOGLE_CLIENT_ID</key>
-		<string>$(GOOGLE_CLIENT_ID)</string>
-		<key>KAKAO_NATIVE_KEY</key>
-		<string>$(KAKAO_NATIVE_KEY)</string>
-		<key>NAVER_CLIENT_ID</key>
-		<string>$(NAVER_CLIENT_ID)</string>
-		<key>NAVER_SECRET</key>
-		<string>$(NAVER_SECRET)</string>
-	</dict>
 </dict>
 </plist>

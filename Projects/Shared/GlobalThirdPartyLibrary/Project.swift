@@ -16,7 +16,10 @@ let project = Project.module(
             .SPM.Moya,
             .SPM.SnapKit,
             .SPM.Then,
-            .SPM.Kingfisher
+            .SPM.Kingfisher,
+            .SPM.RxSwift,
+            .SPM.RxCocoa,
+            .SPM.RxRelay
         ])
     ]
 )

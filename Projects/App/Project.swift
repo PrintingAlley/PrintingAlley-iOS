@@ -26,6 +26,7 @@ let targets: [Target] = [
         infoPlist: .file(path: "Support/Info.plist"),
         sources: ["Sources/**"],
         resources: ["Resources/**"],
+        entitlements: "Support/\(env.name).entitlements",
         scripts:  generateEnvironment == .dev ? projectDevScripts : scripts, // 니들로 인하여 기본 스크립트와 분리 
         dependencies: [
             

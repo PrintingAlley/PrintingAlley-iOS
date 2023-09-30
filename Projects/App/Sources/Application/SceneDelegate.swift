@@ -3,6 +3,7 @@ import GoogleSignIn
 import KakaoSDKAuth
 import RxKakaoSDKAuth
 import UtilityModule
+import NaverThirdPartyLogin
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,12 +20,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     
         registerProviderFactories()
         let  root = AppComponent()
-        window?.rootViewController = root.makeRootView()
+        window?.rootViewController = root.signInFactory.makeView()
         window?.makeKeyAndVisible()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
+        
+        NaverThirdPartyLoginConnection
+           .getSharedInstance()?
+           .receiveAccessToken(URLContexts.first?.url)
+        
+        
         let _ = GIDSignIn.sharedInstance.handle(url)
         
         if let url = URLContexts.first?.url {
