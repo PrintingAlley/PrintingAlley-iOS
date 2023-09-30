@@ -7,9 +7,15 @@
 //
 
 import Foundation
+import MyPageModuleInterface
+import MyPageModule
 
-//extension AppComponent {
-//    var signInFactory: any SigninFactory {
-//        SignInComponent(parent: self)
-//    }
-//}
+extension AppComponent {
+    var mypageFactory: any MyPageFactory {
+        MyPageComponent(parent: self)
+    }
+    
+    var mypageContentFactory: any MyPageContentFactory {
+        MyPageContentComponent(parent: self)
+    }
+}
