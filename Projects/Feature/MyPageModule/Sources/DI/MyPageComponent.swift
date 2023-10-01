@@ -21,6 +21,6 @@ public protocol MyPageDependency: Dependency {
 
 public final class MyPageComponent: Component<MyPageDependency>, MyPageFactory {
     public func makeView() -> UIViewController {
-        MyPageViewController()
+        MyPageViewController(siginInFactory: dependency.signInFactory, myPageContentFactory: dependency.myPageContentFactory)
     }
 }
