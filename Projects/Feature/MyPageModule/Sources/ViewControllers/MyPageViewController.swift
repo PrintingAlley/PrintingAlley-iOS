@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import SignInFeature
 import SignInFeatureInterface
 import MyPageModuleInterface
 import RxSwift
+import UtilityModule
 
-public class MyPageViewController: UIViewController {
+public class MyPageViewController: UIViewController ,ContainerViewType {
+    public var contentView: UIView! = UIView()
     
     var siginInFactory: SigninFactory!
     var myPageContentFactory: MyPageContentFactory!
@@ -30,13 +33,39 @@ public class MyPageViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        self.view.addSubview(contentView)
+        contentView.snp.makeConstraints{
+            $0.left.right.top.bottom.equalToSuperview()
+        }
+        bind()
 
     }
     
 }
 
 extension MyPageViewController {
-    func bind(){
+    func bind() {
+        
+        PreferenceManager.$user
+            .map({$0 != nil})
+            .subscribe(onNext: {[weak self] (isLogin: Bool) in
+                
+                guard let self else {return}
+                
+                if isLogin {
+                    if  self.children.first as? SignInViewController != nil {
+                        self.remove(asChildViewController: self.siginInFactory.makeView())
+                    }
+                    self.add(asChildViewController: self.myPageContentFactory.makeView())
+                } else {
+                    if  self.children.first as? MyPageContentViewController != nil {
+                        self.remove(asChildViewController: self.myPageContentFactory.makeView())
+                    }
+                    self.add(asChildViewController: self.siginInFactory.makeView())
+                }
+                
+            })
+            .disposed(by: disposeBag)
         
     }
 }
