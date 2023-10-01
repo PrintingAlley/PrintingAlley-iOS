@@ -11,11 +11,14 @@ import MyPageModuleInterface
 import MyPageModule
 
 extension AppComponent {
+    
+    var myPageContentFactory: any MyPageContentFactory {
+        MyPageContentComponent(parent: self)
+    }
+    
     var mypageFactory: any MyPageFactory {
         MyPageComponent(parent: self)
     }
     
-    var mypageContentFactory: any MyPageContentFactory {
-        MyPageContentComponent(parent: self)
-    }
+
 }

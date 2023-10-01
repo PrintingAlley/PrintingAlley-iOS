@@ -10,12 +10,16 @@ import Foundation
 import NeedleFoundation
 import MyPageModuleInterface
 import UIKit
+import SignInFeatureInterface
 
 public protocol MyPageDependency: Dependency {
-
+    
+    var signInFactory: any SigninFactory { get }
+    var myPageContentFactory: any MyPageContentFactory { get }
+    
 }
 
-public final class MyPageComponent: Component<MyPageDependency>,MyPageFactory {
+public final class MyPageComponent: Component<MyPageDependency>, MyPageFactory {
     public func makeView() -> UIViewController {
         MyPageViewController()
     }
