@@ -20,10 +20,9 @@ public final class PreferenceManager {
      
     }
     
-//    @UserDefaultWrapper(key: Constants.recentRecords.rawValue, defaultValue: nil)
-//    public static var recentRecords: [String]?
+    @UserDefaultWrapper(key: Constants.user.rawValue, defaultValue: nil)
+    public static var user: UserInfo?
 
-    
 }
 
 @propertyWrapper
@@ -43,7 +42,7 @@ public final class UserDefaultWrapper<T: Codable> {
                 if let lodedObejct = try? decoder.decode(T.self, from: savedData) {
                     return lodedObejct
                 }
-            }else if UserDefaults.standard.array(forKey: key) != nil{
+            }else if UserDefaults.standard.array(forKey: key) != nil {
                 return UserDefaults.standard.array(forKey: key) as? T
             }
             return defaultValue
@@ -59,6 +58,6 @@ public final class UserDefaultWrapper<T: Codable> {
     
     private lazy var subject = BehaviorSubject<T?>(value: wrappedValue)
     public var projectedValue: Observable<T?> {
-        return subject.asObservable()
+        subject.asObservable()
     }
 }
