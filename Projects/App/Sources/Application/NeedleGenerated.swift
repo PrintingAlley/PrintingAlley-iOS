@@ -1,6 +1,8 @@
 
 
 import Foundation
+import MyPageModule
+import MyPageModuleInterface
 import NeedleFoundation
 import RooFuture
 import SignInFeature
@@ -42,6 +44,33 @@ private class SignInDependency5dda0dd015447272446cProvider: SignInDependency {
 private func factoryda2925fd76da866a652ae3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return SignInDependency5dda0dd015447272446cProvider()
 }
+private class MyPageDependency48d84b530313b3ee40feProvider: MyPageDependency {
+    var signInFactory: any SigninFactory {
+        return appComponent.signInFactory
+    }
+    var myPageContentFactory: any MyPageContentFactory {
+        return appComponent.myPageContentFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->MyPageComponent
+private func factory0f6f456ebf157d02dfb3f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return MyPageDependency48d84b530313b3ee40feProvider(appComponent: parent1(component) as! AppComponent)
+}
+private class MyPageContentDependencyc8db405cbc62d6eda9bfProvider: MyPageContentDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->MyPageContentComponent
+private func factory0dbf0a2ebe9a0bf09f32e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return MyPageContentDependencyc8db405cbc62d6eda9bfProvider()
+}
 
 #else
 extension AppComponent: Registration {
@@ -56,6 +85,17 @@ extension RootComponent: Registration {
     }
 }
 extension SignInComponent: Registration {
+    public func registerItems() {
+
+    }
+}
+extension MyPageComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\MyPageDependency.signInFactory] = "signInFactory-any SigninFactory"
+        keyPathToName[\MyPageDependency.myPageContentFactory] = "myPageContentFactory-any MyPageContentFactory"
+    }
+}
+extension MyPageContentComponent: Registration {
     public func registerItems() {
 
     }
@@ -79,6 +119,8 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652ae3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->MyPageComponent", factory0f6f456ebf157d02dfb3f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->MyPageContentComponent", factory0dbf0a2ebe9a0bf09f32e3b0c44298fc1c149afb)
 }
 #endif
 

@@ -29,6 +29,8 @@ final class SignInViewModel: NSObject, ViewModelType {
     
     struct Output {
         let runGoogleLogin: PublishRelay<Void> = .init()
+        let loginResult: PublishSubject<Void> = .init()
+        
     }
 
     func transform(input: Input) -> Output {
@@ -65,6 +67,13 @@ final class SignInViewModel: NSObject, ViewModelType {
         })
         .disposed(by: disposeBag)
         
+        oauthToken.subscribe(onNext: { [weak self] in
+            
+            guard let self else {return}
+            
+            PreferenceManager.shared.setUserInfo(id: "A", platform: .apple)
+        })
+        
         return output
     }
 }
@@ -72,26 +81,34 @@ final class SignInViewModel: NSObject, ViewModelType {
 extension SignInViewModel {
     
     func loginWithKakaoTalk() {
-        UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+        UserApi.shared.loginWithKakaoTalk {[weak self] (oauthToken, error) in
+            
+            guard let self else {return}
+            
             if let error = error {
                 print(error)
             } else {
                 print("loginWithKakaoTalk() success.")
 
                 // do something
+                self.oauthToken.accept(())
                 _ = oauthToken
             }
         }
     }
     
     func loginWithOutKakaoTalk() {
-        UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+        UserApi.shared.loginWithKakaoAccount { [weak self] (oauthToken, error) in
+            
+            guard let self else {return}
+            
             if let error = error {
                 print(error)
             } else {
                 print("loginWithKakaoAccount() success.")
 
                 // do something
+                self.oauthToken.accept(())
                 _ = oauthToken
             }
         }
@@ -131,7 +148,7 @@ extension SignInViewModel: NaverThirdPartyLoginConnectionDelegate {
         if !accessToken { return }
         DEBUG_LOG("NAVER SUCESS2 ")
         
-        
+        oauthToken.accept(())
     }
     
     func oauth20ConnectionDidFinishDeleteToken() {
@@ -154,7 +171,7 @@ extension SignInViewModel:ASAuthorizationControllerDelegate,ASAuthorizationContr
          if let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
             let rawData =  credential.identityToken {
              let token = String(decoding: rawData, as: UTF8.self)
-             //oauthToken.accept((.apple, token))
+             oauthToken.accept(())
              DEBUG_LOG(token)
          }
      }

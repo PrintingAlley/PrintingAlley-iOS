@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public enum LoginType {
+public enum LoginType: Codable {
     
     case kakao
     case naver
