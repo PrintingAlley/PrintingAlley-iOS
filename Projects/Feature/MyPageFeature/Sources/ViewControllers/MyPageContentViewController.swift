@@ -1,6 +1,6 @@
 //
 //  MyPageContentViewController.swift
-//  MyPageModule
+//  MyPageFeature
 //
 //  Created by yongbeomkwak on 2023/09/30.
 //  Copyright © 2023 com. All rights reserved.

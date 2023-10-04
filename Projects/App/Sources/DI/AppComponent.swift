@@ -8,7 +8,7 @@
 
 import Foundation
 import NeedleFoundation
-import RooFuture
+import RootFeature
 
 final class AppComponent: BootstrapComponent {
     func makeRootView() -> RootViewController {

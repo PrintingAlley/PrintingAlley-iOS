@@ -1,6 +1,6 @@
 //
 //  RootComponent.swift
-//  RooFuture
+//  RootFeature
 //
 //  Created by yongbeomkwak on 2023/09/24.
 //  Copyright © 2023 com. All rights reserved.

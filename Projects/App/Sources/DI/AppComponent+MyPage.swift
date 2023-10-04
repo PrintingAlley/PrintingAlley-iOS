@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import MyPageModuleInterface
-import MyPageModule
+import MyPageFeature
+import MyPageFeatureInterface
 
 extension AppComponent {
     
