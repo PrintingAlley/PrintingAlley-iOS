@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UtilityModule
 
 public final class AlleyLabel: UILabel {
     public var padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -28,6 +29,7 @@ public final class AlleyLabel: UILabel {
         self.text = title
         self.font = .setFont(font)
         self.textColor = .setColor(textColor)
+        self.setLineSpacing(lineHeightMultiple: UIFont.getLineHeight(font))
     }
     
     override public func drawText(in rect: CGRect) {

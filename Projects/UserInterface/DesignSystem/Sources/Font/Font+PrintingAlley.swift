@@ -10,8 +10,8 @@ import UIKit
 
 public extension UIFont {
     enum AlleyFontSystem: PrintingAlleyFontable {
-        case h1
-        case h2
+        case header1
+        case header2
         case subtitle1
         case subtitle2
         case subtitle3
@@ -22,31 +22,76 @@ public extension UIFont {
     }
     
     static func setFont(_ style: AlleyFontSystem) -> UIFont {
-        return style.font
+        let font = style.font
+        return font
+    }
+    
+    static func getLineHeight(_ style: AlleyFontSystem) -> CGFloat {
+        let lineHeight = style.alleyLineHeight
+        return lineHeight
     }
 }
 
 public extension UIFont.AlleyFontSystem {
     var font: UIFont {
         switch self {
-        case .h1:
+        case .header1:
             return UIFont(font: DesignSystemFontFamily.Pretendard.semiBold, size: 28) ?? .init()
-        case .h2:
+
+        case .header2:
             return UIFont(font: DesignSystemFontFamily.Pretendard.semiBold, size: 24) ?? .init()
+
         case .subtitle1:
             return UIFont(font: DesignSystemFontFamily.Pretendard.semiBold, size: 18) ?? .init()
+
         case .subtitle2:
             return UIFont(font: DesignSystemFontFamily.Pretendard.semiBold, size: 16) ?? .init()
+
         case .subtitle3:
             return UIFont(font: DesignSystemFontFamily.Pretendard.semiBold, size: 14) ?? .init()
+
         case .body1:
             return UIFont(font: DesignSystemFontFamily.Pretendard.regular, size: 16) ?? .init()
+
         case .body2:
             return UIFont(font: DesignSystemFontFamily.Pretendard.regular, size: 14) ?? .init()
+
         case .caption1:
             return UIFont(font: DesignSystemFontFamily.Pretendard.regular, size: 12) ?? .init()
+
         case .caption2:
             return UIFont(font: DesignSystemFontFamily.Pretendard.regular, size: 10) ?? .init()
+        }
+    }
+    
+    var alleyLineHeight: CGFloat {
+        switch self {
+        case .header1:
+            return 36
+            
+        case .header2:
+            return 32
+            
+        case .subtitle1:
+            return 24
+            
+        case .subtitle2:
+            return 24
+            
+        case .subtitle3:
+            return 20
+            
+        case .body1:
+            return 24
+            
+        case .body2:
+            return 20
+            
+        case .caption1:
+            return 18
+            
+        case .caption2:
+            return 12
         }
     }
 }
