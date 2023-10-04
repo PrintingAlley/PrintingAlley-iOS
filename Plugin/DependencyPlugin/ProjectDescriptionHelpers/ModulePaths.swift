@@ -24,7 +24,7 @@ extension ModulePaths: MicroTargetPathConvertable {
 
 public extension ModulePaths {
     enum Feature: String, MicroTargetPathConvertable {
-        case MyPageModule
+        case MyPageFeature
         case SignInFeature
         case RootFeature
         case BaseFeature
