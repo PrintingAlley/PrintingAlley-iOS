@@ -3,9 +3,9 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.module(
-    name: ModulePaths.Feature.RooFuture.rawValue,
+    name: ModulePaths.Feature.RootFeature.rawValue,
     targets: [
-        .implements(module: .feature(.RooFuture),dependencies: [
+        .implements(module: .feature(.RootFeature),dependencies: [
             .feature(target: .MyPageModule)
         ])
     ]
