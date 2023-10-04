@@ -1,9 +1,8 @@
 import UIKit
-import GoogleSignIn
 import KakaoSDKAuth
-import RxKakaoSDKAuth
 import UtilityModule
 import NaverThirdPartyLogin
+//import GoogleSignIn
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     
         registerProviderFactories()
         let  root = AppComponent()
-        window?.rootViewController = root.signInFactory.makeView()
+        window?.rootViewController = root.mypageFactory.makeView()
         window?.makeKeyAndVisible()
     }
     
@@ -32,11 +31,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
            .receiveAccessToken(URLContexts.first?.url)
         
         
-        let _ = GIDSignIn.sharedInstance.handle(url)
+//        let _ = GIDSignIn.sharedInstance.handle(url)
         
         if let url = URLContexts.first?.url {
             if (AuthApi.isKakaoTalkLoginUrl(url)) {
-                _ = AuthController.rx.handleOpenUrl(url: url)
+                _ = AuthController.handleOpenUrl(url: url)
             }
         }
     }
