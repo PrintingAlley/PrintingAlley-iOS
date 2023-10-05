@@ -7,7 +7,8 @@ let project = Project.module(
     targets: [
         .interface(module: .core(.Netwrok)),
         .implements(module: .core(.Netwrok), dependencies: [
-            .core(target: .Netwrok, type: .interface)
+            .core(target: .Netwrok, type: .interface),
+            .core(target: .JwtStore,type: .interface)
         ]),
         .testing(module: .core(.Netwrok), dependencies: [
             .core(target: .Netwrok, type: .interface)
