@@ -64,6 +64,8 @@ import JwtStoreInterface
  ]
  
  
+ 
+ 
  키 체인을 다루는 메서드 (Security 프레임워크에 정의)
 
  저장 - SecItemAdd
@@ -84,9 +86,14 @@ final class KeychainJwtStore: JwtStore {
         let query: NSDictionary = [
             kSecAttrService: service,
             kSecAttrAccount: property.rawValue,
-            kSecValueData: value.data(using: .utf8, allowLossyConversion: false) ?? .init(),
+            kSecValueData: value.data(using: .utf8, allowLossyConversion: false) ?? .init(), // allowLossyConversion은 인코딩 과정에서 손실이 되는 것을 허용할 것인지 설정
         ]
+        
+        // 2. Delete
+        // Key Chain은 Key값에 중복이 생기면 저장할 수 없기때문에 먼저 Delete
         SecItemDelete(query)
+        
+        //제거후 저장
         SecItemAdd(query, nil)
     }
 
@@ -95,8 +102,8 @@ final class KeychainJwtStore: JwtStore {
             kSecClass: kSecClassGenericPassword,
            kSecAttrService: service,
            kSecAttrAccount: property.rawValue,
-           kSecReturnData: kCFBooleanTrue!,
-           kSecMatchLimit: kSecMatchLimitOne
+           kSecReturnData: kCFBooleanTrue!, // CFData타입으로 불러오지 말라는 의미
+           kSecMatchLimit: kSecMatchLimitOne // 중복되는 경우 하나의 값만 가져오라는 의미
         ]
         
         var dataTypeRef: AnyObject?
