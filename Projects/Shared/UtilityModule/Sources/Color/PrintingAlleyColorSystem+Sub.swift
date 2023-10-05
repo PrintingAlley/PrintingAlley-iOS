@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DesignSystem
 
 public extension UIColor.AlleyColorSystem {
     enum Sub: PrintingAlleyColorable {

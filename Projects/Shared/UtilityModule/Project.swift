@@ -7,6 +7,7 @@ let project = Project.module(
     targets: [
         .implements(module: .shared(.UtilityModule),dependencies: [
             .SPM.RxSwift,
+            .userInterface(target: .DesignSystem)
         ])
     ]
 )
