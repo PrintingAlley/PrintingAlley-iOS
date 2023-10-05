@@ -7,7 +7,8 @@ let project = Project.module(
     targets: [
         .implements(module: .domain(.BaseDomain), dependencies: [
             .shared(target: .GlobalThirdPartyLibrary),
-            .core(target: .Netwrok)
+            .core(target: .Netwrok),
+            .domain(target: .BaseDomain,type: .interface)
         ]),
         .interface(module: .domain(.BaseDomain)),
         .tests(module: .domain(.BaseDomain), dependencies: [
