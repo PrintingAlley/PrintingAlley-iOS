@@ -37,8 +37,10 @@ public final class CustomLoggingPlugin: PluginType {
     ///// Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
     public func didReceive(_ result: Result<Response, MoyaError>, target: TargetType) {
         switch result {
+            
         case let .success(response):
             onSucceed(response, target: target, isFromError: false)
+            
         case let .failure(error):
             onFail(error, target: target)
         }
