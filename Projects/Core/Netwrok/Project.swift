@@ -10,7 +10,6 @@ let project = Project.module(
             .core(target: .Netwrok, type: .interface),
             .core(target: .JwtStore,type: .interface),
             .shared(target: .GlobalThirdPartyLibrary),
-            .shared(target: .UtilityModule)
         ]),
         .testing(module: .core(.Netwrok), dependencies: [
             .core(target: .Netwrok, type: .interface)
