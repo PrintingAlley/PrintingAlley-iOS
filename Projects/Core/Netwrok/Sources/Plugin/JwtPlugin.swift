@@ -22,6 +22,7 @@ public struct JwtPlugin: PluginType {
         self.jwtStore = jwtStore
     }
 
+    /// 토큰 실어 보낼 준비 
     public func prepare(
         _ request: URLRequest,
         target: TargetType
@@ -35,6 +36,7 @@ public struct JwtPlugin: PluginType {
         return req
     }
 
+    /// 토큰 확인 결과
     public func didReceive(
         _ result: Result<Response, MoyaError>,
         target: TargetType

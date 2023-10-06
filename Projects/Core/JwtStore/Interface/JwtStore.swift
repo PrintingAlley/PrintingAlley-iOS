@@ -86,7 +86,7 @@ import Foundation
 
 
 
-public enum JwtStoreProperties: String {
+public enum JwtStoreProperties: String { // 토큰 종류
     case accessToken = "Authorization"
     case none
     

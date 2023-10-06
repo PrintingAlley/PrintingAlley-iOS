@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UtilityModule
 import Moya
 import JwtStoreInterface
 
@@ -21,7 +20,7 @@ public protocol AlleyAPI: TargetType, JwtAuthorizable {
 
 public extension AlleyAPI {
     var baseURL: URL {
-        URL(string: "BASE")! // TODO: BASE URL로 교체
+        URL(string: BASEURL())!
     }
     
     var path: String {
@@ -39,7 +38,7 @@ public extension AlleyAPI {
 
 public enum AlleyDomain: String {
     
-    case tmp
+    case tmp // TODO: 나중에 도메인 추가
     
 }
 
@@ -48,7 +47,7 @@ extension AlleyDomain {
     var asDomainString: String {
         switch self {
             
-        case .tmp:
+        case .tmp: // TODO: 나중에 도메인 추가 
             return "tmp"
         }
     }
