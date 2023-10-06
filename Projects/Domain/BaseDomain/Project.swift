@@ -6,7 +6,6 @@ let project = Project.module(
     name: ModulePaths.Domain.BaseDomain.rawValue,
     targets: [
         .implements(module: .domain(.BaseDomain), dependencies: [
-            .shared(target: .GlobalThirdPartyLibrary),
             .core(target: .Netwrok),
             .domain(target: .BaseDomain,type: .interface)
         ]),
