@@ -88,6 +88,7 @@ import Foundation
 
 public enum JwtStoreProperties: String {
     case accessToken = "Authorization"
+    case none
     
 }
 
@@ -98,7 +99,7 @@ public protocol JwtStore {
 }
 
 public protocol JwtAuthorizable {
-    var jwtStore: JwtStoreProperties { get }
+    var jwtStoreProperties: JwtStoreProperties { get }
 }
 
 
