@@ -39,6 +39,8 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Core: String, MicroTargetPathConvertable {
+        case JwtStore
+        case Netwrok
         case CoreKit
     }
 }
