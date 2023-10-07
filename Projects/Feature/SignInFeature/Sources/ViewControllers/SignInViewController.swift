@@ -13,6 +13,7 @@ import UtilityModule
 import KakaoSDKCommon
 // import GoogleSignIn
 import RxSwift
+import DesignSystem
 
 public class SignInViewController: UIViewController {
 
@@ -20,9 +21,8 @@ public class SignInViewController: UIViewController {
     var viewModel: SignInViewModel!
     var input: SignInViewModel.Input!
     
-    let versionLabel: UILabel = UILabel().then {
-        $0.text = "버전정보 \(APP_VERSION())"
-        $0.textAlignment = .center
+    let versionLabel: AlleyLabel = AlleyLabel("버전정보 \(APP_VERSION())", textColor: .grey(.grey600), font: .caption1, alignment: .center).then{
+        $0.backgroundColor = .red
     }
     
     let stackView: UIStackView = UIStackView().then {
@@ -75,6 +75,7 @@ extension SignInViewController {
         versionLabel.snp.makeConstraints {
             
             $0.left.right.equalToSuperview().inset(20)
+            $0.top.equalTo(stackView.snp.bottom).offset(8)
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(52)
             
         }
@@ -100,8 +101,7 @@ extension SignInViewController {
         }
         
         stackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalTo(versionLabel.snp.top).offset(-55)
+            $0.horizontalEdges.equalToSuperview().inset(24)
         }
     }
     

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import DesignSystem
 import UIKit
 
 public enum LoginType: Codable {
@@ -20,16 +21,16 @@ public enum LoginType: Codable {
         switch self {
             
         case .kakao:
-            return UIImage(systemName: "house")!
+            return DesignSystemAsset.Logo.kakaoTalk.image
             
         case .naver:
-            return UIImage(systemName: "house")!
+            return DesignSystemAsset.Logo.naver.image
             
         case .google:
-            return UIImage(systemName: "house")!
+            return DesignSystemAsset.Logo.google.image
             
         case .apple:
-            return UIImage(systemName: "house")!
+            return DesignSystemAsset.Logo.apple.image
         }
     }
     
@@ -50,19 +51,10 @@ public enum LoginType: Codable {
         }
     }
     
-    public var color:UIColor {
+    public var color: UIColor {
         switch self {
-        case .kakao:
-            return .yellow
-            
-        case .naver:
-            return .green
-            
-        case .google:
-            return .red
-            
-        case .apple:
-            return .blue
+        default:
+            return .white
         }
     }
     
