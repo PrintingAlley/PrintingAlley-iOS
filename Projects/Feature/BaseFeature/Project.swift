@@ -9,7 +9,6 @@ let project = Project.module(
             .userInterface(target: .DesignSystem),
             .shared(target: .GlobalThirdPartyLibrary),
             .shared(target: .UtilityModule),
-            .domain(target: .BaseDomain)
         ]),
         .tests(module: .feature(.BaseFeature), dependencies: [
             .feature(target: .BaseFeature)
