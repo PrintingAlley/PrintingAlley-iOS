@@ -10,23 +10,23 @@ import UIKit
 import SnapKit
 import Then
 
-protocol ImageButtonDelegate: AnyObject {
+public protocol ImageButtonDelegate: AnyObject {
     
-    func action() -> Void
+    func action()
 }
 
-class ImageButton: UIView {
+public class ImageButton: UIView {
 
-    var button:UIButton = UIButton()
-    var imageView:UIImageView = UIImageView().then{
+    var button: UIButton = UIButton()
+    var imageView: UIImageView = UIImageView().then {
         $0.contentMode = .scaleToFill
     }
     
-    weak var delegate:ImageButtonDelegate?
+    public weak var delegate: ImageButtonDelegate?
     
-    public init(image:UIImage){
+    public init() {
         super.init(frame: .zero)
-        self.addSubviews(button,imageView)
+        self.addSubviews(button, imageView)
         
         makeConstraints()
         self.button.addTarget(self, action: #selector(buttonTap), for: .touchDown)
@@ -40,19 +40,23 @@ class ImageButton: UIView {
 
 extension ImageButton {
     
-    func makeConstraints(){
+    public func setImage(image: UIImage) {
+        self.imageView.image = image
+    }
+    
+    func makeConstraints() {
         
-        button.snp.makeConstraints{
+        button.snp.makeConstraints {
             $0.left.right.top.bottom.equalToSuperview()
         }
         
-        imageView.snp.makeConstraints{
+        imageView.snp.makeConstraints {
             $0.left.right.top.bottom.equalToSuperview()
         }
         
     }
     
-    @objc func buttonTap(){
+    @objc func buttonTap() {
         delegate?.action()
     }
     

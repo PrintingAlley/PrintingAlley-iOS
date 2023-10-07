@@ -10,37 +10,45 @@ import UIKit
 import Then
 import SnapKit
 import UtilityModule
+import DesignSystem
 
 public class MyPageContentViewController: UIViewController {
 
-    var button: UIButton = UIButton().then {
-        $0.setTitle("Click", for: .normal)
-    }
-    
-    var label: UILabel = UILabel()
-    
-    public override func viewDidLoad() {
-        super.viewDidLoad()
+    var profileImage: ImageButton = ImageButton()
 
-        self.view.backgroundColor = .red
-        
-        self.view.addSubview(button)
-        self.view.addSubview(label)
-        
-        button.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        
-        button.addTarget(self, action: #selector(action), for: .touchDown)
-        
-        label.text = PreferenceManager.user?.id
-        label.snp.makeConstraints{
+    public override func viewDidLoad() {
+        self.view.backgroundColor = .blue
+        super.viewDidLoad()
+        addSubViews()
+        preProcessing()
+        makeConstraints()
+
+
+    }
+    
+}
+
+extension MyPageContentViewController {
+    func preProcessing() {
+        self.profileImage.delegate = self
+        self.profileImage.setImage(image: DesignSystemAsset.Icon.profilePlaceHolder.image)
+    }
+    
+    func addSubViews() {
+        self.view.addSubviews(profileImage)
+    }
+    
+    func makeConstraints(){
+        profileImage.snp.makeConstraints {
+            $0.width.height.equalTo(64)
             $0.center.equalToSuperview()
         }
     }
-    
-    @objc func action() {
-        PreferenceManager.user = nil
+}
+
+extension MyPageContentViewController: ImageButtonDelegate {
+    public func action() {
+        DEBUG_LOG("ACT")
     }
     
 }
