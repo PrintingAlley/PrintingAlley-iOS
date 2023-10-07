@@ -73,27 +73,24 @@
 import Foundation
 import KeychainModuleInterface
 
-
 final class DefaultKeychain: Keychain {
     private let service: String = Bundle.main.bundleIdentifier ?? ""
     
-
     func save(key: String, value: String) {
         let query: NSDictionary = [
             kSecAttrService: service,
             kSecAttrAccount: key,
-            kSecValueData: value.data(using: .utf8, allowLossyConversion: false) ?? .init(), // allowLossyConversion은 인코딩 과정에서 손실이 되는 것을 허용할 것인지 설정
+            kSecValueData: value.data(using: .utf8, allowLossyConversion: false) ?? .init() //allowLossyConversion은 인코딩 과정에서 손실이 되는 것을 허용할 것인지 설정
         ]
         
         // 2. Delete
         // Key Chain은 Key값에 중복이 생기면 저장할 수 없기때문에 먼저 Delete
         SecItemDelete(query)
         
-        //제거후 저장
+        // 제거후 저장
         SecItemAdd(query, nil)
     }
     
-
     func load(key: String) -> String {
         let query: NSDictionary = [
             kSecClass: kSecClassGenericPassword,
@@ -112,7 +109,6 @@ final class DefaultKeychain: Keychain {
         return ""
     }
     
-
     func delete(key: String) {
         let query: NSDictionary = [
             kSecClass: kSecClassGenericPassword,
