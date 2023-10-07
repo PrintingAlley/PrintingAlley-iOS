@@ -21,9 +21,7 @@ public class SignInViewController: UIViewController {
     var viewModel: SignInViewModel!
     var input: SignInViewModel.Input!
     
-    let versionLabel: AlleyLabel = AlleyLabel("버전정보 \(APP_VERSION())", textColor: .grey(.grey600), font: .caption1, alignment: .center).then{
-        $0.backgroundColor = .red
-    }
+    let versionLabel: AlleyLabel = AlleyLabel("버전정보 \(APP_VERSION())", textColor: .grey(.grey600), font: .caption1, alignment: .center)
     
     let stackView: UIStackView = UIStackView().then {
         $0.axis = .vertical
@@ -75,7 +73,7 @@ extension SignInViewController {
         versionLabel.snp.makeConstraints {
             
             $0.left.right.equalToSuperview().inset(20)
-            $0.top.equalTo(stackView.snp.bottom).offset(8)
+            $0.top.equalTo(stackView.snp.bottom).offset(18)
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(52)
             
         }
