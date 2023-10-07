@@ -64,13 +64,10 @@ public class SignInViewController: UIViewController {
 extension SignInViewController {
     
     func addSubviews() {
-        self.view.addSubview(versionLabel)
-        self.view.addSubview(stackView)
-        self.stackView.addArrangedSubview(kakaoButton)
-        self.stackView.addArrangedSubview(naverButton)
-        self.stackView.addArrangedSubview(appleButton)
-        self.stackView.addArrangedSubview(googleButton)
         
+        self.view.addSubviews(versionLabel, stackView)
+        self.stackView.addArrangedSubview(kakaoButton, naverButton, appleButton, googleButton)
+
     }
     
     func makeConstraints() {
