@@ -6,4 +6,12 @@
 //  Copyright © 2023 com. All rights reserved.
 //
 
-import Foundation
+import KeychainModuleInterface
+import NeedleFoundation
+
+public final class KeychainComponent: Component<EmptyDependency>, KeychainFactory {
+    public var keychain: any Keychain {
+        DefaultKeychain()
+    }
+}
+
