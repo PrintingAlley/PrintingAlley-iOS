@@ -8,7 +8,8 @@ let project = Project.module(
         .interface(module: .core(.JwtStore)),
         .implements(module: .core(.JwtStore), dependencies: [
             .core(target: .JwtStore, type: .interface),
-            .shared(target: .GlobalThirdPartyLibrary)
+            .shared(target: .GlobalThirdPartyLibrary),
+            .shared(target: .KeychainModule)
         ]),
         .testing(module: .core(.JwtStore), dependencies: [
             .core(target: .JwtStore, type: .interface)

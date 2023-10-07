@@ -47,6 +47,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Shared: String, MicroTargetPathConvertable {
+        case KeychainModule
         case UtilityModule
         case GlobalThirdPartyLibrary
     }
