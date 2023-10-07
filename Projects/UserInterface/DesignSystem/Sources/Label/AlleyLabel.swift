@@ -29,7 +29,7 @@ public final class AlleyLabel: UILabel {
         self.text = title
         self.font = .setFont(font)
         self.textColor = .setColor(textColor)
-        self.setLineSpacing(lineHeightMultiple: font.alleyLineHeight)
+        self.setLineSpacing(lineSpacing: font.alleyLineHeight)
         self.textAlignment = alignment
     }
     

@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 import UtilityModule
+import DesignSystem
 
 public protocol LoginButtonViewDelegate: AnyObject {
     func action(type: LoginType)
@@ -28,7 +29,8 @@ class LoginButtonView: UIView {
     }
     
     var label: UILabel = UILabel().then{
-        $0.backgroundColor = .white
+        $0.font = .setFont(.body1)
+        $0.textColor = .black
     }
     
     init(type: LoginType) {
@@ -61,6 +63,8 @@ extension LoginButtonView {
     func preProcessing() {
 
         self.layer.cornerRadius = 8
+        self.layer.borderWidth = 1
+        self.layer.borderColor = DesignSystemAsset.Grey.grey100.color.cgColor
         
         button.addTarget(self, action: #selector(event), for: .touchDown)
 
@@ -76,13 +80,13 @@ extension LoginButtonView {
         }
         
         label.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(17)
+            $0.top.bottom.equalToSuperview().inset(15)
             $0.centerX.equalToSuperview()
         }
         
         imageView.snp.makeConstraints {
-            $0.width.height.equalTo(20)
-            $0.left.equalToSuperview().inset(20)
+            $0.width.height.equalTo(15)
+            $0.left.equalToSuperview().inset(41)
             $0.centerY.equalTo(label.snp.centerY)
            
         }
