@@ -13,7 +13,7 @@ import MyPageFeatureInterface
 import RxSwift
 import UtilityModule
 
-public class MyPageViewController: UIViewController ,ContainerViewType {
+public class MyPageViewController: UIViewController, ContainerViewType {
     public var contentView: UIView! = UIView()
     
     var siginInFactory: SigninFactory!
@@ -34,7 +34,7 @@ public class MyPageViewController: UIViewController ,ContainerViewType {
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(contentView)
-        contentView.snp.makeConstraints{
+        contentView.snp.makeConstraints {
             $0.left.right.top.bottom.equalToSuperview()
         }
         bind()
