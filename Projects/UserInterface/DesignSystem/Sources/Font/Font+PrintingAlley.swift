@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import DesignSystem
 
 public extension UIFont {
     enum AlleyFontSystem: PrintingAlleyFontable {
