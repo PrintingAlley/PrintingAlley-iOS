@@ -7,15 +7,55 @@
 //
 
 import UIKit
+import SnapKit
+import Then
+
+protocol ImageButtonDelegate: AnyObject {
+    
+    func action() -> Void
+}
 
 class ImageButton: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    var button:UIButton = UIButton()
+    var imageView:UIImageView = UIImageView().then{
+        $0.contentMode = .scaleToFill
     }
-    */
+    
+    weak var delegate:ImageButtonDelegate?
+    
+    public init(image:UIImage){
+        super.init(frame: .zero)
+        self.addSubviews(button,imageView)
+        
+        makeConstraints()
+        self.button.addTarget(self, action: #selector(buttonTap), for: .touchDown)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
 }
+
+extension ImageButton {
+    
+    func makeConstraints(){
+        
+        button.snp.makeConstraints{
+            $0.left.right.top.bottom.equalToSuperview()
+        }
+        
+        imageView.snp.makeConstraints{
+            $0.left.right.top.bottom.equalToSuperview()
+        }
+        
+    }
+    
+    @objc func buttonTap(){
+        delegate?.action()
+    }
+    
+}
+
+
