@@ -30,7 +30,7 @@ class MyPageHeaderView: UIView {
         $0.dataSource = self
         $0.delegate = self
         $0.register(MyPageCollectionViewCell.self, forCellWithReuseIdentifier: MyPageCollectionViewCell.identifer)
-        $0.backgroundColor = .red
+
     }
     
     let headers: [HeaderItemType] = [.notice, .bookMark, .like]
@@ -79,17 +79,14 @@ extension MyPageHeaderView: UICollectionViewDataSource {
         headers.count
     }
     
-
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyPageCollectionViewCell.identifer, for: indexPath) as? MyPageCollectionViewCell else {
             return UICollectionViewCell()
         }
         
-        print(headers[indexPath.row])
         cell.update(type: headers[indexPath.row])
         
-        cell.backgroundColor = .green
         return cell
     }
     
@@ -100,23 +97,27 @@ extension  MyPageHeaderView: UICollectionViewDelegateFlowLayout {
       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
           
           let collectionViewWidth = collectionView.bounds.width
-          let cellItemForRow: CGFloat = 3
-          let minimumSpacing: CGFloat = 2
-
-          let width = (collectionViewWidth - (cellItemForRow - 1) * minimumSpacing) / cellItemForRow
           
-          return CGSize(width: 60, height: 60)
+          let cellItemForRow: CGFloat = CGFloat(headers.count)
+          let spaceCount: CGFloat = cellItemForRow - 1
+
+          let width = collectionViewWidth / (cellItemForRow + spaceCount)
+          
+          return CGSize(width: width, height: width)
       }
     
     // 섹션안에 Item 끼리 간격
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 60
+        let collectionViewWidth = collectionView.bounds.width
+        
+        let cellItemForRow: CGFloat = CGFloat(headers.count)
+        let spaceCount: CGFloat = cellItemForRow - 1
+
+        let width = collectionViewWidth / (cellItemForRow + spaceCount)
+        
+        return width
     }
     
-    // MARK: minimumSpacing
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
       
 
 }

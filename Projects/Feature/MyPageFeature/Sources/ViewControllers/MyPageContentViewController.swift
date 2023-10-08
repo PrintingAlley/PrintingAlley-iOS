@@ -16,7 +16,9 @@ public class MyPageContentViewController: UIViewController {
 
     lazy var profileImage: ImageButton = ImageButton()
     
-    lazy var headerVIew: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80))
+    lazy var headerVIew: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80)).then {
+        $0.deleagte = self
+    }
     
     lazy var tableView: UITableView = UITableView().then {
         $0.register(MyPageCategoryTableViewCell.self, forCellReuseIdentifier: MyPageCategoryTableViewCell.identifier)
@@ -119,4 +121,11 @@ extension MyPageContentViewController: UITableViewDelegate {
         
       
     }
+}
+
+extension MyPageContentViewController:MyPageHeaderViewDelegate {
+    public func headerTap(type: HeaderItemType) {
+        DEBUG_LOG(type)
+    }
+ 
 }
