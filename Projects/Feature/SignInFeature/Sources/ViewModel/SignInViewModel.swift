@@ -71,7 +71,7 @@ final class SignInViewModel: NSObject, ViewModelType {
             
             guard let self else {return}
             
-            PreferenceManager.shared.setUserInfo(id: "A", platform: .apple)
+            PreferenceManager.shared.setUserInfo(id: "A", name: "DEFAULT", platform: .apple)
         })
         
         return output
@@ -139,6 +139,7 @@ extension SignInViewModel: NaverThirdPartyLoginConnectionDelegate {
         guard let accessToken = naverLoginInstance?.isValidAccessTokenExpireTimeNow() else { return }
         if !accessToken { return }
         DEBUG_LOG("NAVER SUCESS")
+        oauthToken.accept(())
         
     }
     
