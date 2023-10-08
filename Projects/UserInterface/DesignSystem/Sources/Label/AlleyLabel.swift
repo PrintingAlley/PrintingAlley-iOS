@@ -7,17 +7,14 @@
 //
 
 import UIKit
-import DesignSystem
 
 public final class AlleyLabel: UILabel {
-    public var padding = UIEdgeInsets.zero
+    public var padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
     override public var intrinsicContentSize: CGSize {
         var contentSize = super.intrinsicContentSize
         contentSize.height += padding.top + padding.bottom
         contentSize.width += padding.left + padding.right
-        print("height:\(contentSize.height)")
-        print("width: \(contentSize.width)")
         
         return contentSize
     }
@@ -29,6 +26,14 @@ public final class AlleyLabel: UILabel {
         alignment: NSTextAlignment = .left
     ) {
         super.init(frame: .zero)
+        self.text = title
+        self.font = .setFont(font)
+        self.textColor = .setColor(textColor)
+        self.setLineSpacing(lineSpacing: font.alleyLineHeight)
+        self.textAlignment = alignment
+    }
+    
+    public func setTitle(title:String, textColor: UIColor.AlleyColorSystem, font: UIFont.AlleyFontSystem, alignment: NSTextAlignment = .left) {
         self.text = title
         self.font = .setFont(font)
         self.textColor = .setColor(textColor)

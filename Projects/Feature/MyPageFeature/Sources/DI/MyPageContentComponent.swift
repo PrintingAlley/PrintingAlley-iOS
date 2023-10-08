@@ -17,6 +17,6 @@ public protocol MyPageContentDependency: Dependency {
 
 public final class MyPageContentComponent: Component<MyPageContentDependency>, MyPageContentFactory {
     public func makeView() -> UIViewController {
-        MyPageContentViewController()
+        MyPageContentViewController(viewModel: MyPageContentViewModel())
     }
 }

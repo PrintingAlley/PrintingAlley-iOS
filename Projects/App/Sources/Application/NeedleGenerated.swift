@@ -1,6 +1,10 @@
 
 
 import Foundation
+import JwtStore
+import JwtStoreInterface
+import KeychainModule
+import KeychainModuleInterface
 import MyPageFeature
 import MyPageFeatureInterface
 import NeedleFoundation
@@ -22,6 +26,19 @@ private func parent1(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Sc
 
 #if !NEEDLE_DYNAMIC
 
+private class JwtStoreDependency5613ee3d4fea5093f6faProvider: JwtStoreDependency {
+    var keychainFactory: any KeychainFactory {
+        return appComponent.keychainFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->JwtStoreComponent
+private func factoryb27d5aae1eb7e73575a6f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return JwtStoreDependency5613ee3d4fea5093f6faProvider(appComponent: parent1(component) as! AppComponent)
+}
 private class MyPageDependency48d84b530313b3ee40feProvider: MyPageDependency {
     var signInFactory: any SigninFactory {
         return appComponent.signInFactory
@@ -73,9 +90,19 @@ private func factoryda2925fd76da866a652ae3b0c44298fc1c149afb(_ component: Needle
 }
 
 #else
+extension JwtStoreComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\JwtStoreDependency.keychainFactory] = "keychainFactory-any KeychainFactory"
+    }
+}
 extension AppComponent: Registration {
     public func registerItems() {
 
+
+    }
+}
+extension KeychainComponent: Registration {
+    public func registerItems() {
 
     }
 }
@@ -116,7 +143,9 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
 #if !NEEDLE_DYNAMIC
 
 @inline(never) private func register1() {
+    registerProviderFactory("^->AppComponent->JwtStoreComponent", factoryb27d5aae1eb7e73575a6f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
+    registerProviderFactory("^->AppComponent->KeychainComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->MyPageComponent", factory0f6f456ebf157d02dfb3f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MyPageContentComponent", factory0dbf0a2ebe9a0bf09f32e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb)

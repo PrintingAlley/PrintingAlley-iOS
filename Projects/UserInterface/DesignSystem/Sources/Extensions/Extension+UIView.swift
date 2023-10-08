@@ -17,7 +17,7 @@ public extension UIView {
       layer.mask = mask
     }
     
-    // use: addSubview([firstView, secondView])
+    // use: addSubview(firstView, secondView)
     func addSubviews(_ views: UIView...) {
         views.forEach { self.addSubview($0) }
     }
