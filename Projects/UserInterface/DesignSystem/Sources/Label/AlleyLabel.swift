@@ -33,6 +33,14 @@ public final class AlleyLabel: UILabel {
         self.textAlignment = alignment
     }
     
+    public func setTitle(title:String, textColor: UIColor.AlleyColorSystem, font: UIFont.AlleyFontSystem, alignment: NSTextAlignment = .left) {
+        self.text = title
+        self.font = .setFont(font)
+        self.textColor = .setColor(textColor)
+        self.setLineSpacing(lineSpacing: font.alleyLineHeight)
+        self.textAlignment = alignment
+    }
+    
     override public func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: padding))
     }
