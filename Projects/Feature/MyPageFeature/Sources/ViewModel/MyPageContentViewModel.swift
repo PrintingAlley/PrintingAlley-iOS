@@ -9,7 +9,7 @@
 import Foundation
 import UtilityModule
 
-public enum MyPageCategory:String {
+public enum MyPageCategory: String {
     case notice = "공지사항"
     case faq = "자주 묻는 질문"
     case request = "1:1 문의하기"
