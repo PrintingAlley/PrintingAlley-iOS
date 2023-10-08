@@ -16,10 +16,9 @@ public class MyPageContentViewController: UIViewController {
 
     lazy var profileImage: ImageButton = ImageButton()
     
-    lazy var profileLabel: AlleyLabel = AlleyLabel().then{
+    lazy var profileLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 0
     }
-    
     
     lazy var headerVIew: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80)).then {
         $0.deleagte = self
@@ -66,7 +65,7 @@ extension MyPageContentViewController {
     }
     
     func addSubViews() {
-        self.view.addSubviews(profileImage, profileLabel ,tableView)
+        self.view.addSubviews(profileImage, profileLabel, tableView)
     }
     
     func makeConstraints() {
@@ -82,7 +81,7 @@ extension MyPageContentViewController {
             $0.centerY.equalTo(profileImage.snp.centerY).offset(-10)
         }
         
-        tableView.snp.makeConstraints{
+        tableView.snp.makeConstraints {
             $0.top.equalTo(profileImage.snp.bottom).offset(40)
             $0.left.right.bottom.equalToSuperview()
         }
@@ -91,7 +90,7 @@ extension MyPageContentViewController {
 }
 
 extension MyPageContentViewController: ImageButtonDelegate {
-    public func action() { //TODO: 프로필 이미지 변경
+    public func action() { // TODO: 프로필 이미지 변경
         DEBUG_LOG("ACT")
     }
     
