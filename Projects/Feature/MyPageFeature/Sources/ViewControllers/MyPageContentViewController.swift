@@ -19,7 +19,8 @@ public class MyPageContentViewController: UIViewController {
         $0.register(MyPageCategoryTableViewCell.self, forCellReuseIdentifier: MyPageCategoryTableViewCell.identifier)
         $0.dataSource = self
         $0.delegate = self
-        $0.separatorStyle = .none
+        $0.separatorStyle = .none // 구분선 제거
+        $0.bounces = false // 오버 스크롤 방지
     }
     
     var viewModel: MyPageContentViewModel!
