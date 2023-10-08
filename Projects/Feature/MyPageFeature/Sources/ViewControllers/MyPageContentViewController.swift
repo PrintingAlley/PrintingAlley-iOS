@@ -15,12 +15,16 @@ import DesignSystem
 public class MyPageContentViewController: UIViewController {
 
     lazy var profileImage: ImageButton = ImageButton()
+    
+    lazy var headerVIew: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80))
+    
     lazy var tableView: UITableView = UITableView().then {
         $0.register(MyPageCategoryTableViewCell.self, forCellReuseIdentifier: MyPageCategoryTableViewCell.identifier)
         $0.dataSource = self
         $0.delegate = self
         $0.separatorStyle = .none // 구분선 제거
         $0.bounces = false // 오버 스크롤 방지
+        $0.tableHeaderView = headerVIew
     }
     
     var viewModel: MyPageContentViewModel!
