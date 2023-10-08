@@ -26,6 +26,7 @@ class MyPageCategoryTableViewCell: UITableViewCell {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             self.contentView.addSubviews(label,arrowImageView)
         
+            makeConstraints()
     }
 
     public required init?(coder: NSCoder) {

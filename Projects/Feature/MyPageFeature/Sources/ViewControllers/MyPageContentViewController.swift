@@ -18,6 +18,8 @@ public class MyPageContentViewController: UIViewController {
     lazy var tableView: UITableView = UITableView().then {
         $0.register(MyPageCategoryTableViewCell.self, forCellReuseIdentifier: MyPageCategoryTableViewCell.identifier)
         $0.dataSource = self
+        $0.delegate = self
+        $0.separatorStyle = .none
     }
     
     var viewModel: MyPageContentViewModel!
@@ -67,7 +69,7 @@ extension MyPageContentViewController {
 }
 
 extension MyPageContentViewController: ImageButtonDelegate {
-    public func action() {
+    public func action() { //TODO: 프로필 이미지 변경
         DEBUG_LOG("ACT")
     }
     
@@ -85,8 +87,31 @@ extension MyPageContentViewController: UITableViewDataSource {
         }
         
         cell.update(category: viewModel.categories[indexPath.row])
+        cell.selectionStyle = .none // 선택 시 색깔 없애기
         
         return cell
     }
     
+}
+
+extension MyPageContentViewController: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch viewModel.categories[indexPath.row] {
+                // TODO: 추후 해당 화면 이동 코드
+//        case .notice:
+//
+//        case .faq:
+//
+//        case .request:
+//
+//        case .service:
+            
+        default:
+            print(viewModel.categories[indexPath.row])
+            
+        }
+        
+      
+    }
 }
