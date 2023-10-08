@@ -50,7 +50,6 @@ extension MyPageCollectionViewCell {
             $0.top.equalToSuperview()
             $0.left.right.equalToSuperview().inset(14)
             $0.bottom.equalTo(label.snp.top).offset(-8)
-            //$0.width.height.equalTo(30)
         }
         
         label.snp.makeConstraints {
