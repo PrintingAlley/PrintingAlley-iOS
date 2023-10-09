@@ -74,8 +74,3 @@ public func NAVER_SECRET() -> String {
     CONFIG()["NAVER_SECRET"] as? String ?? ""
     
 }
-
-public func BASE_URL() -> String {
-    
-    CONFIG()["BASE_URL"] as? String ?? ""
-}

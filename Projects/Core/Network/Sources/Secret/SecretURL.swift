@@ -26,6 +26,6 @@ public func CONFIG() -> [String: Any] {
     #endif
 }
 
-public func BASEURL() -> String {
-    CONFIG()["BASE_URL"] as? String ?? ""
+public func BASE_URL() -> String {
+    return CONFIG()["BASE_URL"] as? String ?? ""
 }
