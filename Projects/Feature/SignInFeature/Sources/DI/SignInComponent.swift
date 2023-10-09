@@ -10,13 +10,15 @@ import Foundation
 import NeedleFoundation
 import SignInFeatureInterface
 import UIKit
+import AuthDomainInterface
 
 public protocol SignInDependency: Dependency {
-
+ 
+    var authDomainFactory: any AuthDomainFactory {get}
 }
 
 public final class SignInComponent: Component<SignInDependency>, SigninFactory {
     public func makeView() -> UIViewController {
-        SignInViewController(viewModel: SignInViewModel())
+        SignInViewController(viewModel: SignInViewModel(testUsecase: dependency.authDomainFactory.testGetUseCase))
     }
 }
