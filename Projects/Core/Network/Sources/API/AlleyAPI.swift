@@ -48,7 +48,7 @@ extension AlleyDomain {
         switch self {
             
         case .tmp: // TODO: 나중에 도메인 추가 
-            return "tmp"
+            return "api-rul"
         }
     }
     

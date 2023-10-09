@@ -8,7 +8,15 @@
 
 import Foundation
 import BaseDomain
+import AuthDomainInterface
+import RxSwift
 
-final class RemoteAuthDataSourceImpl: BaseRemoteDataSource<>, RemoteAuthDataSource {
+final class RemoteAuthDataSourceImpl: BaseRemoteDataSource<AuthAPI>, RemoteAuthDataSource {
+    func fetchTest() -> Single<TestEntity> {
+        request(.testGet)
+            .map(TestDTO.self)
+            .map {$0.toDomain()}
+            
+    }
     
 }

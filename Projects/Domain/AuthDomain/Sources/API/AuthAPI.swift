@@ -66,5 +66,4 @@ extension AuthAPI: AlleyAPI {
         }
     }
     
-    
 }
