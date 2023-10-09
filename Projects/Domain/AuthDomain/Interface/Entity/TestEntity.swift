@@ -9,9 +9,9 @@
 import Foundation
 
 public struct TestEntity {
-    public let message: String
+    public let url: String
     
-    public init(message: String) {
-        self.message = message
+    public init(url: String) {
+        self.url = url
     }
 }

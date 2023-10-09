@@ -10,11 +10,11 @@ import Foundation
 import AuthDomainInterface
 
 public struct TestDTO: Decodable {
-    let message: String
+    let url: String
 }
 
 extension TestDTO {
     func toDomain() -> TestEntity {
-        TestEntity(message: self.message)
+        TestEntity(url: self.url)
     }
 }
