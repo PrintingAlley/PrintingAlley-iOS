@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AuthDomainInterface
 
 public struct TestDTO: Decodable {
     let message: String
