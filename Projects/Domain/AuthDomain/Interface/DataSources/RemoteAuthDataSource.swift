@@ -1,5 +1,5 @@
 //
-//  TestRepository.swift
+//  RemoteAuthDataSource.swift
 //  AuthDomainInterface
 //
 //  Created by yongbeomkwak on 2023/10/09.
@@ -9,6 +9,6 @@
 import Foundation
 import RxSwift
 
-public protocol TestRepository {
+public protocol RemoteAuthDataSource {
     func fetchTest() -> Single<TestEntity>
 }

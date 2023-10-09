@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public func CONFIG() -> [String: Any] {
 
     #if DEV
