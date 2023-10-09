@@ -1,5 +1,7 @@
 
 
+import AuthDomain
+import AuthDomainInterface
 import Foundation
 import JwtStore
 import JwtStoreInterface
@@ -88,6 +90,19 @@ private class SignInDependency5dda0dd015447272446cProvider: SignInDependency {
 private func factoryda2925fd76da866a652ae3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return SignInDependency5dda0dd015447272446cProvider()
 }
+private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
+    var jwtStoreFactory: any JwtStoreFactory {
+        return appComponent.jwtStoreFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->AuthDomainComponent
+private func factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return AuthDomainDependency4518b8977185a5c9ff71Provider(appComponent: parent1(component) as! AppComponent)
+}
 
 #else
 extension JwtStoreComponent: Registration {
@@ -127,6 +142,11 @@ extension SignInComponent: Registration {
 
     }
 }
+extension AuthDomainComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\AuthDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+    }
+}
 
 
 #endif
@@ -150,6 +170,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->MyPageContentComponent", factory0dbf0a2ebe9a0bf09f32e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652ae3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
 }
 #endif
 
