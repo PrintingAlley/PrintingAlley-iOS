@@ -1,5 +1,5 @@
 //
-//  TestEntity.swift
+//  TestGetUseCase.swift
 //  AuthDomainInterface
 //
 //  Created by yongbeomkwak on 2023/10/09.
@@ -7,11 +7,8 @@
 //
 
 import Foundation
+import RxSwift
 
-public struct TestEntity {
-    let message: String
-    
-    init(message: String) {
-        self.message = message
-    }
+public protocol TestGetUseCase {
+    func execute() -> Single<TestEntity>
 }

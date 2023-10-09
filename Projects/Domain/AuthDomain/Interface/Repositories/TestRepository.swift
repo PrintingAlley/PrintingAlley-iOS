@@ -1,5 +1,5 @@
 //
-//  TestEntity.swift
+//  TestRepository.swift
 //  AuthDomainInterface
 //
 //  Created by yongbeomkwak on 2023/10/09.
@@ -7,11 +7,10 @@
 //
 
 import Foundation
+import RxSwift
 
-public struct TestEntity {
-    let message: String
+public protocol TestRepository {
     
-    init(message: String) {
-        self.message = message
-    }
+    func fetchTest() -> Single<TestEntity>
+    
 }

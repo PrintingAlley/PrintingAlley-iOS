@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TestDTO: Decodable {
+public struct TestDTO: Decodable {
     let message: String
 }
 
