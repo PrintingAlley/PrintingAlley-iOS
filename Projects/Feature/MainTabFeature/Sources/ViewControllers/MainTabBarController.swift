@@ -31,8 +31,7 @@ public class MainTabBarController: UITabBarController {
         ]
         return items
     }()
-    
-    
+
     init(myPageFactory: MyPageFactory) {
         self.myPageFactory = myPageFactory
         super.init(nibName: nil, bundle: nil)
@@ -60,7 +59,7 @@ extension MainTabBarController {
     
     private func styleTabBar() {
         let normalAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: UIFont.setFont(.caption2),
+            NSAttributedString.Key.font: UIFont.setFont(.body3),
             NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey700))
         ]
         let selectedAttributes: [NSAttributedString.Key: Any] = [
