@@ -12,11 +12,13 @@ public extension UIFont {
     enum AlleyFontSystem: PrintingAlleyFontable {
         case header1
         case header2
+        case header3
         case subtitle1
         case subtitle2
         case subtitle3
         case body1
         case body2
+        case body3
         case caption1
         case caption2
     }
@@ -40,6 +42,9 @@ public extension UIFont.AlleyFontSystem {
 
         case .header2:
             return UIFont(font: DesignSystemFontFamily.Pretendard.semiBold, size: 24) ?? .init()
+            
+        case .header3:
+            return UIFont(font: DesignSystemFontFamily.Pretendard.medium, size: 22) ?? .init()
 
         case .subtitle1:
             return UIFont(font: DesignSystemFontFamily.Pretendard.semiBold, size: 18) ?? .init()
@@ -55,6 +60,9 @@ public extension UIFont.AlleyFontSystem {
 
         case .body2:
             return UIFont(font: DesignSystemFontFamily.Pretendard.regular, size: 14) ?? .init()
+        
+        case .body3:
+            return UIFont(font: DesignSystemFontFamily.Pretendard.medium, size: 10) ?? .init()
 
         case .caption1:
             return UIFont(font: DesignSystemFontFamily.Pretendard.regular, size: 12) ?? .init()
@@ -72,6 +80,9 @@ public extension UIFont.AlleyFontSystem {
         case .header2:
             return 32
             
+        case .header3:
+            return 32
+            
         case .subtitle1:
             return 24
             
@@ -86,6 +97,9 @@ public extension UIFont.AlleyFontSystem {
             
         case .body2:
             return 20
+            
+        case .body3:
+            return 12
             
         case .caption1:
             return 18
