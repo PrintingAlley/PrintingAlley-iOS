@@ -7,6 +7,7 @@ let project = Project.module(
     targets: [
         .implements(module: .feature(.RootFeature),dependencies: [
             .feature(target: .MyPageFeature),
+            .feature(target: .NearByMe)
         ])
     ]
 )
