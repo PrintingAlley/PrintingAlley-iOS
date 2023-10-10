@@ -8,15 +8,16 @@
 
 import UIKit
 import MyPageFeatureInterface
+import DesignSystem
 
 public class MainTabBarController: UITabBarController {
     private var myPageFactory: any MyPageFactory
-    // 폰트 및 이미지 적용
+    // 탭바 이미지 적용 필요
     private let tabBarItems: [UITabBarItem] = {
         let items = [
-        UITabBarItem(title: "홈", image: UIImage(systemName: "home"), selectedImage: UIImage(systemName: "heart")),
-        UITabBarItem(title: "내 주변", image: UIImage(systemName: "home"), selectedImage: UIImage(systemName: "heart")),
-        UITabBarItem(title: "MY", image: UIImage(systemName: "home"), selectedImage: UIImage(systemName: "heart"))
+        UITabBarItem(title: "홈", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill")),
+        UITabBarItem(title: "내 주변", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill")),
+        UITabBarItem(title: "MY", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill"))
         ]
         return items
     }()
@@ -43,6 +44,7 @@ public class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         self.tabBar.backgroundColor = .brown
         configureUI()
+        styleTabBar()
     }
 }
 
@@ -51,7 +53,25 @@ extension MainTabBarController {
         for (index, item) in tabBarItems.enumerated() {
             tabbarControllers[index].tabBarItem = item
         }
-        
         setViewControllers(tabbarControllers, animated: true)
+    }
+    
+    private func styleTabBar() {
+        let normalAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: UIFont.setFont(.caption2),
+            NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey700))
+        ]
+        let selectedAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.setColor(.mainBlue(.blue500))
+        ]
+        self.tabBar.backgroundColor = .setColor(.sub(.white))
+        self.tabBar.layer.borderColor = UIColor.setColor(.grey(.grey100)).cgColor
+        self.tabBar.layer.borderWidth = 1.0
+        for item in tabBarItems {
+            item.setTitleTextAttributes(normalAttributes, for: .normal)
+            item.setTitleTextAttributes(selectedAttributes, for: .selected)
+            item.imageInsets = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
+            item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 2)
+        }
     }
 }
