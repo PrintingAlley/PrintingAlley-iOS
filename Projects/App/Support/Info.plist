@@ -63,6 +63,8 @@
 		<string>$(NAVER_CLIENT_ID)</string>
 		<key>NAVER_SECRET</key>
 		<string>$(NAVER_SECRET)</string>
+		<key>BASE_URL</key>
+		<string>$(BASE_URL)</string>
 	</dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
@@ -84,6 +86,8 @@
 		<string>$(NAVER_CLIENT_ID)</string>
 		<key>NAVER_SECRET</key>
 		<string>$(NAVER_SECRET)</string>
+		<key>BASE_URL</key>
+		<string>$(BASE_URL)</string>
 	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

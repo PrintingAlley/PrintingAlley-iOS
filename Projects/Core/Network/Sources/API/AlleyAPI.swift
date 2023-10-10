@@ -1,6 +1,6 @@
 //
 //  BaseAPI.swift
-//  Netwrok
+//  Network
 //
 //  Created by yongbeomkwak on 2023/10/06.
 //  Copyright © 2023 com. All rights reserved.
@@ -20,7 +20,7 @@ public protocol AlleyAPI: TargetType, JwtAuthorizable {
 
 public extension AlleyAPI {
     var baseURL: URL {
-        URL(string: BASEURL())!
+        URL(string: BASE_URL())!
     }
     
     var path: String {
@@ -48,7 +48,7 @@ extension AlleyDomain {
         switch self {
             
         case .tmp: // TODO: 나중에 도메인 추가 
-            return "tmp"
+            return "api-url"
         }
     }
     

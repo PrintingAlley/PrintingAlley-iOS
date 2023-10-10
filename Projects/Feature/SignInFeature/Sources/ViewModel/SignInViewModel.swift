@@ -14,13 +14,28 @@ import NaverThirdPartyLogin
 import AuthenticationServices
 import KakaoSDKUser
 import KakaoSDKAuth
-    
+import AuthDomainInterface
+
 
 final class SignInViewModel: NSObject, ViewModelType {
 
     let disposeBag = DisposeBag()
     let naverLoginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
     let oauthToken: PublishRelay<Void> = PublishRelay()
+    
+    var testUsecase: any TestGetUseCase
+    
+    init(testUsecase: any TestGetUseCase) {
+        self.testUsecase = testUsecase
+        
+        
+        self.testUsecase.execute()
+            .asObservable()
+            .subscribe(onNext: {
+                DEBUG_LOG($0)
+            })
+            .disposed(by: disposeBag)
+    }
     
     
     struct Input {
