@@ -11,6 +11,8 @@ import Then
 import SnapKit
 import UtilityModule
 import DesignSystem
+import MessageUI // import For MailSystem
+
 
 public class MyPageContentViewController: UIViewController {
 
@@ -87,14 +89,26 @@ extension MyPageContentViewController {
         }
         
     }
+    
+    func showMail() {
+        if MFMailComposeViewController.canSendMail() {
+            
+            let preBody:String = "\n\n닉네임: 익명의 제보자\n앱 버전: \(APP_VERSION())\nOS: \(OS_NAME()) \(OS_VERSION())"
+            
+            let composeVC = MFMailComposeViewController()
+            composeVC.mailComposeDelegate = self
+            composeVC.setToRecipients(["printingstreet.cmyk.gmail.com"])
+            composeVC.setSubject("인쇄골목 문의드립니다")
+            composeVC.setMessageBody(preBody, isHTML: false)
+            self.present(composeVC, animated: true)
+        }
+        else {
+            DEBUG_LOG("메일 계정이 설정되어 있지 않습니다.\n설정 > Mail 앱 > 계정을 설정해주세요.")
+        }
+        
+    }
 }
 
-extension MyPageContentViewController: ImageButtonDelegate {
-    public func action() { // TODO: 프로필 이미지 변경
-        DEBUG_LOG("ACT")
-    }
-    
-}
 
 extension MyPageContentViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -124,7 +138,8 @@ extension MyPageContentViewController: UITableViewDelegate {
 //
 //        case .faq:
 //
-//        case .request:
+        case .request:
+            showMail()
 //
 //        case .service:
             
@@ -141,4 +156,22 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
         DEBUG_LOG(type)
     }
  
+}
+
+extension MyPageContentViewController: ImageButtonDelegate {
+    public func action() { // TODO: 프로필 이미지 변경
+        DEBUG_LOG("ACT")
+    }
+    
+}
+
+extension MyPageContentViewController : MFMailComposeViewControllerDelegate {
+    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true) {
+            if let error = error {
+                DEBUG_LOG(error.localizedDescription)
+            }
+            
+        }
+    }
 }
