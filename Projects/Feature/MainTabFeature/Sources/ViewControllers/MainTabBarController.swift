@@ -7,13 +7,24 @@
 //
 
 import UIKit
+import MyPageFeatureInterface
 
 public class MainTabBarController: UITabBarController {
-
+    private let myPageFactory: any MyPageFactory
+    
+    init(myPageFactory: MyPageFactory) {
+        self.myPageFactory = myPageFactory
+    }
+    
+    private lazy var tabbarControllers: [UIViewController] = {
+        let viewControllers = [
+            myPageFactory.makeView() // ??
+        ]
+        return viewControllers
+    }()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setViewControllers(tabbarControllers, animated: true)
     }
 }
