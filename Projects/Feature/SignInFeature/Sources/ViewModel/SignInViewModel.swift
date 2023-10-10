@@ -28,7 +28,6 @@ final class SignInViewModel: NSObject, ViewModelType {
     init(testUsecase: any TestGetUseCase) {
         self.testUsecase = testUsecase
         
-        
         self.testUsecase.execute()
             .asObservable()
             .subscribe(onNext: {
@@ -36,7 +35,6 @@ final class SignInViewModel: NSObject, ViewModelType {
             })
             .disposed(by: disposeBag)
     }
-    
     
     struct Input {
         let tapLoginButton: PublishRelay<LoginType> = .init()
@@ -153,7 +151,8 @@ extension SignInViewModel: NaverThirdPartyLoginConnectionDelegate {
         
         guard let accessToken = naverLoginInstance?.isValidAccessTokenExpireTimeNow() else { return }
         if !accessToken { return }
-        DEBUG_LOG("NAVER SUCESS")
+        guard let accessToken = naverLoginInstance?.accessToken else { return }
+        DEBUG_LOG("NAVER SUCESS \(accessToken)")
         oauthToken.accept(())
         
     }
@@ -162,7 +161,8 @@ extension SignInViewModel: NaverThirdPartyLoginConnectionDelegate {
     func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
         guard let accessToken = naverLoginInstance?.isValidAccessTokenExpireTimeNow() else { return }
         if !accessToken { return }
-        DEBUG_LOG("NAVER SUCESS2 ")
+        guard let accessToken = naverLoginInstance?.accessToken else { return }
+        DEBUG_LOG("NAVER SUCESS2 \(accessToken) ")
         
         oauthToken.accept(())
     }
