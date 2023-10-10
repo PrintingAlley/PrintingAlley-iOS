@@ -34,6 +34,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Domain: String, MicroTargetPathConvertable {
+        case AuthDomain
         case BaseDomain
     }
 }
@@ -41,7 +42,7 @@ public extension ModulePaths {
 public extension ModulePaths {
     enum Core: String, MicroTargetPathConvertable {
         case JwtStore
-        case Netwrok
+        case Network
         case CoreKit
     }
 }

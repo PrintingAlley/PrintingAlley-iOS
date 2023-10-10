@@ -6,7 +6,7 @@ let project = Project.module(
     name: ModulePaths.Feature.RootFeature.rawValue,
     targets: [
         .implements(module: .feature(.RootFeature),dependencies: [
-            .feature(target: .MainTabFeature)
+            .feature(target: .MyPageFeature),
         ])
     ]
 )
