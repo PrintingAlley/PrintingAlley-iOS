@@ -10,9 +10,6 @@ let project = Project.module(
             .feature(target: .MainTabFeature, type: .interface),
             .feature(target: .MyPageFeature, type: .interface)
         ]),
-        .testing(module: .feature(.MainTabFeature), dependencies: [
-            .feature(target: .MainTabFeature, type: .interface)
-        ]),
         .demo(module: .feature(.MainTabFeature), dependencies: [
             .feature(target: .MainTabFeature)
         ])
