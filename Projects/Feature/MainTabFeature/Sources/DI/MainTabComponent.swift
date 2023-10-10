@@ -13,11 +13,11 @@ import MainTabFeatureInterface
 import MyPageFeatureInterface
 
 public protocol MainTabDependency: Dependency {
-    var myPageFactory: any MyPageFactory { get }
+    var mypageFactory: any MyPageFactory { get }
 }
 
 public final class MainTabComponent: Component<MainTabDependency>, MainTabFactory {
     public func makeView() -> UIViewController {
-        MainTabBarController(myPageFactory: self.myPageFactory)
+        MainTabBarController(myPageFactory: dependency.mypageFactory)
     }
 }
