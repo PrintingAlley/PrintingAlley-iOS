@@ -5,6 +5,7 @@ import JwtStore
 import JwtStoreInterface
 import KeychainModule
 import KeychainModuleInterface
+import MainTabFeatureInterface
 import MyPageFeature
 import MyPageFeatureInterface
 import NeedleFoundation

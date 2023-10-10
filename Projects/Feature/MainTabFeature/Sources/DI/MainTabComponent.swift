@@ -18,6 +18,6 @@ public protocol MainTabDependency: Dependency {
 
 public final class MainTabComponent: Component<MainTabDependency>, MainTabFactory {
     public func makeView() -> UIViewController {
-        MainTabBarController()
+        MainTabBarController(myPageFactory: self.myPageFactory)
     }
 }

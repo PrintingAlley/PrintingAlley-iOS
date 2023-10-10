@@ -10,15 +10,20 @@ import UIKit
 import MyPageFeatureInterface
 
 public class MainTabBarController: UITabBarController {
-    private let myPageFactory: any MyPageFactory
+    private var myPageFactory: any MyPageFactory
     
     init(myPageFactory: MyPageFactory) {
         self.myPageFactory = myPageFactory
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private lazy var tabbarControllers: [UIViewController] = {
         let viewControllers = [
-            myPageFactory.makeView() // ??
+            myPageFactory.makeView() // viewController 반환
         ]
         return viewControllers
     }()
