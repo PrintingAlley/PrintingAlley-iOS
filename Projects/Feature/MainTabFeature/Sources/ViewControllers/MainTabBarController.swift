@@ -30,6 +30,7 @@ public class MainTabBarController: UITabBarController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBar.backgroundColor = .brown
         setViewControllers(tabbarControllers, animated: true)
     }
 }
