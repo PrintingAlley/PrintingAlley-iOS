@@ -13,6 +13,16 @@ import DesignSystem
 public class MainTabBarController: UITabBarController {
     private var myPageFactory: any MyPageFactory
     // 탭바 이미지 적용 필요
+
+    private lazy var tabbarControllers: [UIViewController] = {
+        let viewControllers = [
+            myPageFactory.makeView(),
+            myPageFactory.makeView(),
+            myPageFactory.makeView()
+        ]
+        return viewControllers
+    }()
+    
     private let tabBarItems: [UITabBarItem] = {
         let items = [
         UITabBarItem(title: "홈", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill")),
@@ -22,14 +32,6 @@ public class MainTabBarController: UITabBarController {
         return items
     }()
     
-    private lazy var tabbarControllers: [UIViewController] = {
-        let viewControllers = [
-            myPageFactory.makeView(),
-            myPageFactory.makeView(),
-            myPageFactory.makeView()
-        ]
-        return viewControllers
-    }()
     
     init(myPageFactory: MyPageFactory) {
         self.myPageFactory = myPageFactory
