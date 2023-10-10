@@ -27,12 +27,11 @@ public class MainTabBarController: UITabBarController {
         let items = [
         UITabBarItem(title: "홈", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill")),
         UITabBarItem(title: "내 주변", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill")),
-        UITabBarItem(title: "MY", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill"))
+        UITabBarItem(title: "나의 골목", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill"))
         ]
         return items
     }()
-    
-    
+
     init(myPageFactory: MyPageFactory) {
         self.myPageFactory = myPageFactory
         super.init(nibName: nil, bundle: nil)
@@ -60,7 +59,7 @@ extension MainTabBarController {
     
     private func styleTabBar() {
         let normalAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: UIFont.setFont(.caption2),
+            NSAttributedString.Key.font: UIFont.setFont(.body3),
             NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey700))
         ]
         let selectedAttributes: [NSAttributedString.Key: Any] = [
