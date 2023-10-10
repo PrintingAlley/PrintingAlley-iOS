@@ -27,7 +27,7 @@ public class MainTabBarController: UITabBarController {
         let items = [
         UITabBarItem(title: "홈", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill")),
         UITabBarItem(title: "내 주변", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill")),
-        UITabBarItem(title: "MY", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill"))
+        UITabBarItem(title: "나의 골목", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill"))
         ]
         return items
     }()
