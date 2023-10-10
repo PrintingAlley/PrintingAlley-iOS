@@ -28,7 +28,6 @@ final class SignInViewModel: NSObject, ViewModelType {
     init(testUsecase: any TestGetUseCase) {
         self.testUsecase = testUsecase
         
-        
         self.testUsecase.execute()
             .asObservable()
             .subscribe(onNext: {
@@ -36,7 +35,6 @@ final class SignInViewModel: NSObject, ViewModelType {
             })
             .disposed(by: disposeBag)
     }
-    
     
     struct Input {
         let tapLoginButton: PublishRelay<LoginType> = .init()
