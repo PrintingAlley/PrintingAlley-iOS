@@ -17,6 +17,6 @@ public protocol HomeDependency: Dependency {
 
 public final class HomeComponent: Component<HomeDependency>, HomeFactory {
     public func makeView() -> UIViewController {
-        HomeViewController()
+        HomeViewController(viewModel: HomeViewModel())
     }
 }
