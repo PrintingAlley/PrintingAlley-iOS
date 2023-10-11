@@ -31,6 +31,7 @@ let targets: [Target] = [
         dependencies: [
             .feature(target: .RootFeature),
             .feature(target: .MyPageFeature),
+            .feature(target: .HomeFeature),
             .domain(target: .AuthDomain), // TODO: 임시 디펜던시
             .core(target: .JwtStore)
         ],
