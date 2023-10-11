@@ -9,6 +9,8 @@ import KeychainModule
 import KeychainModuleInterface
 import MyPageFeature
 import MyPageFeatureInterface
+import NearByMeFeature
+import NearByMeFeatureInterface
 import NeedleFoundation
 import RootFeature
 import SignInFeature
@@ -92,6 +94,17 @@ private class SignInDependency5dda0dd015447272446cProvider: SignInDependency {
 private func factoryda2925fd76da866a652af47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return SignInDependency5dda0dd015447272446cProvider(appComponent: parent1(component) as! AppComponent)
 }
+private class NearByMeDependencyfb289c9eb0cc94c83621Provider: NearByMeDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->NearByMeComponent
+private func factory53f303ca6b0d301565d8e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return NearByMeDependencyfb289c9eb0cc94c83621Provider()
+}
 private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
@@ -144,6 +157,11 @@ extension SignInComponent: Registration {
         keyPathToName[\SignInDependency.authDomainFactory] = "authDomainFactory-any AuthDomainFactory"
     }
 }
+extension NearByMeComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension AuthDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\AuthDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
@@ -172,6 +190,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->MyPageContentComponent", factory0dbf0a2ebe9a0bf09f32e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652af47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->NearByMeComponent", factory53f303ca6b0d301565d8e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
 }
 #endif

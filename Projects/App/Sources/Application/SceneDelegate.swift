@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     
         registerProviderFactories()
         let  root = AppComponent()
-        window?.rootViewController = root.mypageFactory.makeView()
+        window?.rootViewController = root.nearByMeFactory.makeView()
         window?.makeKeyAndVisible()
     }
     
