@@ -20,6 +20,7 @@ let project = Project.module(
             .SPM.RxSwift,
             .SPM.RxCocoa,
             .SPM.RxRelay,
+            .SPM.NaverMap
         ])
     ]
 )

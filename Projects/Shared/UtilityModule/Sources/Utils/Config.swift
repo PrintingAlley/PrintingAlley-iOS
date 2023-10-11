@@ -74,3 +74,9 @@ public func NAVER_SECRET() -> String {
     CONFIG()["NAVER_SECRET"] as? String ?? ""
     
 }
+
+public func NAVER_MAP_CLIENT_ID() -> String {
+    
+    CONFIG()["NAVER_MAP_CLIENT_ID"] as? String ?? ""
+    
+}

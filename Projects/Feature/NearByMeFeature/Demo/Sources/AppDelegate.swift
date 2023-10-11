@@ -8,8 +8,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
+        
+        
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = APISampleBaseViewController()
+        let viewController = UIViewController()
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 
