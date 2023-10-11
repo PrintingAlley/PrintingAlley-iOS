@@ -8,7 +8,7 @@ let project = Project.module(
         .interface(module: .feature(.NearByMeFeature),dependencies: [
             .feature(target: .BaseFeature, type: .interface)
         ]),
-        .implements(module: .feature(.NearByMeFeature), dependencies: [
+        .implements(module: .feature(.NearByMeFeature) , dependencies: [
             .feature(target: .NearByMeFeature, type: .interface),
             .feature(target: .BaseFeature)
         ]),
