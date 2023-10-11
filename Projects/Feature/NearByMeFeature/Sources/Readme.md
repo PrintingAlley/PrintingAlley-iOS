@@ -42,6 +42,10 @@
 
 ```
 
+### 3. 위치 추적 모드
+- info.plist 
+    - Privacy - Location When In Use Usage Description 설정
+
 ### 3. NMGLatLng
 - NMGLatLng는 하나의 위경도 좌표를 나타내는 클래스입니다. 
 - latNMGLatLng(py)lat) 속성이 위도를, lngNMGLatLng(py)lng) 속성이 경도를 나타냅니다. 
