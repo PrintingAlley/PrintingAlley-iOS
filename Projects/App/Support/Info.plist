@@ -57,8 +57,8 @@
 	<dict>
 		<key>GOOGLE_CLIENT_ID</key>
 		<string>$(GOOGLE_CLIENT_ID)</string>
-		<key>KAKAO_NATIVE_KEY</key>
-		<string>$(KAKAO_NATIVE_KEY)</string>
+		<key>KAKAO_APP_KEY</key>
+		<string>$(KAKAO_APP_KEY)</string>
 		<key>NAVER_CLIENT_ID</key>
 		<string>$(NAVER_CLIENT_ID)</string>
 		<key>NAVER_SECRET</key>
@@ -80,8 +80,8 @@
 	<dict>
 		<key>GOOGLE_CLIENT_ID</key>
 		<string>$(GOOGLE_CLIENT_ID)</string>
-		<key>KAKAO_NATIVE_KEY</key>
-		<string>$(KAKAO_NATIVE_KEY)</string>
+		<key>KAKAO_APP_KEY</key>
+		<string>$(KAKAO_APP_KEY)</string>
 		<key>NAVER_CLIENT_ID</key>
 		<string>$(NAVER_CLIENT_ID)</string>
 		<key>NAVER_SECRET</key>

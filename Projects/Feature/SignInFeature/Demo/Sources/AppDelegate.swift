@@ -15,7 +15,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 
-        KakaoSDK.initSDK(appKey: KAKAO_NATIVE_KEY() )
+        KakaoSDK.initSDK(appKey: KAKAO_APP_KEY() )
         
         return true
     }

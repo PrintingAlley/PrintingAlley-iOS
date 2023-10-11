@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-        KakaoSDK.initSDK(appKey: KAKAO_NATIVE_KEY() )
+        KakaoSDK.initSDK(appKey: KAKAO_APP_KEY() )
         
         // configure NaverThirdPartyLoginConnection
         let naverInstance = NaverThirdPartyLoginConnection.getSharedInstance()

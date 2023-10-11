@@ -57,9 +57,9 @@ public func GOOGLE_CLIENT_ID() -> String {
     
 }
 
-public func KAKAO_NATIVE_KEY() -> String {
+public func KAKAO_APP_KEY() -> String {
     
-    CONFIG()["KAKAO_NATIVE_KEY"] as? String ?? ""
+    CONFIG()["KAKAO_APP_KEY"] as? String ?? ""
     
 }
   
