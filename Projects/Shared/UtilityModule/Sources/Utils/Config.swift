@@ -57,9 +57,9 @@ public func GOOGLE_CLIENT_ID() -> String {
     
 }
 
-public func KAKAO_NATIVE_KEY() -> String {
+public func KAKAO_APP_KEY() -> String {
     
-    CONFIG()["KAKAO_NATIVE_KEY"] as? String ?? ""
+    CONFIG()["KAKAO_APP_KEY"] as? String ?? ""
     
 }
   
@@ -72,5 +72,11 @@ public func NAVER_CLIENT_ID() -> String {
 public func NAVER_SECRET() -> String {
     
     CONFIG()["NAVER_SECRET"] as? String ?? ""
+    
+}
+
+public func NAVER_MAP_CLIENT_ID() -> String {
+    
+    CONFIG()["NAVER_MAP_CLIENT_ID"] as? String ?? ""
     
 }
