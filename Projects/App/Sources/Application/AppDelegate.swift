@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         KakaoSDK.initSDK(appKey: KAKAO_APP_KEY())
-        NMFAuthManager.shared().clientId = NAVER_CLIENT_ID()
+        NMFAuthManager.shared().clientId = NAVER_MAP_CLIENT_ID()
         
         // configure NaverThirdPartyLoginConnection
         let naverInstance = NaverThirdPartyLoginConnection.getSharedInstance()
