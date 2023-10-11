@@ -17,7 +17,7 @@ public final class PreferenceManager {
     /// UserDefaults에 저장 된 데이터에 접근하기 위한 키 값의 나열.
     enum Constants: String {
         case user
-     
+        case startPage // 시작 페이지 (탭)
     }
     
     @UserDefaultWrapper(key: Constants.user.rawValue, defaultValue: nil)

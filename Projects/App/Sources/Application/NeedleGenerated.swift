@@ -7,6 +7,8 @@ import JwtStore
 import JwtStoreInterface
 import KeychainModule
 import KeychainModuleInterface
+import MainTabFeature
+import MainTabFeatureInterface
 import MyPageFeature
 import MyPageFeatureInterface
 import NearByMeFeature
@@ -42,6 +44,19 @@ private class JwtStoreDependency5613ee3d4fea5093f6faProvider: JwtStoreDependency
 /// ^->AppComponent->JwtStoreComponent
 private func factoryb27d5aae1eb7e73575a6f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return JwtStoreDependency5613ee3d4fea5093f6faProvider(appComponent: parent1(component) as! AppComponent)
+}
+private class MainTabDependency2826cdb310ed0b17a725Provider: MainTabDependency {
+    var mypageFactory: any MyPageFactory {
+        return appComponent.mypageFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->MainTabComponent
+private func factory1ab5a747ddf21e1393f9f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return MainTabDependency2826cdb310ed0b17a725Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class MyPageDependency48d84b530313b3ee40feProvider: MyPageDependency {
     var signInFactory: any SigninFactory {
@@ -136,6 +151,11 @@ extension KeychainComponent: Registration {
 
     }
 }
+extension MainTabComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\MainTabDependency.mypageFactory] = "mypageFactory-any MyPageFactory"
+    }
+}
 extension MyPageComponent: Registration {
     public func registerItems() {
         keyPathToName[\MyPageDependency.signInFactory] = "signInFactory-any SigninFactory"
@@ -186,6 +206,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->JwtStoreComponent", factoryb27d5aae1eb7e73575a6f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->KeychainComponent", factoryEmptyDependencyProvider)
+    registerProviderFactory("^->AppComponent->MainTabComponent", factory1ab5a747ddf21e1393f9f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MyPageComponent", factory0f6f456ebf157d02dfb3f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MyPageContentComponent", factory0dbf0a2ebe9a0bf09f32e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb)
