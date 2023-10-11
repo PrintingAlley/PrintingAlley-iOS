@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>사용자의 위치를 사용하도록 허용하겠습니까?</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -57,14 +59,16 @@
 	<dict>
 		<key>GOOGLE_CLIENT_ID</key>
 		<string>$(GOOGLE_CLIENT_ID)</string>
-		<key>KAKAO_NATIVE_KEY</key>
-		<string>$(KAKAO_NATIVE_KEY)</string>
+		<key>KAKAO_APP_KEY</key>
+		<string>$(KAKAO_APP_KEY)</string>
 		<key>NAVER_CLIENT_ID</key>
 		<string>$(NAVER_CLIENT_ID)</string>
 		<key>NAVER_SECRET</key>
 		<string>$(NAVER_SECRET)</string>
 		<key>BASE_URL</key>
 		<string>$(BASE_URL)</string>
+		<key>NAVER_MAP_CLIENT_ID</key>
+		<string>$(NAVER_MAP_CLIENT_ID)</string>
 	</dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
@@ -80,14 +84,16 @@
 	<dict>
 		<key>GOOGLE_CLIENT_ID</key>
 		<string>$(GOOGLE_CLIENT_ID)</string>
-		<key>KAKAO_NATIVE_KEY</key>
-		<string>$(KAKAO_NATIVE_KEY)</string>
+		<key>KAKAO_APP_KEY</key>
+		<string>$(KAKAO_APP_KEY)</string>
 		<key>NAVER_CLIENT_ID</key>
 		<string>$(NAVER_CLIENT_ID)</string>
 		<key>NAVER_SECRET</key>
 		<string>$(NAVER_SECRET)</string>
 		<key>BASE_URL</key>
 		<string>$(BASE_URL)</string>
+		<key>NAVER_MAP_CLIENT_ID</key>
+		<string>$(NAVER_MAP_CLIENT_ID)</string>
 	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

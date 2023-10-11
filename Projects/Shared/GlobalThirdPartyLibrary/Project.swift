@@ -19,7 +19,8 @@ let project = Project.module(
             .SPM.Kingfisher,
             .SPM.RxSwift,
             .SPM.RxCocoa,
-            .SPM.RxRelay
+            .SPM.RxRelay,
+            .SPM.NaverMap
         ])
     ]
 )
