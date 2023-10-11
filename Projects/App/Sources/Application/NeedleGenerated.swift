@@ -3,6 +3,8 @@
 import AuthDomain
 import AuthDomainInterface
 import Foundation
+import HomeFeature
+import HomeFeatureInterface
 import JwtStore
 import JwtStoreInterface
 import KeychainModule
@@ -46,6 +48,9 @@ private func factoryb27d5aae1eb7e73575a6f47b58f8f304c97af4d5(_ component: Needle
 private class MainTabDependency2826cdb310ed0b17a725Provider: MainTabDependency {
     var mypageFactory: any MyPageFactory {
         return appComponent.mypageFactory
+    }
+    var homeFactory: any HomeFactory {
+        return appComponent.homeFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -107,6 +112,19 @@ private class SignInDependency5dda0dd015447272446cProvider: SignInDependency {
 private func factoryda2925fd76da866a652af47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return SignInDependency5dda0dd015447272446cProvider(appComponent: parent1(component) as! AppComponent)
 }
+private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
+    var homeFactory: any HomeFactory {
+        return appComponent.homeFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->HomeComponent
+private func factory67229cdf0f755562b2b1f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return HomeDependency443c4e1871277bd8432aProvider(appComponent: parent1(component) as! AppComponent)
+}
 private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
@@ -141,6 +159,7 @@ extension KeychainComponent: Registration {
 extension MainTabComponent: Registration {
     public func registerItems() {
         keyPathToName[\MainTabDependency.mypageFactory] = "mypageFactory-any MyPageFactory"
+        keyPathToName[\MainTabDependency.homeFactory] = "homeFactory-any HomeFactory"
     }
 }
 extension MyPageComponent: Registration {
@@ -162,6 +181,11 @@ extension RootComponent: Registration {
 extension SignInComponent: Registration {
     public func registerItems() {
         keyPathToName[\SignInDependency.authDomainFactory] = "authDomainFactory-any AuthDomainFactory"
+    }
+}
+extension HomeComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\HomeDependency.homeFactory] = "homeFactory-any HomeFactory"
     }
 }
 extension AuthDomainComponent: Registration {
@@ -193,6 +217,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->MyPageContentComponent", factory0dbf0a2ebe9a0bf09f32e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652af47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
 }
 #endif
