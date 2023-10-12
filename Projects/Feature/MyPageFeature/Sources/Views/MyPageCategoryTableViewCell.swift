@@ -16,10 +16,10 @@ class MyPageCategoryTableViewCell: UITableViewCell {
     static let identifier:String = "MyPageCategoryTableViewCell"
     
     lazy var label: AlleyLabel = AlleyLabel()
-    lazy var arrowImageView:UIImageView = UIImageView().then {
+    lazy var arrowImageView: UIImageView = UIImageView().then {
         $0.contentMode = .scaleToFill
 
-        $0.image = UIImage(systemName: "chevron.right")?.withTintColor(.setColor(.grey(.grey1000)), renderingMode: .alwaysTemplate)
+        $0.image = DesignSystemAsset.Icon.rightArrow.image
     }
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -44,7 +44,7 @@ extension MyPageCategoryTableViewCell {
         }
         
         arrowImageView.snp.makeConstraints {
-            $0.width.height.equalTo(14)
+            $0.width.height.equalTo(24)
             $0.right.equalToSuperview().inset(24)
             $0.centerY.equalTo(label.snp.centerY)
         }
