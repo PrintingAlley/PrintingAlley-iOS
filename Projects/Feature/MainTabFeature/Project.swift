@@ -8,7 +8,8 @@ let project = Project.module(
         .interface(module: .feature(.MainTabFeature)),
         .implements(module: .feature(.MainTabFeature), dependencies: [
             .feature(target: .MainTabFeature, type: .interface),
-            .feature(target: .MyPageFeature, type: .interface)
+            .feature(target: .MyPageFeature, type: .interface),
+            .feature(target: .HomeFeature, type: .interface)
         ]),
         .demo(module: .feature(.MainTabFeature), dependencies: [
             .feature(target: .MainTabFeature)

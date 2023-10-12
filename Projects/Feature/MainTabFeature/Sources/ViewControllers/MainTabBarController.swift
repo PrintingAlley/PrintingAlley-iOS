@@ -7,16 +7,18 @@
 //
 
 import UIKit
-import MyPageFeatureInterface
 import DesignSystem
+import MyPageFeatureInterface
+import HomeFeatureInterface
 
 public class MainTabBarController: UITabBarController {
     private var myPageFactory: any MyPageFactory
+    private var homeFactory: any HomeFactory
     // 탭바 이미지 적용 필요
 
     private lazy var tabbarControllers: [UIViewController] = {
         let viewControllers = [
-            myPageFactory.makeView(),
+            homeFactory.makeView(),
             myPageFactory.makeView(),
             myPageFactory.makeView()
         ]
@@ -32,8 +34,9 @@ public class MainTabBarController: UITabBarController {
         return items
     }()
 
-    init(myPageFactory: MyPageFactory) {
+    init(myPageFactory: MyPageFactory, homeFactory: HomeFactory) {
         self.myPageFactory = myPageFactory
+        self.homeFactory = homeFactory
         super.init(nibName: nil, bundle: nil)
     }
     

@@ -11,13 +11,18 @@ import NeedleFoundation
 import UIKit
 import MainTabFeatureInterface
 import MyPageFeatureInterface
+import HomeFeatureInterface
 
 public protocol MainTabDependency: Dependency {
     var mypageFactory: any MyPageFactory { get }
+    var homeFactory: any HomeFactory { get }
 }
 
 public final class MainTabComponent: Component<MainTabDependency>, MainTabFactory {
     public func makeView() -> UIViewController {
-        MainTabBarController(myPageFactory: dependency.mypageFactory)
+        MainTabBarController(
+            myPageFactory: dependency.mypageFactory,
+            homeFactory: dependency.homeFactory
+        )
     }
 }
