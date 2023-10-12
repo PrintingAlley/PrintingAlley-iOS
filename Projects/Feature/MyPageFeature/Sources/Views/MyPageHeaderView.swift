@@ -33,7 +33,7 @@ class MyPageHeaderView: UIView {
 
     }
     
-    let headers: [HeaderItemType] = [.notice, .bookMark, .like]
+    let headers: [HeaderItemType] = [.bookMark, .review, .notice,]
     
     weak var deleagte: MyPageHeaderViewDelegate?
     
