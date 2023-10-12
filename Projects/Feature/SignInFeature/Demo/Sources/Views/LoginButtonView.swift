@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 import UtilityModule
+import DesignSystem
 
 public protocol LoginButtonViewDelegate: AnyObject {
     func action(type: LoginType)
@@ -27,9 +28,7 @@ class LoginButtonView: UIView {
         $0.contentMode = .scaleAspectFill
     }
     
-    var label: UILabel = UILabel().then{
-        $0.backgroundColor = .white
-    }
+    var label: AlleyLabel = AlleyLabel()
     
     init(type: LoginType) {
         super.init(frame: .zero)
@@ -66,7 +65,7 @@ extension LoginButtonView {
 
         imageView.image = type.image
         
-        label.text = type.text
+        self.label.setTitle(title: "HELLO", textColor: type.textColor, font: .body1)
     }
     
     func makeConstraints() {

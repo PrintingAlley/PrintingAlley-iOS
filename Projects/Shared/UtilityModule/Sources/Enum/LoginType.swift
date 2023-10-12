@@ -51,6 +51,17 @@ public enum LoginType: Codable {
         }
     }
     
+    public var textColor: UIColor.AlleyColorSystem {
+        switch self {
+        case .naver:
+            
+            return .sub(.white)
+            
+        default:
+            return .sub(.black)
+        }
+    }
+    
     public var color: UIColor {
         switch self {
             
