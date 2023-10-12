@@ -16,13 +16,17 @@ final class HomeViewController: UIViewController {
     private let contentView = UIView().then {
         $0.backgroundColor = .setColor(.mainBlue(.blue500))
     }
+    
     private let scrollView = UIScrollView().then {
         $0.backgroundColor = .setColor(.sub(.white))
     }
+    
     private let testLabel = UILabel().then {
         $0.textColor = UIColor.setColor(.mainBlue(.blue1000))
         $0.text = "test"
     }
+    
+    private let collectionView = UICollectionView(frame: <#T##CGRect#>, collectionViewLayout: <#T##UICollectionViewLayout#>)
     
     var viewModel: HomeViewModel!
 
@@ -39,6 +43,20 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         addSubViews()
         makeConstraints()
+    }
+}
+
+extension HomeViewController {
+    private func makeCollectionView() -> UICollectionView {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+            $0.delegate = self
+            $0.dataSource = self
+            $0.showsHorizontalScrollIndicator = false
+            $0.showsVerticalScrollIndicator = false
+            $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
+        }
     }
 }
 
