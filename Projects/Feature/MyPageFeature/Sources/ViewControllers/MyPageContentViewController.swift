@@ -97,7 +97,7 @@ extension MyPageContentViewController {
             
             let composeVC = MFMailComposeViewController()
             composeVC.mailComposeDelegate = self
-            composeVC.setToRecipients(["printingstreet.cmyk.gmail.com"])
+            composeVC.setToRecipients(["printingstreet.cmyk@gmail.com"])
             composeVC.setSubject("인쇄골목 문의드립니다")
             composeVC.setMessageBody(preBody, isHTML: false)
             self.present(composeVC, animated: true)
