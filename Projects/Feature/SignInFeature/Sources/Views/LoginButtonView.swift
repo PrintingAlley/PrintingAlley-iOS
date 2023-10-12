@@ -28,10 +28,7 @@ class LoginButtonView: UIView {
         $0.contentMode = .scaleAspectFill
     }
     
-    var label: UILabel = UILabel().then{
-        $0.font = .setFont(.body1)
-        $0.textColor = .black
-    }
+    var label: AlleyLabel = AlleyLabel()
     
     init(type: LoginType) {
         super.init(frame: .zero)
@@ -70,7 +67,7 @@ extension LoginButtonView {
 
         imageView.image = type.image
         
-        label.text = type.text
+        label.setTitle(title: type.text, textColor: type.textColor, font: .body1)
     }
     
     func makeConstraints() {

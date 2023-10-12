@@ -24,7 +24,7 @@ public enum LoginType: Codable {
             return DesignSystemAsset.Logo.kakaoTalk.image
             
         case .naver:
-            return DesignSystemAsset.Logo.naver.image
+            return DesignSystemAsset.Logo.naverWhite.image
             
         case .google:
             return DesignSystemAsset.Logo.google.image
@@ -51,9 +51,30 @@ public enum LoginType: Codable {
         }
     }
     
+    public var textColor: UIColor.AlleyColorSystem {
+        switch self {
+        case .naver:
+            
+            return .sub(.white)
+            
+        default:
+            return .sub(.black)
+        }
+    }
+    
     public var color: UIColor {
         switch self {
-        default:
+            
+        case .kakao:
+            return colorFromRGB("FEE500")
+            
+        case .naver:
+            return colorFromRGB("03C75A")
+            
+        case .google:
+            return .white
+            
+        case .apple:
             return .white
         }
     }
