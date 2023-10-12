@@ -13,7 +13,7 @@ import DesignSystem
 
 class MyPageCategoryTableViewCell: UITableViewCell {
     
-    static let identifier:String = "MyPageCategoryTableViewCell"
+    static let identifier: String = "MyPageCategoryTableViewCell"
     
     lazy var label: AlleyLabel = AlleyLabel()
     lazy var arrowImageView: UIImageView = UIImageView().then {
