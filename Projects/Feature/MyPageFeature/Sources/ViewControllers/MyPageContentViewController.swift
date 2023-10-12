@@ -33,9 +33,11 @@ public class MyPageContentViewController: UIViewController {
         //$0.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15) //<- 중요
     }
     
-    lazy var headerVIew: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80)).then {
+    lazy var headerView: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80)).then {
         $0.deleagte = self
     }
+    
+    lazy var footerView: MyPageFooterView = MyPageFooterView()
     
     lazy var tableView: UITableView = UITableView().then {
         $0.register(MyPageCategoryTableViewCell.self, forCellReuseIdentifier: MyPageCategoryTableViewCell.identifier)
@@ -43,7 +45,8 @@ public class MyPageContentViewController: UIViewController {
         $0.delegate = self
         $0.separatorStyle = .none // 구분선 제거
         $0.bounces = false // 오버 스크롤 방지
-        $0.tableHeaderView = headerVIew
+        $0.tableHeaderView = headerView
+        $0.tableFooterView = footerView
     }
     
     var viewModel: MyPageContentViewModel!
@@ -103,6 +106,7 @@ extension MyPageContentViewController {
             $0.top.equalTo(profileImage.snp.bottom).offset(40)
             $0.left.right.bottom.equalToSuperview()
         }
+        
         
     }
     
