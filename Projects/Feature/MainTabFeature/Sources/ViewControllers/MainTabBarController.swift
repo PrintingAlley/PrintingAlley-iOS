@@ -10,16 +10,18 @@ import UIKit
 import DesignSystem
 import MyPageFeatureInterface
 import HomeFeatureInterface
+import NearByMeFeatureInterface
 
 public class MainTabBarController: UITabBarController {
     private var myPageFactory: any MyPageFactory
     private var homeFactory: any HomeFactory
+    private var nearByMeFactory: any NearByMeFactory
     // 탭바 이미지 적용 필요
 
     private lazy var tabbarControllers: [UIViewController] = {
         let viewControllers = [
             homeFactory.makeView(),
-            myPageFactory.makeView(),
+            nearByMeFactory.makeView(),
             myPageFactory.makeView()
         ]
         return viewControllers
@@ -34,9 +36,10 @@ public class MainTabBarController: UITabBarController {
         return items
     }()
 
-    init(myPageFactory: MyPageFactory, homeFactory: HomeFactory) {
+    init(myPageFactory: MyPageFactory, homeFactory: HomeFactory, nearByMeFactory:NearByMeFactory) {
         self.myPageFactory = myPageFactory
         self.homeFactory = homeFactory
+        self.nearByMeFactory = nearByMeFactory
         super.init(nibName: nil, bundle: nil)
     }
     
