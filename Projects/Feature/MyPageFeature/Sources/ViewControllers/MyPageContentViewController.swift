@@ -22,6 +22,17 @@ public class MyPageContentViewController: UIViewController {
         $0.numberOfLines = 0
     }
     
+    lazy var profileNameEditButton: UIButton = UIButton().then {
+        $0.setTitle("프로필 수정", for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.pencil.image, for: .normal)
+        $0.setTitleColor(DesignSystemAsset.Grey.grey500.color, for: .normal)
+        $0.imageView?.contentMode = .scaleAspectFit
+        $0.titleLabel?.font = .setFont(.caption1)
+        $0.contentHorizontalAlignment = .center
+        $0.semanticContentAttribute = .forceRightToLeft //<- 중요
+        //$0.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15) //<- 중요
+    }
+    
     lazy var headerVIew: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80)).then {
         $0.deleagte = self
     }
@@ -67,7 +78,7 @@ extension MyPageContentViewController {
     }
     
     func addSubViews() {
-        self.view.addSubviews(profileImage, profileLabel, tableView)
+        self.view.addSubviews(profileImage, profileLabel, tableView, profileNameEditButton)
     }
     
     func makeConstraints() {
@@ -81,6 +92,11 @@ extension MyPageContentViewController {
             $0.left.equalTo(profileImage.snp.right).offset(24)
             $0.right.equalToSuperview()
             $0.centerY.equalTo(profileImage.snp.centerY).offset(-10)
+        }
+        
+        profileNameEditButton.snp.makeConstraints {
+            $0.left.equalTo(profileLabel.snp.left)
+            $0.top.equalTo(profileLabel.snp.bottom)
         }
         
         tableView.snp.makeConstraints {
