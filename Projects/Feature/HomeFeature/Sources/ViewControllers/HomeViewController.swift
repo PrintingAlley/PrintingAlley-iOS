@@ -13,10 +13,12 @@ import SnapKit
 
 final class HomeViewController: UIViewController {
     
-    private let scrollView = UIScrollView().then {
-        $0.backgroundColor = .green
+    private let contentView = UIView().then {
+        $0.backgroundColor = .setColor(.mainBlue(.blue500))
     }
-    private let contentView = UIView()
+    private let scrollView = UIScrollView().then {
+        $0.backgroundColor = .setColor(.sub(.white))
+    }
     private let testLabel = UILabel().then {
         $0.textColor = UIColor.setColor(.mainBlue(.blue1000))
         $0.text = "test"
@@ -49,11 +51,12 @@ extension HomeViewController {
     
     private func makeConstraints() {
         contentView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-            // bottom : superview - 탭바높이
+            $0.edges.equalToSuperview()
         }
         scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalToSuperview().inset(153)
+            $0.leading.trailing.bottom.equalToSuperview()
+            // bottom : superview - 탭바높이)
         }
         testLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(16)
