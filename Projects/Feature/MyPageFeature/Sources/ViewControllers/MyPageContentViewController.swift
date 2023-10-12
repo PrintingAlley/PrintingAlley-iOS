@@ -159,8 +159,17 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
 }
 
 extension MyPageContentViewController: ImageButtonDelegate {
-    public func action() { // TODO: 프로필 이미지 변경
-        DEBUG_LOG("ACT")
+    public func action(image: UIImage) { // TODO: 프로필 이미지 변경
+        
+        switch image {
+        case DesignSystemAsset.Icon.profilePlaceHolder.image:
+            DEBUG_LOG("RIGHT")
+        default:
+            DEBUG_LOG("HELLo")
+            
+    
+        }
+        
     }
     
 }

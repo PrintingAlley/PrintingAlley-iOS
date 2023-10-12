@@ -12,7 +12,7 @@ import Then
 
 public protocol ImageButtonDelegate: AnyObject {
     
-    func action()
+    func action(image: UIImage)
 }
 
 public class ImageButton: UIView {
@@ -22,14 +22,22 @@ public class ImageButton: UIView {
         $0.contentMode = .scaleToFill
     }
     
+    var image: UIImage!
+    
     public weak var delegate: ImageButtonDelegate?
     
     public init() {
         super.init(frame: .zero)
         self.addSubviews(button, imageView)
-        
         makeConstraints()
         self.button.addTarget(self, action: #selector(buttonTap), for: .touchDown)
+    }
+    
+    public convenience init (image: UIImage) { // 생성 할 때 , 이미지를 넣을 때
+        self.init()
+        self.image = image
+        self.imageView.image = image
+        
     }
     
     required init?(coder: NSCoder) {
@@ -40,7 +48,8 @@ public class ImageButton: UIView {
 
 extension ImageButton {
     
-    public func setImage(image: UIImage) {
+    public func setImage(image: UIImage) { // 생성은 별도로 하고 나중에 이미지를 지정할 때
+        self.image = image
         self.imageView.image = image
     }
     
@@ -57,9 +66,7 @@ extension ImageButton {
     }
     
     @objc func buttonTap() {
-        delegate?.action()
+        delegate?.action(image: image)
     }
     
 }
-
-
