@@ -15,7 +15,7 @@ public enum HeaderItemType: String {
     
     case notice = "알림"
     case bookMark = "북마크"
-    case like = "좋아요"
+    case review = "리뷰"
 }
 
 
@@ -53,7 +53,7 @@ extension MyPageCollectionViewCell {
         }
         
         label.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(4)
             $0.centerX.equalTo(imageView.snp.centerX)
         }
     }
@@ -65,16 +65,16 @@ extension MyPageCollectionViewCell {
         switch type {
             
         case .notice:
-            imageView.image = UIImage(systemName: "bell")
+            imageView.image = DesignSystemAsset.Icon.bell.image
             
         case .bookMark:
-            imageView.image = UIImage(systemName: "bookmark")
+            imageView.image = DesignSystemAsset.Icon.bookMark.image
             
-        case .like:
-            imageView.image = UIImage(systemName: "heart")
+        case .review:
+            imageView.image = DesignSystemAsset.Icon.textBubble.image
         }
         
-        label.setTitle(title: type.rawValue, textColor: .grey(.grey1000), font: .body1)
+        label.setTitle(title: type.rawValue, textColor: .grey(.grey1000), font: .subtitle3)
         
     }
     

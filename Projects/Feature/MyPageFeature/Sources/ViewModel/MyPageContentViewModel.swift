@@ -10,7 +10,7 @@ import Foundation
 import UtilityModule
 
 public enum MyPageCategory: String {
-    case notice = "공지사항"
+    case pushAlarmSetting = "앱 푸시 알림 설정"
     case faq = "자주 묻는 질문"
     case request = "1:1 문의하기"
     case service = "서비스 이용약관"
@@ -18,7 +18,7 @@ public enum MyPageCategory: String {
 
 final class MyPageContentViewModel : ViewModelType {
  
-    let categories:[MyPageCategory] = [.notice,.faq,.request,.service]
+    let categories:[MyPageCategory] = [.pushAlarmSetting, .faq, .request, .service]
     
     struct Input{
         

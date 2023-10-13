@@ -30,7 +30,7 @@ public class ImageButton: UIView {
         super.init(frame: .zero)
         self.addSubviews(button, imageView)
         makeConstraints()
-        self.button.addTarget(self, action: #selector(buttonTap), for: .touchDown)
+        self.button.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
     }
     
     public convenience init (image: UIImage) { // 생성 할 때 , 이미지를 넣을 때
