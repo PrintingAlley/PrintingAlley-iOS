@@ -25,6 +25,9 @@ public protocol MyPageFooterViewDelegate: AnyObject {
 
 class MyPageFooterView: UIView {
     
+    
+    // TODO: 버튼들 동작 확인
+    
     lazy var baseLine = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
      }
@@ -61,10 +64,10 @@ class MyPageFooterView: UIView {
     
     init() {
         super.init(frame: .zero)
-        preProcessing()
-        self.addSubviews(baseLine, imageView, label, button, infoImageView, withDrawButton)
+       
+        self.addSubviews(button, withDrawButton, baseLine, imageView, label, infoImageView)
         makeConstraints()
-        
+        preProcessing()
     }
         
     required init?(coder: NSCoder) {
