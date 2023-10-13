@@ -22,7 +22,7 @@ public class MyPageContentViewController: UIViewController {
         $0.numberOfLines = 0
     }
     
-    lazy var profileNameEditButton: UIButton = UIButton().then {
+    lazy var profileNameEditButton: UIButton = UIButton().then { // TODO: 프로필 편집 연결 
         $0.setTitle("프로필 수정", for: .normal)
         $0.setImage(DesignSystemAsset.Icon.pencil.image, for: .normal)
         $0.setTitleColor(DesignSystemAsset.Grey.grey500.color, for: .normal)
