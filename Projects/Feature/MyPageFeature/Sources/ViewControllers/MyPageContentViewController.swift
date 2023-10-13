@@ -37,7 +37,7 @@ public class MyPageContentViewController: UIViewController {
         $0.deleagte = self
     }
     
-    lazy var footerView: MyPageFooterView = MyPageFooterView()
+    lazy var footerView: MyPageFooterView = MyPageFooterView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 150))
     
     lazy var tableView: UITableView = UITableView().then {
         $0.register(MyPageCategoryTableViewCell.self, forCellReuseIdentifier: MyPageCategoryTableViewCell.identifier)
