@@ -14,20 +14,20 @@ import Moya
 import JwtStoreInterface
 
 enum AuthAPI {
-    case testGet
+    case login(token: String, provider : String)
 }
 
 extension AuthAPI: AlleyAPI {
     var domain: AlleyDomain {
-        .tmp
+        .auth
     }
     
     var urlPath: String {
         
         switch self {
             
-        case .testGet:
-            return ""
+        case .login:
+            return "/login"
         }
     }
     
@@ -46,22 +46,22 @@ extension AuthAPI: AlleyAPI {
     
     var method: Moya.Method {
         switch self {
-        case .testGet:
-            return .get
+        case .login:
+            return .post
         }
     }
     
     var task: Task {
         switch self {
             
-        case .testGet:
-            return .requestPlain
+        case .login(token: let token, provider: let provider):
+            return .requestJSONEncodable(LoginRequestDTO(access_token: token, provider: provider))
         }
     }
     
     var jwtStoreProperties: JwtStoreProperties {
         switch self {
-        case .testGet:
+        case .login:
             return .none
         }
     }

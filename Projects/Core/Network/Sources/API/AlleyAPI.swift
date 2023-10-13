@@ -38,7 +38,7 @@ public extension AlleyAPI {
 
 public enum AlleyDomain: String {
     
-    case tmp // TODO: 나중에 도메인 추가
+    case auth
     
 }
 
@@ -47,8 +47,8 @@ extension AlleyDomain {
     var asDomainString: String {
         switch self {
             
-        case .tmp: // TODO: 나중에 도메인 추가 
-            return "api-url"
+        case .auth: 
+            return "auth"
         }
     }
     

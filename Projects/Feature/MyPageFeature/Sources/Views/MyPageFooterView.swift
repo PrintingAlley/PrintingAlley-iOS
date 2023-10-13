@@ -97,7 +97,6 @@ extension MyPageFooterView {
     
     func preProcessing() {
         
-        
         PreferenceManager
             .$user
             .withUnretained(self)
