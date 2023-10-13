@@ -15,18 +15,26 @@ public protocol AuthDomainDependency: Dependency {
 }
 
 public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDomainFactory {
-    public var testGetUseCase: any TestGetUseCase {
-        TestGetUseCaseImpl(authRepository: authRepository)
+    public var fetchLoginUseCase: any FetchLoginUseCase {
+        FetchLoginUseCaseImpl(authRepository: authRepository)
+    }
+    
+    public var fetchTokenTestUseCase: any FetchTokenTestUseCase {
+        FetchTokenTestUseCaseImpl(authRepository: authRepository)
     }
     
     public var authRepository: any AuthRepository {
         AuthRepositoryImpl(
-            remoteAuthDataSource: remoteAuthDataSource
+            localAuthDataSource: localAuthDataSource, remoteAuthDataSource: remoteAuthDataSource
         )
     }
     
     var remoteAuthDataSource: any RemoteAuthDataSource {
         RemoteAuthDataSourceImpl(jwtStore: dependency.jwtStoreFactory.jwtStore)
+    }
+    
+    var localAuthDataSource: any LocalAuthDataSource {
+        LocalAuthDataSourcesImpl(jwtStore: dependency.jwtStoreFactory.jwtStore)
     }
     
 }

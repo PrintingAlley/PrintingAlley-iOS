@@ -8,10 +8,11 @@
 
 import Foundation
 
-public struct TestEntity {
-    public let url: String
+public struct TokenEntity {
+    let access_token: String
     
-    public init(url: String) {
-        self.url = url
+    public init(access_token: String) {
+        self.access_token = access_token
     }
+    
 }

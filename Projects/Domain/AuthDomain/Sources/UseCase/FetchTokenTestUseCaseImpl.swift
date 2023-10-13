@@ -10,8 +10,11 @@ import Foundation
 
 import AuthDomainInterface
 import RxSwift
+import Network
 
-struct TestGetUseCaseImpl: TestGetUseCase {
+struct FetchTokenTestUseCaseImpl: FetchTokenTestUseCase {
+
+    
 
     private let authRepository: any AuthRepository
 
@@ -19,7 +22,8 @@ struct TestGetUseCaseImpl: TestGetUseCase {
         self.authRepository = authRepository
     }
     
-    func execute() -> Single<TestEntity> {
-        authRepository.fetchTest()
+    func execute() -> RxSwift.Single<TokenTestEntity> {
+        authRepository.jwtTest()
     }
+
 }

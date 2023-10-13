@@ -62,13 +62,21 @@ class MyPageFooterView: UIView {
     
     public weak var deleagte: MyPageFooterViewDelegate?
     
-    init() {
-        super.init(frame: .zero)
-       
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.addSubviews(button, withDrawButton, baseLine, imageView, label, infoImageView)
         makeConstraints()
         preProcessing()
+        
     }
+    
+//    init() {
+//        super.init(frame: .zero)
+//       
+//        self.addSubviews(button, withDrawButton, baseLine, imageView, label, infoImageView)
+//        makeConstraints()
+//        preProcessing()
+//    }
         
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -76,12 +84,10 @@ class MyPageFooterView: UIView {
     }
     
     @objc func tapLogOut() {
-        DEBUG_LOG("HELLO")
         deleagte?.action(type: .logout)
     }
     
     @objc func tapWithdraw() {
-        DEBUG_LOG("HELLO2")
         deleagte?.action(type: .withdraw)
     }
 
@@ -90,9 +96,6 @@ class MyPageFooterView: UIView {
 extension MyPageFooterView {
     
     func preProcessing() {
-        
-        button.addTarget(self, action: #selector(tapLogOut), for: .touchUpInside)
-        withDrawButton.addTarget(self, action: #selector(tapWithdraw), for: .touchUpInside)
         
         PreferenceManager
             .$user
@@ -119,9 +122,13 @@ extension MyPageFooterView {
                     owner.imageView.image = DesignSystemAsset.Logo.apple.image
                     owner.label.setTitle(title: "애플 계정 회원", textColor: .grey(.grey1000), font: .body1)
                 }
+                
            
         })
         .disposed(by: disposeBag)
+        
+        button.addTarget(self, action: #selector(tapLogOut), for: .touchUpInside)
+        withDrawButton.addTarget(self, action: #selector(tapWithdraw), for: .touchUpInside)
     
     }
     

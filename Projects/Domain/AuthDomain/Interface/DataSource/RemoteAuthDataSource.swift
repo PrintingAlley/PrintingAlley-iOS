@@ -1,14 +1,17 @@
 //
-//  RemoteAuthDataSource.swift
-//  AuthDomainInterface
+//  BaseLocalDataSource.swift
+//  BaseDomain
 //
-//  Created by yongbeomkwak on 2023/10/09.
+//  Created by yongbeomkwak on 10/13/23.
 //  Copyright © 2023 com. All rights reserved.
 //
 
 import Foundation
+import Network
 import RxSwift
 
 public protocol RemoteAuthDataSource {
-    func fetchTest() -> Single<TestEntity>
+    func loadJwtToken(accessToken:String, provider:String) -> Single<TokenEntity>
+    func jwtTest() -> Single<TokenTestEntity>
+    
 }

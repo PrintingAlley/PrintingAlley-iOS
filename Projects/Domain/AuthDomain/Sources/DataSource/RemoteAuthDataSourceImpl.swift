@@ -12,11 +12,15 @@ import AuthDomainInterface
 import RxSwift
 
 final class RemoteAuthDataSourceImpl: BaseRemoteDataSource<AuthAPI>, RemoteAuthDataSource {
-    func fetchTest() -> Single<TestEntity> {
-        request(.testGet)
-            .map(TestDTO.self)
-            .map {$0.toDomain()}
-            
+    func loadJwtToken(accessToken: String, provider: String) -> Single<TokenEntity> {
+        request(.login(token: accessToken, provider: provider))
+            .map(TokenResponseDTO.self)
+            .map{$0.toDomain()}
     }
     
+    func jwtTest() -> Single<TokenTestEntity> {
+        request(.jwt)
+            .map(TokenTestDTO.self)
+            .map{$0.toDomain()}
+    }
 }

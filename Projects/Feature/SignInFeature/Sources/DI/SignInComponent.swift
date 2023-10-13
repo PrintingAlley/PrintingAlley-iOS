@@ -15,10 +15,11 @@ import AuthDomainInterface
 public protocol SignInDependency: Dependency {
  
     var authDomainFactory: any AuthDomainFactory {get}
+    
 }
 
 public final class SignInComponent: Component<SignInDependency>, SigninFactory {
     public func makeView() -> UIViewController {
-        SignInViewController(viewModel: SignInViewModel(testUsecase: dependency.authDomainFactory.testGetUseCase))
+        SignInViewController(viewModel: SignInViewModel(fetchLoginUseCase: dependency.authDomainFactory.fetchLoginUseCase, fetchTokenTestUseCase: dependency.authDomainFactory.fetchTokenTestUseCase))
     }
 }
