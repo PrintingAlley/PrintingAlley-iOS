@@ -26,7 +26,7 @@ final class HomeViewController: UIViewController {
         $0.text = "test"
     }
     
-    private let collectionView = UICollectionView(frame: <#T##CGRect#>, collectionViewLayout: <#T##UICollectionViewLayout#>)
+    private lazy var collectionView = makeCollectionView()
     
     var viewModel: HomeViewModel!
 
@@ -57,6 +57,7 @@ extension HomeViewController {
             $0.showsVerticalScrollIndicator = false
             $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
         }
+        return collectionView
     }
 }
 
@@ -64,7 +65,7 @@ extension HomeViewController {
     private func addSubViews() {
         view.addSubviews(contentView)
         contentView.addSubviews(scrollView)
-        scrollView.addSubviews(testLabel)
+        scrollView.addSubviews(testLabel, collectionView)
     }
     
     private func makeConstraints() {
@@ -73,13 +74,44 @@ extension HomeViewController {
         }
         scrollView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(153)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
             // bottom : superview - 탭바높이)
         }
         testLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(16)
-            $0.leading.trailing.equalTo(contentView).inset(24)
-            $0.bottom.equalToSuperview().inset(100)
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(20)
         }
+        collectionView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(40)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(400)
+        }
+    }
+}
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // 셀 크기
+      return CGSize(width: 70, height: 100)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        // 옆 간격
+      return 20
+    }
+}
+
+extension HomeViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20 // 아이템 개수
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath)
+                      as? CategoryCollectionViewCell else { return UICollectionViewCell() }
+        // Data bind
+        return cell
     }
 }
