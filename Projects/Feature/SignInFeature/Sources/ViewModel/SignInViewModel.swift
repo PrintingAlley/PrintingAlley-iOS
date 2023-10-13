@@ -23,19 +23,6 @@ final class SignInViewModel: NSObject, ViewModelType {
     let naverLoginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
     let oauthToken: PublishRelay<Void> = PublishRelay()
     
-    var testUsecase: any TestGetUseCase
-    
-    init(testUsecase: any TestGetUseCase) {
-        self.testUsecase = testUsecase
-        
-        self.testUsecase.execute()
-            .asObservable()
-            .subscribe(onNext: {
-                DEBUG_LOG($0)
-            })
-            .disposed(by: disposeBag)
-    }
-    
     struct Input {
         let tapLoginButton: PublishRelay<LoginType> = .init()
     }

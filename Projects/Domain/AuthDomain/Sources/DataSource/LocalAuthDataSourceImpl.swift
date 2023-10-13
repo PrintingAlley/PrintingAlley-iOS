@@ -1,25 +1,23 @@
 //
-//  BaseLocalDataSourceImpl.swift
-//  BaseDomain
+//  LocalAuthDataSourcesImpl.swift
+//  AuthDomain
 //
 //  Created by yongbeomkwak on 10/13/23.
 //  Copyright © 2023 com. All rights reserved.
 //
 
+import Foundation
+import AuthDomainInterface
 import JwtStoreInterface
-import BaseDomainInterface
-import Network
 
-final class LocalAuthDataSourceImpl: BaseLocalDataSource {
-
+class  LocalAuthDataSourcesImpl: LocalAuthDataSource {
+    
     private let jwtStore: any JwtStore
     
     init(jwtStore: any JwtStore) {
         self.jwtStore = jwtStore
     }
-
     func loadJwtToken() -> String {
         jwtStore.load(property: .accessToken)
     }
-
 }

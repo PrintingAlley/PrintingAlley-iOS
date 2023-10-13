@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 public protocol AuthRepository {
-    func fetchTest() -> Single<TestEntity>
+    func login(accessToken: String, provider: String) -> Single<TokenEntity>
 }
