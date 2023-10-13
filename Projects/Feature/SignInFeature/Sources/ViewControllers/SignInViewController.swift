@@ -137,7 +137,7 @@ extension SignInViewController {
 
                // let profilePicUrl = user.profile?.imageURL(withDimension: 320)
 
-                self.viewModel.oauthToken.accept((user.accessToken.tokenString, .google))
+                self.viewModel.oauthToken.accept((user.idToken!.tokenString, .google)) //TODO: 예외처리
             }
 
         })
