@@ -24,10 +24,19 @@ final class SignInViewModel: NSObject, ViewModelType {
     let oauthToken: PublishRelay<(String,LoginType)> = PublishRelay()
     
     var fetchLoginUseCase: any FetchLoginUseCase
+    var fetchTokenTestUseCase: any FetchTokenTestUseCase
     
     
-    init(fetchLoginUseCase: FetchLoginUseCase!) {
+    init(fetchLoginUseCase: FetchLoginUseCase!, fetchTokenTestUseCase: FetchTokenTestUseCase) {
         self.fetchLoginUseCase = fetchLoginUseCase
+        self.fetchTokenTestUseCase = fetchTokenTestUseCase
+        
+        self.fetchTokenTestUseCase.execute()
+            .asObservable()
+            .subscribe(onNext: {
+                DEBUG_LOG($0)
+            })
+            .disposed(by: disposeBag)
     }
     
     struct Input {

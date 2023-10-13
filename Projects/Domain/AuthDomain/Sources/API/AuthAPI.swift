@@ -15,6 +15,7 @@ import JwtStoreInterface
 
 enum AuthAPI {
     case login(token: String, provider : String)
+    case jwt
 }
 
 extension AuthAPI: AlleyAPI {
@@ -28,6 +29,8 @@ extension AuthAPI: AlleyAPI {
             
         case .login:
             return "/login"
+        case .jwt:
+            return "/jwt-test"
         }
     }
     
@@ -48,6 +51,8 @@ extension AuthAPI: AlleyAPI {
         switch self {
         case .login:
             return .post
+        case .jwt:
+            return .get
         }
     }
     
@@ -56,13 +61,19 @@ extension AuthAPI: AlleyAPI {
             
         case .login(token: let token, provider: let provider):
             return .requestJSONEncodable(LoginRequestDTO(access_token: token, provider: provider))
+            
+        case .jwt:
+            return .requestPlain
         }
     }
+    
     
     var jwtStoreProperties: JwtStoreProperties {
         switch self {
         case .login:
             return .none
+        case .jwt:
+            return .accessToken
         }
     }
     

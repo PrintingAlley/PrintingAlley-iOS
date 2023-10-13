@@ -10,7 +10,7 @@ import Moya
 import Foundation
 import JwtStoreInterface
 
-public struct TokenDTO: Equatable, Decodable {
+struct TokenDTO: Equatable, Decodable {
     let access_token: String
 
 }
@@ -54,8 +54,8 @@ public struct JwtPlugin: PluginType {
 }
 
 private extension JwtPlugin {
-    func getToken(type: JwtStoreProperties) -> String {
-            "Bearer \(jwtStore.load(property: .accessToken))"
+    func getToken(type: JwtStoreProperties) -> String { // 가져오기 
+        "Bearer \(jwtStore.load(property: .accessToken))"
     }
 
     func saveToken(token: TokenDTO) {

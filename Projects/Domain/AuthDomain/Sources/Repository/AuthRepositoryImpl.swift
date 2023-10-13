@@ -11,6 +11,8 @@ import AuthDomainInterface
 import RxSwift
 
 struct AuthRepositoryImpl: AuthRepository {
+ 
+    
 
     private let localAuthDataSource: any LocalAuthDataSource
     private let remoteAuthDataSource: any RemoteAuthDataSource
@@ -23,5 +25,10 @@ struct AuthRepositoryImpl: AuthRepository {
     func login(accessToken: String, provider: String) -> Single<TokenEntity> {
         remoteAuthDataSource.loadJwtToken(accessToken: accessToken, provider: provider)
     }
+    
+    func jwtTest() -> Single<TokenTestEntity> {
+        remoteAuthDataSource.jwtTest()
+    }
+    
     
 }

@@ -12,5 +12,6 @@ import RxSwift
 
 public protocol RemoteAuthDataSource {
     func loadJwtToken(accessToken:String, provider:String) -> Single<TokenEntity>
+    func jwtTest() -> Single<TokenTestEntity>
     
 }

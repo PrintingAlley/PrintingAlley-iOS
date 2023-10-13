@@ -11,4 +11,5 @@ import Foundation
 public protocol AuthDomainFactory {
     
     var fetchLoginUseCase: any FetchLoginUseCase { get }
+    var fetchTokenTestUseCase: any FetchTokenTestUseCase { get }
 }

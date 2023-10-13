@@ -21,6 +21,7 @@ open class BaseRemoteDataSource<API: AlleyAPI> {
     
     public init (jwtStore: any JwtStore, provider: MoyaProvider<API>? = nil) {
         self.jwtStore = jwtStore
+
         
         #if DEV
         self.provider = provider ?? MoyaProvider(plugins: [JwtPlugin(jwtStore: jwtStore), CustomLoggingPlugin()])

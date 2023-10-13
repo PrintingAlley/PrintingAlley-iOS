@@ -19,6 +19,10 @@ public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDom
         FetchLoginUseCaseImpl(authRepository: authRepository)
     }
     
+    public var fetchTokenTestUseCase: any FetchTokenTestUseCase {
+        FetchTokenTestUseCaseImpl(authRepository: authRepository)
+    }
+    
     public var authRepository: any AuthRepository {
         AuthRepositoryImpl(
             localAuthDataSource: localAuthDataSource, remoteAuthDataSource: remoteAuthDataSource
