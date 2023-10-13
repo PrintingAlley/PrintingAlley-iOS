@@ -18,7 +18,7 @@ public protocol MyPageHeaderViewDelegate: AnyObject {
 class MyPageHeaderView: UIView {
     
     lazy var baseLine = UIView().then {
-        $0.backgroundColor = .black
+        $0.backgroundColor = .black.withAlphaComponent(0.1)
      }
     
     lazy var flowLayout = UICollectionViewFlowLayout().then {
@@ -36,6 +36,7 @@ class MyPageHeaderView: UIView {
     let headers: [HeaderItemType] = [.bookMark, .review, .notice,]
     
     weak var deleagte: MyPageHeaderViewDelegate?
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,7 +58,7 @@ extension MyPageHeaderView {
         collectionView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(47)
             $0.top.equalToSuperview()
-            $0.bottom.equalTo(baseLine.snp.top).offset(-16)
+            $0.bottom.equalTo(baseLine.snp.top).offset(-32)
         }
         
         baseLine.snp.makeConstraints {

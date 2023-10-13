@@ -53,7 +53,7 @@ extension MyPageCollectionViewCell {
         }
         
         label.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(4)
             $0.centerX.equalTo(imageView.snp.centerX)
         }
     }
@@ -74,7 +74,7 @@ extension MyPageCollectionViewCell {
             imageView.image = DesignSystemAsset.Icon.textBubble.image
         }
         
-        label.setTitle(title: type.rawValue, textColor: .grey(.grey1000), font: .body1)
+        label.setTitle(title: type.rawValue, textColor: .grey(.grey1000), font: .subtitle3)
         
     }
     

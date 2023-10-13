@@ -33,7 +33,7 @@ public class MyPageContentViewController: UIViewController {
         //$0.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15) //<- 중요
     }
     
-    lazy var headerView: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80)).then {
+    lazy var headerView: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 84)).then {
         $0.deleagte = self
     }
     
@@ -76,6 +76,7 @@ extension MyPageContentViewController {
         self.profileImage.delegate = self
         self.profileImage.setImage(image: DesignSystemAsset.Icon.profilePlaceHolder.image)
         
+        footerView.deleagte = self
         // TODO: 닉네임 프리퍼런스 매니저 연결
         profileLabel.setTitle(title: "첫 번째 골목대장 ", textColor: .sub(.black), font: .subtitle1)
     }
@@ -87,7 +88,7 @@ extension MyPageContentViewController {
     func makeConstraints() {
         profileImage.snp.makeConstraints {
             $0.width.height.equalTo(64)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(40)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(42)
             $0.left.equalToSuperview().inset(25)
         }
         
@@ -106,7 +107,6 @@ extension MyPageContentViewController {
             $0.top.equalTo(profileImage.snp.bottom).offset(40)
             $0.left.right.bottom.equalToSuperview()
         }
-        
         
     }
     
@@ -178,6 +178,13 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
  
 }
 
+extension MyPageContentViewController: MyPageFooterViewDelegate {
+    public func action(type: UserLogoutAction) {
+        DEBUG_LOG(type)
+    }
+    
+}
+
 extension MyPageContentViewController: ImageButtonDelegate {
     public func action(image: UIImage) { // TODO: 프로필 이미지 변경
         
@@ -194,7 +201,7 @@ extension MyPageContentViewController: ImageButtonDelegate {
     
 }
 
-extension MyPageContentViewController : MFMailComposeViewControllerDelegate {
+extension MyPageContentViewController: MFMailComposeViewControllerDelegate {
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true) {
             if let error = error {
@@ -204,3 +211,5 @@ extension MyPageContentViewController : MFMailComposeViewControllerDelegate {
         }
     }
 }
+
+
