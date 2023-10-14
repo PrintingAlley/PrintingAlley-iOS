@@ -5,9 +5,12 @@ import ProjectDescriptionHelpers
 let project = Project.module(
     name: ModulePaths.Feature.BookMarkModule.rawValue,
     targets: [
-        .interface(module: .feature(.BookMarkModule)),
+        .interface(module: .feature(.BookMarkModule),dependencies: [
+            .feature(target: .BaseFeature, type: .interface)
+        ]),
         .implements(module: .feature(.BookMarkModule), dependencies: [
-            .feature(target: .BookMarkModule, type: .interface)
+            .feature(target: .BookMarkModule, type: .interface),
+            .feature(target: .BaseFeature)
         ]),
         .testing(module: .feature(.BookMarkModule), dependencies: [
             .feature(target: .BookMarkModule, type: .interface)
