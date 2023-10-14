@@ -21,6 +21,7 @@ public extension TargetDependency.SPM {
     static let RxCocoa = TargetDependency.external(name: "RxCocoa")
     static let RxRelay = TargetDependency.external(name: "RxRelay")
     static let NaverMap = TargetDependency.external(name: "NMapsMap")
+    static let RxDataSource = TargetDependency.external(name: "RxDataSources")
     
 }
 
