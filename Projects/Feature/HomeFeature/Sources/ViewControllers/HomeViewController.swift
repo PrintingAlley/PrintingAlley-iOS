@@ -19,14 +19,18 @@ final class HomeViewController: UIViewController {
     
     private let scrollView = UIScrollView().then {
         $0.backgroundColor = .setColor(.sub(.white))
+        $0.layer.cornerRadius = 12 // top left, right만 적용되도록
     }
     
-    private let testLabel = UILabel().then {
-        $0.textColor = UIColor.setColor(.mainBlue(.blue1000))
-        $0.text = "test"
+    private lazy var categoryCollectionView = makeCollectionView(scrollDirection: .horizontal).then {
+        $0.tag = 0
+        $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
     }
     
-    private lazy var collectionView = makeCollectionView()
+    private lazy var contentsCollectionView = makeCollectionView(scrollDirection: .vertical).then {
+        $0.tag = 1
+        $0.register(ContentsCollectionViewCell.self, forCellWithReuseIdentifier: ContentsCollectionViewCell.identifier)
+    }
     
     var viewModel: HomeViewModel!
 
@@ -47,15 +51,14 @@ final class HomeViewController: UIViewController {
 }
 
 extension HomeViewController {
-    private func makeCollectionView() -> UICollectionView {
+    private func makeCollectionView(scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = scrollDirection
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
             $0.delegate = self
             $0.dataSource = self
             $0.showsHorizontalScrollIndicator = false
             $0.showsVerticalScrollIndicator = false
-            $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
         }
         return collectionView
     }
@@ -65,7 +68,7 @@ extension HomeViewController {
     private func addSubViews() {
         view.addSubviews(contentView)
         contentView.addSubviews(scrollView)
-        scrollView.addSubviews(testLabel, collectionView)
+        scrollView.addSubviews(categoryCollectionView, contentsCollectionView)
     }
     
     private func makeConstraints() {
@@ -77,15 +80,15 @@ extension HomeViewController {
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
             // bottom : superview - 탭바높이)
         }
-        testLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(16)
-            $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(20)
-        }
-        collectionView.snp.makeConstraints {
+        categoryCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(400)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.height.equalTo(174)
+        }
+        contentsCollectionView.snp.makeConstraints {
+            $0.top.equalTo(categoryCollectionView.snp.bottom).offset(16)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
+            $0.height.equalTo(800) // 수정
         }
     }
 }
@@ -93,25 +96,63 @@ extension HomeViewController {
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-      return CGSize(width: 70, height: 100)
+        switch collectionView.tag {
+        case 0:
+            return CGSize(width: 80, height: 40)
+
+        case 1:
+            return CGSize(width: 163, height: 201)
+
+        default:
+            return CGSize(width: 0, height: 0)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         // 옆 간격
-      return 20
+        switch collectionView.tag {
+        case 0:
+            return 20
+
+        case 1:
+            return 16
+
+        default:
+            return 0
+        }
     }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20 // 아이템 개수
+        // 아이템 개수
+        switch collectionView.tag {
+        case 0:
+            return 8
+
+        case 1:
+            return 8
+
+        default:
+            return 0
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath)
-                      as? CategoryCollectionViewCell else { return UICollectionViewCell() }
-        // Data bind
-        return cell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell { // data bind
+        switch collectionView.tag {
+        case 0:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath)
+                          as? CategoryCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+
+        case 1:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentsCollectionViewCell.identifier, for: indexPath)
+                          as? ContentsCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+
+        default:
+            return UICollectionViewCell()
+        }
     }
 }

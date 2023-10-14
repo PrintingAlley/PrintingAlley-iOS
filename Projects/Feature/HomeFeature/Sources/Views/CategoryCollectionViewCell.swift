@@ -1,8 +1,8 @@
 //
 //  CategoryCollectionViewCell.swift
-//  HomeFeatureInterface
+//  HomeFeature
 //
-//  Created by 박의서 on 2023/10/12.
+//  Created by 박의서 on 2023/10/14.
 //  Copyright © 2023 com. All rights reserved.
 //
 
@@ -21,12 +21,13 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     
     private let label = UILabel().then {
         $0.text = "Default Text"
-        $0.font = .setFont(.caption2)
-        $0.textColor = .cyan
+        $0.font = .setFont(.body2)
+        $0.textColor = .setColor(.grey(.grey800))
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.backgroundColor = .setColor(.sub(.white))
         addSubviews()
         makeConstraints()
     }
@@ -44,16 +45,12 @@ extension CategoryCollectionViewCell {
     private func makeConstraints() {
         image.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().inset(2)
+            $0.centerX.equalToSuperview()
         }
         
         label.snp.makeConstraints {
-            $0.top.equalTo(image.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(image.snp.bottom).offset(8)
+            $0.centerX.equalToSuperview()
         }
-    }
-    
-    func dataBind(text: String) {
-        label.text = text
     }
 }
