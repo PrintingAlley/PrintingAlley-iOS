@@ -55,7 +55,7 @@ extension BookMarkTableViewCell {
     func makeConstraints() {
         
         containerView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().inset(16)
             $0.left.right.equalToSuperview().inset(26)
         }
         
@@ -65,7 +65,7 @@ extension BookMarkTableViewCell {
         }
         
         subtitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(2)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(5)
             $0.left.equalTo(titleLabel.snp.left)
             $0.bottom.equalToSuperview()
         }
@@ -85,13 +85,14 @@ extension BookMarkTableViewCell {
         
     }
     
-    public func update(model: TmpModel) {
+    public func update(model: TmpModel , isLast: Bool) {
         self.model = model
         
         titleLabel.setTitle(title: model.name, textColor: .grey(.grey1000), font: .body1)
         subtitleLabel.setTitle(title: "장소 \(model.contents.count)개", textColor: .grey(.grey500), font: .caption1)
         
-        
+        print(isLast)
+        baseLine.layer.opacity = isLast ? 0 : 1
     }
     
     @objc func tapMore() {

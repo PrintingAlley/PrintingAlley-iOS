@@ -38,12 +38,12 @@ class BookMarkHeaderView: UIView {
     
 //    init(){
 //        super.init(frame: .zero)
-//        
+//
 //        addSubviews()
 //        makeConstraints()
 //        preProcessing()
-//        
-//        
+//
+//
 //    }
     
     override init(frame: CGRect) {
@@ -72,9 +72,9 @@ extension BookMarkHeaderView {
     
     func makeConstraints() {
         button.snp.makeConstraints{
-            $0.top.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
             $0.left.right.equalToSuperview().inset(24)
-            $0.bottom.equalToSuperview().inset(24)
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
     

@@ -24,13 +24,14 @@ class BookMarkViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel("북마크", textColor: .sub(.black), font: .header3, alignment: .center)
     
-    lazy var tableViewHeader: BookMarkHeaderView = BookMarkHeaderView(frame: CGRect(x: .zero, y: .zero, width: UIScreen.main.bounds.size.width, height: 64)).then {
+    lazy var tableViewHeader: BookMarkHeaderView = BookMarkHeaderView(frame: CGRect(x: .zero, y: .zero, width: UIScreen.main.bounds.size.width, height: 54)).then {
         $0.delegate = self
     }
     
     lazy var tableView :UITableView = UITableView().then {
         $0.tableHeaderView = tableViewHeader
         $0.register(BookMarkTableViewCell.self, forCellReuseIdentifier: BookMarkTableViewCell.identifier)
+        $0.separatorStyle = .none
     }
     
     var viewModel: BookMarkViewModel!
@@ -108,13 +109,21 @@ extension BookMarkViewController {
                 }
                 
                 cell.deleagte = self
-                
-                cell.update(model: model)
+                cell.selectionStyle = .none
+                cell.update(model: model, isLast: output.dataSource.value.count-1 == index )
                 
                 return cell
             }
         
             .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: {
+                
+                print($0)
+            })
+            .disposed(by: disposeBag)
+        
     }
 }
 
