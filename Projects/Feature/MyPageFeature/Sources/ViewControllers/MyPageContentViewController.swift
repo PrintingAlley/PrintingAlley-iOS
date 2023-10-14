@@ -16,7 +16,10 @@ import MessageUI // import For MailSystem
 
 public class MyPageContentViewController: UIViewController {
 
-    lazy var profileImage: ImageButton = ImageButton()
+    lazy var profileImage: UIButton = UIButton().then { // TODO: 프로필 이미지 편집 연결
+        $0.setImage(DesignSystemAsset.Icon.profilePlaceHolder.image, for: .normal)
+        $0.imageView?.contentMode = .scaleAspectFill
+    }
     
     lazy var profileLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 0
@@ -73,8 +76,6 @@ public class MyPageContentViewController: UIViewController {
 
 extension MyPageContentViewController {
     func preProcessing() {
-        self.profileImage.delegate = self
-        self.profileImage.setImage(image: DesignSystemAsset.Icon.profilePlaceHolder.image)
         
         footerView.deleagte = self
         // TODO: 닉네임 프리퍼런스 매니저 연결
@@ -113,7 +114,7 @@ extension MyPageContentViewController {
     func showMail() {
         if MFMailComposeViewController.canSendMail() {
             
-            let preBody:String = "\n\n닉네임: 익명의 제보자\n앱 버전: \(APP_VERSION())\nOS: \(OS_NAME()) \(OS_VERSION())"
+            let preBody: String = "\n\n닉네임: 익명의 제보자\n앱 버전: \(APP_VERSION())\nOS: \(OS_NAME()) \(OS_VERSION())"
             
             let composeVC = MFMailComposeViewController()
             composeVC.mailComposeDelegate = self
@@ -181,22 +182,6 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
 extension MyPageContentViewController: MyPageFooterViewDelegate {
     public func action(type: UserLogoutAction) {
         DEBUG_LOG(type)
-    }
-    
-}
-
-extension MyPageContentViewController: ImageButtonDelegate {
-    public func action(image: UIImage) { // TODO: 프로필 이미지 변경
-        
-        switch image {
-        case DesignSystemAsset.Icon.profilePlaceHolder.image:
-            DEBUG_LOG("RIGHT")
-        default:
-            DEBUG_LOG("HELLo")
-            
-    
-        }
-        
     }
     
 }
