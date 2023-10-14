@@ -29,7 +29,7 @@ public class MyPageContentViewController: UIViewController {
         $0.setTitle("프로필 수정", for: .normal)
         $0.setImage(DesignSystemAsset.Icon.pencil.image, for: .normal)
         $0.setTitleColor(DesignSystemAsset.Grey.grey500.color, for: .normal)
-        $0.imageView?.contentMode = .scaleAspectFit
+        $0.imageView?.contentMode = .scaleAspectFill
         $0.titleLabel?.font = .setFont(.caption1)
         $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
         $0.semanticContentAttribute = .forceRightToLeft //<- 중요

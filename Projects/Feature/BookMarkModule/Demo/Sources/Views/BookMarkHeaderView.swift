@@ -26,7 +26,7 @@ class BookMarkHeaderView: UIView {
         $0.setTitle("새 목록", for: .normal)
         $0.setImage(DesignSystemAsset.Icon.add.image, for: .normal)
         $0.setTitleColor(DesignSystemAsset.MainBlue.blue500.color, for: .normal)
-        $0.imageView?.contentMode = .scaleAspectFit
+        $0.imageView?.contentMode = .scaleAspectFill
         $0.titleLabel?.font = .setFont(.subtitle2)
         $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
         $0.semanticContentAttribute = .forceLeftToRight //<- 중요

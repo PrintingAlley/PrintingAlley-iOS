@@ -10,10 +10,11 @@ import UIKit
 import SnapKit
 import Then
 import DesignSystem
+import RxSwift
+import RxDataSources
 
 class BookMarkViewController: UIViewController {
 
-    
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
         
@@ -27,10 +28,24 @@ class BookMarkViewController: UIViewController {
         $0.delegate = self
     }
     
-    lazy var tableView:UITableView = UITableView().then{
+    lazy var tableView :UITableView = UITableView().then {
         $0.tableHeaderView = tableViewHeader
+        $0.register(BookMarkTableViewCell.self, forCellReuseIdentifier: BookMarkTableViewCell.identifier)
     }
     
+    var viewModel: BookMarkViewModel!
+
+    
+    let disposeBag = DisposeBag()
+    
+    init(viewModel: BookMarkViewModel!) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +53,7 @@ class BookMarkViewController: UIViewController {
         
         addSubviews()
         makeConstraints()
+        bindViewModel()
     }
     
 }
@@ -72,10 +88,46 @@ extension BookMarkViewController {
         
     }
     
+    func bindViewModel(){
+        let input = BookMarkViewModel.Input()
+        let output = self.viewModel.transform(input: input)
+        
+        bindDataSource(output:output)
+        
+    }
+    
+    func bindDataSource(output:BookMarkViewModel.Output) {
+        
+        output.dataSource
+            .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell in
+                
+                let indexPath: IndexPath = IndexPath(row: index, section: 0)
+                
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: BookMarkTableViewCell.identifier, for: indexPath) as? BookMarkTableViewCell  else {
+                    return UITableViewCell()
+                }
+                
+                cell.deleagte = self
+                
+                cell.update(model: model)
+                
+                return cell
+            }
+        
+            .disposed(by: disposeBag)
+    }
 }
 
-extension BookMarkViewController:BookMarkHeaderViewDelegate {
+extension BookMarkViewController: BookMarkHeaderViewDelegate {
     func action() {
         print("PREss")
     }
+}
+
+extension BookMarkViewController : BookMarkTableViewCellDelegate {
+    func tapMore() {
+        print("More")
+    }
+    
+    
 }
