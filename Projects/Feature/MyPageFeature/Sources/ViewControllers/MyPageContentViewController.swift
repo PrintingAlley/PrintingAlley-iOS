@@ -31,7 +31,7 @@ public class MyPageContentViewController: UIViewController {
         $0.setTitleColor(DesignSystemAsset.Grey.grey500.color, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFit
         $0.titleLabel?.font = .setFont(.caption1)
-        $0.contentHorizontalAlignment = .center
+        $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
         $0.semanticContentAttribute = .forceRightToLeft //<- 중요
         //$0.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15) //<- 중요
     }

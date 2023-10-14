@@ -15,7 +15,7 @@ class BookMarkViewController: UIViewController {
 
     
     lazy var naviTitleView: UIView = UIView()
-    lazy var backButton:UIButton = UIButton().then {
+    lazy var backButton: UIButton = UIButton().then {
         
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
@@ -23,7 +23,13 @@ class BookMarkViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel("북마크", textColor: .sub(.black), font: .header3, alignment: .center)
     
-    lazy var tableView:UITableView = UITableView()
+    lazy var tableViewHeader: BookMarkHeaderView = BookMarkHeaderView(frame: CGRect(x: .zero, y: .zero, width: UIScreen.main.bounds.size.width, height: 64)).then {
+        $0.delegate = self
+    }
+    
+    lazy var tableView:UITableView = UITableView().then{
+        $0.tableHeaderView = tableViewHeader
+    }
     
     
     override func viewDidLoad() {
@@ -38,15 +44,15 @@ class BookMarkViewController: UIViewController {
 
 extension BookMarkViewController {
     func addSubviews() {
-        self.view.addSubviews(naviTitleView)
+        self.view.addSubviews(naviTitleView,tableView)
         naviTitleView.addSubviews(backButton, naviTitleLabel)
     }
     
     func makeConstraints() {
         naviTitleView.snp.makeConstraints {
             $0.left.right.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(15)
-            $0.height.equalTo(28)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(12)
+            $0.height.equalTo(32)
         }
         
         backButton.snp.makeConstraints {
@@ -59,8 +65,17 @@ extension BookMarkViewController {
             $0.edges.equalToSuperview()
         }
         
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(naviTitleView.snp.bottom).offset(23)
+            $0.left.right.bottom.equalToSuperview()
+        }
         
-        
-        
+    }
+    
+}
+
+extension BookMarkViewController:BookMarkHeaderViewDelegate {
+    func action() {
+        print("PREss")
     }
 }
