@@ -20,4 +20,13 @@ public extension UIView {
     func addSubviews(_ views: UIView...) {
         views.forEach { self.addSubview($0) }
     }
+    
+    // use: myView.addTapGesture(target: self, action: #selector(action))
+    func addTapGesture(target: Any, action: Selector) {
+        let tap = UITapGestureRecognizer(target: target, action: action)
+        tap.numberOfTapsRequired = 1
+        tap.numberOfTouchesRequired = 1
+        addGestureRecognizer(tap)
+        isUserInteractionEnabled = true
+    }
 }
