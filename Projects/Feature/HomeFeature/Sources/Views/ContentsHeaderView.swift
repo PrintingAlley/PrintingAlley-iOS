@@ -19,19 +19,13 @@ final class ContentsHeaderView: UICollectionReusableView {
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
     }
     
-    private let contentsTitle = UILabel().then {
-        $0.text = "인쇄 알아보기"
-        $0.font = .setFont(.subtitle1)
-    }
+    private let contentsTitle = AlleyLabel("인쇄 알아보기", font: .subtitle1)
     
-    private let showMoreView = UIView().then {
-        $0.backgroundColor = .red
+    private lazy var showMoreView = UIView().then {
+        $0.addTapGesture(target: self, action: #selector(tapShowMoreView))
     }
 
-    private let showMoreText = UILabel().then {
-        $0.text = "더보기"
-        $0.font = .setFont(.caption1)
-    }
+    private let showMoreText = AlleyLabel("더보기", font: .caption1)
     
     private let showMoreIcon = UIImageView().then {
         $0.image = DesignSystemAsset.Icon.rightArrow.image
@@ -40,6 +34,7 @@ final class ContentsHeaderView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .setColor(.sub(.white))
         addSubviews()
         makeConstraints()
     }
@@ -92,6 +87,11 @@ extension ContentsHeaderView {
             $0.showsVerticalScrollIndicator = false
         }
         return collectionView
+    }
+    
+    @objc
+    private func tapShowMoreView() {
+        print("탭탭")
     }
 }
 

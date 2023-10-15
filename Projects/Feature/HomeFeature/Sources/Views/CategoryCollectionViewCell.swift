@@ -19,12 +19,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         $0.contentMode = .scaleAspectFit
     }
     
-    private let label = UILabel().then {
-        $0.text = "엽서/카드"
-        $0.textAlignment = .center
-        $0.font = .setFont(.body2)
-        $0.textColor = .setColor(.grey(.grey800))
-    }
+    private let label = AlleyLabel("엽서/카드", textColor: .grey(.grey800),font: .body2)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,8 +46,6 @@ extension CategoryCollectionViewCell {
         
         label.snp.makeConstraints {
             $0.top.equalTo(image.snp.bottom).offset(8)
-//            $0.leading.equalToSuperview()
-//            $0.width.equalTo(60)
             $0.centerX.equalToSuperview()
         }
     }

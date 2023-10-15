@@ -19,10 +19,7 @@ final class ContentsCollectionViewCell: UICollectionViewCell {
         $0.contentMode = .scaleAspectFit
     }
     
-    private let label = UILabel().then {
-        $0.text = "콘텐츠 타이틀"
-        $0.font = .setFont(.caption2)
-    }
+    private let label = AlleyLabel("콘텐츠 타이틀", font: .caption2)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
