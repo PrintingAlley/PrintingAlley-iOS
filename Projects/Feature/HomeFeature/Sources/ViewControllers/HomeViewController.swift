@@ -17,10 +17,8 @@ final class HomeViewController: UIViewController {
     }
     
     private let scrollView = UIScrollView().then {
+        $0.setRound([.topLeft, .topRight], radius: 12)
         $0.backgroundColor = .setColor(.sub(.white))
-        $0.layer.cornerRadius = 12
-        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        $0.layer.masksToBounds = true
     }
     
     private lazy var contentsCollectionView = makeCollectionView(scrollDirection: .vertical).then {
