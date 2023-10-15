@@ -8,6 +8,7 @@
 
 import UIKit
 import UtilityModule
+import DesignSystem
 import Then
 import SnapKit
 
@@ -15,6 +16,8 @@ final class HomeViewController: UIViewController {
     private let contentView = UIView().then {
         $0.backgroundColor = .setColor(.mainBlue(.blue500))
     }
+    
+    private let searchBar = SearchBar()
     
     private let scrollView = UIScrollView().then {
         $0.setRound([.topLeft, .topRight], radius: 12)
@@ -74,7 +77,7 @@ extension HomeViewController {
 extension HomeViewController {
     private func addSubViews() {
         view.addSubviews(contentView)
-        contentView.addSubviews(scrollView)
+        contentView.addSubviews(searchBar, scrollView)
         scrollView.addSubviews(contentsCollectionView)
     }
     
@@ -82,6 +85,12 @@ extension HomeViewController {
         contentView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(74)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
+            $0.height.equalTo(56)
+        }
+        
         scrollView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(208)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
