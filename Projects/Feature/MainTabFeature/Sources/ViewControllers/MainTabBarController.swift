@@ -36,7 +36,7 @@ public class MainTabBarController: UITabBarController {
         return items
     }()
 
-    init(myPageFactory: MyPageFactory, homeFactory: HomeFactory, nearByMeFactory:NearByMeFactory) {
+    init(myPageFactory: MyPageFactory, homeFactory: HomeFactory, nearByMeFactory: NearByMeFactory) {
         self.myPageFactory = myPageFactory
         self.homeFactory = homeFactory
         self.nearByMeFactory = nearByMeFactory
