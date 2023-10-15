@@ -12,7 +12,6 @@ import Then
 import SnapKit
 
 final class HomeViewController: UIViewController {
-    
     private let contentView = UIView().then {
         $0.backgroundColor = .setColor(.mainBlue(.blue500))
     }
@@ -22,23 +21,21 @@ final class HomeViewController: UIViewController {
         $0.layer.cornerRadius = 12 // top left, right만 적용되도록
     }
     
-    private lazy var categoryCollectionView = makeCollectionView(scrollDirection: .horizontal).then {
-        $0.tag = 0
-        $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
-    }
-    
     private lazy var contentsCollectionView = makeCollectionView(scrollDirection: .vertical).then {
         $0.tag = 1
         $0.register(ContentsCollectionViewCell.self, forCellWithReuseIdentifier: ContentsCollectionViewCell.identifier)
+        $0.register(ContentsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ContentsHeaderView.identifier)
     }
     
+    private let contentsInsets = UIEdgeInsets(top: 16, left: 0, bottom: 20, right: 0)
+    
     var viewModel: HomeViewModel!
-
+    
     init(viewModel: HomeViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -62,13 +59,19 @@ extension HomeViewController {
         }
         return collectionView
     }
+    
+    private func calculateHeight(count: Int, dividingBy: CGFloat, cellHeight: CGFloat, lineSpacing: CGFloat, insets: UIEdgeInsets) -> CGFloat { // count: List.cound
+        let count = CGFloat(count)
+        let heightCount = count / dividingBy + count.truncatingRemainder(dividingBy: dividingBy)
+        return heightCount * cellHeight + (heightCount - 1) * lineSpacing + insets.top + insets.bottom
+    }
 }
 
 extension HomeViewController {
     private func addSubViews() {
         view.addSubviews(contentView)
         contentView.addSubviews(scrollView)
-        scrollView.addSubviews(categoryCollectionView, contentsCollectionView)
+        scrollView.addSubviews(contentsCollectionView)
     }
     
     private func makeConstraints() {
@@ -78,17 +81,12 @@ extension HomeViewController {
         scrollView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(153)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-            // bottom : superview - 탭바높이)
-        }
-        categoryCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(40)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
-            $0.height.equalTo(174)
         }
         contentsCollectionView.snp.makeConstraints {
-            $0.top.equalTo(categoryCollectionView.snp.bottom).offset(16)
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
-            $0.height.equalTo(800) // 수정
+            $0.height.equalTo(calculateHeight(count: 10, dividingBy: 2, cellHeight: 201, lineSpacing: 24, insets: contentsInsets)) // 유동적으로
+            $0.bottom.equalToSuperview()
         }
     }
 }
@@ -96,63 +94,46 @@ extension HomeViewController {
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-        switch collectionView.tag {
-        case 0:
-            return CGSize(width: 80, height: 40)
-
-        case 1:
-            return CGSize(width: 163, height: 201)
-
-        default:
-            return CGSize(width: 0, height: 0)
-        }
+        return CGSize(width: 163, height: 201)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        // 줄 간격
+        return 24
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         // 옆 간격
-        switch collectionView.tag {
-        case 0:
-            return 20
-
-        case 1:
-            return 16
-
-        default:
-            return 0
+        return 16
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ContentsHeaderView.identifier, for: indexPath) as! ContentsHeaderView
+            return headerView
         }
+        return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        // 헤더 뷰의 크기 반환
+        return CGSize(width: APP_WIDTH(), height: 280)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        contentsInsets
     }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 아이템 개수
-        switch collectionView.tag {
-        case 0:
-            return 8
-
-        case 1:
-            return 8
-
-        default:
-            return 0
-        }
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell { // data bind
-        switch collectionView.tag {
-        case 0:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath)
-                          as? CategoryCollectionViewCell else { return UICollectionViewCell() }
-            return cell
-
-        case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentsCollectionViewCell.identifier, for: indexPath)
-                          as? ContentsCollectionViewCell else { return UICollectionViewCell() }
-            return cell
-
-        default:
-            return UICollectionViewCell()
-        }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentsCollectionViewCell.identifier, for: indexPath)
+                as? ContentsCollectionViewCell else { return UICollectionViewCell() }
+        return cell
     }
 }

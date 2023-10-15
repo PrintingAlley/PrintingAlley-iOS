@@ -20,7 +20,8 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     }
     
     private let label = UILabel().then {
-        $0.text = "Default Text"
+        $0.text = "엽서/카드"
+        $0.textAlignment = .center
         $0.font = .setFont(.body2)
         $0.textColor = .setColor(.grey(.grey800))
     }
@@ -50,6 +51,8 @@ extension CategoryCollectionViewCell {
         
         label.snp.makeConstraints {
             $0.top.equalTo(image.snp.bottom).offset(8)
+//            $0.leading.equalToSuperview()
+//            $0.width.equalTo(60)
             $0.centerX.equalToSuperview()
         }
     }

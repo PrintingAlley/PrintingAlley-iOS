@@ -15,14 +15,13 @@ final class ContentsCollectionViewCell: UICollectionViewCell {
     static let identifier = "ContentsCollectionViewCell"
     
     private let image = UIImageView().then {
-        $0.image = DesignSystemAsset.Icon.bookMark.image
+        $0.backgroundColor = .lightGray
         $0.contentMode = .scaleAspectFit
     }
     
     private let label = UILabel().then {
-        $0.text = "Default Text"
+        $0.text = "콘텐츠 타이틀"
         $0.font = .setFont(.caption2)
-        $0.textColor = .cyan
     }
     
     override init(frame: CGRect) {
@@ -45,6 +44,7 @@ extension ContentsCollectionViewCell {
     private func makeConstraints() {
         image.snp.makeConstraints {
             $0.top.equalToSuperview()
+            $0.width.height.equalTo(163)
             $0.centerX.equalToSuperview()
         }
         
