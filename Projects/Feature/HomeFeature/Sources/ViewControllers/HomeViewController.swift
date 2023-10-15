@@ -29,6 +29,10 @@ final class HomeViewController: UIViewController {
     
     private let contentsInsets = UIEdgeInsets(top: 16, left: 0, bottom: 20, right: 0)
     
+    private let contentsCount = 4 // 더미
+    
+    private let headerViewHeight: CGFloat = 280
+    
     var viewModel: HomeViewModel!
     
     init(viewModel: HomeViewModel) {
@@ -85,7 +89,7 @@ extension HomeViewController {
         contentsCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
-            $0.height.equalTo(calculateHeight(count: 10, dividingBy: 2, cellHeight: 201, lineSpacing: 24, insets: contentsInsets)) // 유동적으로
+            $0.height.equalTo(calculateHeight(count: contentsCount, dividingBy: 2, cellHeight: 201, lineSpacing: 24, insets: contentsInsets) + headerViewHeight) // 유동적으로
             $0.bottom.equalToSuperview()
         }
     }
@@ -117,7 +121,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         // 헤더 뷰의 크기 반환
-        return CGSize(width: APP_WIDTH(), height: 280)
+        return CGSize(width: APP_WIDTH(), height: headerViewHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -128,7 +132,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 아이템 개수
-        return 10
+        return contentsCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell { // data bind
