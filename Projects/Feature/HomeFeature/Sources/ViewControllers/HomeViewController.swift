@@ -19,6 +19,11 @@ final class HomeViewController: UIViewController {
     
     private let searchBar = SearchBar()
     
+    private lazy var searchBarTouchView = UIView().then {
+        $0.backgroundColor = .none
+        $0.addTapGesture(target: self, action: #selector(navigateToSearch))
+    }
+    
     private let scrollView = UIScrollView().then {
         $0.setRound([.topLeft, .topRight], radius: 12)
         $0.backgroundColor = .setColor(.sub(.white))
@@ -53,7 +58,50 @@ final class HomeViewController: UIViewController {
         makeConstraints()
     }
 }
+// MARK: - Objc 함수
+extension HomeViewController {
+    @objc private func navigateToSearch() {
+        print("네비게이션하렴")
+    }
+}
 
+// MARK: - UI 관련 함수
+extension HomeViewController {
+    private func addSubViews() {
+        view.addSubviews(contentView)
+        contentView.addSubviews(searchBar, scrollView)
+        searchBar.addSubviews(searchBarTouchView)
+        scrollView.addSubviews(contentsCollectionView)
+    }
+    
+    private func makeConstraints() {
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(74)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
+            $0.height.equalTo(56)
+        }
+        
+        searchBarTouchView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        scrollView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(208)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        contentsCollectionView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
+            $0.height.equalTo(calculateHeight(count: contentsCount, dividingBy: 2, cellHeight: 201, lineSpacing: 24, insets: contentsInsets) + headerViewHeight) // 유동적으로
+            $0.bottom.equalToSuperview()
+        }
+    }
+}
+
+// MARK: - CollectionView 관련 함수
 extension HomeViewController {
     private func makeCollectionView(scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
         let layout = UICollectionViewFlowLayout()
@@ -71,36 +119,6 @@ extension HomeViewController {
         let count = CGFloat(count)
         let heightCount = count / dividingBy + count.truncatingRemainder(dividingBy: dividingBy)
         return heightCount * cellHeight + (heightCount - 1) * lineSpacing + insets.top + insets.bottom
-    }
-}
-
-extension HomeViewController {
-    private func addSubViews() {
-        view.addSubviews(contentView)
-        contentView.addSubviews(searchBar, scrollView)
-        scrollView.addSubviews(contentsCollectionView)
-    }
-    
-    private func makeConstraints() {
-        contentView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        searchBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(74)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
-            $0.height.equalTo(56)
-        }
-        
-        scrollView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(208)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-        contentsCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
-            $0.height.equalTo(calculateHeight(count: contentsCount, dividingBy: 2, cellHeight: 201, lineSpacing: 24, insets: contentsInsets) + headerViewHeight) // 유동적으로
-            $0.bottom.equalToSuperview()
-        }
     }
 }
 
