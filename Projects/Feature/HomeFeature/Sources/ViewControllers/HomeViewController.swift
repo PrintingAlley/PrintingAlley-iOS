@@ -18,7 +18,9 @@ final class HomeViewController: UIViewController {
     
     private let scrollView = UIScrollView().then {
         $0.backgroundColor = .setColor(.sub(.white))
-        $0.layer.cornerRadius = 12 // top left, right만 적용되도록
+        $0.layer.cornerRadius = 12
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        $0.layer.masksToBounds = true
     }
     
     private lazy var contentsCollectionView = makeCollectionView(scrollDirection: .vertical).then {
@@ -79,7 +81,7 @@ extension HomeViewController {
             $0.edges.equalToSuperview()
         }
         scrollView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(153)
+            $0.top.equalToSuperview().inset(208)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         contentsCollectionView.snp.makeConstraints {
