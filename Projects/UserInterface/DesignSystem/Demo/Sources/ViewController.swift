@@ -20,17 +20,20 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.addSubview(button)
+        self.view.backgroundColor = .white
         button.snp.makeConstraints{
             $0.center.equalToSuperview()
         }
-        
+        button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(action), for: .touchUpInside)
     }
     
     @objc func action(){
         let vc = AlertViewController(title: "삭제하시겠나요?", content: "리스트를 삭제하면 리스트에 저장된\n장소도 함께 삭제됩니다", type: .delete)
         
-        self.present(vc,animated: true)
+        vc.modalPresentationStyle = .overFullScreen
+        
+        self.present(vc,animated: false)
     }
 
 

@@ -47,6 +47,11 @@ public class AlertViewController: UIViewController {
     var contentString: String = ""
     var type: AlertType = .onlyConfirm
     
+    lazy var alertView: UIView = UIView().then {
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 8
+    }
+    
     lazy var titleLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 0
     }
@@ -100,7 +105,8 @@ public class AlertViewController: UIViewController {
 extension AlertViewController {
     
     func addSubViews() {
-        self.view.addSubviews(titleLabel,contentLabel, buttonStack)
+        self.view.addSubviews(alertView)
+        self.alertView.addSubviews(titleLabel,contentLabel, buttonStack)
         buttonStack.addArrangedSubview(cancelButton, confirmButton)
         
     }
@@ -108,9 +114,8 @@ extension AlertViewController {
     func preProcessing() {
         
         cancelButton.isHidden = type.isHiddenCancelButton
-        
-        self.view.layer.cornerRadius = 8
-        self.view.backgroundColor = .white
+    
+        self.view.backgroundColor = .black.withAlphaComponent(0.4)
         
         titleLabel.setTitle(title: self.titleString, textColor: .sub(.black), font: .subtitle2, alignment: .center)
         contentLabel.setTitle(title: self.contentString, textColor: .sub(.black), font: .body2, alignment: .center)
@@ -124,6 +129,10 @@ extension AlertViewController {
     }
     
     func makeConstraints() {
+        
+        alertView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
