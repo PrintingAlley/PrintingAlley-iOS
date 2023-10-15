@@ -21,9 +21,12 @@ final class ContentsHeaderView: UICollectionReusableView {
     
     private let contentsTitle = AlleyLabel("인쇄 알아보기", font: .subtitle1)
     
-    private lazy var showMoreView = UIView().then {
-        $0.addTapGesture(target: self, action: #selector(tapShowMoreView))
+    private lazy var showMoreTouchView = UIView().then {
+        $0.backgroundColor = .none
+        $0.addTapGesture(target: self, action: #selector(navigateToAllContents))
     }
+    
+    private let showMoreContainer = UIView()
 
     private let showMoreText = AlleyLabel("더보기", font: .caption1)
     
@@ -46,8 +49,9 @@ final class ContentsHeaderView: UICollectionReusableView {
 
 extension ContentsHeaderView {
     private func addSubviews() {
-        showMoreView.addSubviews(showMoreText, showMoreIcon)
-        addSubviews(categoryCollectionView, contentsTitle, showMoreView)
+        addSubviews(categoryCollectionView, contentsTitle, showMoreContainer)
+        showMoreContainer.addSubviews(showMoreText, showMoreIcon)
+        showMoreContainer.addSubviews( showMoreTouchView)
     }
     
     private func makeConstraints() {
@@ -68,10 +72,14 @@ extension ContentsHeaderView {
             $0.width.equalTo(9)
             $0.leading.equalTo(showMoreText.snp.trailing).offset(3)
         }
-        showMoreView.snp.makeConstraints {
+        showMoreContainer.snp.makeConstraints {
             $0.centerY.equalTo(contentsTitle)
             $0.width.equalTo(44)
             $0.trailing.equalToSuperview()
+        }
+        showMoreTouchView.snp.makeConstraints {
+            $0.width.height.equalTo(40)
+            $0.edges.equalToSuperview()
         }
     }
 }
@@ -90,7 +98,7 @@ extension ContentsHeaderView {
     }
     
     @objc
-    private func tapShowMoreView() {
+    private func navigateToAllContents() {
         print("탭탭")
     }
 }
