@@ -73,11 +73,14 @@ public class AlertViewController: UIViewController {
     }
     
     
-    public init(title: String = "",
-         content: String = "",
-         type: AlertType = .onlyConfirm,
-         completion: (() -> Void)? = nil,
-         cancelCompletion: (() -> Void)? = nil){
+    /// <#Description#>
+    /// - Parameters:
+    ///   - title: "제목"
+    ///   - content: "내용"
+    ///   - type: "Alert 타입"
+    ///   - completion: "확인 핸들러"
+    ///   - cancelCompletion: "취소 핸들러"
+    public init(title: String = "", content: String = "", type: AlertType = .onlyConfirm, completion: (() -> Void)? = nil, cancelCompletion: (() -> Void)? = nil) {
         
         super.init(nibName: nil, bundle: nil)
         
@@ -165,3 +168,16 @@ extension AlertViewController {
         self.completion?()
     }
 }
+
+/*
+ 
+ 사용법
+ 
+ let vc = AlertViewController(title: "삭제하시겠나요?", content: "리스트를 삭제하면 리스트에 저장된\n장소도 함께 삭제됩니다", type: .delete)
+ 
+ vc.modalPresentationStyle = .overFullScreen 꼭 이걸로
+ 
+ self.present(vc,animated: false)
+ 
+ 
+ */
