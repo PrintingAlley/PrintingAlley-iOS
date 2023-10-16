@@ -31,14 +31,14 @@ class BookMarkViewController: UIViewController {
         $0.setTitleColor(DesignSystemAsset.Grey.grey300.color, for: .disabled)
         $0.setTitleColor(DesignSystemAsset.Sub.red.color, for: .normal)
         
-        $0.setImage(DesignSystemAsset.Icon.trash.image, for: .disabled)
-        $0.setImage(DesignSystemAsset.Icon.trashRed.image, for: .normal)
+//        $0.setImage(DesignSystemAsset.Icon.trash.image, for: .disabled)
+//        $0.setImage(DesignSystemAsset.Icon.trashRed.image, for: .normal)
         
         $0.titleLabel?.font = .setFont(.body1)
         
-        $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
-        $0.semanticContentAttribute = .forceLeftToRight // 이미지 왼쪽에 배치
-        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0) //<- 중요
+//        $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
+//        $0.semanticContentAttribute = .forceLeftToRight // 이미지 왼쪽에 배치
+//        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0) //<- 중요
         
         
     }
@@ -101,8 +101,7 @@ extension BookMarkViewController {
         
         
         deleteButton.snp.makeConstraints {
-            $0.width.equalTo(60)
-            $0.height.equalTo(29)
+            $0.width.height.equalTo(29)
             $0.centerY.equalToSuperview()
             $0.right.equalTo(editOrDoneButton.snp.left).offset(-10)
         }
