@@ -13,8 +13,21 @@ import Then
 import SnapKit
 
 final class HomeViewController: UIViewController {
-    private let contentView = UIView().then {
+    private let blueBackgroundView = UIView().then {
         $0.backgroundColor = .setColor(.mainBlue(.blue500))
+    }
+    
+    private let whiteBackgroundView = UIView().then {
+        $0.backgroundColor = .setColor(.sub(.white))
+    }
+    
+    private let containerView = UIView().then {
+        $0.backgroundColor = .none
+    }
+    
+    private let scrollview = UIScrollView().then {
+        $0.setRound([.topLeft, .topRight], radius: 12)
+        $0.backgroundColor = .none
     }
     
     private let searchBar = SearchBar()
@@ -23,19 +36,14 @@ final class HomeViewController: UIViewController {
         $0.backgroundColor = .none
         $0.addTapGesture(target: self, action: #selector(navigateToSearch))
     }
-    
-    private let scrollView = UIScrollView().then {
+    private lazy var contentsCollectionView = makeCollectionView(scrollDirection: .vertical).then {
         $0.setRound([.topLeft, .topRight], radius: 12)
         $0.backgroundColor = .setColor(.sub(.white))
-    }
-    
-    private lazy var contentsCollectionView = makeCollectionView(scrollDirection: .vertical).then {
-        $0.tag = 1
         $0.register(ContentsCollectionViewCell.self, forCellWithReuseIdentifier: ContentsCollectionViewCell.identifier)
         $0.register(ContentsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ContentsHeaderView.identifier)
     }
     
-    private let contentsInsets = UIEdgeInsets(top: 16, left: 0, bottom: 20, right: 0)
+    private let contentsInsets = UIEdgeInsets(top: 16, left: 24, bottom: 20, right: 24)
     
     private let contentsCount = 4 // 더미
     
@@ -58,6 +66,7 @@ final class HomeViewController: UIViewController {
         makeConstraints()
     }
 }
+
 // MARK: - Objc 함수
 extension HomeViewController {
     @objc private func navigateToSearch() {
@@ -68,18 +77,33 @@ extension HomeViewController {
 // MARK: - UI 관련 함수
 extension HomeViewController {
     private func addSubViews() {
-        view.addSubviews(contentView)
-        contentView.addSubviews(searchBar, scrollView)
+        view.addSubviews(blueBackgroundView, whiteBackgroundView, containerView)
+        containerView.addSubviews(scrollview)
+        scrollview.addSubviews(searchBar, contentsCollectionView)
         searchBar.addSubviews(searchBarTouchView)
-        scrollView.addSubviews(contentsCollectionView)
     }
     
     private func makeConstraints() {
-        contentView.snp.makeConstraints {
+        blueBackgroundView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(APP_HEIGHT() / 5 * 3)
+        }
+
+        whiteBackgroundView.snp.makeConstraints {
+            $0.top.equalTo(blueBackgroundView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        containerView.snp.makeConstraints { // 로고 들어갈 뷰
             $0.edges.equalToSuperview()
         }
+        
+        scrollview.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(110) // 수정필요
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
         searchBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(74)
+            $0.top.equalToSuperview().inset(10) // 수정 필요
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
             $0.height.equalTo(56)
         }
@@ -87,14 +111,9 @@ extension HomeViewController {
         searchBarTouchView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
-        scrollView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(208)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
         contentsCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
+            $0.top.equalTo(searchBar.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(calculateHeight(count: contentsCount, dividingBy: 2, cellHeight: 201, lineSpacing: 24, insets: contentsInsets) + headerViewHeight) // 유동적으로
             $0.bottom.equalToSuperview()
         }

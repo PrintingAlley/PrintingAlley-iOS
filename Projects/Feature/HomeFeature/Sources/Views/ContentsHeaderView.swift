@@ -57,11 +57,17 @@ extension ContentsHeaderView {
     private func makeConstraints() {
         categoryCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(24)
             $0.height.equalTo(172)
         }
         contentsTitle.snp.makeConstraints {
             $0.top.equalTo(categoryCollectionView.snp.bottom).offset(42)
+            $0.leading.equalToSuperview().inset(24)
+        }
+        showMoreContainer.snp.makeConstraints {
+            $0.centerY.equalTo(contentsTitle)
+            $0.width.equalTo(44)
+            $0.trailing.equalToSuperview().inset(24)
         }
         showMoreText.snp.makeConstraints {
             $0.leading.equalToSuperview()
@@ -71,11 +77,6 @@ extension ContentsHeaderView {
             $0.centerY.equalToSuperview()
             $0.width.equalTo(9)
             $0.leading.equalTo(showMoreText.snp.trailing).offset(3)
-        }
-        showMoreContainer.snp.makeConstraints {
-            $0.centerY.equalTo(contentsTitle)
-            $0.width.equalTo(44)
-            $0.trailing.equalToSuperview()
         }
         showMoreTouchView.snp.makeConstraints {
             $0.width.height.equalTo(40)

@@ -10,6 +10,11 @@ import UIKit
 import Then
 
 public final class SearchBar: UIView {
+    private let containerView = UIView().then {
+        $0.backgroundColor = .setColor(.sub(.white))
+        $0.setRound([.allCorners], radius: 32)
+    }
+    
     private let searchTextField = UITextField().then {
         let attributedPlaceholder = NSAttributedString(string: "플레이스 홀더 색상 바꾸기!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey400))])
         $0.attributedPlaceholder = attributedPlaceholder
@@ -22,7 +27,7 @@ public final class SearchBar: UIView {
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        configureUI()
+        self.backgroundColor = .none
         addSubviews()
         makeConstraints()
     }
@@ -33,16 +38,17 @@ public final class SearchBar: UIView {
 }
 
 extension SearchBar {
-    private func configureUI() {
-        self.backgroundColor = .setColor(.sub(.white))
-        self.setRound([.allCorners], radius: 32)
-    }
     
     private func addSubviews() {
-        self.addSubviews(searchTextField, searchButton)
+        self.addSubviews(containerView)
+        containerView.addSubviews(searchTextField, searchButton)
     }
     
     private func makeConstraints() {
+        containerView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
+        
         searchTextField.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(24)
