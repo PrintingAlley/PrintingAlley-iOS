@@ -12,6 +12,7 @@ import Then
 import DesignSystem
 import RxSwift
 import RxDataSources
+import UtilityModule
 
 class BookMarkViewController: UIViewController {
 
@@ -52,7 +53,7 @@ class BookMarkViewController: UIViewController {
     }
     
     var viewModel: BookMarkViewModel!
-
+    let input = BookMarkViewModel.Input()
     
     let disposeBag = DisposeBag()
     
@@ -121,8 +122,8 @@ extension BookMarkViewController {
         
     }
     
-    func bindViewModel(){
-        let input = BookMarkViewModel.Input()
+    func bindViewModel() {
+       
         let output = self.viewModel.transform(input: input)
         
         ///bind Input
@@ -131,6 +132,7 @@ extension BookMarkViewController {
         
         ///bind Output
         bindDataSource(input:input, output:output)
+        bindIndexOfSelectedItem(output: output)
     }
     
     func bindStateInputWithButton(input: BookMarkViewModel.Input) {
@@ -145,8 +147,8 @@ extension BookMarkViewController {
     func bindEditState(input: BookMarkViewModel.Input) {
         
         input.isEdit
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] isEdit  in
+            .asDriver()
+            .drive(onNext: { [weak self] isEdit  in
             
             guard let self else {return}
             
@@ -163,7 +165,7 @@ extension BookMarkViewController {
         
     }
     
-    func bindDataSource(input:BookMarkViewModel.Input, output:BookMarkViewModel.Output) {
+    func bindDataSource(input: BookMarkViewModel.Input, output: BookMarkViewModel.Output) {
         
         output.dataSource
             .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell in
@@ -176,7 +178,7 @@ extension BookMarkViewController {
                 
                 cell.deleagte = self
                 cell.selectionStyle = .none
-                cell.update(model: model, isEditng: input.isEdit.value  , isLast: output.dataSource.value.count-1 == index )
+                cell.update(model: model,index: index, isEditing: input.isEdit.value , isLast: output.dataSource.value.count-1 == index )
                 
                 return cell
             }
@@ -191,13 +193,36 @@ extension BookMarkViewController {
             .disposed(by: disposeBag)
         
     }
+    
+    func bindIndexOfSelectedItem(output: BookMarkViewModel.Output) {
+        
+        output.indexOfSelectedItem
+            .asDriver()
+            .drive(onNext:{ [weak self] selectedIndex in
+                
+                guard let self else {return}
+                
+                self.deleteButton.isEnabled = !selectedIndex.isEmpty
+                
+                // 선택된게 비어있으면 삭제는 비활성 화
+                
+            })
+            .disposed(by: disposeBag)
+        
+    }
 }
 
 
-extension BookMarkViewController : BookMarkTableViewCellDelegate {
-    func tapMore() {
-        print("More")
+extension BookMarkViewController: BookMarkTableViewCellDelegate {
+    func tapChecked(index: Int?) {
+        
+        guard let index = index as? Int else {
+            return
+        }
+        
+        input.tapItem.onNext(index)
+       
+        
     }
-    
     
 }

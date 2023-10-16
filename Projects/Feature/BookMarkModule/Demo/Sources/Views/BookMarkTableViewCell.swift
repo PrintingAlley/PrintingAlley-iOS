@@ -8,21 +8,26 @@
 
 import UIKit
 import DesignSystem
+import UtilityModule
 
 public protocol BookMarkTableViewCellDelegate: AnyObject {
-    func tapMore()
+    func tapChecked(index: Int?) //편집 모드일 때만 index 전달
 }
 
 class BookMarkTableViewCell: UITableViewCell {
 
     static let identifier: String = "BookMarkTableViewCell"
     
-    lazy var containerView: UIView = UIView()
+    lazy var containerView: UIView = UIView().then {
+        $0.isUserInteractionEnabled = true
+    }
     lazy var titleLabel: AlleyLabel = AlleyLabel()
     lazy var subtitleLabel: AlleyLabel = AlleyLabel()
-    lazy var button: UIButton = UIButton().then{
-        $0.setImage(DesignSystemAsset.Icon.more.image, for: .normal)
-        $0.imageView?.contentMode = .scaleAspectFill
+    lazy var button: UIButton = UIButton()
+    
+    lazy var rightArrowImageView: UIImageView = UIImageView().then{
+        $0.contentMode = .scaleAspectFill
+        $0.image = DesignSystemAsset.Icon.rightArrow.image
     }
     
     lazy var baseLine: UIView = UIView().then{
@@ -31,12 +36,14 @@ class BookMarkTableViewCell: UITableViewCell {
     
     public weak var deleagte: BookMarkTableViewCellDelegate?
     var model: TmpModel!
+    var index: Int!
+    var isEdit: Bool!
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             addSubviews()
             makeConstraints()
-            button.addTarget(self, action: #selector(tapMore), for: .touchUpInside)
+            button.addTarget(self, action: #selector(tapCheck), for: .touchUpInside)
         
     }
 
@@ -47,21 +54,22 @@ class BookMarkTableViewCell: UITableViewCell {
 }
 
 extension BookMarkTableViewCell {
-    func addSubviews(){
-        self.contentView.addSubviews(containerView,baseLine)
-        self.containerView.addSubviews(titleLabel,subtitleLabel,button)
+    func addSubviews() {
+        self.contentView.addSubviews(containerView,baseLine,button)
+        self.containerView.addSubviews(titleLabel,subtitleLabel,rightArrowImageView)
     }
     
     func makeConstraints() {
         
         containerView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(16)
-            $0.left.right.equalToSuperview().inset(26)
+            $0.right.equalToSuperview().inset(26)
+            $0.left.equalTo(button.snp.right)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.left.equalToSuperview()
-            
+            $0.top.equalToSuperview()
+            $0.left.equalTo(button.snp.right).offset(16)
         }
         
         subtitleLabel.snp.makeConstraints {
@@ -70,14 +78,21 @@ extension BookMarkTableViewCell {
             $0.bottom.equalToSuperview()
         }
         
-        button.snp.makeConstraints {
+        rightArrowImageView.snp.makeConstraints {
             $0.width.height.equalTo(24)
             $0.centerY.right.equalToSuperview()
+
+        }
+        
+        button.snp.makeConstraints {
+            $0.width.height.equalTo(32)
+            $0.centerY.equalToSuperview()
+            $0.left.equalToSuperview().inset(26)
         }
         
         baseLine.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.left.right.equalTo(containerView)
+            $0.left.right.equalToSuperview().inset(26)
             $0.top.equalTo(containerView.snp.bottom).offset(16)
             $0.bottom.equalToSuperview()
         }
@@ -85,17 +100,31 @@ extension BookMarkTableViewCell {
         
     }
     
-    public func update(model: TmpModel ,isEditng: Bool, isLast: Bool) {
+    public func update(model: TmpModel, index:Int, isEditing: Bool, isLast: Bool) {
         self.model = model
+        self.index = index
+        self.isEdit = isEditing
         
         titleLabel.setTitle(title: model.name, textColor: .grey(.grey1000), font: .body1)
         subtitleLabel.setTitle(title: "장소 \(model.contents.count)개", textColor: .grey(.grey500), font: .caption1)
         
-        print(isLast)
+
+        
+        if isEditing == false {
+            button.setImage(DesignSystemAsset.Icon.more.image, for: .normal)
+            button.imageView?.contentMode = .scaleAspectFill
+        }
+        
+        else {
+            button.setImage(model.isSelected == true ? DesignSystemAsset.Icon.check.image : DesignSystemAsset.Icon.unCheck.image, for: .normal)
+            button.imageView?.contentMode = .scaleAspectFill
+        }
+        
         baseLine.layer.opacity = isLast ? 0 : 1
     }
     
-    @objc func tapMore() {
-        deleagte?.tapMore()
+    @objc func tapCheck() {
+        
+        deleagte?.tapChecked(index: isEdit ? index : nil)
     }
 }

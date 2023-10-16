@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxRelay
+import UtilityModule
 
 final class BookMarkViewModel {
     
@@ -17,7 +18,7 @@ final class BookMarkViewModel {
     struct Input {
         let isEdit: BehaviorRelay<Bool> = .init(value: false)
         let tapStateButton: PublishSubject<Void> = .init()
-        let tapItem:PublishSubject<Int> = .init()
+        let tapItem: PublishSubject<Int> = .init()
         
  
     }
@@ -30,6 +31,13 @@ final class BookMarkViewModel {
     func transform(input: Input) -> Output {
         
         let output = Output()
+        
+        //편집 버튼 눌렀을 때 상태 바꿈
+        input.tapStateButton
+            .withLatestFrom(input.isEdit)
+            .map({!$0})
+            .bind(to: input.isEdit)
+            .disposed(by: disposeBag)
         
         /// 아이템 체크 표시 클릭 시 , 체크 표시되어 있으면  삭제 , 없으면 추가
         input.tapItem
@@ -47,6 +55,7 @@ final class BookMarkViewModel {
                 }
                 
             }
+            .debug("ID")
             .bind(to: output.indexOfSelectedItem)
             .disposed(by: disposeBag)
         
@@ -63,12 +72,20 @@ final class BookMarkViewModel {
                 selectedItems.forEach { i in
                     realData[i].isSelected = true
                 }
+
                 return realData
                 
             }
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
-
+        
+        input.isEdit
+            .skip(1)
+            .withLatestFrom(output.indexOfSelectedItem){($0, $1)}
+            .map({ $0.0 == false ? [] : $0.1 }) // $0.0 == false 편집 종료
+            .bind(to: output.indexOfSelectedItem) // 편집 종료 면 , 선택된 애들 모두 해제
+            .disposed(by: disposeBag)
+            
         
         
         
