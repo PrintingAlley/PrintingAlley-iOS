@@ -44,7 +44,7 @@ public extension UIFont.AlleyFontSystem {
             return UIFont(font: DesignSystemFontFamily.Pretendard.semiBold, size: 24) ?? .init()
             
         case .header3:
-            return UIFont(font: DesignSystemFontFamily.Pretendard.medium, size: 22) ?? .init()
+            return UIFont(font: DesignSystemFontFamily.Pretendard.medium, size: 20) ?? .init()
 
         case .subtitle1:
             return UIFont(font: DesignSystemFontFamily.Pretendard.semiBold, size: 18) ?? .init()
@@ -81,7 +81,7 @@ public extension UIFont.AlleyFontSystem {
             return 32
             
         case .header3:
-            return 32
+            return 30
             
         case .subtitle1:
             return 24
