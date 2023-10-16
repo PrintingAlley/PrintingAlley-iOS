@@ -12,6 +12,7 @@ import Then
 import DesignSystem
 import RxCocoa
 import RxSwift
+import RxKeyboard
 
 
 public class EditModalViewController: UIViewController {
@@ -37,6 +38,7 @@ public class EditModalViewController: UIViewController {
     
     lazy var textField: UITextField = UITextField().then {
         $0.font = .setFont(.body1)
+        $0.autocorrectionType = .no // 자동완성 끄기
         $0.setPlaceHolder(text: "이름을 입력하세요.", textColor: .setColor(.grey(.grey300)), font: .body1)
     }
     
@@ -101,14 +103,15 @@ public class EditModalViewController: UIViewController {
         addSubViews()
         preProcessing()
         makeConstraints()
-        bindViewModel()
+        bindTextField()
+        bindKeyboard()
     }
     
 }
 
 extension EditModalViewController {
     
-    func bindViewModel() {
+    func bindTextField() {
         
         textField
             .rx
@@ -130,10 +133,32 @@ extension EditModalViewController {
                 
                 guard let self else {return}
                 
+                self.confirmButton.isEnabled  = !str.isEmpty
+  
                 self.limitLabel.setTitle(title: "\(str.count)/14자", textColor: .grey(.grey400), font: .caption1)
             })
             .bind(to: textField.rx.text)
             .disposed(by: disposeBag)
+        
+    }
+    
+    func bindKeyboard() {
+        
+        RxKeyboard.instance.visibleHeight //드라이브: 무조건 메인쓰레드에서 돌아감
+        .drive(onNext: { [weak self] keyboardVisibleHeight in
+            print("keyboardVisibleHeight: \(keyboardVisibleHeight)")
+            guard let self = self else {
+                return
+            }
+            //키보드는 바텀 SafeArea부터 계산되므로 빼야함
+            let window: UIWindow? = UIApplication.shared.windows.first
+            let safeAreaInsetsBottom: CGFloat = window?.safeAreaInsets.bottom ?? 0
+            let tmp = keyboardVisibleHeight  - safeAreaInsetsBottom
+            
+            print(tmp)
+
+            
+        })
         
     }
     
@@ -160,6 +185,8 @@ extension EditModalViewController {
             $0.left.right.equalToSuperview().inset(14)
             $0.center.equalToSuperview()
         }
+        
+        //TODO: 키보드에 따른 contentview 위치 
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
