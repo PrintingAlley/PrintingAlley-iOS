@@ -11,7 +11,7 @@ import SnapKit
 import Then
 import UtilityModule
 import KakaoSDKCommon
- import GoogleSignIn
+//import GoogleSignIn
 import RxSwift
 import DesignSystem
 
@@ -108,9 +108,9 @@ extension SignInViewController {
         
         
         
-        bindGoogleLogin(output: output)
+//        bindGoogleLogin(output: output)
     }
-    
+    /*
     func bindGoogleLogin(output: SignInViewModel.Output) {
 
         output.runGoogleLogin.subscribe(onNext: { [weak self] in
@@ -145,6 +145,7 @@ extension SignInViewController {
 
 
     }
+     */
 }
 
 extension SignInViewController: LoginButtonViewDelegate {
