@@ -26,9 +26,9 @@ final class ContentsHeaderView: UICollectionReusableView {
     
     private let contentsTitle = AlleyLabel("인쇄가 어려운 당신에게", font: .subtitle1)
     
-    private lazy var showMoreTouchView = UIView().then {
+    private lazy var showMoreTouchButton = UIButton().then {
         $0.backgroundColor = .none
-        $0.addTapGesture(target: self, action: #selector(navigateToAllContents))
+        $0.addTarget(self, action: #selector(navigateToAllContents), for: .touchDown)
     }
     
     private let showMoreContainer = UIView()
@@ -56,14 +56,13 @@ extension ContentsHeaderView {
     private func addSubviews() {
         addSubviews(categoryCollectionView, contentsTitle, showMoreContainer)
         showMoreContainer.addSubviews(showMoreText, showMoreIcon)
-        showMoreContainer.addSubviews(showMoreTouchView)
+        showMoreContainer.addSubviews(showMoreTouchButton)
     }
     
     private func makeConstraints() {
         categoryCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
             $0.leading.trailing.equalToSuperview().inset(24)
-//            $0.height.equalTo(cellSize.height * 2 + lineSpacing)
             $0.height.equalTo(172)
         }
         contentsTitle.snp.makeConstraints {
@@ -84,7 +83,7 @@ extension ContentsHeaderView {
             $0.width.equalTo(9)
             $0.leading.equalTo(showMoreText.snp.trailing).offset(3)
         }
-        showMoreTouchView.snp.makeConstraints {
+        showMoreTouchButton.snp.makeConstraints {
             $0.width.height.equalTo(40)
             $0.edges.equalToSuperview()
         }

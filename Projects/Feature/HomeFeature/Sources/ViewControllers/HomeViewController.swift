@@ -37,10 +37,11 @@ final class HomeViewController: UIViewController {
     
     private let searchBar = SearchBar()
     
-    private lazy var searchBarTouchView = UIView().then {
+    private lazy var searchBarButton = UIButton().then {
+        $0.addTarget(self, action: #selector(navigateToSearch), for: .touchDown)
         $0.backgroundColor = .none
-        $0.addTapGesture(target: self, action: #selector(navigateToSearch))
     }
+
     private lazy var contentsCollectionView = makeCollectionView(scrollDirection: .vertical).then {
         $0.setRound([.topLeft, .topRight], radius: 12)
         $0.backgroundColor = .setColor(.sub(.white))
@@ -86,7 +87,7 @@ extension HomeViewController {
         view.addSubviews(blueBackgroundView, whiteBackgroundView, containerView)
         containerView.addSubviews(logoImage, scrollview)
         scrollview.addSubviews(searchBar, contentsCollectionView)
-        searchBar.addSubviews(searchBarTouchView)
+        searchBar.addSubviews(searchBarButton)
     }
     
     private func makeConstraints() {
@@ -120,7 +121,7 @@ extension HomeViewController {
             $0.height.equalTo(56)
         }
         
-        searchBarTouchView.snp.makeConstraints {
+        searchBarButton.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
 
