@@ -34,7 +34,9 @@ public final class SearchBar: UIView {
 
 extension SearchBar {
     private func configureUI() {
-        self.setRound([.allCorners], radius: 32)
+        DispatchQueue.main.async {
+            self.setRound([.allCorners], radius: self.frame.height / 2)
+        }
         self.backgroundColor = .setColor(.sub(.white))
         self.layer.borderColor = UIColor.setColor(.grey(.grey100)).cgColor
         self.layer.borderWidth = 1.0
