@@ -22,7 +22,29 @@ class BookMarkViewController: UIViewController {
         $0.imageView?.contentMode = .scaleAspectFill
     }
     
-    lazy var naviTitleLabel: AlleyLabel = AlleyLabel("북마크", textColor: .sub(.black), font: .header3, alignment: .center)
+    lazy var editOrDoneButton: UIButton = UIButton()
+    
+    lazy var deleteButton: UIButton = UIButton().then{
+        $0.setTitle("삭제", for: .normal)
+        $0.setTitle("삭제", for: .disabled)
+        
+        $0.setTitleColor(DesignSystemAsset.Grey.grey300.color, for: .disabled)
+        $0.setTitleColor(DesignSystemAsset.Sub.red.color, for: .normal)
+        
+        $0.setImage(DesignSystemAsset.Icon.trash.image, for: .disabled)
+        $0.setImage(DesignSystemAsset.Icon.trashRed.image, for: .normal)
+        
+        $0.titleLabel?.font = .setFont(.body1)
+        
+        $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
+        $0.semanticContentAttribute = .forceLeftToRight // 이미지 왼쪽에 배치
+        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0) //<- 중요
+        
+        
+    }
+    
+    
+    lazy var naviTitleLabel: AlleyLabel = AlleyLabel("저장목록", textColor: .sub(.black), font: .header3, alignment: .center)
     
     lazy var tableView :UITableView = UITableView().then {
         $0.register(BookMarkTableViewCell.self, forCellReuseIdentifier: BookMarkTableViewCell.identifier)
@@ -57,7 +79,7 @@ class BookMarkViewController: UIViewController {
 extension BookMarkViewController {
     func addSubviews() {
         self.view.addSubviews(naviTitleView,tableView)
-        naviTitleView.addSubviews(backButton, naviTitleLabel)
+        naviTitleView.addSubviews(backButton, naviTitleLabel,deleteButton, editOrDoneButton)
     }
     
     func makeConstraints() {
@@ -77,10 +99,26 @@ extension BookMarkViewController {
             $0.edges.equalToSuperview()
         }
         
+        
+        deleteButton.snp.makeConstraints {
+            $0.width.equalTo(60)
+            $0.height.equalTo(29)
+            $0.centerY.equalToSuperview()
+            $0.right.equalTo(editOrDoneButton.snp.left).offset(-10)
+        }
+        
+        editOrDoneButton.snp.makeConstraints {
+            $0.right.equalToSuperview().inset(24)
+            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(29)
+        }
+        
         tableView.snp.makeConstraints {
             $0.top.equalTo(naviTitleView.snp.bottom).offset(23)
             $0.left.right.bottom.equalToSuperview()
         }
+        
+        
         
     }
     
@@ -90,20 +128,35 @@ extension BookMarkViewController {
         
         ///bind Input
         bindEditState(input: input)
+        bindStateInputWithButton(input: input)
         
         ///bind Output
         bindDataSource(input:input, output:output)
     }
     
+    func bindStateInputWithButton(input: BookMarkViewModel.Input) {
+        
+        editOrDoneButton.rx
+            .tap
+            .bind(to: input.tapStateButton)
+            .disposed(by: disposeBag)
+        
+    }
+    
     func bindEditState(input: BookMarkViewModel.Input) {
         
-        input.isEdit.subscribe(onNext: { [weak self] isEdit  in
+        input.isEdit
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isEdit  in
             
             guard let self else {return}
             
             self.backButton.isHidden = isEdit
+            self.deleteButton.isHidden = !isEdit
             
-            
+            self.editOrDoneButton.setTitle(isEdit ? "완료" : "편집", for: .normal)
+            self.editOrDoneButton.titleLabel?.font = .setFont(.body1)
+            self.editOrDoneButton.setTitleColor(isEdit ? DesignSystemAsset.MainBlue.blue500.color : .black, for: .normal)
             
             
         })
@@ -141,11 +194,6 @@ extension BookMarkViewController {
     }
 }
 
-extension BookMarkViewController: BookMarkHeaderViewDelegate {
-    func action() {
-        print("PREss")
-    }
-}
 
 extension BookMarkViewController : BookMarkTableViewCellDelegate {
     func tapMore() {

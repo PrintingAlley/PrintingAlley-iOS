@@ -12,8 +12,11 @@ import RxRelay
 
 final class BookMarkViewModel {
     
+    let disposeBag = DisposeBag()
+    
     struct Input {
         let isEdit: BehaviorRelay<Bool> = .init(value: false)
+        let tapStateButton: PublishSubject<Void> = .init()
  
     }
     
@@ -25,6 +28,17 @@ final class BookMarkViewModel {
     func transform(input: Input) -> Output {
         
         let output = Output()
+        
+        input.tapStateButton
+            .withLatestFrom(input.isEdit)
+            .subscribe(onNext: { [weak self] isEdit in
+            
+            guard let self else { return }
+            
+                input.isEdit.accept(!isEdit)
+            
+        })
+        .disposed(by: disposeBag)
         
         
         return output
