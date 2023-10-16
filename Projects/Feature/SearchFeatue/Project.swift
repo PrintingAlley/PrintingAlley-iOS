@@ -5,12 +5,12 @@ import ProjectDescriptionHelpers
 let project = Project.module(
     name: ModulePaths.Feature.SearchFeatue.rawValue,
     targets: [
-        .interface(module: .feature(.SearchFeatue)),
-        .implements(module: .feature(.SearchFeatue), dependencies: [
-            .feature(target: .SearchFeatue, type: .interface)
+        .interface(module: .feature(.SearchFeatue), dependencies: [
+            .feature(target: .BaseFeature, type: .interface)
         ]),
-        .testing(module: .feature(.SearchFeatue), dependencies: [
-            .feature(target: .SearchFeatue, type: .interface)
+        .implements(module: .feature(.SearchFeatue), dependencies: [
+            .feature(target: .SearchFeatue, type: .interface),
+            .feature(target: .BaseFeature),
         ]),
         .demo(module: .feature(.SearchFeatue), dependencies: [
             .feature(target: .SearchFeatue)
