@@ -142,6 +142,7 @@ extension AlertViewController {
     func makeConstraints() {
         
         alertView.snp.makeConstraints {
+            //$0.left.right.equalToSuperview().inset()
             $0.center.equalToSuperview()
         }
         
