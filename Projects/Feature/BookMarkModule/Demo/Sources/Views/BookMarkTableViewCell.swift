@@ -85,7 +85,7 @@ extension BookMarkTableViewCell {
         
     }
     
-    public func update(model: TmpModel , isLast: Bool) {
+    public func update(model: TmpModel ,isEditng: Bool, isLast: Bool) {
         self.model = model
         
         titleLabel.setTitle(title: model.name, textColor: .grey(.grey1000), font: .body1)

@@ -24,12 +24,7 @@ class BookMarkViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel("북마크", textColor: .sub(.black), font: .header3, alignment: .center)
     
-    lazy var tableViewHeader: BookMarkHeaderView = BookMarkHeaderView(frame: CGRect(x: .zero, y: .zero, width: UIScreen.main.bounds.size.width, height: 54)).then {
-        $0.delegate = self
-    }
-    
     lazy var tableView :UITableView = UITableView().then {
-        $0.tableHeaderView = tableViewHeader
         $0.register(BookMarkTableViewCell.self, forCellReuseIdentifier: BookMarkTableViewCell.identifier)
         $0.separatorStyle = .none
     }
@@ -93,11 +88,30 @@ extension BookMarkViewController {
         let input = BookMarkViewModel.Input()
         let output = self.viewModel.transform(input: input)
         
-        bindDataSource(output:output)
+        ///bind Input
+        bindEditState(input: input)
+        
+        ///bind Output
+        bindDataSource(input:input, output:output)
+    }
+    
+    func bindEditState(input: BookMarkViewModel.Input) {
+        
+        input.isEdit.subscribe(onNext: { [weak self] isEdit  in
+            
+            guard let self else {return}
+            
+            self.backButton.isHidden = isEdit
+            
+            
+            
+            
+        })
+        .disposed(by: disposeBag)
         
     }
     
-    func bindDataSource(output:BookMarkViewModel.Output) {
+    func bindDataSource(input:BookMarkViewModel.Input, output:BookMarkViewModel.Output) {
         
         output.dataSource
             .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell in
@@ -110,7 +124,7 @@ extension BookMarkViewController {
                 
                 cell.deleagte = self
                 cell.selectionStyle = .none
-                cell.update(model: model, isLast: output.dataSource.value.count-1 == index )
+                cell.update(model: model, isEditng: input.isEdit.value  , isLast: output.dataSource.value.count-1 == index )
                 
                 return cell
             }

@@ -13,7 +13,8 @@ import RxRelay
 final class BookMarkViewModel {
     
     struct Input {
-        
+        let isEdit: BehaviorRelay<Bool> = .init(value: false)
+ 
     }
     
     struct Output {
