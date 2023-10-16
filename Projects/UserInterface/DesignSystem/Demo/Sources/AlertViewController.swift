@@ -22,7 +22,7 @@ public enum AlertType {
         case .onlyConfirm:
             return "확인"
         case .delete:
-            return "삭제"
+            return "삭제하기"
         }
     }
     
@@ -58,19 +58,27 @@ public class AlertViewController: UIViewController {
     lazy var contentLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 0
     }
-    lazy var cancelButton: UIButton = UIButton().then{
-        $0.setTitle("취소", for: .normal)
-        $0.setTitleColor(DesignSystemAsset.Grey.grey400.color, for: .normal)
-        $0.titleLabel?.font = .setFont(.subtitle2)
-        $0.contentHorizontalAlignment = .center
+    
+    lazy var baseLineView: UIView = UIView().then {
+        $0.backgroundColor = .black.withAlphaComponent(0.1)
     }
-    lazy var confirmButton: UIButton = UIButton()
     
     lazy var buttonStack: UIStackView = UIStackView().then{
         $0.axis = .horizontal
         $0.spacing = 4
         $0.distribution = .fillEqually
     }
+    
+    lazy var cancelButton: UIButton = UIButton().then{
+        $0.setTitle("취소", for: .normal)
+        $0.setTitleColor(DesignSystemAsset.Grey.grey400.color, for: .normal)
+        $0.titleLabel?.font = .setFont(.body2)
+        $0.contentHorizontalAlignment = .center
+    }
+    lazy var confirmButton: UIButton = UIButton()
+    
+    
+ 
     
     
     /// <#Description#>
@@ -109,7 +117,7 @@ extension AlertViewController {
     
     func addSubViews() {
         self.view.addSubviews(alertView)
-        self.alertView.addSubviews(titleLabel,contentLabel, buttonStack)
+        self.alertView.addSubviews(titleLabel,contentLabel, baseLineView , buttonStack)
         buttonStack.addArrangedSubview(cancelButton, confirmButton)
         
     }
@@ -148,8 +156,14 @@ extension AlertViewController {
             $0.left.right.equalTo(titleLabel)
         }
         
+        baseLineView.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(contentLabel.snp.bottom).offset(16)
+        }
+        
         buttonStack.snp.makeConstraints {
-            $0.top.equalTo(contentLabel.snp.bottom).offset(24)
+            $0.top.equalTo(baseLineView.snp.bottom).offset(10)
             $0.horizontalEdges.equalTo(titleLabel.snp.horizontalEdges)
             $0.bottom.equalToSuperview().inset(16)
         }

@@ -25,12 +25,12 @@ class BookMarkTableViewCell: UITableViewCell {
         $0.imageView?.contentMode = .scaleAspectFill
     }
     
-    lazy var baseLine:UIView = UIView().then{
+    lazy var baseLine: UIView = UIView().then{
         $0.backgroundColor = .black.withAlphaComponent(0.1)
     }
     
     public weak var deleagte: BookMarkTableViewCellDelegate?
-    var model:TmpModel!
+    var model: TmpModel!
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)

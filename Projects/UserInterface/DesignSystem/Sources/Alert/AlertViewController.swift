@@ -47,12 +47,18 @@ public class AlertViewController: UIViewController {
     var contentString: String = ""
     var type: AlertType = .onlyConfirm
     
+    lazy var alertView: UIView = UIView().then {
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 8
+    }
+    
     lazy var titleLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 0
     }
     lazy var contentLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 0
     }
+    
     lazy var cancelButton: UIButton = UIButton().then{
         $0.setTitle("취소", for: .normal)
         $0.setTitleColor(DesignSystemAsset.Grey.grey400.color, for: .normal)
@@ -61,6 +67,7 @@ public class AlertViewController: UIViewController {
     }
     lazy var confirmButton: UIButton = UIButton()
     
+    
     lazy var buttonStack: UIStackView = UIStackView().then{
         $0.axis = .horizontal
         $0.spacing = 4
@@ -68,11 +75,14 @@ public class AlertViewController: UIViewController {
     }
     
     
-    public init(title: String = "",
-         content: String = "",
-         type: AlertType = .onlyConfirm,
-         completion: (() -> Void)? = nil,
-         cancelCompletion: (() -> Void)? = nil){
+    /// <#Description#>
+    /// - Parameters:
+    ///   - title: "제목"
+    ///   - content: "내용"
+    ///   - type: "Alert 타입"
+    ///   - completion: "확인 핸들러"
+    ///   - cancelCompletion: "취소 핸들러"
+    public init(title: String = "", content: String = "", type: AlertType = .onlyConfirm, completion: (() -> Void)? = nil, cancelCompletion: (() -> Void)? = nil) {
         
         super.init(nibName: nil, bundle: nil)
         
@@ -100,7 +110,8 @@ public class AlertViewController: UIViewController {
 extension AlertViewController {
     
     func addSubViews() {
-        self.view.addSubviews(titleLabel,contentLabel, buttonStack)
+        self.view.addSubviews(alertView)
+        self.alertView.addSubviews(titleLabel,contentLabel, buttonStack)
         buttonStack.addArrangedSubview(cancelButton, confirmButton)
         
     }
@@ -108,9 +119,8 @@ extension AlertViewController {
     func preProcessing() {
         
         cancelButton.isHidden = type.isHiddenCancelButton
-        
-        self.view.layer.cornerRadius = 8
-        self.view.backgroundColor = .white
+    
+        self.view.backgroundColor = .black.withAlphaComponent(0.4)
         
         titleLabel.setTitle(title: self.titleString, textColor: .sub(.black), font: .subtitle2, alignment: .center)
         contentLabel.setTitle(title: self.contentString, textColor: .sub(.black), font: .body2, alignment: .center)
@@ -124,6 +134,10 @@ extension AlertViewController {
     }
     
     func makeConstraints() {
+        
+        alertView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
@@ -156,3 +170,16 @@ extension AlertViewController {
         self.completion?()
     }
 }
+
+/*
+ 
+ 사용법
+ 
+ let vc = AlertViewController(title: "삭제하시겠나요?", content: "리스트를 삭제하면 리스트에 저장된\n장소도 함께 삭제됩니다", type: .delete)
+ 
+ vc.modalPresentationStyle = .overFullScreen 꼭 이걸로
+ 
+ self.present(vc,animated: false)
+ 
+ 
+ */
