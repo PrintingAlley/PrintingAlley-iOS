@@ -17,28 +17,60 @@ final class BookMarkViewModel {
     struct Input {
         let isEdit: BehaviorRelay<Bool> = .init(value: false)
         let tapStateButton: PublishSubject<Void> = .init()
+        let tapItem:PublishSubject<Int> = .init()
+        
  
     }
     
     struct Output {
         let dataSource: BehaviorRelay<[TmpModel]> = .init(value: TmpModel.makeDummy())
-        
+        let indexOfSelectedItem: BehaviorRelay<[Int]> = .init(value: [])
     }
     
     func transform(input: Input) -> Output {
         
         let output = Output()
         
-        input.tapStateButton
-            .withLatestFrom(input.isEdit)
-            .subscribe(onNext: { [weak self] isEdit in
-            
-            guard let self else { return }
-            
-                input.isEdit.accept(!isEdit)
-            
-        })
-        .disposed(by: disposeBag)
+        /// 아이템 체크 표시 클릭 시 , 체크 표시되어 있으면  삭제 , 없으면 추가
+        input.tapItem
+            .withLatestFrom(output.indexOfSelectedItem) { (index, selectedItems) -> [Int] in
+                if selectedItems.contains(index) {
+                    guard let removeTargetIndex = selectedItems.firstIndex(where: { $0 == index }) else { return selectedItems }
+                    var newSelectedItems = selectedItems
+                    newSelectedItems.remove(at: removeTargetIndex)
+                    
+                    return newSelectedItems
+                }
+                
+                else {
+                    return selectedItems + [index]
+                }
+                
+            }
+            .bind(to: output.indexOfSelectedItem)
+            .disposed(by: disposeBag)
+        
+        /// 선택된 것들의 체크 표시를 반영하기 위한 dataSource 바인딩
+        output.indexOfSelectedItem
+            .withLatestFrom(output.dataSource){ ($0, $1) }
+            .map{ (selectedItems, dataSource) -> [TmpModel] in
+                var realData = dataSource
+                
+                realData.indices.forEach({
+                    realData[$0].isSelected = false
+                })
+                
+                selectedItems.forEach { i in
+                    realData[i].isSelected = true
+                }
+                return realData
+                
+            }
+            .bind(to: output.dataSource)
+            .disposed(by: disposeBag)
+
+        
+        
         
         
         return output
@@ -49,6 +81,7 @@ final class BookMarkViewModel {
 struct TmpModel {
     let name: String
     let contents: [TmpContentModel]
+    var isSelected: Bool = false
     
     static func makeDummy() -> [Self] {
         [TmpModel(name: "즐겨찾기 1", contents: [TmpContentModel(name: "정다운 인쇄소 1", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80"), TmpContentModel(name: "정다운 인쇄소 2", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80")]),
