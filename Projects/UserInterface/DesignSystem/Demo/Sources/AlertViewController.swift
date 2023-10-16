@@ -78,9 +78,6 @@ public class AlertViewController: UIViewController {
     lazy var confirmButton: UIButton = UIButton()
     
     
- 
-    
-    
     /// <#Description#>
     /// - Parameters:
     ///   - title: "제목"
@@ -172,13 +169,11 @@ extension AlertViewController {
     }
     
     @objc func cancelAction() {
-        print("삭제")
         self.dismiss(animated: false)
         self.cancelCompletion?()
     }
     
     @objc func confirmAction() {
-        print("확인")
         self.dismiss(animated: false)
         self.completion?()
     }

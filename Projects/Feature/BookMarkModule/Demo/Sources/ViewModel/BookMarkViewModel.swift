@@ -11,7 +11,7 @@ import RxSwift
 import RxRelay
 import UtilityModule
 
-final class BookMarkViewModel {
+final class BookMarkViewModel : ViewModelType {
     
     let disposeBag = DisposeBag()
     

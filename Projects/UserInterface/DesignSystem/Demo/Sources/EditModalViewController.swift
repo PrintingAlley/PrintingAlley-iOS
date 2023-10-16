@@ -10,20 +10,23 @@ import UIKit
 import SnapKit
 import Then
 import DesignSystem
+import RxCocoa
+import RxSwift
+
 
 public class EditModalViewController: UIViewController {
     var completion: (() -> Void)?
     var cancelCompletion: (() -> Void)?
     var titleString: String = ""
     
+    let disposeBag = DisposeBag()
+    
     lazy var contentView: UIView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 8
     }
 
-    
     lazy var titleLabel: AlleyLabel = AlleyLabel()
-
     
     lazy var textFieldContainerView: UIView = UIView().then {
         $0.layer.cornerRadius = 8
@@ -98,11 +101,41 @@ public class EditModalViewController: UIViewController {
         addSubViews()
         preProcessing()
         makeConstraints()
+        bindViewModel()
     }
     
 }
 
 extension EditModalViewController {
+    
+    func bindViewModel() {
+        
+        textField
+            .rx
+            .text
+            .orEmpty
+            .observe(on: MainScheduler.asyncInstance)
+            .map({ str -> String in
+                
+                var str: String = str
+                if str.count > 14 {
+                    let index = str.index(str.startIndex, offsetBy: 14)
+                    str = String(str[..<index])
+                }
+                
+                return str
+                
+            })
+            .do(onNext: { [weak self] str in
+                
+                guard let self else {return}
+                
+                self.limitLabel.setTitle(title: "\(str.count)/14자", textColor: .grey(.grey400), font: .caption1)
+            })
+            .bind(to: textField.rx.text)
+            .disposed(by: disposeBag)
+        
+    }
     
     func addSubViews() {
         self.view.addSubviews(contentView)
@@ -115,7 +148,6 @@ extension EditModalViewController {
     func preProcessing() {
         
         self.view.backgroundColor = .black.withAlphaComponent(0.4)
-        limitLabel.setTitle(title: "0/14자", textColor: .grey(.grey400), font: .caption1)
         titleLabel.setTitle(title: self.titleString, textColor: .sub(.black), font: .header3, alignment: .center)
         
         cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
@@ -168,13 +200,11 @@ extension EditModalViewController {
     }
     
     @objc func cancelAction() {
-        print("삭제")
         self.dismiss(animated: false)
         self.cancelCompletion?()
     }
     
     @objc func confirmAction() {
-        print("확인")
         self.dismiss(animated: false)
         self.completion?()
     }
