@@ -17,7 +17,7 @@ public final class SearchBar: UIView {
     }
     
     private let searchButton = UIButton().then {
-        $0.setImage(DesignSystemAsset.Icon.roundedX.image, for: .normal) // 이미지 수정 필요
+        $0.setImage(DesignSystemAsset.Icon.search.image, for: .normal)
     }
     
     override public init(frame: CGRect) {

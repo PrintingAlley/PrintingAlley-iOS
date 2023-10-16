@@ -22,7 +22,7 @@ final class HomeViewController: UIViewController {
     }
     
     private let logoImage = UIImageView().then {
-        $0.image = DesignSystemAsset.Icon.add.image // 이미지 수정 필요
+        $0.image = DesignSystemAsset.Logo.homeLogo.image
         $0.contentMode = .scaleAspectFit
     }
     
@@ -106,7 +106,7 @@ extension HomeViewController {
         
         logoImage.snp.makeConstraints {
             $0.top.equalToSuperview().inset(75)
-            $0.leading.trailing.equalTo(155)
+            $0.centerX.equalToSuperview()
         }
         
         scrollview.snp.makeConstraints {
