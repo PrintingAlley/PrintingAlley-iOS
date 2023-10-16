@@ -37,6 +37,8 @@ public class EditModalViewController: UIViewController {
         $0.setPlaceHolder(text: "이름을 입력하세요.", textColor: .setColor(.grey(.grey300)), font: .body1)
     }
     
+    lazy var limitLabel: AlleyLabel = AlleyLabel()
+    
     lazy var cancelButton: UIButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
         $0.setTitleColor(DesignSystemAsset.Sub.black.color, for: .normal)
@@ -104,8 +106,8 @@ extension EditModalViewController {
     
     func addSubViews() {
         self.view.addSubviews(contentView)
-        self.contentView.addSubviews(titleLabel, buttonStack,baseLine,textFieldContainerView)
-        self.textFieldContainerView.addSubview(textField)
+        self.contentView.addSubviews(titleLabel, buttonStack,baseLine, textFieldContainerView)
+        self.textFieldContainerView.addSubviews(textField, limitLabel)
         buttonStack.addArrangedSubview(cancelButton, confirmButton)
         
     }
@@ -113,10 +115,8 @@ extension EditModalViewController {
     func preProcessing() {
         
         self.view.backgroundColor = .black.withAlphaComponent(0.4)
-        
+        limitLabel.setTitle(title: "0/14자", textColor: .grey(.grey400), font: .caption1)
         titleLabel.setTitle(title: self.titleString, textColor: .sub(.black), font: .header3, alignment: .center)
-        
-        
         
         cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
         confirmButton.addTarget(self, action: #selector(confirmAction), for: .touchUpInside)
@@ -142,8 +142,15 @@ extension EditModalViewController {
         
         textField.snp.makeConstraints {
             $0.left.equalToSuperview().inset(16)
+            $0.right.equalToSuperview().inset(55)
             $0.top.bottom.equalToSuperview().inset(17)
-            $0.right.equalToSuperview()
+           
+        }
+        
+        limitLabel.snp.makeConstraints {
+            
+            $0.right.equalToSuperview().inset(16)
+            $0.centerY.equalTo(textField.snp.centerY)
         }
         
         baseLine.snp.makeConstraints {

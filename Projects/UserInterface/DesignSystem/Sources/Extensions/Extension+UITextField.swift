@@ -17,7 +17,6 @@ extension UITextField {
     ///   - textColor:  색
     ///   - font: 폰트
     public func setPlaceHolder(text:String, textColor: UIColor, font: UIFont.AlleyFontSystem) {
-        
         self.attributedPlaceholder = NSAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor : textColor, NSAttributedString.Key.font : font.font ])
         
     }

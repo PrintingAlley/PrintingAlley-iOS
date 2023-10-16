@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     }
     
     @objc func action() {
-        let vc = EditModalViewController(title: "삭제하시겠나요?")
+        let vc = EditModalViewController(title: "이름 수정")
         
         vc.modalPresentationStyle = .overFullScreen
         
