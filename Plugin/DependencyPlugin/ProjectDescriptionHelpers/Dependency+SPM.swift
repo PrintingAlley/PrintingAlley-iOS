@@ -22,6 +22,7 @@ public extension TargetDependency.SPM {
     static let RxRelay = TargetDependency.external(name: "RxRelay")
     static let NaverMap = TargetDependency.external(name: "NMapsMap")
     static let RxDataSource = TargetDependency.external(name: "RxDataSources")
+    static let RxKeyBoard = TargetDependency.external(name: "RxKeyboard")
     
 }
 

@@ -21,7 +21,8 @@ let project = Project.module(
             .SPM.RxCocoa,
             .SPM.RxRelay,
             .SPM.NaverMap,
-            .SPM.RxDataSource
+            .SPM.RxDataSource,
+            .SPM.RxKeyBoard
         ])
     ]
 )
