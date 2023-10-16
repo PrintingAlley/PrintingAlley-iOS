@@ -49,6 +49,7 @@ final class HomeViewController: UIViewController {
     }
     
     private let contentsInsets = UIEdgeInsets(top: 16, left: 24, bottom: 20, right: 24)
+    private let contentsCellSpacing: CGFloat = 16
     
     private let contentsCount = 4 // 더미
     
@@ -156,7 +157,7 @@ extension HomeViewController {
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-        return CGSize(width: 163, height: 201)
+        return CGSize(width: (APP_WIDTH() - contentsInsets.left - contentsInsets.right - contentsCellSpacing) / 2, height: 201)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -166,7 +167,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         // 옆 간격
-        return 16
+        return contentsCellSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

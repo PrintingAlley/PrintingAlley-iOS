@@ -15,11 +15,16 @@ import DesignSystem
 final class ContentsHeaderView: UICollectionReusableView {
     static let identifier = "ContentsHeaderView"
     
-    private lazy var categoryCollectionView = makeCollectionView(scrollDirection: .vertical).then {
+    private let cellSpacing: CGFloat = 30
+    private let collectionViewInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
+    private lazy var cellSize = CGSize(width: (APP_WIDTH() - 30 - 30 - cellSpacing * 3) / 4, height: 70)
+    private let lineSpacing: CGFloat = 32
+    
+    public lazy var categoryCollectionView = makeCollectionView(scrollDirection: .vertical).then {
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
     }
     
-    private let contentsTitle = AlleyLabel("인쇄 알아보기", font: .subtitle1)
+    private let contentsTitle = AlleyLabel("인쇄가 어려운 당신에게", font: .subtitle1)
     
     private lazy var showMoreTouchView = UIView().then {
         $0.backgroundColor = .none
@@ -51,13 +56,14 @@ extension ContentsHeaderView {
     private func addSubviews() {
         addSubviews(categoryCollectionView, contentsTitle, showMoreContainer)
         showMoreContainer.addSubviews(showMoreText, showMoreIcon)
-        showMoreContainer.addSubviews( showMoreTouchView)
+        showMoreContainer.addSubviews(showMoreTouchView)
     }
     
     private func makeConstraints() {
         categoryCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
             $0.leading.trailing.equalToSuperview().inset(24)
+//            $0.height.equalTo(cellSize.height * 2 + lineSpacing)
             $0.height.equalTo(172)
         }
         contentsTitle.snp.makeConstraints {
@@ -107,17 +113,21 @@ extension ContentsHeaderView {
 extension ContentsHeaderView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-        return CGSize(width: 60, height: 70)
+        return cellSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         // 줄 간격
-        return 32
+        return lineSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         // 옆 간격
-        return 30
+        return cellSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        collectionViewInsets
     }
 }
 

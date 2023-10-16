@@ -19,7 +19,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         $0.contentMode = .scaleAspectFit
     }
     
-    private let label = AlleyLabel("엽서/카드", textColor: .grey(.grey800),font: .body2)
+    private let label = AlleyLabel("엽서/카드", textColor: .grey(.grey800), font: .body2)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
