@@ -21,14 +21,17 @@ final class SignInViewModel: NSObject, ViewModelType {
 
     let disposeBag = DisposeBag()
     let naverLoginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
-    let oauthToken: PublishRelay<Void> = PublishRelay()
+    let oauthToken: PublishRelay<(String,LoginType)> = PublishRelay()
     
-    var testUsecase: any TestGetUseCase
+    var fetchLoginUseCase: any FetchLoginUseCase
+    var fetchTokenTestUseCase: any FetchTokenTestUseCase
     
-    init(testUsecase: any TestGetUseCase) {
-        self.testUsecase = testUsecase
+    
+    init(fetchLoginUseCase: FetchLoginUseCase!, fetchTokenTestUseCase: FetchTokenTestUseCase) {
+        self.fetchLoginUseCase = fetchLoginUseCase
+        self.fetchTokenTestUseCase = fetchTokenTestUseCase
         
-        self.testUsecase.execute()
+        self.fetchTokenTestUseCase.execute()
             .asObservable()
             .subscribe(onNext: {
                 DEBUG_LOG($0)
@@ -80,13 +83,20 @@ final class SignInViewModel: NSObject, ViewModelType {
         })
         .disposed(by: disposeBag)
         
-        oauthToken.subscribe(onNext: { [weak self] in
+        oauthToken
+            .flatMap{ [weak self] (accessToken,type) -> Observable <TokenEntity> in
+                
+                guard let self else {return Observable.empty()}
+                
+                return self.fetchLoginUseCase
+                    .execute(accessToken: accessToken, provider: type.rawValue)
+                    .asObservable()
+            }
+            .subscribe(onNext:{
+                DEBUG_LOG("제발 받아와 !! \($0) ")
+            })
+            .disposed(by: disposeBag)
             
-            guard let self else {return}
-            
-            PreferenceManager.shared.setUserInfo(id: "A", name: "DEFAULT", platform: .apple)
-        })
-        
         return output
     }
 }
@@ -103,9 +113,13 @@ extension SignInViewModel {
             } else {
                 print("loginWithKakaoTalk() success.")
 
+                guard let accessToken = oauthToken?.accessToken else {
+                    return
+                }
+                
                 // do something
-                self.oauthToken.accept(())
-                _ = oauthToken
+                self.oauthToken.accept((accessToken,.kakao))
+
             }
         }
     }
@@ -121,8 +135,12 @@ extension SignInViewModel {
                 print("loginWithKakaoAccount() success.")
 
                 // do something
-                self.oauthToken.accept(())
-                _ = oauthToken
+                guard let accessToken = oauthToken?.accessToken else {
+                    return
+                }
+                
+                // do something
+                self.oauthToken.accept((accessToken,.kakao))
             }
         }
     }
@@ -153,7 +171,7 @@ extension SignInViewModel: NaverThirdPartyLoginConnectionDelegate {
         if !accessToken { return }
         guard let accessToken = naverLoginInstance?.accessToken else { return }
         DEBUG_LOG("NAVER SUCESS \(accessToken)")
-        oauthToken.accept(())
+        oauthToken.accept((accessToken,.naver))
         
     }
     
@@ -164,7 +182,7 @@ extension SignInViewModel: NaverThirdPartyLoginConnectionDelegate {
         guard let accessToken = naverLoginInstance?.accessToken else { return }
         DEBUG_LOG("NAVER SUCESS2 \(accessToken) ")
         
-        oauthToken.accept(())
+        oauthToken.accept((accessToken,.naver))
     }
     
     func oauth20ConnectionDidFinishDeleteToken() {
@@ -187,8 +205,7 @@ extension SignInViewModel:ASAuthorizationControllerDelegate,ASAuthorizationContr
          if let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
             let rawData =  credential.identityToken {
              let token = String(decoding: rawData, as: UTF8.self)
-             oauthToken.accept(())
-             DEBUG_LOG(token)
+             oauthToken.accept((token,.apple))
          }
      }
 

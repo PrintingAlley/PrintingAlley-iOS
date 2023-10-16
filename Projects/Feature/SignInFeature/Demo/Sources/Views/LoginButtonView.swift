@@ -61,11 +61,11 @@ extension LoginButtonView {
 
         self.layer.cornerRadius = 8
         
-        button.addTarget(self, action: #selector(event), for: .touchDown)
+        button.addTarget(self, action: #selector(event), for: .touchUpInside)
 
         imageView.image = type.image
         
-        self.label.setTitle(title: "HELLO", textColor: type.textColor, font: .body1)
+        self.label.setTitle(title: type.text, textColor: type.textColor, font: .body1)
     }
     
     func makeConstraints() {

@@ -13,18 +13,19 @@ import DesignSystem
 
 class MyPageCategoryTableViewCell: UITableViewCell {
     
-    static let identifier:String = "MyPageCategoryTableViewCell"
+    static let identifier: String = "MyPageCategoryTableViewCell"
     
     lazy var label: AlleyLabel = AlleyLabel()
-    lazy var arrowImageView:UIImageView = UIImageView().then {
+    
+    lazy var arrowImageView: UIImageView = UIImageView().then {
         $0.contentMode = .scaleToFill
 
-        $0.image = UIImage(systemName: "chevron.right")?.withTintColor(.setColor(.grey(.grey1000)), renderingMode: .alwaysTemplate)
+        $0.image = DesignSystemAsset.Icon.rightArrow.image
     }
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
-            self.contentView.addSubviews(label,arrowImageView)
+            self.contentView.addSubviews(label, arrowImageView)
         
             makeConstraints()
     }
@@ -40,11 +41,12 @@ extension MyPageCategoryTableViewCell {
     func makeConstraints() {
         
         label.snp.makeConstraints {
-            $0.left.top.bottom.equalToSuperview().inset(24)
+            $0.left.top.equalToSuperview().inset(32)
+            $0.bottom.equalToSuperview()
         }
         
         arrowImageView.snp.makeConstraints {
-            $0.width.height.equalTo(14)
+            $0.width.height.equalTo(24)
             $0.right.equalToSuperview().inset(24)
             $0.centerY.equalTo(label.snp.centerY)
         }

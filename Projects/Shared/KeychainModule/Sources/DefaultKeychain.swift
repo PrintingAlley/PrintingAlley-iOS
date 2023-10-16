@@ -77,7 +77,10 @@ final class DefaultKeychain: Keychain {
     private let service: String = Bundle.main.bundleIdentifier ?? ""
     
     func save(key: String, value: String) {
+        
+        
         let query: NSDictionary = [
+            kSecClass:kSecClassGenericPassword,
             kSecAttrService: service,
             kSecAttrAccount: key,
             kSecValueData: value.data(using: .utf8, allowLossyConversion: false) ?? .init() //allowLossyConversion은 인코딩 과정에서 손실이 되는 것을 허용할 것인지 설정
@@ -102,7 +105,11 @@ final class DefaultKeychain: Keychain {
         
         var dataTypeRef: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+        
+        print(status.description)
+        
         if status == errSecSuccess {
+            
             guard let data = dataTypeRef as? Data else { return "" }
             return String(data: data, encoding: .utf8) ?? ""
         }

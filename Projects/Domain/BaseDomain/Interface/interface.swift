@@ -2,7 +2,7 @@
 //  interface.swift
 //  BaseDomainInterface
 //
-//  Created by yongbeomkwak on 2023/10/09.
+//  Created by yongbeomkwak on 10/13/23.
 //  Copyright © 2023 com. All rights reserved.
 //
 

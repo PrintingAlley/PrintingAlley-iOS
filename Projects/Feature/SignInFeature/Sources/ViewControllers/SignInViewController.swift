@@ -11,7 +11,7 @@ import SnapKit
 import Then
 import UtilityModule
 import KakaoSDKCommon
-// import GoogleSignIn
+ import GoogleSignIn
 import RxSwift
 import DesignSystem
 
@@ -108,42 +108,43 @@ extension SignInViewController {
         
         
         
-        //bindGoogleLogin(output: output)
+        bindGoogleLogin(output: output)
     }
     
-//    func bindGoogleLogin(output: SignInViewModel.Output) {
-//
-//        output.runGoogleLogin.subscribe(onNext: { [weak self] in
-//
-//            guard let self else {return}
-//
-//            let id = GOOGLE_CLIENT_ID()  // 여기서는 반전시키지 말고 ID값 그대로 적용한다.
-//            let signInConfig = GIDConfiguration(clientID: id)
-//
-//            GIDSignIn.sharedInstance.configuration = signInConfig
-//
-//            GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
-//                guard error == nil else { return }
-//                guard let signInResult = signInResult else { return }
-//
-//                let user = signInResult.user
-//
-//                let emailAddress = user.profile?.email
-//
-//                let fullName = user.profile?.name
-//                let givenName = user.profile?.givenName
-//                let familyName = user.profile?.familyName
-//
-//               // let profilePicUrl = user.profile?.imageURL(withDimension: 320)
-//
-//                DEBUG_LOG(fullName)
-//            }
-//
-//        })
-//        .disposed(by: disposeBag)
-//
-//
-//    }
+    func bindGoogleLogin(output: SignInViewModel.Output) {
+
+        output.runGoogleLogin.subscribe(onNext: { [weak self] in
+
+            guard let self else {return}
+
+            let id = GOOGLE_CLIENT_ID()  // 여기서는 반전시키지 말고 ID값 그대로 적용한다.
+            let signInConfig = GIDConfiguration(clientID: id)
+
+            GIDSignIn.sharedInstance.configuration = signInConfig
+
+            GIDSignIn.sharedInstance.signIn(withPresenting: self) { [weak self] signInResult, error in
+                guard let self else {return}
+                guard error == nil else { return }
+                guard let signInResult = signInResult else { return }
+
+                let user = signInResult.user
+
+                let emailAddress = user.profile?.email
+
+                let fullName = user.profile?.name
+                let givenName = user.profile?.givenName
+                let familyName = user.profile?.familyName
+
+               // let profilePicUrl = user.profile?.imageURL(withDimension: 320)
+
+                self.viewModel.oauthToken.accept((user.idToken!.tokenString, .google)) //TODO: 예외처리
+            }
+
+        })
+        .disposed(by: disposeBag)
+
+
+    }
 }
 
 extension SignInViewController: LoginButtonViewDelegate {

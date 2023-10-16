@@ -63,7 +63,7 @@ extension LoginButtonView {
         self.layer.borderWidth = 1
         self.layer.borderColor = DesignSystemAsset.Grey.grey100.color.cgColor
         
-        button.addTarget(self, action: #selector(event), for: .touchDown)
+        button.addTarget(self, action: #selector(event), for: .touchUpInside)
 
         imageView.image = type.image
         

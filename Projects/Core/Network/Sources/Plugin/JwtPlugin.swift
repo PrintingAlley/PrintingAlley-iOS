@@ -11,7 +11,7 @@ import Foundation
 import JwtStoreInterface
 
 struct TokenDTO: Equatable, Decodable {
-    let accessToken: String
+    let access_token: String
 
 }
 
@@ -54,11 +54,11 @@ public struct JwtPlugin: PluginType {
 }
 
 private extension JwtPlugin {
-    func getToken(type: JwtStoreProperties) -> String {
-            "Bearer \(jwtStore.load(property: .accessToken))"
+    func getToken(type: JwtStoreProperties) -> String { // 가져오기 
+        "Bearer \(jwtStore.load(property: .accessToken))"
     }
 
     func saveToken(token: TokenDTO) {
-        jwtStore.save(property: .accessToken, value: token.accessToken)
+        jwtStore.save(property: .accessToken, value: token.access_token)
     }
 }

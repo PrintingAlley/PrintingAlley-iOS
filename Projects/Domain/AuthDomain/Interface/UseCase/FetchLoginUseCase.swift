@@ -8,7 +8,8 @@
 
 import Foundation
 import RxSwift
+import Network
 
-public protocol TestGetUseCase {
-    func execute() -> Single<TestEntity>
+public protocol FetchLoginUseCase {
+    func execute(accessToken: String, provider: String) -> Single<TokenEntity>
 }
