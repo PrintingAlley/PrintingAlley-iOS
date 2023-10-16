@@ -29,15 +29,16 @@ public final class AlleyLabel: UILabel {
         self.text = title
         self.font = .setFont(font)
         self.textColor = .setColor(textColor)
-        self.setLineSpacing(lineSpacing: font.alleyLineHeight)
+        self.setLineSpacing(lineHeight: font.alleyLineHeight)
         self.textAlignment = alignment
+        self.numberOfLines = 0
     }
     
-    public func setTitle(title:String, textColor: UIColor.AlleyColorSystem, font: UIFont.AlleyFontSystem, alignment: NSTextAlignment = .left) {
+    public func setTitle(title: String, textColor: UIColor.AlleyColorSystem, font: UIFont.AlleyFontSystem, alignment: NSTextAlignment = .left) {
         self.text = title
         self.font = .setFont(font)
         self.textColor = .setColor(textColor)
-        self.setLineSpacing(lineSpacing: font.alleyLineHeight)
+        self.setLineSpacing(lineHeight: font.alleyLineHeight)
         self.textAlignment = alignment
     }
     
