@@ -21,6 +21,11 @@ final class HomeViewController: UIViewController {
         $0.backgroundColor = .setColor(.sub(.white))
     }
     
+    private let logoImage = UIImageView().then {
+        $0.image = DesignSystemAsset.Icon.add.image // 이미지 수정 필요
+        $0.contentMode = .scaleAspectFit
+    }
+    
     private let containerView = UIView().then {
         $0.backgroundColor = .none
     }
@@ -78,7 +83,7 @@ extension HomeViewController {
 extension HomeViewController {
     private func addSubViews() {
         view.addSubviews(blueBackgroundView, whiteBackgroundView, containerView)
-        containerView.addSubviews(scrollview)
+        containerView.addSubviews(logoImage, scrollview)
         scrollview.addSubviews(searchBar, contentsCollectionView)
         searchBar.addSubviews(searchBarTouchView)
     }
@@ -94,16 +99,22 @@ extension HomeViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
-        containerView.snp.makeConstraints { // 로고 들어갈 뷰
+        containerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
+        logoImage.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(75)
+            $0.leading.trailing.equalTo(155)
+        }
+        
         scrollview.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(110) // 수정필요
+            $0.top.equalTo(logoImage.snp.bottom).offset(24)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+
         searchBar.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10) // 수정 필요
+            $0.top.equalToSuperview().inset(8)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
             $0.height.equalTo(56)
         }
@@ -111,8 +122,9 @@ extension HomeViewController {
         searchBarTouchView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+
         contentsCollectionView.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(10)
+            $0.top.equalTo(searchBar.snp.bottom).offset(24)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(calculateHeight(count: contentsCount, dividingBy: 2, cellHeight: 201, lineSpacing: 24, insets: contentsInsets) + headerViewHeight) // 유동적으로
             $0.bottom.equalToSuperview()
