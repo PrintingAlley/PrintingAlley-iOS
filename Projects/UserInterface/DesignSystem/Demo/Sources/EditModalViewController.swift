@@ -21,6 +21,7 @@ public class EditModalViewController: UIViewController {
     var titleString: String = ""
     
     let disposeBag = DisposeBag()
+    let appHeight =  UIScreen.main.bounds.size.height
     
     lazy var contentView: UIView = UIView().then {
         $0.backgroundColor = .white
@@ -111,6 +112,10 @@ public class EditModalViewController: UIViewController {
 
 extension EditModalViewController {
     
+    func isWhite(_ str: String) -> Bool {
+        str.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
+    }
+    
     func bindTextField() {
         
         textField
@@ -121,7 +126,7 @@ extension EditModalViewController {
             .map({ str -> String in
                 
                 var str: String = str
-                if str.count > 14 {
+                if str.count > 14 { // 길이 제한
                     let index = str.index(str.startIndex, offsetBy: 14)
                     str = String(str[..<index])
                 }
@@ -133,7 +138,7 @@ extension EditModalViewController {
                 
                 guard let self else {return}
                 
-                self.confirmButton.isEnabled  = !str.isEmpty
+                self.confirmButton.isEnabled  = !((str.first?.isWhitespace ?? true)) // 앞에 시작이 공백일 때
   
                 self.limitLabel.setTitle(title: "\(str.count)/14자", textColor: .grey(.grey400), font: .caption1)
             })
@@ -154,6 +159,19 @@ extension EditModalViewController {
             let window: UIWindow? = UIApplication.shared.windows.first
             let safeAreaInsetsBottom: CGFloat = window?.safeAreaInsets.bottom ?? 0
             let tmp = keyboardVisibleHeight  - safeAreaInsetsBottom
+            
+            self.contentView.snp.updateConstraints {
+                $0.left.right.equalToSuperview().inset(14)
+                $0.bottom.equalToSuperview().inset( tmp <= .zero ?  self.appHeight/3 : tmp + 50)
+            }
+            
+            UIView.animate(withDuration: 1.0) {
+                self.view.layoutIfNeeded()
+                
+            }
+            
+            
+           
             
             print(tmp)
 
@@ -183,10 +201,10 @@ extension EditModalViewController {
         
         contentView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(14)
-            $0.center.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(appHeight/4)
         }
         
-        //TODO: 키보드에 따른 contentview 위치 
+        //TODO: 키보드에 따른 contentview 위치
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
