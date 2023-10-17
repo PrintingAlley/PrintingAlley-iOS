@@ -92,9 +92,6 @@ extension BookMarkListTableViewCell {
     }
     
     public func update(model: TmpModel, isLast: Bool) {
-        self.model = model
-        self.index = index
-        self.isEdit = isEditing
         
         titleLabel.setTitle(title: model.name, textColor: .grey(.grey1000), font: .body1)
         subtitleLabel.setTitle(title: "장소 \(model.contents.count)개", textColor: .grey(.grey500), font: .caption1)
