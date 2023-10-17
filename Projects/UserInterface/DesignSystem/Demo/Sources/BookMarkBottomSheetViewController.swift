@@ -113,6 +113,7 @@ extension BookMarkBottomSheetViewController {
     func bindViewModel() {
         
         let input: BookMarkBottomSheetViewModel.Input = BookMarkBottomSheetViewModel.Input()
+        bindUiEvent(input: input)
         
         let output = viewModel.transform(input: input)
         bindDataSource(output: output)
@@ -136,6 +137,24 @@ extension BookMarkBottomSheetViewController {
                 return cell
                 
             }
+            .disposed(by: disposeBag)
+        
+    }
+    
+    func bindUiEvent(input: BookMarkBottomSheetViewModel.Input) {
+        
+        closeButton.rx
+            .tap.subscribe(onNext: { [weak self] in
+                
+                guard let self else {return}
+             
+                UIView.animate(withDuration: 0.4) {
+                    self.dismiss(animated: true)
+                }
+                
+                
+                
+            })
             .disposed(by: disposeBag)
         
     }

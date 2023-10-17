@@ -55,6 +55,7 @@ class ViewController: UIViewController {
         
         fpc.set(contentViewController: vc)
         fpc.isRemovalInteractionEnabled = true // 끌어 내려 닫기
+        fpc.backdropView.dismissalTapGestureRecognizer.isEnabled = true
         
         // Hidden grabber
         fpc.surfaceView.grabberHandle.isHidden = true
