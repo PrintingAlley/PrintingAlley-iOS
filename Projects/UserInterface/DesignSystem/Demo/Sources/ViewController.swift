@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     }
     
     @objc func action() {
-        let vc = EditModalViewController(title: "이름 수정")
+        let vc = BookMarkBottomSheetViewController(viewModel: BookMarkBottomSheetViewModel())
         
         vc.modalPresentationStyle = .overFullScreen
         

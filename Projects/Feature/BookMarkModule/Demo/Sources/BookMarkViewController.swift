@@ -16,6 +16,11 @@ import UtilityModule
 
 class BookMarkViewController: UIViewController {
 
+    var viewModel: BookMarkViewModel!
+    let input = BookMarkViewModel.Input()
+    
+    let disposeBag = DisposeBag()
+    
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
         
@@ -52,10 +57,7 @@ class BookMarkViewController: UIViewController {
         $0.separatorStyle = .none
     }
     
-    var viewModel: BookMarkViewModel!
-    let input = BookMarkViewModel.Input()
-    
-    let disposeBag = DisposeBag()
+
     
     init(viewModel: BookMarkViewModel!) {
         super.init(nibName: nil, bundle: nil)

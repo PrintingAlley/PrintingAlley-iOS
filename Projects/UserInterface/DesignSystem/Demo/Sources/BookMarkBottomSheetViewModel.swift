@@ -8,15 +8,16 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
-public class EditModalViewModel {
+public class BookMarkBottomSheetViewModel {
     
     struct Input {
-        var text: PublishSubject<String> = .init()
+       
     }
     
-    public struct Output {
-        
+    struct Output {
+        var dataSource: BehaviorRelay<[TmpModel]> = .init(value: TmpModel.makeDummy())
     }
     
     

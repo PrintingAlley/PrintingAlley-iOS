@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = BookMarkBottomSheetViewController()
+        let viewController = BookMarkBottomSheetViewController(viewModel: BookMarkBottomSheetViewModel())
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 

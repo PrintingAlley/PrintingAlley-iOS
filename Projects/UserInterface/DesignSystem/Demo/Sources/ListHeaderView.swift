@@ -22,7 +22,7 @@ public class ListHeaderView: UIView {
     }
     
     lazy var imageView: UIImageView = UIImageView().then{
-        $0.image = DesignSystemAsset.Icon.add.image
+        $0.image = DesignSystemAsset.Icon.add.image //TODO: 나중에 변경 
         $0.contentMode = .scaleAspectFill
     }
     

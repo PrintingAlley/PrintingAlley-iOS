@@ -10,10 +10,14 @@ import UIKit
 import SnapKit
 import Then
 import DesignSystem
+import RxDataSources
+import RxSwift
 
-
-class BookMarkBottomSheetViewController: UIViewController {
-
+public class BookMarkBottomSheetViewController: UIViewController {
+    
+    var viewModel: BookMarkBottomSheetViewModel!
+    
+    let disposeBag = DisposeBag()
     
     lazy var naviTitleView: UIView = UIView()
     
@@ -34,15 +38,20 @@ class BookMarkBottomSheetViewController: UIViewController {
     }
     
     lazy var tableView: UITableView = UITableView().then {
+        $0.register(BookMarkListTableViewCell.self, forCellReuseIdentifier: BookMarkListTableViewCell.identifier)
         $0.tableHeaderView = headerView
+        $0.separatorStyle = .none
         
     }
     
     
     
-    init() {
+    init(viewModel: BookMarkBottomSheetViewModel!) {
         super.init(nibName: nil, bundle: nil)
-        self.view.backgroundColor = .white
+
+        
+        self.viewModel = viewModel
+        
     }
     
     required init?(coder: NSCoder) {
@@ -50,12 +59,14 @@ class BookMarkBottomSheetViewController: UIViewController {
     }
     
     
-    override func viewDidLoad() {
-        self.view.backgroundColor = .white
+    public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = .white
         addSubviews()
         makeConstraints()
-
+       bindViewModel()
+        
     }
     
 
@@ -66,7 +77,7 @@ extension BookMarkBottomSheetViewController {
     func addSubviews() {
         self.view.addSubviews(naviTitleView, baseLine, tableView)
         
-        self.naviTitleView.addSubviews(closeButton,titleLabel)
+        self.naviTitleView.addSubviews(closeButton, titleLabel)
     }
     
     func makeConstraints() {
@@ -97,11 +108,40 @@ extension BookMarkBottomSheetViewController {
             $0.left.right.bottom.equalToSuperview()
         }
     }
+    
+    func bindViewModel() {
+        
+        let input: BookMarkBottomSheetViewModel.Input = BookMarkBottomSheetViewModel.Input()
+        
+        let output = viewModel.transform(input: input)
+        bindDataSource(output: output)
+        
+    }
+    
+    func bindDataSource(output: BookMarkBottomSheetViewModel.Output) {
+        
+        output.dataSource
+            .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell  in
+                
+                let indexPath: IndexPath = IndexPath(row: index, section: 0)
+                
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: BookMarkListTableViewCell.identifier, for: indexPath) as? BookMarkListTableViewCell else {
+                    return UITableViewCell()
+                }
+                
+                cell.update(model: model)
+                cell.selectionStyle = .none
+                
+                return cell
+                
+            }
+            .disposed(by: disposeBag)
+        
+    }
 }
 
-
 extension BookMarkBottomSheetViewController: ListHeaderViewDelegate {
-    func generateNewList() {
+    public func generateNewList() {
         print("Hello")
     }
     
