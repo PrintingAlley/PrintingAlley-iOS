@@ -23,6 +23,7 @@ public extension TargetDependency.SPM {
     static let NaverMap = TargetDependency.external(name: "NMapsMap")
     static let RxDataSource = TargetDependency.external(name: "RxDataSources")
     static let RxKeyBoard = TargetDependency.external(name: "RxKeyboard")
+    static let FloatingPanel = TargetDependency.external(name: "FloatingPanel")
     
 }
 

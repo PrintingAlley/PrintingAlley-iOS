@@ -22,7 +22,8 @@ let project = Project.module(
             .SPM.RxRelay,
             .SPM.NaverMap,
             .SPM.RxDataSource,
-            .SPM.RxKeyBoard
+            .SPM.RxKeyBoard,
+            .SPM.FloatingPanel
         ])
     ]
 )

@@ -58,12 +58,10 @@ public class EditModalViewController: UIViewController {
         $0.setTitleColor(DesignSystemAsset.MainBlue.blue500.color, for: .normal)
         $0.contentHorizontalAlignment = .center
         
-        
         $0.setTitle("저장하기", for: .disabled)
         $0.titleLabel?.font = .setFont(.body1)
         $0.setTitleColor(DesignSystemAsset.Grey.grey400.color, for: .disabled)
         $0.contentHorizontalAlignment = .center
-        
         
     }
     
