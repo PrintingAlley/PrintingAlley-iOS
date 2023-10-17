@@ -9,8 +9,10 @@ let project = Project.module(
             .feature(target: .MainTabFeature),
             .feature(target: .HomeFeature),
             .feature(target: .MyPageFeature),
-            .feature(target: .NearByMeFeature),
             .feature(target: .SearchFeatue)
+            .feature(target: .SignInFeature),
+            .feature(target: .NearByMeFeature),
+            .feature(target: .BookMarkModule)
         ])
     ]
 )
