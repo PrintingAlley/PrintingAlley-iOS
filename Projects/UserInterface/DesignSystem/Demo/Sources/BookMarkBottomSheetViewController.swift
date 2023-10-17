@@ -65,7 +65,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
         self.view.backgroundColor = .white
         addSubviews()
         makeConstraints()
-       bindViewModel()
+        bindViewModel()
         
     }
     
@@ -74,6 +74,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
 }
 
 extension BookMarkBottomSheetViewController {
+    
     func addSubviews() {
         self.view.addSubviews(naviTitleView, baseLine, tableView)
         

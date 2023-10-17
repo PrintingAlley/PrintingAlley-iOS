@@ -17,7 +17,7 @@ class BookMarkListTableViewCell: UITableViewCell {
     
     lazy var frontImageView: UIImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.image = DesignSystemAsset.Icon.bookMark.image
+        $0.image = DesignSystemAsset.Icon.add.image
     }
     
     lazy var titleLabel: AlleyLabel = AlleyLabel()
@@ -53,7 +53,15 @@ extension BookMarkListTableViewCell {
     
     func makeConstraints() {
         
+        
+        baseLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.left.right.equalToSuperview().inset(24)
+            $0.top.equalToSuperview()
+        }
+        
         frontImageView.snp.makeConstraints {
+            $0.width.height.equalTo(32)
             $0.top.bottom.equalToSuperview().inset(22)
             $0.left.equalToSuperview().inset(24)
         }
@@ -65,7 +73,7 @@ extension BookMarkListTableViewCell {
         }
         
         subtitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(5)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(4)
             $0.left.equalTo(titleLabel.snp.left)
             $0.bottom.equalToSuperview().inset(16)
         }
@@ -77,12 +85,7 @@ extension BookMarkListTableViewCell {
 
         }
         
-        
-        baseLine.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.left.right.equalToSuperview().inset(24)
-            $0.top.equalToSuperview()
-        }
+
         
         
     }

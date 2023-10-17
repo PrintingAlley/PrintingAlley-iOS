@@ -32,7 +32,7 @@ public class ListHeaderView: UIView {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubviews(button , imageView, label)
+        self.addSubviews(button, imageView, label)
         makeConstraints()
     }
     
@@ -59,7 +59,7 @@ extension ListHeaderView {
         }
         
         label.snp.makeConstraints {
-            $0.left.equalTo(imageView.snp.right).offset(15)
+            $0.left.equalTo(imageView.snp.right).offset(16)
             $0.centerY.equalTo(imageView)
         }
         
