@@ -92,7 +92,7 @@ final class SignInViewModel: NSObject, ViewModelType {
                     .execute(accessToken: accessToken, provider: type.rawValue)
                     .asObservable()
             }
-            .subscribe(onNext:{
+            .subscribe(onNext: {
                 DEBUG_LOG("제발 받아와 !! \($0) ")
             })
             .disposed(by: disposeBag)
