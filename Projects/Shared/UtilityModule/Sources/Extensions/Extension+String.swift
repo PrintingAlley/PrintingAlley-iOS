@@ -10,6 +10,6 @@ import Foundation
 
 public extension String {
     var isWhiteSpace: Bool{
-              return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count == 0
+              return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
     }
 }

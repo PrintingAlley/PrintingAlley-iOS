@@ -9,9 +9,12 @@
 import UIKit
 import SnapKit
 import Then
+import FloatingPanel
 
 class ViewController: UIViewController {
 
+    var fpc: FloatingPanelController!
+    
     var button: UIButton = UIButton().then {
         $0.setTitle("Press", for: .normal)
     }
@@ -29,12 +32,63 @@ class ViewController: UIViewController {
     }
     
     @objc func action() {
-        let vc = EditModalViewController(title: "이름 수정")
+        let vc = BookMarkBottomSheetViewController(viewModel: BookMarkBottomSheetViewModel())
+        fpc = FloatingPanelController()
         
-        vc.modalPresentationStyle = .overFullScreen
+        // Create a new appearance.
+        let appearance = SurfaceAppearance()
+
+        // Define shadows
+//        let shadow = SurfaceAppearance.Shadow()
+//        shadow.color = UIColor.black
+//        shadow.offset = CGSize(width: 0, height: 16)
+//        shadow.radius = 16
+//        shadow.spread = 8
+//        appearance.shadows = [shadow]
+
+        // Define corner radius and background color
+        appearance.cornerRadius = 8.0
+        appearance.backgroundColor = .clear
+
+        // Set the new appearance
+        fpc.surfaceView.appearance = appearance
         
-        self.present(vc,animated: false)
+        fpc.set(contentViewController: vc)
+        fpc.isRemovalInteractionEnabled = true // 끌어 내려 닫기
+        fpc.backdropView.dismissalTapGestureRecognizer.isEnabled = true
+        
+        // Hidden grabber
+        fpc.surfaceView.grabberHandle.isHidden = true
+        
+        fpc.addPanel(toParent: self)
+        
+        fpc.layout = CustomFloatingPanelLayout()
+       
+        
+        UIView.animate(withDuration: 0.4) {
+            self.fpc.move(to: .half, animated: false)
+        }
+        
+        fpc.show()
+      
     }
 
 
+}
+
+class CustomFloatingPanelLayout: FloatingPanelLayout {
+    var position: FloatingPanelPosition = .bottom
+    var initialState: FloatingPanelState = .tip
+    
+    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
+            return [
+                .full: FloatingPanelLayoutAnchor(fractionalInset: 1.0, edge: .bottom, referenceGuide: .superview),
+                .half: FloatingPanelLayoutAnchor(fractionalInset: 0.8, edge: .bottom, referenceGuide: .superview),
+                .tip: FloatingPanelLayoutAnchor(fractionalInset: 0.5, edge: .bottom, referenceGuide: .superview)
+            ]
+    }
+    
+    func backdropAlpha(for state: FloatingPanelState) -> CGFloat { // 뒷 배경
+        0.3
+    }
 }
