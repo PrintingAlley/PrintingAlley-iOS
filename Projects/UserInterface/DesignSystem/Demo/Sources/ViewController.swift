@@ -62,6 +62,12 @@ class ViewController: UIViewController {
         fpc.addPanel(toParent: self)
         
         fpc.layout = CustomFloatingPanelLayout()
+       
+        
+        UIView.animate(withDuration: 0.4) {
+            self.fpc.move(to: .half, animated: false)
+        }
+        
         fpc.show()
       
     }
