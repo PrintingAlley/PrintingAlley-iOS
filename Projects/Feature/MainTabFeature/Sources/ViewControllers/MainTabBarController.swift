@@ -29,14 +29,14 @@ public class MainTabBarController: UITabBarController {
     
     private let tabBarItems: [UITabBarItem] = {
         let items = [
-        UITabBarItem(title: "홈", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill")),
-        UITabBarItem(title: "내 주변", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill")),
-        UITabBarItem(title: "나의 골목", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill"))
+            UITabBarItem(title: "홈", image: DesignSystemAsset.BottomTabIcon.defaultHome.image, selectedImage: DesignSystemAsset.BottomTabIcon.selectedHome.image),
+        UITabBarItem(title: "내 주변", image: DesignSystemAsset.BottomTabIcon.defaultMapMarker.image, selectedImage: DesignSystemAsset.BottomTabIcon.selectedMapMarker.image),
+        UITabBarItem(title: "나의 골목", image: DesignSystemAsset.BottomTabIcon.defaultPerson.image, selectedImage: DesignSystemAsset.BottomTabIcon.selectedPerson.image)
         ]
         return items
     }()
 
-    init(myPageFactory: MyPageFactory, homeFactory: HomeFactory, nearByMeFactory:NearByMeFactory) {
+    init(myPageFactory: MyPageFactory, homeFactory: HomeFactory, nearByMeFactory: NearByMeFactory) {
         self.myPageFactory = myPageFactory
         self.homeFactory = homeFactory
         self.nearByMeFactory = nearByMeFactory

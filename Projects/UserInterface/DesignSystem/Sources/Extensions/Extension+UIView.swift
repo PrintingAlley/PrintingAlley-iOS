@@ -11,10 +11,9 @@ import UIKit
 public extension UIView {
     // use: setRound([.allCorners], radius: 22)
     func setRound(_ corners: UIRectCorner, radius: CGFloat) {
-      let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-      let mask = CAShapeLayer()
-      mask.path = path.cgPath
-      layer.mask = mask
+        self.layer.maskedCorners = CACornerMask(rawValue: corners.rawValue)
+        self.layer.cornerRadius = radius
+        self.layer.masksToBounds = true
     }
     
     // use: addSubview(firstView, secondView)
