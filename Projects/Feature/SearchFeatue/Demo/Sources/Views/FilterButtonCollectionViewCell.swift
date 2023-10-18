@@ -11,7 +11,6 @@ import SnapKit
 import Then
 import DesignSystem
 
-
 final class FilterButtonCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "RecommendCollectionViewCell"

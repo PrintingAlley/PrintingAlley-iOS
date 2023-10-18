@@ -35,7 +35,7 @@ final class SearchViewController: UIViewController {
     
     private let recommendTitle = AlleyLabel("추천 검색어", textColor: .sub(.black), font: .subtitle1)
     
-    private lazy var recommendCollectionView = makeCollectionView(scrollDirection: .vertical).then {
+    private lazy var recommendCollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .vertical).then {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
@@ -94,11 +94,8 @@ extension SearchViewController {
 }
 
 extension SearchViewController {
-    private func makeCollectionView(scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
-        let layout = LeftAlignedCollectionViewFlowLayout()
+    private func makeCollectionView(layout: UICollectionViewFlowLayout, scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
         layout.scrollDirection = scrollDirection
-        layout.minimumLineSpacing = 8
-        layout.minimumInteritemSpacing = 6
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
             $0.delegate = self
             $0.dataSource = self
@@ -115,8 +112,15 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
         let tempLabel = AlleyLabel(testRecommend[indexPath.row].title, font: .body1).then {
             $0.sizeToFit()
         }
-        
         return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        8
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        6
     }
 }
 
