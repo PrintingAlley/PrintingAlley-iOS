@@ -9,6 +9,7 @@
 import UIKit
 import SignInFeatureInterface
 import MyPageFeatureInterface
+import BookMarkFeatureInterface
 import RxSwift
 import UtilityModule
 
@@ -17,13 +18,15 @@ public class MyPageViewController: UIViewController, ContainerViewType {
     
     var siginInFactory: SigninFactory!
     var myPageContentFactory: MyPageContentFactory!
+    var bookMarkFactory: BookMarkFactory!
     
     let disposeBag = DisposeBag()
 
-    init(siginInFactory: SigninFactory, myPageContentFactory: MyPageContentFactory) {
+    init(siginInFactory: SigninFactory, myPageContentFactory: MyPageContentFactory, bookMarkFactory: BookMarkFactory) {
         super.init(nibName: nil, bundle: nil)
         self.siginInFactory = siginInFactory
         self.myPageContentFactory = myPageContentFactory
+        self.bookMarkFactory = bookMarkFactory
     }
     
     required init?(coder: NSCoder) {

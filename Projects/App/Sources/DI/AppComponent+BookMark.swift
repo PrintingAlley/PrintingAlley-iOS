@@ -11,7 +11,7 @@ import BookMarkFeature
 import BookMarkFeatureInterface
 
 extension AppComponent {
-//    var bookMarkFactory: any BookMarkFactory {
-//        BookMarkComponent(parent: self)
-//    }
+    var bookMarkFactory: any BookMarkFactory {
+        BookMarkComponent(parent: self)
+    }
 }

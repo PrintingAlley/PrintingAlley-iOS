@@ -14,7 +14,7 @@ import UIKit
 
 public protocol BookMarkDependency: Dependency {
     
-    var bookMarkDomainFactory: BookMarkDomainFactory { get }
+    var bookMarkDomainFactory: any BookMarkDomainFactory { get }
 
 }
 

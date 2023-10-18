@@ -6,10 +6,8 @@
 //  Copyright © 2023 com. All rights reserved.
 //
 
-
 import UIKit
 
 public protocol BookMarkFactory {
     func makeView() -> UIViewController
 }
-

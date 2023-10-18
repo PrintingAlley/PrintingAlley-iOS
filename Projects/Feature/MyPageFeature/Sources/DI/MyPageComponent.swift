@@ -11,16 +11,18 @@ import NeedleFoundation
 import MyPageFeatureInterface
 import UIKit
 import SignInFeatureInterface
+import BookMarkFeatureInterface
 
 public protocol MyPageDependency: Dependency {
     
     var signInFactory: any SigninFactory { get }
     var myPageContentFactory: any MyPageContentFactory { get }
+    var bookMarkFactory: any BookMarkFactory { get }
     
 }
 
 public final class MyPageComponent: Component<MyPageDependency>, MyPageFactory {
     public func makeView() -> UIViewController {
-        MyPageViewController(siginInFactory: dependency.signInFactory, myPageContentFactory: dependency.myPageContentFactory)
+        MyPageViewController(siginInFactory: dependency.signInFactory, myPageContentFactory: dependency.myPageContentFactory,bookMarkFactory: dependency.bookMarkFactory)
     }
 }
