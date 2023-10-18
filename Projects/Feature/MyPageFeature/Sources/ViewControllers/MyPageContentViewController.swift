@@ -29,14 +29,14 @@ public class MyPageContentViewController: UIViewController {
         $0.setTitle("프로필 수정", for: .normal)
         $0.setImage(DesignSystemAsset.Icon.pencil.image, for: .normal)
         $0.setTitleColor(DesignSystemAsset.Grey.grey500.color, for: .normal)
-        $0.imageView?.contentMode = .scaleAspectFill
+        $0.imageView?.contentMode = .scaleAspectFit
         $0.titleLabel?.font = .setFont(.caption1)
         $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
         $0.semanticContentAttribute = .forceRightToLeft //<- 중요
         //$0.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15) //<- 중요
     }
     
-    lazy var headerView: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 84)).then {
+    lazy var headerView: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 75)).then {
         $0.deleagte = self
     }
     
@@ -101,6 +101,8 @@ extension MyPageContentViewController {
         
         profileNameEditButton.snp.makeConstraints {
             $0.left.equalTo(profileLabel.snp.left)
+            $0.width.equalTo(80)
+            $0.height.equalTo(24)
             $0.top.equalTo(profileLabel.snp.bottom)
         }
         
@@ -174,7 +176,17 @@ extension MyPageContentViewController: UITableViewDelegate {
 
 extension MyPageContentViewController: MyPageHeaderViewDelegate {
     public func headerTap(type: HeaderItemType) {
-        DEBUG_LOG(type)
+        
+        
+        switch type {
+            
+        case .notice:
+            DEBUG_LOG(type)
+        case .bookMark:
+            DEBUG_LOG(type)
+        case .review:
+            DEBUG_LOG(type)
+        }
     }
  
 }
