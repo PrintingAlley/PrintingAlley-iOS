@@ -200,7 +200,6 @@ extension EditModalViewController {
             $0.bottom.equalToSuperview().inset(appHeight/4)
         }
         
-        //TODO: 키보드에 따른 contentview 위치
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)

@@ -17,7 +17,7 @@ class BookMarkListTableViewCell: UITableViewCell {
     
     lazy var frontImageView: UIImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.image = DesignSystemAsset.Icon.add.image
+        $0.image = DesignSystemAsset.Icon.blackBookMark.image
     }
     
     lazy var titleLabel: AlleyLabel = AlleyLabel()
