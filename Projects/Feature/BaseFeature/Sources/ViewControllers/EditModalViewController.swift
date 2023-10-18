@@ -75,15 +75,13 @@ public class EditModalViewController: UIViewController {
         $0.distribution = .fillEqually
     }
     
-    
+    //TODO: 나중에 유즈케이스 주입할 수 있음
     /// <#Description#>
     /// - Parameters:
     ///   - title: "제목"
-    ///   - content: "내용"
-    ///   - type: "Alert 타입"
     ///   - completion: "확인 핸들러"
     ///   - cancelCompletion: "취소 핸들러"
-    public init(title: String = "", preName: String = "" ,completion: (() -> Void)? = nil, cancelCompletion: (() -> Void)? = nil) {
+    public init(title: String = "",completion: (() -> Void)? = nil, cancelCompletion: (() -> Void)? = nil) {
         
         super.init(nibName: nil, bundle: nil)
      

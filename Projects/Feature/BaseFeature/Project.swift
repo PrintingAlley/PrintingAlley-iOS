@@ -8,10 +8,15 @@ let project = Project.module(
         .interface(module: .feature(.BaseFeature)),
         .implements(module: .feature(.BaseFeature), dependencies: [
             .shared(target: .UtilityModule),
-            .feature(target: .BaseFeature,type:.interface)
+            .feature(target: .BaseFeature,type:.interface),
+            .feature(target: .BookMarkFeature, type: .interface)
         ]),
         .tests(module: .feature(.BaseFeature), dependencies: [
             .feature(target: .BaseFeature)
+        ]),
+        .demo(module: .feature(.BaseFeature), dependencies: [
+            .feature(target: .BaseFeature)
         ])
+        
     ]
 )
