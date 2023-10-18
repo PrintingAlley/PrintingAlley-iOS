@@ -24,6 +24,8 @@ final class SearchViewController: UIViewController {
     
     private let recommendTitle = AlleyLabel("추천 검색어", textColor: .sub(.black), font: .subtitle1)
     
+    private let test = FilterButton(title: "스프링노트", type: .selectedWithX)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .setColor(.sub(.white))
@@ -36,7 +38,7 @@ extension SearchViewController {
     private func addSubviews() {
         view.addSubviews(navigationView, recommendView)
         navigationView.addSubviews(backButton, searchBar)
-        recommendView.addSubviews(recommendTitle)
+        recommendView.addSubviews(recommendTitle, test)
     }
     
     private func makeConstraints() {
@@ -66,6 +68,11 @@ extension SearchViewController {
         
         recommendTitle.snp.makeConstraints {
             $0.top.equalToSuperview().inset(17)
+            $0.leading.equalToSuperview().inset(24)
+        }
+        
+        test.snp.makeConstraints {
+            $0.top.equalTo(recommendTitle.snp.bottom).offset(16)
             $0.leading.equalToSuperview().inset(24)
         }
     }
