@@ -9,19 +9,20 @@
 import Foundation
 import RxSwift
 import RxRelay
+import UtilityModule
 
-public class BookMarkBottomSheetViewModel {
-    
-    struct Input {
+public class BookMarkBottomSheetViewModel: ViewModelType {
+     
+    public struct Input {
        
     }
     
-    struct Output {
+    public struct Output {
         var dataSource: BehaviorRelay<[TmpModel]> = .init(value: TmpModel.makeDummy())
     }
     
     
-    func transform(input: Input) -> Output {
+    public func transform(input: Input) -> Output {
         
         let output = Output()
         

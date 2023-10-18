@@ -10,10 +10,11 @@ import Foundation
 import BaseFeatureInterface
 import NeedleFoundation
 import UIKit
+import BookMarkDomainInterface
 
 public protocol BaseDependency: Dependency {
     
-
+    var bookMarkDomainFactory: any BookMarkDomainFactory { get }
 }
 
 public final class BaseComponent: Component<BaseDependency>, BaseFactory {
@@ -21,8 +22,8 @@ public final class BaseComponent: Component<BaseDependency>, BaseFactory {
         BookMarkBottomSheetViewController(viewModel: BookMarkBottomSheetViewModel())
     }
     
-    public func makeEditMoal() -> UIViewController {
-        EditModalViewController()
+    public func makeEditModal(title: String,type: EditType) -> UIViewController {
+        EditModalViewController(title: title, viewModel: EditModalViewModel(type: type, generateBookMarkUseCase: dependency.bookMarkDomainFactory.generateBookMarkUseCase))
     }
     
     

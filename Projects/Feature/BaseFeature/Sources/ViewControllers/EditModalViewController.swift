@@ -16,8 +16,8 @@ import RxKeyboard
 
 
 public class EditModalViewController: UIViewController {
-    var completion: (() -> Void)?
-    var cancelCompletion: (() -> Void)?
+
+    var viewModel: EditModalViewModel!
     var titleString: String = ""
     
     let disposeBag = DisposeBag()
@@ -81,13 +81,13 @@ public class EditModalViewController: UIViewController {
     ///   - title: "제목"
     ///   - completion: "확인 핸들러"
     ///   - cancelCompletion: "취소 핸들러"
-    public init(title: String = "",completion: (() -> Void)? = nil, cancelCompletion: (() -> Void)? = nil) {
+    public init(title: String = "",viewModel: EditModalViewModel) {
         
         super.init(nibName: nil, bundle: nil)
      
         self.titleString =  title
-        self.completion = completion
-        self.cancelCompletion = cancelCompletion
+        self.viewModel = viewModel
+
     }
     
     required init?(coder: NSCoder) {
@@ -110,6 +110,38 @@ extension EditModalViewController {
     
     func isWhite(_ str: String) -> Bool {
         str.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
+    }
+    
+    func bindViewModel() {
+        let input = EditModalViewModel.Input()
+        
+        bindButtons(input: input)
+        
+        
+        let output = viewModel.transform(input: input)
+        
+        
+    }
+    
+    func bindButtons(input: EditModalViewModel.Input) {
+        
+        cancelButton.rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                
+                guard let self else {return}
+                self.dismiss(animated: false)
+                
+            })
+            .disposed(by: disposeBag)
+        
+        confirmButton
+            .rx
+            .tap
+            .bind(to: input.tapConfirm)
+            .disposed(by: disposeBag)
+        
+        
     }
     
     func bindTextField() {
@@ -166,10 +198,6 @@ extension EditModalViewController {
                 
             }
             
-            
-           
-            
-            print(tmp)
 
             
         })
@@ -188,9 +216,6 @@ extension EditModalViewController {
         
         self.view.backgroundColor = .black.withAlphaComponent(0.4)
         titleLabel.setTitle(title: self.titleString, textColor: .sub(.black), font: .header3, alignment: .center)
-        
-        cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
-        confirmButton.addTarget(self, action: #selector(confirmAction), for: .touchUpInside)
     }
     
     func makeConstraints() {
@@ -239,13 +264,5 @@ extension EditModalViewController {
         
     }
     
-    @objc func cancelAction() {
-        self.dismiss(animated: false)
-        self.cancelCompletion?()
-    }
-    
-    @objc func confirmAction() {
-        self.dismiss(animated: false)
-        self.completion?()
-    }
+
 }

@@ -11,5 +11,5 @@ import UIKit
 
 public protocol BaseFactory {
     func makeBookMarkBottomSheet() -> UIViewController
-    func makeEditMoal() -> UIViewController
+    func makeEditModal(title: String,type: EditType) -> UIViewController
 }
