@@ -12,10 +12,12 @@ import SnapKit
 import UtilityModule
 import DesignSystem
 import MessageUI // import For MailSystem
-
+import BookMarkFeatureInterface
 
 public class MyPageContentViewController: UIViewController {
 
+    var bookMarkFactory: BookMarkFactory!
+    
     lazy var profileImage: UIButton = UIButton().then { // TODO: 프로필 이미지 편집 연결
         $0.setImage(DesignSystemAsset.Icon.profilePlaceHolder.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
@@ -54,9 +56,10 @@ public class MyPageContentViewController: UIViewController {
     
     var viewModel: MyPageContentViewModel!
     
-    init(viewModel: MyPageContentViewModel!) {
+    init(bookMarkFactory: BookMarkFactory, viewModel: MyPageContentViewModel!) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        self.bookMarkFactory = bookMarkFactory
     }
     
     required init?(coder: NSCoder) {
@@ -183,7 +186,10 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
         case .notice:
             DEBUG_LOG(type)
         case .bookMark:
-            DEBUG_LOG(type)
+            
+            let vc = bookMarkFactory.makeView()
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         case .review:
             DEBUG_LOG(type)
         }

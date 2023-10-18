@@ -30,13 +30,6 @@ final class SignInViewModel: NSObject, ViewModelType {
     init(fetchLoginUseCase: FetchLoginUseCase!, fetchTokenTestUseCase: FetchTokenTestUseCase) {
         self.fetchLoginUseCase = fetchLoginUseCase
         self.fetchTokenTestUseCase = fetchTokenTestUseCase
-        
-        self.fetchTokenTestUseCase.execute()
-            .asObservable()
-            .subscribe(onNext: {
-                DEBUG_LOG($0)
-            })
-            .disposed(by: disposeBag)
     }
     
     struct Input {
@@ -90,10 +83,22 @@ final class SignInViewModel: NSObject, ViewModelType {
                 
                 return self.fetchLoginUseCase
                     .execute(accessToken: accessToken, provider: type.rawValue)
+                    .catch{ err in
+                        
+                        DEBUG_LOG(err.asAlleyError.errorDescription)
+                        DEBUG_LOG(err.localizedDescription)
+                        
+                        return Single<TokenEntity>.create { single in
+                            single(.success(TokenEntity(access_token: "1234")))
+                            return Disposables.create()
+                
+                        }
+                    }
                     .asObservable()
             }
-            .subscribe(onNext: {
-                DEBUG_LOG("제발 받아와 !! \($0) ")
+            .debug("WHAT")
+            .subscribe(onNext: { _ in
+                PreferenceManager.shared.setUserInfo(id: "TMP", name: "아라라", platform: .apple)
             })
             .disposed(by: disposeBag)
             

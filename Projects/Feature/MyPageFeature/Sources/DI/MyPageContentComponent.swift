@@ -10,13 +10,14 @@ import Foundation
 import NeedleFoundation
 import MyPageFeatureInterface
 import UIKit
+import BookMarkFeatureInterface
 
 public protocol MyPageContentDependency: Dependency {
-
+    var bookMarkFactory: any BookMarkFactory { get }
 }
 
 public final class MyPageContentComponent: Component<MyPageContentDependency>, MyPageContentFactory {
     public func makeView() -> UIViewController {
-        MyPageContentViewController(viewModel: MyPageContentViewModel())
+        MyPageContentViewController(bookMarkFactory: dependency.bookMarkFactory,viewModel: MyPageContentViewModel())
     }
 }

@@ -71,7 +71,7 @@ class BookMarkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        
+        preProcessing()
         addSubviews()
         makeConstraints()
         bindViewModel()
@@ -80,6 +80,11 @@ class BookMarkViewController: UIViewController {
 }
 
 extension BookMarkViewController {
+    
+    func preProcessing() {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     func addSubviews() {
         self.view.addSubviews(naviTitleView,tableView)
         naviTitleView.addSubviews(backButton, naviTitleLabel,deleteButton, editOrDoneButton)
