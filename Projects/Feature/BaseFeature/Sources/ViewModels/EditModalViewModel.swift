@@ -38,7 +38,13 @@ public class EditModalViewModel: ViewModelType {
         
         let output = Output()
         
-    
+        //TODO:  type 에 따른 유즈케이스 주입
+
+//        input.tapConfirm
+//            .flatMap { <#()#> in
+//                <#code#>
+//            }
+//    
         
         return output
     }
