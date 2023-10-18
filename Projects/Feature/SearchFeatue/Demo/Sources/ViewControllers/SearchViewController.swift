@@ -37,7 +37,7 @@ final class SearchViewController: UIViewController {
     
     private lazy var recommendCollectionView = makeCollectionView(scrollDirection: .vertical).then {
         $0.backgroundColor = .setColor(.sub(.white))
-        $0.register(RecommendCollectionViewCell.self, forCellWithReuseIdentifier: RecommendCollectionViewCell.identifier)
+        $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
     
     override func viewDidLoad() {
@@ -122,9 +122,9 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 
 extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendCollectionViewCell.identifier, for: indexPath)
-                as? RecommendCollectionViewCell else { return UICollectionViewCell() }
-        cell.dummyDataBind(model: testRecommend[indexPath.row])
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath)
+                as? FilterButtonCollectionViewCell else { return UICollectionViewCell() }
+        cell.dummyDataBind(model: testRecommend[indexPath.row], type: .selected)
         return cell
     }
     

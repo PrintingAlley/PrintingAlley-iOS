@@ -8,17 +8,21 @@
 
 import UIKit
 
+public enum FilterButtonType {
+    case basic
+    case filter
+    case arrowFilter
+    case selected
+    case selectedWithX
+}
+
 public final class FilterButton: UIButton {
     
-    public enum FilterButtonType {
-        case basic
-        case filter
-        case arrowFilter
-        case selected
-        case selectedWithX
+    public var type: FilterButtonType {
+        didSet {
+            configureUI()
+        }
     }
-    
-    public var type: FilterButtonType
     
     public var title: String {
         didSet {
