@@ -21,7 +21,7 @@ struct BookMarkRepositoryImpl: BookMarkRepository {
         self.remoteBookMarkDataSource = remoteBookMarkDataSource
     }
     
-    func fetchMyBookMarks() -> Single<MyBookMarkEntity> {
+    func fetchMyBookMarks() -> Single<[MyBookMarkEntity]> {
         remoteBookMarkDataSource.fetchMyBookMarks()
     }
     

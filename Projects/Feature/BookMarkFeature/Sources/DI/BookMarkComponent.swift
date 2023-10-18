@@ -8,5 +8,19 @@
 
 import Foundation
 import NeedleFoundation
+import BookMarkDomainInterface
+import BookMarkFeatureInterface
+import UIKit
 
+public protocol BookMarkDependency: Dependency {
+    
+    var bookMarkDomainFactory: BookMarkDomainFactory { get }
+
+}
+
+public final class BookMarkComponent: Component<BookMarkDependency>, BookMarkFactory {
+    public func makeView() -> UIViewController {
+        BookMarkViewController(viewModel: BookMarkViewModel(fetchMyBookMarksUseCase: dependency.bookMarkDomainFactory.fetchMyBookMarksUseCase))
+    }
+}
 

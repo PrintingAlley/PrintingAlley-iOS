@@ -4,6 +4,8 @@ import AuthDomain
 import AuthDomainInterface
 import BookMarkDomain
 import BookMarkDomainInterface
+import BookMarkFeature
+import BookMarkFeatureInterface
 import Foundation
 import HomeFeature
 import HomeFeatureInterface

@@ -9,9 +9,10 @@
 import Foundation
 
 public struct MyBookMarkEntity {
-    let id: Int
-    let name: String
-    let bookmarks: [Int]
+    public let id: Int
+    public let name: String
+    public let bookmarks: [Int]
+    public var isSelected: Bool = false
     
     public init(id: Int, name: String, bookmarks: [Int]) {
         self.id = id

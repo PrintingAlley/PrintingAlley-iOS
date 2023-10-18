@@ -10,13 +10,19 @@ import Foundation
 import RxSwift
 import RxRelay
 import UtilityModule
-
+import BookMarkDomainInterface
 
 final class BookMarkViewModel: ViewModelType {
     
     let disposeBag = DisposeBag()
+    var fetchMyBookMarksUseCase: any FetchMyBookMarksUseCase
+    
+    init(fetchMyBookMarksUseCase: FetchMyBookMarksUseCase!) {
+        self.fetchMyBookMarksUseCase = fetchMyBookMarksUseCase
+    }
     
     struct Input {
+        let viewDidLoad: PublishSubject<Void> = .init()
         let isEdit: BehaviorRelay<Bool> = .init(value: false)
         let tapStateButton: PublishSubject<Void> = .init()
         let tapItem: PublishSubject<Int> = .init()
@@ -25,13 +31,26 @@ final class BookMarkViewModel: ViewModelType {
     }
     
     struct Output {
-        let dataSource: BehaviorRelay<[TmpModel]> = .init(value: TmpModel.makeDummy())
+        let dataSource: BehaviorRelay<[MyBookMarkEntity]> = .init(value: [])
         let indexOfSelectedItem: BehaviorRelay<[Int]> = .init(value: [])
     }
     
     func transform(input: Input) -> Output {
         
         let output = Output()
+        
+        input.viewDidLoad
+            .flatMap{ [weak self] _ -> Observable<[MyBookMarkEntity]> in
+            
+                guard let self else {return Observable.empty()}
+                
+                return self.fetchMyBookMarksUseCase.execute()
+                    .asObservable()
+                
+            }
+            .bind(to: output.dataSource)
+            .disposed(by: disposeBag)
+        
         
         //편집 버튼 눌렀을 때 상태 바꿈
         input.tapStateButton
@@ -63,7 +82,7 @@ final class BookMarkViewModel: ViewModelType {
         /// 선택된 것들의 체크 표시를 반영하기 위한 dataSource 바인딩
         output.indexOfSelectedItem
             .withLatestFrom(output.dataSource){ ($0, $1) }
-            .map{ (selectedItems, dataSource) -> [TmpModel] in
+            .map{ (selectedItems, dataSource) -> [MyBookMarkEntity] in
                 var realData = dataSource
                 
                 realData.indices.forEach({
