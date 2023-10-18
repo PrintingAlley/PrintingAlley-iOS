@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SignInFeature
 import SignInFeatureInterface
 import MyPageFeatureInterface
 import RxSwift
@@ -53,7 +52,7 @@ extension MyPageViewController {
                 guard let self else {return}
                 
                 if isLogin {
-                    if  self.children.first as? SignInViewController != nil {
+                    if  self.children.first as? MyPageContentViewController == nil { // 로그인 되어 있는데 첫번째 자식이  MyPageContentViewController 아니면
                         self.remove(asChildViewController: self.siginInFactory.makeView())
                     }
                     self.add(asChildViewController: self.myPageContentFactory.makeView())

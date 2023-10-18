@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 import AuthDomainInterface
 import RxSwift
 import Network

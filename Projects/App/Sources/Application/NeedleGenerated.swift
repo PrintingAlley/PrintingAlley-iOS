@@ -2,6 +2,8 @@
 
 import AuthDomain
 import AuthDomainInterface
+import BookMarkDomain
+import BookMarkDomainInterface
 import Foundation
 import HomeFeature
 import HomeFeatureInterface
@@ -141,6 +143,19 @@ private class NearByMeDependencyfb289c9eb0cc94c83621Provider: NearByMeDependency
 private func factory53f303ca6b0d301565d8e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return NearByMeDependencyfb289c9eb0cc94c83621Provider()
 }
+private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDomainDependency {
+    var jwtStoreFactory: any JwtStoreFactory {
+        return appComponent.jwtStoreFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->BookMarkDomainComponent
+private func factory9b3fac1bd377f0830537f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return BookMarkDomainDependency2ef018453822a996a9abProvider(appComponent: parent1(component) as! AppComponent)
+}
 private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
@@ -210,6 +225,11 @@ extension NearByMeComponent: Registration {
 
     }
 }
+extension BookMarkDomainComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\BookMarkDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+    }
+}
 extension AuthDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\AuthDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
@@ -241,6 +261,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652af47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->NearByMeComponent", factory53f303ca6b0d301565d8e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
 }
 #endif
