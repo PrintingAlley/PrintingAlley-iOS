@@ -10,7 +10,8 @@ let project = Project.module(
         ]),
         .implements(module: .feature(.BookMarkModule), dependencies: [
             .feature(target: .BookMarkModule, type: .interface),
-            .feature(target: .BaseFeature)
+            .domain(target: .BookMarkDomain, type: .interface)
+            .feature(target: .BaseFeature),
         ]),
         .testing(module: .feature(.BookMarkModule), dependencies: [
             .feature(target: .BookMarkModule, type: .interface)
