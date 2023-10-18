@@ -11,7 +11,7 @@ let project = Project.module(
             .feature(target: .MyPageFeature),
             .feature(target: .SignInFeature),
             .feature(target: .NearByMeFeature),
-            .feature(target: .BookMarkModule)
+            .feature(target: .BookMarkFeature)
         ])
     ]
 )

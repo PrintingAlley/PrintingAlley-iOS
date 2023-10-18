@@ -8,6 +8,5 @@
 
 import Foundation
 import NeedleFoundation
-import BookMarkModuleInterface
 
 
