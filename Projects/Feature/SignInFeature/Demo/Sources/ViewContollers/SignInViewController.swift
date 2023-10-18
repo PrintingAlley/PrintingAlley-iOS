@@ -44,7 +44,7 @@ public class SignInViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        configureCommonUI()
         kakaoButton.delegate = self
         naverButton.delegate = self
         appleButton.delegate = self

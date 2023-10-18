@@ -16,7 +16,6 @@ import KakaoSDKUser
 import KakaoSDKAuth
 import AuthDomainInterface
 
-
 final class SignInViewModel: NSObject, ViewModelType {
 
     let disposeBag = DisposeBag()
@@ -25,7 +24,6 @@ final class SignInViewModel: NSObject, ViewModelType {
     
     var fetchLoginUseCase: any FetchLoginUseCase
     var fetchTokenTestUseCase: any FetchTokenTestUseCase
-    
     
     init(fetchLoginUseCase: FetchLoginUseCase!, fetchTokenTestUseCase: FetchTokenTestUseCase) {
         self.fetchLoginUseCase = fetchLoginUseCase
@@ -85,7 +83,6 @@ final class SignInViewModel: NSObject, ViewModelType {
                     .execute(accessToken: accessToken, provider: type.rawValue)
                     .catch{ err in
                         
-                        DEBUG_LOG(err.asAlleyError.errorDescription)
                         DEBUG_LOG(err.localizedDescription)
                         
                         return Single<TokenEntity>.create { single in

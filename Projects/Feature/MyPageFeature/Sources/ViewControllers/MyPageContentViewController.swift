@@ -68,7 +68,7 @@ public class MyPageContentViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        configureCommonUI()
         addSubViews()
         preProcessing()
         makeConstraints()

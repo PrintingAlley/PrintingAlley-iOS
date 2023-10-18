@@ -2,6 +2,8 @@
 
 import AuthDomain
 import AuthDomainInterface
+import BaseFeature
+import BaseFeatureInterface
 import BookMarkDomain
 import BookMarkDomainInterface
 import BookMarkFeature
@@ -160,6 +162,17 @@ private class BookMarkDependency8b686eab048ca50fc073Provider: BookMarkDependency
 private func factory28d0c1b9536190951087f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BookMarkDependency8b686eab048ca50fc073Provider(appComponent: parent1(component) as! AppComponent)
 }
+private class BaseDependency859c0dc7c01380fd4dcdProvider: BaseDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->BaseComponent
+private func factory8d6553a65a3e0710b1b5e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return BaseDependency859c0dc7c01380fd4dcdProvider()
+}
 private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
@@ -247,6 +260,11 @@ extension BookMarkComponent: Registration {
         keyPathToName[\BookMarkDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
     }
 }
+extension BaseComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension BookMarkDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
@@ -284,6 +302,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->NearByMeComponent", factory53f303ca6b0d301565d8e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BookMarkComponent", factory28d0c1b9536190951087f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->BaseComponent", factory8d6553a65a3e0710b1b5e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
 }

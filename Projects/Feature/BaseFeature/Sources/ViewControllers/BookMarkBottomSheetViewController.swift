@@ -12,6 +12,7 @@ import Then
 import DesignSystem
 import RxDataSources
 import RxSwift
+import UtilityModule
 
 public class BookMarkBottomSheetViewController: UIViewController {
     
@@ -62,7 +63,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .white
+        configureCommonUI()
         addSubviews()
         makeConstraints()
         bindViewModel()
