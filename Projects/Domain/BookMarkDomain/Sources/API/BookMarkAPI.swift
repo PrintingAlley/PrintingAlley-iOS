@@ -44,6 +44,7 @@ extension BookMarkAPI: AlleyAPI {
         case .removeBookMarkGroup:
             return "/group"
         }
+    }
     
     var errorMap: [Int: Network.AlleyError] {
         switch self {
@@ -60,7 +61,7 @@ extension BookMarkAPI: AlleyAPI {
     
     var method: Moya.Method {
         switch self {
- 
+            
         case .myBookMark:
             return .get
         case .addBookMark:
@@ -74,6 +75,7 @@ extension BookMarkAPI: AlleyAPI {
         case .removeBookMarkGroup:
             return .delete
         }
+    }
     
         var task: Task {
             switch self {

@@ -1,5 +1,5 @@
 //
-//  AddBookMarkRequestDTO.swift
+//  GenerateBookMarkGroupRequestDTO.swift
 //  BookMarkDomain
 //
 //  Created by yongbeomkwak on 10/18/23.
