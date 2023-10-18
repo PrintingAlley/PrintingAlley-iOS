@@ -34,13 +34,6 @@ extension RecommendCollectionViewCell {
     }
     
     private func makeConstraints() {
-        print("width와 height")
-        print(filterButton.frame.width)
-        print(filterButton.frame.height)
-        contentView.snp.makeConstraints {
-            $0.width.equalTo(filterButton)
-            $0.height.equalTo(filterButton)
-        }
         filterButton.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
         }

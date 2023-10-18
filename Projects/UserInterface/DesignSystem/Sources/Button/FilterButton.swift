@@ -20,7 +20,11 @@ public final class FilterButton: UIButton {
     
     public var type: FilterButtonType
     
-    public var title: String
+    public var title: String {
+        didSet {
+            configureUI()
+        }
+    }
     
     public init(title: String, type: FilterButtonType) {
         self.type = type
@@ -36,7 +40,7 @@ public final class FilterButton: UIButton {
 }
 
 extension FilterButton {
-    private func configureUI() {
+    func configureUI() {
         let stringSize = (title as NSString).size(withAttributes: [NSAttributedString.Key.font: UIFont.setFont(.body1)])
         
         self.setRound([.allCorners], radius: 16)
