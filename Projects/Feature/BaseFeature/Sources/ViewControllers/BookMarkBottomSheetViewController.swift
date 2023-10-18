@@ -27,7 +27,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
         
     }
     
-    lazy var titleLabel: AlleyLabel = AlleyLabel("저장 목록",textColor: .sub(.black), font: .header3, alignment: .center )
+    lazy var titleLabel: AlleyLabel = AlleyLabel("저장 목록",textColor: .sub(.black), font: .header3, alignment: .center)
     
     lazy var baseLine: UIView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.1)

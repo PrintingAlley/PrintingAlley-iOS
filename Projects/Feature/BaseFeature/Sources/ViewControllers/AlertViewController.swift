@@ -111,7 +111,7 @@ extension AlertViewController {
     
     func addSubViews() {
         self.view.addSubviews(alertView)
-        self.alertView.addSubviews(titleLabel,contentLabel, buttonStack)
+        self.alertView.addSubviews(titleLabel, contentLabel, buttonStack)
         buttonStack.addArrangedSubview(cancelButton, confirmButton)
         
     }
