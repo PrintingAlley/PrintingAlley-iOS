@@ -8,13 +8,15 @@
 
 import Foundation
 import RxSwift
+import BaseDomainInterface
+
 
 public protocol BookMarkRepository {
     func fetchMyBookMarks() -> Single<MyBookMarkEntity>
-    func addBookMark(printShopId: Int, bookmarkGroupId: Int) -> Single<Void>
-    func removeBookMark(id: Int) -> Single<Void>
-    func linkBookMark(bookMarkId: Int, groupId: Int) -> Single<Void>
-    func generateBookMark(name: String) -> Single<Void>
-    func removeBookMarkGroup(id: Int) -> Single<Void>
+    func addBookMark(printShopId: Int, bookmarkGroupId: Int) -> Single<BaseEntity>
+    func removeBookMark(id: Int) -> Single<BaseEntity>
+    func linkBookMark(bookMarkId: Int, groupId: Int) -> Single<BaseEntity>
+    func generateBookMark(name: String) -> Single<BaseEntity>
+    func removeBookMarkGroup(id: Int) -> Single<BaseEntity>
     
 }

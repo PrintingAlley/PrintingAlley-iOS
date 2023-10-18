@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import Network
 import BookMarkDomainInterface
+import BaseDomainInterface
 
 struct LinkBookMarkUseCaseImpl: LinkBookMarkUseCase {
 
@@ -21,7 +22,7 @@ struct LinkBookMarkUseCaseImpl: LinkBookMarkUseCase {
         self.bookMarkRepository = bookMarkRepository
     }
     
-    func execute(bookMarkId: Int, groupId: Int) -> Single<Void> {
+    func execute(bookMarkId: Int, groupId: Int) -> Single<BaseEntity> {
         bookMarkRepository.linkBookMark(bookMarkId: bookMarkId, groupId: groupId)
     }
     

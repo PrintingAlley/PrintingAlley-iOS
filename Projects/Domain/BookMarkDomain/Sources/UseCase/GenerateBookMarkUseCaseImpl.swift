@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import Network
 import BookMarkDomainInterface
+import BaseDomainInterface
 
 struct GenerateBookMarkUseCaseImpl: GenerateBookMarkUseCase {
 
@@ -19,7 +20,7 @@ struct GenerateBookMarkUseCaseImpl: GenerateBookMarkUseCase {
         self.bookMarkRepository = bookMarkRepository
     }
     
-    func execute(name: String) -> Single<Void> {
+    func execute(name: String) -> Single<BaseEntity> {
         bookMarkRepository.generateBookMark(name: name)
     }
     

@@ -8,7 +8,8 @@
 
 import Foundation
 import RxSwift
+import BaseDomainInterface
 
 public protocol RemoveBookMarkUseCase {
-    func execute(id: Int) -> Single<Void>
+    func execute(id: Int) -> Single<BaseEntity>
 }

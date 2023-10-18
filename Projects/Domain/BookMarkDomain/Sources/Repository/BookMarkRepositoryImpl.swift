@@ -9,6 +9,7 @@
 import Foundation
 import BookMarkDomainInterface
 import RxSwift
+import BaseDomainInterface
 
 struct BookMarkRepositoryImpl: BookMarkRepository {
     
@@ -24,23 +25,23 @@ struct BookMarkRepositoryImpl: BookMarkRepository {
         remoteBookMarkDataSource.fetchMyBookMarks()
     }
     
-    func addBookMark(printShopId: Int, bookmarkGroupId: Int) -> Single<Void> {
+    func addBookMark(printShopId: Int, bookmarkGroupId: Int) -> Single<BaseEntity> {
         remoteBookMarkDataSource.addBookMark(printShopId: printShopId, bookmarkGroupId: bookmarkGroupId)
     }
     
-    func removeBookMark(id: Int) -> Single<Void> {
+    func removeBookMark(id: Int) -> Single<BaseEntity> {
         remoteBookMarkDataSource.removeBookMark(id: id)
     }
     
-    func linkBookMark(bookMarkId: Int, groupId: Int) -> Single<Void> {
+    func linkBookMark(bookMarkId: Int, groupId: Int) -> Single<BaseEntity> {
         remoteBookMarkDataSource.linkBookMark(bookMarkId: bookMarkId, groupId: groupId)
     }
     
-    func generateBookMark(name: String) -> Single<Void> {
+    func generateBookMark(name: String) -> Single<BaseEntity> {
         remoteBookMarkDataSource.generateBookMark(name: name)
     }
     
-    func removeBookMarkGroup(id: Int) -> Single<Void> {
+    func removeBookMarkGroup(id: Int) -> Single<BaseEntity> {
         remoteBookMarkDataSource.removeBookMarkGroup(id: id)
     }
     

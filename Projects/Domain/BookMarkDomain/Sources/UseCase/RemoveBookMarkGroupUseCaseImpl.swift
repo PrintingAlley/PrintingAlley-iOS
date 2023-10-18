@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import Network
 import BookMarkDomainInterface
+import BaseDomainInterface
 
 struct RemoveBookMarkGroupUseCaseImpl: RemoveBookMarkGroupUseCase {
 
@@ -19,7 +20,7 @@ struct RemoveBookMarkGroupUseCaseImpl: RemoveBookMarkGroupUseCase {
         self.bookMarkRepository = bookMarkRepository
     }
     
-    func execute(id: Int) -> Single<Void> {
+    func execute(id: Int) -> Single<BaseEntity> {
         bookMarkRepository.removeBookMarkGroup(id: id)
     }
     

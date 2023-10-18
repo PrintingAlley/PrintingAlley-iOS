@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import BookMarkDomainInterface
 
 struct AddBookMarkRequestDTO : Encodable {
     let printShopId: Int
     let bookmarkGroupId: Int
+    
 }

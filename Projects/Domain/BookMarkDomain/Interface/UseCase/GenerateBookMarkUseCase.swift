@@ -8,7 +8,8 @@
 
 import Foundation
 import RxSwift
+import BaseDomainInterface
 
 public protocol GenerateBookMarkUseCase {
-    func execute(name: String) -> Single<Void>
+    func execute(name: String) -> Single<BaseEntity>
 }

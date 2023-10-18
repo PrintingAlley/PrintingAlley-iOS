@@ -8,7 +8,8 @@
 
 import Foundation
 import RxSwift
+import BaseDomainInterface
 
 public protocol LinkBookMarkUseCase {
-    func execute(bookMarkId: Int, groupId: Int) -> Single<Void>
+    func execute(bookMarkId: Int, groupId: Int) -> Single<BaseEntity>
 }

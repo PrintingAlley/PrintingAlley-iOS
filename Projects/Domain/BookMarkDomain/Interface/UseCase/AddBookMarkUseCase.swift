@@ -8,7 +8,8 @@
 
 import Foundation
 import RxSwift
+import BaseDomainInterface
 
 public protocol AddBookMarkUseCase {
-    func execute(printShopId: Int, bookmarkGroupId: Int) -> Single<Void>
+    func execute(printShopId: Int, bookmarkGroupId: Int) -> Single<BaseEntity>
 }

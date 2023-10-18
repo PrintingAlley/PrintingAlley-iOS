@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 
+
 public protocol FetchMyBookMarksUseCase {
     func execute() -> Single<MyBookMarkEntity>
 }

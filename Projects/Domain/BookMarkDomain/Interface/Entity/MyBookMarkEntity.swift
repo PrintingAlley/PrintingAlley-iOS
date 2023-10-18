@@ -12,4 +12,10 @@ public struct MyBookMarkEntity {
     let id: Int
     let name: String
     let bookmarks: [Int]
+    
+    public init(id: Int, name: String, bookmarks: [Int]) {
+        self.id = id
+        self.name = name
+        self.bookmarks = bookmarks
+    }
 }
