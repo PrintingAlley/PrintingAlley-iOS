@@ -13,20 +13,25 @@ import DesignSystem
 import RxSwift
 import RxDataSources
 import UtilityModule
+import BaseFeatureInterface
 
 class BookMarkViewController: UIViewController {
 
     var viewModel: BookMarkViewModel!
+    var baseFactory: any BaseFactory
+
     let input = BookMarkViewModel.Input()
     
     let disposeBag = DisposeBag()
     
+        
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
         
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
     }
+    
     
     lazy var editOrDoneButton: UIButton = UIButton()
     
@@ -59,9 +64,10 @@ class BookMarkViewController: UIViewController {
     
 
     
-    init(viewModel: BookMarkViewModel!) {
-        super.init(nibName: nil, bundle: nil)
+    init(baseFactory: BaseFactory, viewModel: BookMarkViewModel!) {
+        self.baseFactory = baseFactory
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {

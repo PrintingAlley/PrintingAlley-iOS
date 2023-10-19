@@ -12,10 +12,11 @@ import RxRelay
 import UtilityModule
 import BookMarkDomainInterface
 import BaseFeatureInterface
-
+import BaseDomainInterface
 
 public class EditModalViewModel: ViewModelType {
     
+    let disposeBag = DisposeBag()
     var type: EditType!
     var generateBookMarkUseCase: any GenerateBookMarkUseCase
     //TODO: 프로필 이름 변경 유즈 케이스
@@ -27,10 +28,11 @@ public class EditModalViewModel: ViewModelType {
     
     public struct Input {
         let tapConfirm: PublishSubject<Void> = .init()
+        let text:BehaviorRelay<String> = .init(value: "")
     }
     
     public struct Output {
-        
+        let result:PublishSubject<BaseEntity> = .init()
     }
     
     
@@ -38,13 +40,19 @@ public class EditModalViewModel: ViewModelType {
         
         let output = Output()
         
-        //TODO:  type 에 따른 유즈케이스 주입
 
-//        input.tapConfirm
-//            .flatMap { <#()#> in
-//                <#code#>
-//            }
-//    
+        input.tapConfirm
+            .withLatestFrom(input.text){($1)}
+            .flatMap({ [weak self] text -> Observable<BaseEntity> in
+                
+                guard let self else { return Observable.empty()}
+                
+                return self.generateBookMarkUseCase.execute(name: text)
+                    .asObservable()
+            })
+            .bind(to: output.result)
+            .disposed(by: disposeBag)
+    
         
         return output
     }

@@ -13,7 +13,10 @@ import DesignSystem
 import RxCocoa
 import RxSwift
 import RxKeyboard
+import UtilityModule
 
+
+//TODO: dismiss 처리 및 업데이트 노티 쏴주기
 
 public class EditModalViewController: UIViewController {
 
@@ -97,11 +100,12 @@ public class EditModalViewController: UIViewController {
     
    public override func viewDidLoad() {
         super.viewDidLoad()
+       
         addSubViews()
         preProcessing()
         makeConstraints()
-        bindTextField()
-        bindKeyboard()
+        bindViewModel()
+
     }
     
 }
@@ -114,11 +118,13 @@ extension EditModalViewController {
     
     func bindViewModel() {
         let input = EditModalViewModel.Input()
+        let output = viewModel.transform(input: input)
         
         bindButtons(input: input)
+        bindTextField(input: input)
+        bindKeyboard()
+        bindResult(output: output)
         
-        
-        let output = viewModel.transform(input: input)
         
         
     }
@@ -144,7 +150,7 @@ extension EditModalViewController {
         
     }
     
-    func bindTextField() {
+    func bindTextField(input: EditModalViewModel.Input) {
         
         textField
             .rx
@@ -170,7 +176,10 @@ extension EditModalViewController {
   
                 self.limitLabel.setTitle(title: "\(str.count)/14자", textColor: .grey(.grey400), font: .caption1)
             })
-            .bind(to: textField.rx.text)
+            .do(onNext: {
+                input.text.accept($0)
+            })
+            .bind(to:textField.rx.text)
             .disposed(by: disposeBag)
         
     }
@@ -202,6 +211,15 @@ extension EditModalViewController {
             
         })
         
+    }
+    
+    func bindResult(output: EditModalViewModel.Output) {
+        output
+            .result
+            .subscribe(onNext: {
+                DEBUG_LOG($0)
+            })
+            .disposed(by: disposeBag)
     }
     
     func addSubViews() {

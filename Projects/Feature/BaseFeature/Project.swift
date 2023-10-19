@@ -9,7 +9,8 @@ let project = Project.module(
         .implements(module: .feature(.BaseFeature), dependencies: [
             .shared(target: .UtilityModule),
             .feature(target: .BaseFeature,type:.interface),
-            .feature(target: .BookMarkFeature, type: .interface)
+            .feature(target: .BookMarkFeature, type: .interface),
+            .domain(target: .BookMarkDomain, type: .interface)
         ]),
         .tests(module: .feature(.BaseFeature), dependencies: [
             .feature(target: .BaseFeature)
