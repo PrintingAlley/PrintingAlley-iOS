@@ -32,6 +32,9 @@ final class BeforeSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .setColor(.sub(.white))
+        addSubview()
+        makeConstraints()
     }
 }
 
