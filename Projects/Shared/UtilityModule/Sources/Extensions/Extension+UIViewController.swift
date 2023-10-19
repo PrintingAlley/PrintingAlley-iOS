@@ -26,4 +26,19 @@ public extension UIViewController {
         
          self.view.backgroundColor = DesignSystemAsset.Sub.white.color
     }
+
+    ///viewDidAppear에 명시
+    public func configureSwipeBack() {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil // 현재 탭에서 화면이동이 일어날 시 , 빠져나올 때 swipe로 이동
+    }
+    
+    /*
+     
+     public override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            configureSwipeBack()
+            
+        }
+
+     */
 }
