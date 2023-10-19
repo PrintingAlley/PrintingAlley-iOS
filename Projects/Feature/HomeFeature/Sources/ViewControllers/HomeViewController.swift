@@ -11,6 +11,7 @@ import UtilityModule
 import DesignSystem
 import Then
 import SnapKit
+import RxSwift
 
 final class HomeViewController: UIViewController {
     private let blueBackgroundView = UIView().then {
@@ -56,6 +57,8 @@ final class HomeViewController: UIViewController {
     
     private let headerViewHeight: CGFloat = 280
     
+    let disposeBag = DisposeBag()
+    
     var viewModel: HomeViewModel!
     
     init(viewModel: HomeViewModel) {
@@ -71,6 +74,33 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         addSubViews()
         makeConstraints()
+        bindViewModel()
+    }
+}
+
+extension HomeViewController {
+    func bindViewModel(){
+        let input = HomeViewModel.Input()
+        
+        let output = viewModel.transform(input: input)
+        
+        bindTagDataSource(output: output)
+        bindViewDidLoad(input: input)
+    }
+    
+    func bindViewDidLoad(input: HomeViewModel.Input){
+        input.viewDidLoad.onNext(())
+    }
+    
+    func bindTagDataSource(output: HomeViewModel.Output) {
+        
+        output.tagDataSource
+            .debug("WEST")
+            .subscribe(onNext: {
+                DEBUG_LOG($0)
+            })
+            .disposed(by: disposeBag)
+        
     }
 }
 

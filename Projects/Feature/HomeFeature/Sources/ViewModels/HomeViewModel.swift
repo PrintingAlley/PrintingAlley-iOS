@@ -8,19 +8,42 @@
 
 import Foundation
 import UtilityModule
+import TagDomainInterface
+import RxRelay
+import RxSwift
 
 final class HomeViewModel: ViewModelType {
-
-    struct Input{
-        
+    
+    var fetchTagToplevelUseCase: any FetchTagToplevelUseCase
+    
+    let disposeBag = DisposeBag()
+    
+    init(fetchTagToplevelUseCase: FetchTagToplevelUseCase) {
+        self.fetchTagToplevelUseCase = fetchTagToplevelUseCase
     }
     
-    struct Output{
-        
+    public struct Input {
+        let viewDidLoad: PublishSubject<Void> = .init()
     }
     
-    func transform(input: Input) -> Output {
+    public struct Output{
+        let tagDataSource: BehaviorRelay<[TagToplevelEntity]> = .init(value: [])
+    }
+    
+    public func transform(input: Input) -> Output {
         let output = Output()
+        
+        input.viewDidLoad
+            .flatMap({ [weak self] () -> Observable<[TagToplevelEntity]> in
+                
+                guard let self else { return Observable.empty()}
+                
+                return self.fetchTagToplevelUseCase.execute()
+                    .asObservable()
+                
+            })
+            .bind(to: output.tagDataSource)
+            .disposed(by: disposeBag)
         
         return output
     }
