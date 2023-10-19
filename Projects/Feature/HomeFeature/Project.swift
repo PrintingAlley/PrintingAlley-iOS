@@ -10,7 +10,8 @@ let project = Project.module(
         ]),
         .implements(module: .feature(.HomeFeature), dependencies: [
             .feature(target: .HomeFeature, type: .interface),
-            .feature(target: .BaseFeature)
+            .feature(target: .BaseFeature),
+            .domain(target: .TagDomain,type: .interface)
         ]),
         .demo(module: .feature(.HomeFeature), dependencies: [
             .feature(target: .HomeFeature)
