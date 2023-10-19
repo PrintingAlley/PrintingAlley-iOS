@@ -153,9 +153,6 @@ private class BookMarkDependency8b686eab048ca50fc073Provider: BookMarkDependency
     var bookMarkDomainFactory: any BookMarkDomainFactory {
         return appComponent.bookMarkDomainFactory
     }
-    var baseFactory: any BaseFactory {
-        return appComponent.baseFactory
-    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -263,7 +260,6 @@ extension NearByMeComponent: Registration {
 extension BookMarkComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
-        keyPathToName[\BookMarkDependency.baseFactory] = "baseFactory-any BaseFactory"
     }
 }
 extension BaseComponent: Registration {

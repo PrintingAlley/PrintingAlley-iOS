@@ -112,7 +112,7 @@ extension BookMarkTableViewCell {
 
         
         if isEditing == false {
-            button.setImage(DesignSystemAsset.Icon.blackBookMark.image, for: .normal)
+            button.setImage(DesignSystemAsset.Icon.roundBookMark.image, for: .normal)
             button.imageView?.contentMode = .scaleAspectFill
         }
         

@@ -18,7 +18,6 @@ import BaseFeatureInterface
 class BookMarkViewController: UIViewController {
 
     var viewModel: BookMarkViewModel!
-    var baseFactory: any BaseFactory
 
     let input = BookMarkViewModel.Input()
     
@@ -64,8 +63,7 @@ class BookMarkViewController: UIViewController {
     
 
     
-    init(baseFactory: BaseFactory, viewModel: BookMarkViewModel!) {
-        self.baseFactory = baseFactory
+    init(viewModel: BookMarkViewModel!) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
