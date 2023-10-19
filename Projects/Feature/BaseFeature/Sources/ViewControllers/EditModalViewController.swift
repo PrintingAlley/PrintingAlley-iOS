@@ -195,8 +195,8 @@ extension EditModalViewController {
                 return
             }
             //키보드는 바텀 SafeArea부터 계산되므로 빼야함
-            let window: UIWindow? = UIApplication.shared.windows.first
-            let safeAreaInsetsBottom: CGFloat = window?.safeAreaInsets.bottom ?? 0
+           
+            let safeAreaInsetsBottom: CGFloat = SAFEAREA_BOTTOM_HEIGHT()
             let tmp = keyboardVisibleHeight  - safeAreaInsetsBottom
             
             self.contentView.snp.updateConstraints {
