@@ -52,6 +52,10 @@ public class AlertViewController: UIViewController {
         $0.layer.cornerRadius = 8
     }
     
+    lazy var baseLine: UIView = UIView().then{
+        $0.backgroundColor = .blue.withAlphaComponent(0.1)
+    }
+    
     lazy var titleLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 0
     }
@@ -62,7 +66,7 @@ public class AlertViewController: UIViewController {
     lazy var cancelButton: UIButton = UIButton().then{
         $0.setTitle("취소", for: .normal)
         $0.setTitleColor(DesignSystemAsset.Grey.grey400.color, for: .normal)
-        $0.titleLabel?.font = .setFont(.subtitle2)
+        $0.titleLabel?.font = .setFont(.body2)
         $0.contentHorizontalAlignment = .center
     }
     lazy var confirmButton: UIButton = UIButton()
@@ -111,7 +115,7 @@ extension AlertViewController {
     
     func addSubViews() {
         self.view.addSubviews(alertView)
-        self.alertView.addSubviews(titleLabel, contentLabel, buttonStack)
+        self.alertView.addSubviews(titleLabel, contentLabel, buttonStack, baseLine)
         buttonStack.addArrangedSubview(cancelButton, confirmButton)
         
     }
@@ -136,6 +140,7 @@ extension AlertViewController {
     func makeConstraints() {
         
         alertView.snp.makeConstraints {
+            $0.left.right.equalToSuperview().inset(58)
             $0.center.equalToSuperview()
         }
         
@@ -150,8 +155,14 @@ extension AlertViewController {
             $0.left.right.equalTo(titleLabel)
         }
         
-        buttonStack.snp.makeConstraints {
+        baseLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.left.right.equalToSuperview()
             $0.top.equalTo(contentLabel.snp.bottom).offset(24)
+        }
+        
+        buttonStack.snp.makeConstraints {
+            $0.top.equalTo(baseLine.snp.bottom).offset(16)
             $0.horizontalEdges.equalTo(titleLabel.snp.horizontalEdges)
             $0.bottom.equalToSuperview().inset(16)
         }
@@ -159,13 +170,11 @@ extension AlertViewController {
     }
     
     @objc func cancelAction() {
-        print("삭제")
         self.dismiss(animated: false)
         self.cancelCompletion?()
     }
     
     @objc func confirmAction() {
-        print("확인")
         self.dismiss(animated: false)
         self.completion?()
     }

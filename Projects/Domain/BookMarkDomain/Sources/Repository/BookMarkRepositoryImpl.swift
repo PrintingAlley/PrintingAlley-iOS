@@ -41,8 +41,8 @@ struct BookMarkRepositoryImpl: BookMarkRepository {
         remoteBookMarkDataSource.generateBookMark(name: name)
     }
     
-    func removeBookMarkGroup(id: Int) -> Single<BaseEntity> {
-        remoteBookMarkDataSource.removeBookMarkGroup(id: id)
+    func removeBookMarkGroup(ids: [Int]) -> Single<BaseEntity> {
+        remoteBookMarkDataSource.removeBookMarkGroup(ids: ids)
     }
     
  

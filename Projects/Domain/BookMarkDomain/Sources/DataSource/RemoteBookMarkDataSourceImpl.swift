@@ -46,8 +46,8 @@ final class RemoteBookMarkDataSourceImpl: BaseRemoteDataSource<BookMarkAPI>, Rem
             .map{$0.toDomain()}
     }
     
-    func removeBookMarkGroup(id: Int) -> RxSwift.Single<BaseEntity> {
-        request(.removeBookMarkGroup(id: id))
+    func removeBookMarkGroup(ids: [Int]) -> RxSwift.Single<BaseEntity> {
+        request(.removeBookMarkGroup(ids: ids))
             .map(BaseResponseDTO.self)
             .map{$0.toDomain()}
     }

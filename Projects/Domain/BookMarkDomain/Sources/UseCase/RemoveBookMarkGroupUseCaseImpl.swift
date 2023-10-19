@@ -20,8 +20,8 @@ struct RemoveBookMarkGroupUseCaseImpl: RemoveBookMarkGroupUseCase {
         self.bookMarkRepository = bookMarkRepository
     }
     
-    func execute(id: Int) -> Single<BaseEntity> {
-        bookMarkRepository.removeBookMarkGroup(id: id)
+    func execute(ids: [Int]) -> Single<BaseEntity> {
+        bookMarkRepository.removeBookMarkGroup(ids: ids)
     }
     
  

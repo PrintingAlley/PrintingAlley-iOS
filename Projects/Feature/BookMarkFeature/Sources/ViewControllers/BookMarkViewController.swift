@@ -140,11 +140,13 @@ extension BookMarkViewController {
         bindStateInputWithButton(input: input)
         bindViewDidLoad(input: input)
         bindRefresh(input: input)
+        bindTapDelete(input: input)
         
         ///bind Output
         bindDataSource(input:input, output:output)
         bindIndexOfSelectedItem(output: output)
         bindBackButton()
+        
     }
     
   

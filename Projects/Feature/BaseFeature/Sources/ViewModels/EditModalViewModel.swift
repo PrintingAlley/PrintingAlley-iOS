@@ -44,7 +44,18 @@ public class EditModalViewModel: ViewModelType {
         
         let output = Output()
         
+        bindTapConfirm(input: input, output: output)
 
+       
+        
+        return output
+    }
+    
+}
+
+///input
+extension EditModalViewModel {
+    func bindTapConfirm(input: Input, output: Output) {
         input.tapConfirm
             .withLatestFrom(input.text){($1)}
             .flatMap({ [weak self] text -> Observable<BaseEntity> in
@@ -73,8 +84,7 @@ public class EditModalViewModel: ViewModelType {
             .bind(to: output.showToast)
             .disposed(by: disposeBag)
     
-        
-        return output
     }
     
+
 }

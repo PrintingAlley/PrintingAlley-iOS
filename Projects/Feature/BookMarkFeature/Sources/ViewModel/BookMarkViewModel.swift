@@ -16,9 +16,11 @@ final class BookMarkViewModel: ViewModelType {
     
     let disposeBag = DisposeBag()
     var fetchMyBookMarksUseCase: any FetchMyBookMarksUseCase
+    var removeBookMarkGroupUseCase: any RemoveBookMarkGroupUseCase
     
-    init(fetchMyBookMarksUseCase: FetchMyBookMarksUseCase!) {
+    init(fetchMyBookMarksUseCase: FetchMyBookMarksUseCase!, removeBookMarkGroupUseCase: RemoveBookMarkGroupUseCase) {
         self.fetchMyBookMarksUseCase = fetchMyBookMarksUseCase
+        self.removeBookMarkGroupUseCase = removeBookMarkGroupUseCase
     }
     
     struct Input {
@@ -26,8 +28,8 @@ final class BookMarkViewModel: ViewModelType {
         let isEdit: BehaviorRelay<Bool> = .init(value: false)
         let tapStateButton: PublishSubject<Void> = .init()
         let tapItem: PublishSubject<Int> = .init()
+        let runDelete: PublishSubject<Void> = .init()
         
- 
     }
     
     struct Output {
@@ -39,26 +41,32 @@ final class BookMarkViewModel: ViewModelType {
         
         let output = Output()
         
-        input.fetchDataSource
-            .flatMap{ [weak self] _ -> Observable<[MyBookMarkEntity]> in
-            
-                guard let self else {return Observable.empty()}
-                
-                return self.fetchMyBookMarksUseCase.execute()
-                    .asObservable()
-                
-            }
-            .bind(to: output.dataSource)
+        bindFetchDataSource(input: input, output: output)
+        bindTapEditButton(input: input)
+        bindInputTapItem(input: input, output: output)
+        bindIndexOfSelected(output: output)
+        bindIsEdit(input: input, output: output)
+        bindRunDelete(input: input, output: output)
+        
+        return output
+    }
+    
+}
+
+///input
+extension BookMarkViewModel {
+    
+    //편집모드 on/off
+    func bindIsEdit(input: Input, output: Output) {
+        input.isEdit
+            .skip(1)
+            .withLatestFrom(output.indexOfSelectedItem){($0, $1)}
+            .map({ $0.0 == false ? [] : $0.1 }) // $0.0 == false 편집 종료
+            .bind(to: output.indexOfSelectedItem) // 편집 종료 면 , 선택된 애들 모두 해제
             .disposed(by: disposeBag)
-        
-        
-        //편집 버튼 눌렀을 때 상태 바꿈
-        input.tapStateButton
-            .withLatestFrom(input.isEdit)
-            .map({!$0})
-            .bind(to: input.isEdit)
-            .disposed(by: disposeBag)
-        
+    }
+    
+    func bindInputTapItem(input: Input, output: Output) {
         /// 아이템 체크 표시 클릭 시 , 체크 표시되어 있으면  삭제 , 없으면 추가
         input.tapItem
             .withLatestFrom(output.indexOfSelectedItem) { (index, selectedItems) -> [Int] in
@@ -75,10 +83,53 @@ final class BookMarkViewModel: ViewModelType {
                 }
                 
             }
-            .debug("ID")
             .bind(to: output.indexOfSelectedItem)
             .disposed(by: disposeBag)
+    }
+    
+    func bindTapEditButton(input: Input) {
         
+        //편집 버튼 눌렀을 때 상태 바꿈
+        input.tapStateButton
+            .withLatestFrom(input.isEdit)
+            .map({!$0})
+            .bind(to: input.isEdit)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindFetchDataSource(input: Input, output: Output) {
+        input.fetchDataSource
+            .flatMap{ [weak self] _ -> Observable<[MyBookMarkEntity]> in
+            
+                guard let self else {return Observable.empty()}
+                
+                return self.fetchMyBookMarksUseCase.execute()
+                    .asObservable()
+                
+            }
+            .bind(to: output.dataSource)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindRunDelete(input: Input, output: Output){
+        
+        input.runDelete
+            .withLatestFrom(output.indexOfSelectedItem){$1}
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,ids) in
+                
+                
+                
+                DEBUG_LOG("RUN DELTE")
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+
+///output
+extension BookMarkViewModel {
+    func bindIndexOfSelected(output: Output) {
         /// 선택된 것들의 체크 표시를 반영하기 위한 dataSource 바인딩
         output.indexOfSelectedItem
             .withLatestFrom(output.dataSource){ ($0, $1) }
@@ -98,17 +149,6 @@ final class BookMarkViewModel: ViewModelType {
             }
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
-        
-        input.isEdit
-            .skip(1)
-            .withLatestFrom(output.indexOfSelectedItem){($0, $1)}
-            .map({ $0.0 == false ? [] : $0.1 }) // $0.0 == false 편집 종료
-            .bind(to: output.indexOfSelectedItem) // 편집 종료 면 , 선택된 애들 모두 해제
-            .disposed(by: disposeBag)
-            
-        
-        return output
     }
-    
 }
 

@@ -13,6 +13,7 @@ import UIKit
 
 extension BookMarkViewController {
     
+    /// DataSource 바인딩
     func bindDataSource(input: BookMarkViewModel.Input, output: BookMarkViewModel.Output) {
         
         output.dataSource
@@ -42,6 +43,7 @@ extension BookMarkViewController {
         
     }
     
+    /// 뒤로가기 버튼
     func bindBackButton() {
         backButton.rx
             .tap
@@ -53,6 +55,7 @@ extension BookMarkViewController {
             .disposed(by: disposeBag)
     }
     
+    /// 아이템 선택 이벤트 바인딩
     func bindIndexOfSelectedItem(output: BookMarkViewModel.Output) {
         
         output.indexOfSelectedItem
@@ -70,12 +73,6 @@ extension BookMarkViewController {
         
     }
     
-    func bindRefresh(input: BookMarkViewModel.Input) {
-        
-        NotificationCenter.default.rx.notification(.refreshBookMark)
-            .map{_ in ()}
-            .bind(to: input.fetchDataSource)
-            .disposed(by: disposeBag)
-    }
+    
     
 }

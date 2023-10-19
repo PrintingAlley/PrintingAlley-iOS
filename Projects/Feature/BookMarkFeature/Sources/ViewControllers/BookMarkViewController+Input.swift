@@ -17,6 +17,7 @@ extension BookMarkViewController {
         input.fetchDataSource.onNext(())
     }
     
+    // 편집 및 완료 버튼
     func bindStateInputWithButton(input: BookMarkViewModel.Input) {
         
         editOrDoneButton.rx
@@ -26,6 +27,7 @@ extension BookMarkViewController {
         
     }
     
+    // 편집 상태 별 상태 변화
     func bindEditState(input: BookMarkViewModel.Input) {
         
         input.isEdit
@@ -44,5 +46,31 @@ extension BookMarkViewController {
         })
         .disposed(by: disposeBag)
         
+    }
+    
+    // 리프래시 바인딩
+    func bindRefresh(input: BookMarkViewModel.Input) {
+        
+        NotificationCenter.default.rx.notification(.refreshBookMark)
+            .map{_ in ()}
+            .bind(to: input.fetchDataSource)
+            .disposed(by: disposeBag)
+    }
+    
+    /// 삭제버튼 이벤트 바인딩
+    func bindTapDelete(input: BookMarkViewModel.Input) {
+        deleteButton.rx
+            .tap
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,_) in
+                
+                let vc = AlertViewController(title: "저장목록을 삭제하시겠어요?", content: "목록을 삭제하면 저장된 장소도\n함께 사라져요.", type: .delete,  completion: {
+                    input.runDelete.onNext(())
+                })
+                vc.modalPresentationStyle = .overFullScreen
+                owner.present(vc,animated: false)
+                
+            })
+            .disposed(by: disposeBag)
     }
 }
