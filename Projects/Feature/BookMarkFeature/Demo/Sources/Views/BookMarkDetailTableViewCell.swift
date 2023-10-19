@@ -14,20 +14,22 @@ public protocol BookMarkTableViewCellDelegate: AnyObject {
     func tapChecked(index: Int?) //편집 모드일 때만 index 전달
 }
 
-class BookMarkTableViewCell: UITableViewCell {
+class BookMarkDetailTableViewCell: UITableViewCell {
 
-    static let identifier: String = "BookMarkTableViewCell"
+    static let identifier: String = "BookMarkDetailTableViewCell"
     
-    lazy var containerView: UIView = UIView().then {
-        $0.isUserInteractionEnabled = true
+    lazy var containerView: UIView = UIView()
+    lazy var titleLabel: AlleyLabel = AlleyLabel().then{
+        $0.numberOfLines = 1
     }
-    lazy var titleLabel: AlleyLabel = AlleyLabel()
-    lazy var subtitleLabel: AlleyLabel = AlleyLabel()
-    lazy var button: UIButton = UIButton()
-    
-    lazy var rightArrowImageView: UIImageView = UIImageView().then{
-        $0.contentMode = .scaleAspectFill
-        $0.image = DesignSystemAsset.Icon.rightArrow.image
+    lazy var subtitleLabel: AlleyLabel = AlleyLabel().then {
+        $0.numberOfLines = 1
+    }
+    lazy var tagLabel: AlleyLabel = AlleyLabel().then {
+        $0.numberOfLines = 1
+    }
+    lazy var button: UIButton = UIButton().then {
+        $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
     }
     
     lazy var baseLine: UIView = UIView().then{
@@ -53,46 +55,47 @@ class BookMarkTableViewCell: UITableViewCell {
 
 }
 
-extension BookMarkTableViewCell {
+extension BookMarkDetailTableViewCell {
     func addSubviews() {
         self.contentView.addSubviews(containerView,baseLine,button)
-        self.containerView.addSubviews(titleLabel,subtitleLabel,rightArrowImageView)
+        self.containerView.addSubviews(titleLabel,subtitleLabel,tagLabel)
     }
     
     func makeConstraints() {
         
         containerView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(16)
-            $0.right.equalToSuperview().inset(26)
-            $0.left.equalTo(button.snp.right)
+            $0.left.equalToSuperview().inset(24)
+            $0.right.equalTo(button.snp.left).offset(-5)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.left.equalTo(button.snp.right).offset(16)
+            $0.top.left.equalToSuperview()
+            
+        }
+        
+        tagLabel.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel.snp.centerY)
+            $0.left.equalTo(titleLabel.snp.right).offset(4)
+            $0.right.equalToSuperview()
         }
         
         subtitleLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(5)
             $0.left.equalTo(titleLabel.snp.left)
+            $0.right.equalToSuperview()
             $0.bottom.equalToSuperview()
-        }
-        
-        rightArrowImageView.snp.makeConstraints {
-            $0.width.height.equalTo(24)
-            $0.centerY.right.equalToSuperview()
-
         }
         
         button.snp.makeConstraints {
             $0.width.height.equalTo(32)
-            $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().inset(26)
+            $0.centerY.equalTo(containerView.snp.centerY)
+            $0.right.equalToSuperview().inset(24)
         }
         
         baseLine.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.left.right.equalToSuperview().inset(26)
+            $0.left.right.equalToSuperview().inset(24)
             $0.top.equalTo(containerView.snp.bottom).offset(16)
             $0.bottom.equalToSuperview()
         }
@@ -100,25 +103,12 @@ extension BookMarkTableViewCell {
         
     }
     
-    public func update(model: TmpModel, index:Int, isEditing: Bool, isLast: Bool) {
+    public func update(model: TmpModel,isLast: Bool) {
         self.model = model
-        self.index = index
-        self.isEdit = isEditing
-        
-        titleLabel.setTitle(title: model.name, textColor: .grey(.grey1000), font: .body1)
-        subtitleLabel.setTitle(title: "장소 \(model.contents.count)개", textColor: .grey(.grey500), font: .caption1)
-        
 
-        
-        if isEditing == false {
-            button.setImage(DesignSystemAsset.Icon.more.image, for: .normal)
-            button.imageView?.contentMode = .scaleAspectFill
-        }
-        
-        else {
-            button.setImage(model.isSelected == true ? DesignSystemAsset.Icon.check.image : DesignSystemAsset.Icon.unCheck.image, for: .normal)
-            button.imageView?.contentMode = .scaleAspectFill
-        }
+        titleLabel.setTitle(title: model.name, textColor: .sub(.black), font: .subtitle1)
+        subtitleLabel.setTitle(title: model.location, textColor: .sub(.black), font: .body1)
+        tagLabel.setTitle(title: model.types.joined(separator: "·"), textColor: .grey(.grey500), font: .caption1)
         
         baseLine.layer.opacity = isLast ? 0 : 1
     }
