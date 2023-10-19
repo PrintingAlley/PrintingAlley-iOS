@@ -97,6 +97,9 @@ public class EditModalViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        DEBUG_LOG(Self.self)
+    }
     
    public override func viewDidLoad() {
         super.viewDidLoad()
@@ -173,11 +176,9 @@ extension EditModalViewController {
                 guard let self else {return}
                 
                 self.confirmButton.isEnabled  = !((str.first?.isWhitespace ?? true)) // 앞에 시작이 공백일 때
-  
+                input.text.accept(str)
                 self.limitLabel.setTitle(title: "\(str.count)/14자", textColor: .grey(.grey400), font: .caption1)
-            })
-            .do(onNext: {
-                input.text.accept($0)
+               
             })
             .bind(to:textField.rx.text)
             .disposed(by: disposeBag)
@@ -185,6 +186,7 @@ extension EditModalViewController {
     }
     
     func bindKeyboard() {
+        
         
         RxKeyboard.instance.visibleHeight //드라이브: 무조건 메인쓰레드에서 돌아감
         .drive(onNext: { [weak self] keyboardVisibleHeight in
@@ -207,17 +209,43 @@ extension EditModalViewController {
                 
             }
             
-
-            
         })
+        .disposed(by: disposeBag)
         
     }
     
     func bindResult(output: EditModalViewModel.Output) {
         output
-            .result
-            .subscribe(onNext: {
-                DEBUG_LOG($0)
+            .showToast
+            .subscribe(onNext: { [weak self] result in
+                
+                
+                guard let self else {return}
+                
+                
+                if result.statusCode == 0 {
+                    self.view.showToast(text: result.message)
+                }
+                
+                else if result.statusCode == 401 {
+                    self.view.showToast(text: result.message)
+                    // TODO: 토큰 exired 경우 LOGOUT
+                }
+                
+                else {
+                    
+                    switch viewModel.type {
+                    //TODO: 리프래쉬
+                   // case .newBookMark
+                    
+                    default:
+                        DEBUG_LOG("DEFAULT")
+                        
+                        self.dismiss(animated: false)
+                    }
+                    
+            
+                }
             })
             .disposed(by: disposeBag)
     }

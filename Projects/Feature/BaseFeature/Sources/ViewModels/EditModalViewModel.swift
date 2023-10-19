@@ -26,13 +26,17 @@ public class EditModalViewModel: ViewModelType {
         self.generateBookMarkUseCase = generateBookMarkUseCase
     }
     
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
+    }
+    
     public struct Input {
         let tapConfirm: PublishSubject<Void> = .init()
         let text:BehaviorRelay<String> = .init(value: "")
     }
     
     public struct Output {
-        let result:PublishSubject<BaseEntity> = .init()
+        let showToast:PublishSubject<BaseEntity> = .init()
     }
     
     
@@ -46,11 +50,27 @@ public class EditModalViewModel: ViewModelType {
             .flatMap({ [weak self] text -> Observable<BaseEntity> in
                 
                 guard let self else { return Observable.empty()}
-                
+                 
                 return self.generateBookMarkUseCase.execute(name: text)
+                    .catch({ error in
+                        
+                        let alleryError = error.asAlleyError
+                        
+                        if alleryError == .tokenExpired {
+                            return Single<BaseEntity>.create { single in
+                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                return Disposables.create()
+                            }
+                        }
+                        
+                        return Single<BaseEntity>.create { single in
+                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                            return Disposables.create()
+                        }
+                    })
                     .asObservable()
             })
-            .bind(to: output.result)
+            .bind(to: output.showToast)
             .disposed(by: disposeBag)
     
         
