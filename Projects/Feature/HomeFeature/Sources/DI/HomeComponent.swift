@@ -10,13 +10,14 @@ import Foundation
 import NeedleFoundation
 import UIKit
 import HomeFeatureInterface
+import TagDomainInterface
 
 public protocol HomeDependency: Dependency {
-    var homeFactory: any HomeFactory { get }
+    var tagDomainFactory: any TagDomainFactory { get }
 }
 
 public final class HomeComponent: Component<HomeDependency>, HomeFactory {
     public func makeView() -> UIViewController {
-        HomeViewController(viewModel: HomeViewModel())
+        HomeViewController(viewModel: HomeViewModel(fetchTagToplevelUseCase: dependency.tagDomainFactory.fetchTagToplevelUseCase ))
     }
 }
