@@ -12,9 +12,10 @@ import RxRelay
 import UtilityModule
 
 
-final class BookMarkViewModel: ViewModelType {
+public final class BookMarkViewModel: ViewModelType {
     
     let disposeBag = DisposeBag()
+    
     
     struct Input {
         let isEdit: BehaviorRelay<Bool> = .init(value: false)

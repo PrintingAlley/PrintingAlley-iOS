@@ -11,8 +11,8 @@ import Foundation
 
 public struct BaseEntity {
     
-    let statusCode: Int
-    let message: String
+    public let statusCode: Int
+    public let message: String
     
     public init(statusCode: Int, message: String) {
         self.statusCode = statusCode

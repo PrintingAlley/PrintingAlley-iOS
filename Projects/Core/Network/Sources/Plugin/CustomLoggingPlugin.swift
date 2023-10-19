@@ -69,7 +69,7 @@ public final class CustomLoggingPlugin: PluginType {
             return
         }
         var log = "네트워크 오류"
-        log.append("<-- \(error.errorCode) \(target)\n")
+        log.append("<-- Error Code \(error.errorCode) \(target)\n")
         log.append("\(error.failureReason ?? error.errorDescription ?? "unknown error")\n")
         log.append("<-- END HTTP\n")
         print(log)

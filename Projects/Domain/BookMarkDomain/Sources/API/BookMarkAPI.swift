@@ -19,7 +19,7 @@ enum BookMarkAPI {
     case removeBookMark(id: Int)
     case linkBookMark(bookMarkId: Int, groupId: Int)
     case generateBookMark(name: String)
-    case removeBookMarkGroup(id: Int)
+    case removeBookMarkGroup(ids: [Int])
 }
 
 extension BookMarkAPI: AlleyAPI {
@@ -42,7 +42,7 @@ extension BookMarkAPI: AlleyAPI {
         case .generateBookMark:
             return "/group"
         case .removeBookMarkGroup:
-            return "/group"
+            return "/groups"
         }
     }
     
@@ -90,8 +90,8 @@ extension BookMarkAPI: AlleyAPI {
                 return .requestParameters(parameters: ["bookmarkId": String(bookMarkId) , "groupId" : String(groupId)], encoding: URLEncoding.queryString)
             case .generateBookMark(name: let name):
                 return .requestJSONEncodable(GenerateBookMarkGroupRequestDTO(name: name))
-            case .removeBookMarkGroup(id: let id):
-                return .requestParameters(parameters: ["id": String(id)], encoding: URLEncoding.queryString)
+            case .removeBookMarkGroup(ids: let ids):
+                return .requestJSONEncodable(RemoveBookMarkGroupRequestDTO(groupIds: ids))
             }
         }
     

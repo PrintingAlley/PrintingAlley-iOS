@@ -9,9 +9,10 @@
 import UIKit
 import DesignSystem
 import UtilityModule
+import BookMarkDomainInterface
 
 public protocol BookMarkTableViewCellDelegate: AnyObject {
-    func tapChecked(index: Int?) //편집 모드일 때만 index 전달
+    func tapChecked(id: Int?) //편집 모드일 때만 id 전달
 }
 
 class BookMarkTableViewCell: UITableViewCell {
@@ -35,8 +36,7 @@ class BookMarkTableViewCell: UITableViewCell {
     }
     
     public weak var deleagte: BookMarkTableViewCellDelegate?
-    var model: TmpModel!
-    var index: Int!
+    var model: MyBookMarkEntity!
     var isEdit: Bool!
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -100,18 +100,17 @@ extension BookMarkTableViewCell {
         
     }
     
-    public func update(model: TmpModel, index:Int, isEditing: Bool, isLast: Bool) {
+    public func update(model: MyBookMarkEntity, isEditing: Bool, isLast: Bool) {
         self.model = model
-        self.index = index
         self.isEdit = isEditing
         
         titleLabel.setTitle(title: model.name, textColor: .grey(.grey1000), font: .body1)
-        subtitleLabel.setTitle(title: "장소 \(model.contents.count)개", textColor: .grey(.grey500), font: .caption1)
+        subtitleLabel.setTitle(title: "장소 \(model.bookmarks.count)개", textColor: .grey(.grey500), font: .caption1)
         
 
         
         if isEditing == false {
-            button.setImage(DesignSystemAsset.Icon.more.image, for: .normal)
+            button.setImage(DesignSystemAsset.Icon.roundBookMark.image, for: .normal)
             button.imageView?.contentMode = .scaleAspectFill
         }
         
@@ -125,6 +124,6 @@ extension BookMarkTableViewCell {
     
     @objc func tapCheck() {
         
-        deleagte?.tapChecked(index: isEdit ? index : nil)
+        deleagte?.tapChecked(id: isEdit ? model.id : nil)
     }
 }

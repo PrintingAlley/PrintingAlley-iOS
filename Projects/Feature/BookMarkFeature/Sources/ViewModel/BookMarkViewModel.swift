@@ -10,28 +10,88 @@ import Foundation
 import RxSwift
 import RxRelay
 import UtilityModule
-
+import BookMarkDomainInterface
+import BaseDomainInterface
 
 final class BookMarkViewModel: ViewModelType {
     
     let disposeBag = DisposeBag()
+    var fetchMyBookMarksUseCase: any FetchMyBookMarksUseCase
+    var removeBookMarkGroupUseCase: any RemoveBookMarkGroupUseCase
+    
+    init(fetchMyBookMarksUseCase: FetchMyBookMarksUseCase!, removeBookMarkGroupUseCase: RemoveBookMarkGroupUseCase) {
+        self.fetchMyBookMarksUseCase = fetchMyBookMarksUseCase
+        self.removeBookMarkGroupUseCase = removeBookMarkGroupUseCase
+    }
     
     struct Input {
+        let fetchDataSource: PublishSubject<Void> = .init()
         let isEdit: BehaviorRelay<Bool> = .init(value: false)
         let tapStateButton: PublishSubject<Void> = .init()
         let tapItem: PublishSubject<Int> = .init()
+        let runDelete: PublishSubject<Void> = .init()
         
- 
     }
     
     struct Output {
-        let dataSource: BehaviorRelay<[TmpModel]> = .init(value: TmpModel.makeDummy())
+        let dataSource: BehaviorRelay<[MyBookMarkEntity]> = .init(value: [])
         let indexOfSelectedItem: BehaviorRelay<[Int]> = .init(value: [])
+        let showToast: PublishSubject<BaseEntity> = .init()
+        let runIndicator: BehaviorRelay<Void> = .init(value: ())
     }
     
     func transform(input: Input) -> Output {
         
         let output = Output()
+        
+        bindFetchDataSource(input: input, output: output)
+        bindTapEditButton(input: input)
+        bindInputTapItem(input: input, output: output)
+        bindIndexOfSelected(output: output)
+        bindIsEdit(input: input, output: output)
+        bindRunDelete(input: input, output: output)
+        
+        return output
+    }
+    
+}
+
+///input
+extension BookMarkViewModel {
+    
+    //편집모드 on/off
+    func bindIsEdit(input: Input, output: Output) {
+        input.isEdit
+            .skip(1)
+            .withLatestFrom(output.indexOfSelectedItem){($0, $1)}
+            .map({ $0.0 == false ? [] : $0.1 }) // $0.0 == false 편집 종료
+            .bind(to: output.indexOfSelectedItem) // 편집 종료 면 , 선택된 애들 모두 해제
+            .disposed(by: disposeBag)
+    }
+    
+    func bindInputTapItem(input: Input, output: Output) {
+        /// 아이템 체크 표시 클릭 시 , 체크 표시되어 있으면  삭제 , 없으면 추가
+        input.tapItem
+            .withLatestFrom(output.indexOfSelectedItem) { (id, selectedItems) -> [Int] in
+                
+                var selectedItemsSet = Set(selectedItems)
+                
+                if selectedItemsSet.contains(id) {
+                    selectedItemsSet.remove(id)
+                }
+                
+                else {
+                    selectedItemsSet.insert(id)
+                }
+                
+                return Array(selectedItemsSet)
+                
+            }
+            .bind(to: output.indexOfSelectedItem)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindTapEditButton(input: Input) {
         
         //편집 버튼 눌렀을 때 상태 바꿈
         input.tapStateButton
@@ -39,73 +99,76 @@ final class BookMarkViewModel: ViewModelType {
             .map({!$0})
             .bind(to: input.isEdit)
             .disposed(by: disposeBag)
-        
-        /// 아이템 체크 표시 클릭 시 , 체크 표시되어 있으면  삭제 , 없으면 추가
-        input.tapItem
-            .withLatestFrom(output.indexOfSelectedItem) { (index, selectedItems) -> [Int] in
-                if selectedItems.contains(index) {
-                    guard let removeTargetIndex = selectedItems.firstIndex(where: { $0 == index }) else { return selectedItems }
-                    var newSelectedItems = selectedItems
-                    newSelectedItems.remove(at: removeTargetIndex)
-                    
-                    return newSelectedItems
-                }
+    }
+    
+    func bindFetchDataSource(input: Input, output: Output) {
+        input.fetchDataSource
+            .flatMap{ [weak self] _ -> Observable<[MyBookMarkEntity]> in
+            
+                guard let self else {return Observable.empty()}
                 
-                else {
-                    return selectedItems + [index]
-                }
+                return self.fetchMyBookMarksUseCase.execute()
+                    .asObservable()
                 
             }
-            .debug("ID")
-            .bind(to: output.indexOfSelectedItem)
+            .bind(to: output.dataSource)
             .disposed(by: disposeBag)
+    }
+    
+    func bindRunDelete(input: Input, output: Output){
         
+        input.runDelete
+            .withLatestFrom(output.indexOfSelectedItem){$1}
+            .withUnretained(self)
+            .flatMap({ (owner,ids) -> Observable<BaseEntity> in
+            
+                return owner.removeBookMarkGroupUseCase
+                    .execute(ids: ids)
+                    .catch({ error in
+                        
+                        let alleryError = error.asAlleyError
+                        
+                        if alleryError == .tokenExpired {
+                            return Single<BaseEntity>.create { single in
+                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                return Disposables.create()
+                            }
+                        }
+                        
+                        return Single<BaseEntity>.create { single in
+                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                            return Disposables.create()
+                        }
+                    })
+                    .asObservable()
+            })
+            .bind(to: output.showToast)
+            .disposed(by: disposeBag)
+    }
+}
+
+
+///output
+extension BookMarkViewModel {
+    func bindIndexOfSelected(output: Output) {
         /// 선택된 것들의 체크 표시를 반영하기 위한 dataSource 바인딩
         output.indexOfSelectedItem
             .withLatestFrom(output.dataSource){ ($0, $1) }
-            .map{ (selectedItems, dataSource) -> [TmpModel] in
+            .map{ (selectedItems: Array<Int>, dataSource) -> [MyBookMarkEntity] in
                 var realData = dataSource
                 
+                var selectedItemsSet = Set(selectedItems)
+                
                 realData.indices.forEach({
-                    realData[$0].isSelected = false
+                    realData[$0].isSelected = selectedItemsSet.contains(realData[$0].id)
                 })
                 
-                selectedItems.forEach { i in
-                    realData[i].isSelected = true
-                }
 
                 return realData
                 
             }
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
-        
-        input.isEdit
-            .skip(1)
-            .withLatestFrom(output.indexOfSelectedItem){($0, $1)}
-            .map({ $0.0 == false ? [] : $0.1 }) // $0.0 == false 편집 종료
-            .bind(to: output.indexOfSelectedItem) // 편집 종료 면 , 선택된 애들 모두 해제
-            .disposed(by: disposeBag)
-            
-        
-        return output
-    }
-    
-}
-
-struct TmpModel {
-    let name: String
-    let contents: [TmpContentModel]
-    var isSelected: Bool = false
-    
-    static func makeDummy() -> [Self] {
-        [TmpModel(name: "즐겨찾기 1", contents: [TmpContentModel(name: "정다운 인쇄소 1", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80"), TmpContentModel(name: "정다운 인쇄소 2", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80")]),
-          TmpModel(name: "즐겨찾기 1", contents: [TmpContentModel(name: "정다운 인쇄소 1", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80"), TmpContentModel(name: "정다운 인쇄소 2", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80"), TmpContentModel(name: "정다운 인쇄소 2", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80")])]
     }
 }
 
-struct TmpContentModel {
-    let name: String
-    let options: [String]
-    let adress: String
-}

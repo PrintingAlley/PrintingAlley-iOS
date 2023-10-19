@@ -12,7 +12,6 @@ import AuthDomainInterface
 struct TokenResponseDTO: Decodable {
     let access_token: String
     
-    
     public func toDomain() -> TokenEntity {
         return TokenEntity(access_token: self.access_token)
     }

@@ -7,6 +7,7 @@ let project = Project.module(
     targets: [
         .interface(module: .feature(.MyPageFeature),dependencies: [
             .feature(target: .BaseFeature, type: .interface),
+            .feature(target: .BookMarkFeature, type: .interface)
             
         ]),
         .implements(module: .feature(.MyPageFeature), dependencies: [

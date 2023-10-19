@@ -12,6 +12,7 @@ import Then
 import DesignSystem
 import RxDataSources
 import RxSwift
+import UtilityModule
 
 public class BookMarkBottomSheetViewController: UIViewController {
     
@@ -27,7 +28,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
         
     }
     
-    lazy var titleLabel: AlleyLabel = AlleyLabel("저장 목록",textColor: .sub(.black), font: .header3, alignment: .center )
+    lazy var titleLabel: AlleyLabel = AlleyLabel("저장 목록",textColor: .sub(.black), font: .header3, alignment: .center)
     
     lazy var baseLine: UIView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
@@ -62,7 +63,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .white
+        configureCommonUI()
         addSubviews()
         makeConstraints()
         bindViewModel()

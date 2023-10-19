@@ -58,10 +58,11 @@ extension MyPageHeaderView {
         collectionView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(47)
             $0.top.equalToSuperview()
-            $0.bottom.equalTo(baseLine.snp.top).offset(-32)
+            
         }
         
         baseLine.snp.makeConstraints {
+            $0.top.equalTo(collectionView.snp.bottom).offset(16)
             $0.height.equalTo(1)
             $0.left.right.bottom.equalToSuperview()
         }

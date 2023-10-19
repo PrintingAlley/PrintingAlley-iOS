@@ -9,6 +9,7 @@
 import UIKit
 import SignInFeatureInterface
 import MyPageFeatureInterface
+import BookMarkFeatureInterface
 import RxSwift
 import UtilityModule
 

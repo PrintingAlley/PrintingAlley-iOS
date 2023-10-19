@@ -13,11 +13,14 @@ import DesignSystem
 import RxCocoa
 import RxSwift
 import RxKeyboard
+import UtilityModule
 
+
+//TODO:  업데이트 노티 쏴주기
 
 public class EditModalViewController: UIViewController {
-    var completion: (() -> Void)?
-    var cancelCompletion: (() -> Void)?
+
+    var viewModel: EditModalViewModel!
     var titleString: String = ""
     
     let disposeBag = DisposeBag()
@@ -75,35 +78,31 @@ public class EditModalViewController: UIViewController {
         $0.distribution = .fillEqually
     }
     
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - title: "제목"
-    ///   - content: "내용"
-    ///   - type: "Alert 타입"
-    ///   - completion: "확인 핸들러"
-    ///   - cancelCompletion: "취소 핸들러"
-    public init(title: String = "", preName: String = "" ,completion: (() -> Void)? = nil, cancelCompletion: (() -> Void)? = nil) {
+    public init(title: String = "",viewModel: EditModalViewModel) {
         
         super.init(nibName: nil, bundle: nil)
      
         self.titleString =  title
-        self.completion = completion
-        self.cancelCompletion = cancelCompletion
+        self.viewModel = viewModel
+
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        DEBUG_LOG(Self.self)
+    }
     
    public override func viewDidLoad() {
         super.viewDidLoad()
+       
         addSubViews()
         preProcessing()
         makeConstraints()
-        bindTextField()
-        bindKeyboard()
+        bindViewModel()
+
     }
     
 }
@@ -114,7 +113,41 @@ extension EditModalViewController {
         str.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
     }
     
-    func bindTextField() {
+    func bindViewModel() {
+        let input = EditModalViewModel.Input()
+        let output = viewModel.transform(input: input)
+        
+        bindButtons(input: input)
+        bindTextField(input: input)
+        bindKeyboard()
+        bindResult(output: output)
+        
+        
+        
+    }
+    
+    func bindButtons(input: EditModalViewModel.Input) {
+        
+        cancelButton.rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                
+                guard let self else {return}
+                self.dismiss(animated: false)
+                
+            })
+            .disposed(by: disposeBag)
+        
+        confirmButton
+            .rx
+            .tap
+            .bind(to: input.tapConfirm)
+            .disposed(by: disposeBag)
+        
+        
+    }
+    
+    func bindTextField(input: EditModalViewModel.Input) {
         
         textField
             .rx
@@ -137,15 +170,17 @@ extension EditModalViewController {
                 guard let self else {return}
                 
                 self.confirmButton.isEnabled  = !((str.first?.isWhitespace ?? true)) // 앞에 시작이 공백일 때
-  
+                input.text.accept(str)
                 self.limitLabel.setTitle(title: "\(str.count)/14자", textColor: .grey(.grey400), font: .caption1)
+               
             })
-            .bind(to: textField.rx.text)
+            .bind(to:textField.rx.text)
             .disposed(by: disposeBag)
         
     }
     
     func bindKeyboard() {
+        
         
         RxKeyboard.instance.visibleHeight //드라이브: 무조건 메인쓰레드에서 돌아감
         .drive(onNext: { [weak self] keyboardVisibleHeight in
@@ -154,8 +189,8 @@ extension EditModalViewController {
                 return
             }
             //키보드는 바텀 SafeArea부터 계산되므로 빼야함
-            let window: UIWindow? = UIApplication.shared.windows.first
-            let safeAreaInsetsBottom: CGFloat = window?.safeAreaInsets.bottom ?? 0
+           
+            let safeAreaInsetsBottom: CGFloat = SAFEAREA_BOTTOM_HEIGHT()
             let tmp = keyboardVisibleHeight  - safeAreaInsetsBottom
             
             self.contentView.snp.updateConstraints {
@@ -168,14 +203,46 @@ extension EditModalViewController {
                 
             }
             
-            
-           
-            
-            print(tmp)
-
-            
         })
+        .disposed(by: disposeBag)
         
+    }
+    
+    func bindResult(output: EditModalViewModel.Output) {
+        output
+            .showToast
+            .subscribe(onNext: { [weak self] result in
+                
+                
+                guard let self else {return}
+                
+                
+                if result.statusCode == 0 {
+                    self.view.showToast(text: result.message)
+                }
+                
+                else if result.statusCode == 401 {
+                    self.view.showToast(text: result.message)
+                    // TODO: 토큰 exired 경우 LOGOUT
+                }
+                
+                else {
+                    
+                    switch viewModel.type {
+                    
+                    case .newBookMark:
+                        NotificationCenter.default.post(name: .refreshBookMark, object: nil) // 리프래쉬
+                        self.dismiss(animated: false)
+                    
+                    default:
+                        
+                        self.dismiss(animated: false)
+                    }
+                    
+            
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func addSubViews() {
@@ -190,9 +257,6 @@ extension EditModalViewController {
         
         self.view.backgroundColor = .black.withAlphaComponent(0.4)
         titleLabel.setTitle(title: self.titleString, textColor: .sub(.black), font: .header3, alignment: .center)
-        
-        cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
-        confirmButton.addTarget(self, action: #selector(confirmAction), for: .touchUpInside)
     }
     
     func makeConstraints() {
@@ -202,7 +266,6 @@ extension EditModalViewController {
             $0.bottom.equalToSuperview().inset(appHeight/4)
         }
         
-        //TODO: 키보드에 따른 contentview 위치
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
@@ -242,13 +305,5 @@ extension EditModalViewController {
         
     }
     
-    @objc func cancelAction() {
-        self.dismiss(animated: false)
-        self.cancelCompletion?()
-    }
-    
-    @objc func confirmAction() {
-        self.dismiss(animated: false)
-        self.completion?()
-    }
+
 }
