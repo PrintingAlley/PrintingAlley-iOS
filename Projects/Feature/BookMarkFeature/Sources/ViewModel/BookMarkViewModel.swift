@@ -124,22 +124,22 @@ extension BookMarkViewModel {
             
                 return owner.removeBookMarkGroupUseCase
                     .execute(ids: ids)
-                    .catch({ error in
-                        
-                        let alleryError = error.asAlleyError
-                        
-                        if alleryError == .tokenExpired {
-                            return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
-                                return Disposables.create()
-                            }
-                        }
-                        
-                        return Single<BaseEntity>.create { single in
-                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
-                            return Disposables.create()
-                        }
-                    })
+//                    .catch({ error in
+//                        
+//                        let alleryError = error.asAlleyError
+//                        
+//                        if alleryError == .tokenExpired {
+//                            return Single<BaseEntity>.create { single in
+//                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+//                                return Disposables.create()
+//                            }
+//                        }
+//                        
+//                        return Single<BaseEntity>.create { single in
+//                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+//                            return Disposables.create()
+//                        }
+//                    })
                     .asObservable()
             })
             .bind(to: output.showToast)
