@@ -42,6 +42,17 @@ extension BookMarkViewController {
         
     }
     
+    func bindBackButton() {
+        backButton.rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                
+                self?.navigationController?.popViewController(animated: true)
+                
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func bindIndexOfSelectedItem(output: BookMarkViewModel.Output) {
         
         output.indexOfSelectedItem

@@ -134,6 +134,7 @@ extension BookMarkViewController {
         ///bind Output
         bindDataSource(input:input, output:output)
         bindIndexOfSelectedItem(output: output)
+        bindBackButton()
     }
     
   
