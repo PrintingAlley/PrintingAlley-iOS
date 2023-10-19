@@ -21,6 +21,8 @@ import NeedleFoundation
 import RootFeature
 import SignInFeature
 import SignInFeatureInterface
+import TagDomain
+import TagDomainInterface
 import UIKit
 
 // swiftlint:disable unused_declaration
@@ -120,8 +122,8 @@ private func factoryda2925fd76da866a652af47b58f8f304c97af4d5(_ component: Needle
     return SignInDependency5dda0dd015447272446cProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
-    var homeFactory: any HomeFactory {
-        return appComponent.homeFactory
+    var tagDomainFactory: any TagDomainFactory {
+        return appComponent.tagDomainFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -155,6 +157,19 @@ private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDoma
 /// ^->AppComponent->BookMarkDomainComponent
 private func factory9b3fac1bd377f0830537f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BookMarkDomainDependency2ef018453822a996a9abProvider(appComponent: parent1(component) as! AppComponent)
+}
+private class TagDomainDependency8436ae71fd9cf2012d70Provider: TagDomainDependency {
+    var jwtStoreFactory: any JwtStoreFactory {
+        return appComponent.jwtStoreFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->TagDomainComponent
+private func factory6a92323f94d86d563660f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return TagDomainDependency8436ae71fd9cf2012d70Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
@@ -217,7 +232,7 @@ extension SignInComponent: Registration {
 }
 extension HomeComponent: Registration {
     public func registerItems() {
-        keyPathToName[\HomeDependency.homeFactory] = "homeFactory-any HomeFactory"
+        keyPathToName[\HomeDependency.tagDomainFactory] = "tagDomainFactory-any TagDomainFactory"
     }
 }
 extension NearByMeComponent: Registration {
@@ -228,6 +243,11 @@ extension NearByMeComponent: Registration {
 extension BookMarkDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+    }
+}
+extension TagDomainComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\TagDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
 extension AuthDomainComponent: Registration {
@@ -262,6 +282,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->NearByMeComponent", factory53f303ca6b0d301565d8e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->TagDomainComponent", factory6a92323f94d86d563660f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
 }
 #endif
