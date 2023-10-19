@@ -27,7 +27,7 @@ extension BookMarkViewController {
                 
                 cell.deleagte = self
                 cell.selectionStyle = .none
-                cell.update(model: model,index: index, isEditing: input.isEdit.value , isLast: output.dataSource.value.count-1 == index )
+                cell.update(model: model,isEditing: input.isEdit.value , isLast: output.dataSource.value.count-1 == index )
                 
                 return cell
             }
@@ -59,8 +59,7 @@ extension BookMarkViewController {
     func bindIndexOfSelectedItem(output: BookMarkViewModel.Output) {
         
         output.indexOfSelectedItem
-            .asDriver()
-            .drive(onNext:{ [weak self] selectedIndex in
+            .subscribe(onNext:{ [weak self] selectedIndex in
                 
                 guard let self else {return}
                 
@@ -71,6 +70,34 @@ extension BookMarkViewController {
             })
             .disposed(by: disposeBag)
         
+    }
+    
+    func bindResult(input: BookMarkViewModel.Input ,output: BookMarkViewModel.Output) {
+        output
+            .showToast
+            .subscribe(onNext: { [weak self] result in
+                
+                
+                guard let self else {return}
+                
+                
+                if result.statusCode == 0 {
+                    self.view.showToast(text: result.message)
+                }
+                
+                else if result.statusCode == 401 {
+                    self.view.showToast(text: result.message)
+                    // TODO: 토큰 exired 경우 LOGOUT
+                }
+                
+                else {
+                    
+                    input.fetchDataSource.onNext(())
+                    input.isEdit.accept(false)
+                    
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     

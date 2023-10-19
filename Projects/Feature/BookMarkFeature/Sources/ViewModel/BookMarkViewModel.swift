@@ -11,6 +11,7 @@ import RxSwift
 import RxRelay
 import UtilityModule
 import BookMarkDomainInterface
+import BaseDomainInterface
 
 final class BookMarkViewModel: ViewModelType {
     
@@ -35,6 +36,7 @@ final class BookMarkViewModel: ViewModelType {
     struct Output {
         let dataSource: BehaviorRelay<[MyBookMarkEntity]> = .init(value: [])
         let indexOfSelectedItem: BehaviorRelay<[Int]> = .init(value: [])
+        let showToast: PublishSubject<BaseEntity> = .init()
     }
     
     func transform(input: Input) -> Output {
@@ -69,18 +71,19 @@ extension BookMarkViewModel {
     func bindInputTapItem(input: Input, output: Output) {
         /// 아이템 체크 표시 클릭 시 , 체크 표시되어 있으면  삭제 , 없으면 추가
         input.tapItem
-            .withLatestFrom(output.indexOfSelectedItem) { (index, selectedItems) -> [Int] in
-                if selectedItems.contains(index) {
-                    guard let removeTargetIndex = selectedItems.firstIndex(where: { $0 == index }) else { return selectedItems }
-                    var newSelectedItems = selectedItems
-                    newSelectedItems.remove(at: removeTargetIndex)
-                    
-                    return newSelectedItems
+            .withLatestFrom(output.indexOfSelectedItem) { (id, selectedItems) -> [Int] in
+                
+                var selectedItemsSet = Set(selectedItems)
+                
+                if selectedItemsSet.contains(id) {
+                    selectedItemsSet.remove(id)
                 }
                 
                 else {
-                    return selectedItems + [index]
+                    selectedItemsSet.insert(id)
                 }
+                
+                return Array(selectedItemsSet)
                 
             }
             .bind(to: output.indexOfSelectedItem)
@@ -116,12 +119,29 @@ extension BookMarkViewModel {
         input.runDelete
             .withLatestFrom(output.indexOfSelectedItem){$1}
             .withUnretained(self)
-            .subscribe(onNext: { (owner,ids) in
-                
-                
-                
-                DEBUG_LOG("RUN DELTE")
+            .flatMap({ (owner,ids) -> Observable<BaseEntity> in
+            
+                return owner.removeBookMarkGroupUseCase
+                    .execute(ids: ids)
+                    .catch({ error in
+                        
+                        let alleryError = error.asAlleyError
+                        
+                        if alleryError == .tokenExpired {
+                            return Single<BaseEntity>.create { single in
+                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                return Disposables.create()
+                            }
+                        }
+                        
+                        return Single<BaseEntity>.create { single in
+                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                            return Disposables.create()
+                        }
+                    })
+                    .asObservable()
             })
+            .bind(to: output.showToast)
             .disposed(by: disposeBag)
     }
 }
@@ -133,16 +153,16 @@ extension BookMarkViewModel {
         /// 선택된 것들의 체크 표시를 반영하기 위한 dataSource 바인딩
         output.indexOfSelectedItem
             .withLatestFrom(output.dataSource){ ($0, $1) }
-            .map{ (selectedItems, dataSource) -> [MyBookMarkEntity] in
+            .debug("HH")
+            .map{ (selectedItems: Array<Int>, dataSource) -> [MyBookMarkEntity] in
                 var realData = dataSource
                 
+                var selectedItemsSet = Set(selectedItems)
+                
                 realData.indices.forEach({
-                    realData[$0].isSelected = false
+                    realData[$0].isSelected = selectedItemsSet.contains(realData[$0].id)
                 })
                 
-                selectedItems.forEach { i in
-                    realData[i].isSelected = true
-                }
 
                 return realData
                 

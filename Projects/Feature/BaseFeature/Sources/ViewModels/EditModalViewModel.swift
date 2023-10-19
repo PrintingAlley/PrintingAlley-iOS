@@ -36,7 +36,7 @@ public class EditModalViewModel: ViewModelType {
     }
     
     public struct Output {
-        let showToast:PublishSubject<BaseEntity> = .init()
+        let showToast: PublishSubject<BaseEntity> = .init()
     }
     
     

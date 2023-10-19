@@ -146,6 +146,7 @@ extension BookMarkViewController {
         bindDataSource(input:input, output:output)
         bindIndexOfSelectedItem(output: output)
         bindBackButton()
+        bindResult(input: input, output: output)
         
     }
     
@@ -156,13 +157,13 @@ extension BookMarkViewController {
 
 
 extension BookMarkViewController: BookMarkTableViewCellDelegate {
-    func tapChecked(index: Int?) {
+    func tapChecked(id: Int?) {
         
-        guard let index = index as? Int else {
+        guard let id = id as? Int else {
             return
         }
         
-        input.tapItem.onNext(index)
+        input.tapItem.onNext(id)
        
         
     }
