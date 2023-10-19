@@ -16,7 +16,7 @@ import RxKeyboard
 import UtilityModule
 
 
-//TODO: dismiss 처리 및 업데이트 노티 쏴주기
+//TODO:  업데이트 노티 쏴주기
 
 public class EditModalViewController: UIViewController {
 
@@ -78,12 +78,6 @@ public class EditModalViewController: UIViewController {
         $0.distribution = .fillEqually
     }
     
-    //TODO: 나중에 유즈케이스 주입할 수 있음
-    /// <#Description#>
-    /// - Parameters:
-    ///   - title: "제목"
-    ///   - completion: "확인 핸들러"
-    ///   - cancelCompletion: "취소 핸들러"
     public init(title: String = "",viewModel: EditModalViewModel) {
         
         super.init(nibName: nil, bundle: nil)
@@ -235,11 +229,12 @@ extension EditModalViewController {
                 else {
                     
                     switch viewModel.type {
-                    //TODO: 리프래쉬
-                   // case .newBookMark
+                    
+                    case .newBookMark:
+                        NotificationCenter.default.post(name: .refreshBookMark, object: nil) // 리프래쉬
+                        self.dismiss(animated: false)
                     
                     default:
-                        DEBUG_LOG("DEFAULT")
                         
                         self.dismiss(animated: false)
                     }

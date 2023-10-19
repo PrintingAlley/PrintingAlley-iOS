@@ -22,7 +22,7 @@ final class BookMarkViewModel: ViewModelType {
     }
     
     struct Input {
-        let viewDidLoad: PublishSubject<Void> = .init()
+        let fetchDataSource: PublishSubject<Void> = .init()
         let isEdit: BehaviorRelay<Bool> = .init(value: false)
         let tapStateButton: PublishSubject<Void> = .init()
         let tapItem: PublishSubject<Int> = .init()
@@ -39,7 +39,7 @@ final class BookMarkViewModel: ViewModelType {
         
         let output = Output()
         
-        input.viewDidLoad
+        input.fetchDataSource
             .flatMap{ [weak self] _ -> Observable<[MyBookMarkEntity]> in
             
                 guard let self else {return Observable.empty()}
@@ -112,19 +112,3 @@ final class BookMarkViewModel: ViewModelType {
     
 }
 
-struct TmpModel {
-    let name: String
-    let contents: [TmpContentModel]
-    var isSelected: Bool = false
-    
-    static func makeDummy() -> [Self] {
-        [TmpModel(name: "즐겨찾기 1", contents: [TmpContentModel(name: "정다운 인쇄소 1", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80"), TmpContentModel(name: "정다운 인쇄소 2", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80")]),
-          TmpModel(name: "즐겨찾기 1", contents: [TmpContentModel(name: "정다운 인쇄소 1", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80"), TmpContentModel(name: "정다운 인쇄소 2", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80"), TmpContentModel(name: "정다운 인쇄소 2", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80")])]
-    }
-}
-
-struct TmpContentModel {
-    let name: String
-    let options: [String]
-    let adress: String
-}

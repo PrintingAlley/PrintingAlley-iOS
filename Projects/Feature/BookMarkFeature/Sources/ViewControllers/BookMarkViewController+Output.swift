@@ -70,4 +70,12 @@ extension BookMarkViewController {
         
     }
     
+    func bindRefresh(input: BookMarkViewModel.Input) {
+        
+        NotificationCenter.default.rx.notification(.refreshBookMark)
+            .map{_ in ()}
+            .bind(to: input.fetchDataSource)
+            .disposed(by: disposeBag)
+    }
+    
 }

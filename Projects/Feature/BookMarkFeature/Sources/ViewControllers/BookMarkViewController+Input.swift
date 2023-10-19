@@ -14,7 +14,7 @@ import UIKit
 extension BookMarkViewController {
     
     func bindViewDidLoad(input: BookMarkViewModel.Input) {
-        input.viewDidLoad.onNext(())
+        input.fetchDataSource.onNext(())
     }
     
     func bindStateInputWithButton(input: BookMarkViewModel.Input) {

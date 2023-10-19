@@ -141,6 +141,7 @@ extension BookMarkViewController {
         bindEditState(input: input)
         bindStateInputWithButton(input: input)
         bindViewDidLoad(input: input)
+        bindRefresh(input: input)
         
         ///bind Output
         bindDataSource(input:input, output:output)
