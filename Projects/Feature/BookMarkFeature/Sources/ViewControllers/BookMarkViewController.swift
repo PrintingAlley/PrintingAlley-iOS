@@ -23,6 +23,11 @@ class BookMarkViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
+    lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then{
+        $0.color = DesignSystemAsset.MainBlue.blue500.color
+        $0.hidesWhenStopped = true
+        
+    }
         
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
@@ -90,7 +95,7 @@ class BookMarkViewController: UIViewController {
 
 extension BookMarkViewController {
     func addSubviews() {
-        self.view.addSubviews(naviTitleView,tableView)
+        self.view.addSubviews(naviTitleView, tableView, indicator)
         naviTitleView.addSubviews(backButton, naviTitleLabel,deleteButton, editOrDoneButton)
     }
     
@@ -129,6 +134,12 @@ extension BookMarkViewController {
             $0.left.right.bottom.equalToSuperview()
         }
         
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        
+        
     }
     
     func bindViewModel() {
@@ -147,11 +158,10 @@ extension BookMarkViewController {
         bindIndexOfSelectedItem(output: output)
         bindBackButton()
         bindResult(input: input, output: output)
-        
+        bindIndicator(output: output)
     }
     
   
-    
 
 }
 

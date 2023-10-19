@@ -37,6 +37,7 @@ final class BookMarkViewModel: ViewModelType {
         let dataSource: BehaviorRelay<[MyBookMarkEntity]> = .init(value: [])
         let indexOfSelectedItem: BehaviorRelay<[Int]> = .init(value: [])
         let showToast: PublishSubject<BaseEntity> = .init()
+        let runIndicator: BehaviorRelay<Void> = .init(value: ())
     }
     
     func transform(input: Input) -> Output {
@@ -153,7 +154,6 @@ extension BookMarkViewModel {
         /// 선택된 것들의 체크 표시를 반영하기 위한 dataSource 바인딩
         output.indexOfSelectedItem
             .withLatestFrom(output.dataSource){ ($0, $1) }
-            .debug("HH")
             .map{ (selectedItems: Array<Int>, dataSource) -> [MyBookMarkEntity] in
                 var realData = dataSource
                 

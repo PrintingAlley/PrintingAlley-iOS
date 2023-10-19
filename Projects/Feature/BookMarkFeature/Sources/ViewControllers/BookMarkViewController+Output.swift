@@ -17,6 +17,10 @@ extension BookMarkViewController {
     func bindDataSource(input: BookMarkViewModel.Input, output: BookMarkViewModel.Output) {
         
         output.dataSource
+            .do(onNext: { [weak self] _ in
+                guard let self else {return}
+                self.indicator.stopAnimating()
+            })
             .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell in
                 
                 let indexPath: IndexPath = IndexPath(row: index, section: 0)
@@ -96,6 +100,20 @@ extension BookMarkViewController {
                     input.isEdit.accept(false)
                     
                 }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    ///  indcator 시작
+    func bindIndicator(output: BookMarkViewModel.Output) {
+        output.runIndicator
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                guard let self else {return}
+                
+                self.indicator.startAnimating()
+                
+                
             })
             .disposed(by: disposeBag)
     }
