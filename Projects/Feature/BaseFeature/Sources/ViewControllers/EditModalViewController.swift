@@ -42,6 +42,7 @@ public class EditModalViewController: UIViewController {
     lazy var textField: UITextField = UITextField().then {
         $0.font = .setFont(.body1)
         $0.autocorrectionType = .no // 자동완성 끄기
+        $0.delegate = self
     }
     
     lazy var limitLabel: AlleyLabel = AlleyLabel()
@@ -148,32 +149,20 @@ extension EditModalViewController {
     
     func bindTextField(input: EditModalViewModel.Input) {
         
+        // TextField 델리게이트로 .. 
         textField
             .rx
             .text
             .orEmpty
-            .observe(on: MainScheduler.asyncInstance)
-            .map({ str -> String in
-                
-                var str: String = str
-                if str.count > 14 { // 길이 제한
-                    let index = str.index(str.startIndex, offsetBy: 14)
-                    str = String(str[..<index])
-                }
-                
-                return str
-                
-            })
             .do(onNext: { [weak self] str in
                 
                 guard let self else {return}
                 
                 self.confirmButton.isEnabled  = !((str.first?.isWhitespace ?? true)) // 앞에 시작이 공백일 때
-                input.text.accept(str)
                 self.limitLabel.setTitle(title: "\(str.count)/14자", textColor: .grey(.grey400), font: .caption1)
                
             })
-            .bind(to:textField.rx.text)
+            .bind(to:input.text)
             .disposed(by: disposeBag)
         
     }
@@ -305,4 +294,21 @@ extension EditModalViewController {
     }
     
 
+}
+
+
+extension EditModalViewController : UITextFieldDelegate {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        // 백스페이스 처리
+           if let char = string.cString(using: String.Encoding.utf8) {
+                  let isBackSpace = strcmp(char, "\\b") //  백스페이스는 UInt32값으로  -92
+                  if isBackSpace == -92 {
+                      return true
+                  }
+            }
+        
+        guard textField.text!.count < 14 else { return false } // 15 글자로 제한
+             return true
+    }
 }
