@@ -16,6 +16,10 @@ public protocol BookMarkDomainDependency: Dependency {
 }
 
 public final class BookMarkDomainComponent: Component<BookMarkDomainDependency>, BookMarkDomainFactory {
+    public var fetchBookMarkDetailUseCase: any FetchBookMarkDetailUseCase {
+        FetchMyBookMarksDetailUseCaseImpl(bookMarkRepository: bookMarkRepository)
+    }
+    
     public var fetchMyBookMarksUseCase:  any FetchMyBookMarksUseCase {
         FetchMyBookMarksUseCaseImpl(bookMarkRepository: bookMarkRepository)
     }

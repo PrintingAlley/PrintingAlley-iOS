@@ -14,6 +14,8 @@ import BaseDomainInterface
 
 
 final class RemoteBookMarkDataSourceImpl: BaseRemoteDataSource<BookMarkAPI>, RemoteBookMarkDataSource {
+
+    
     func fetchMyBookMarks() -> RxSwift.Single<[BookMarkDomainInterface.MyBookMarkEntity]> {
         request(.myBookMark)
             .map([MyBookMarkResponseDTO].self)
@@ -50,6 +52,12 @@ final class RemoteBookMarkDataSourceImpl: BaseRemoteDataSource<BookMarkAPI>, Rem
         request(.removeBookMarkGroup(ids: ids))
             .map(BaseResponseDTO.self)
             .map{$0.toDomain()}
+    }
+    
+    func fetchBookMarkDetail(id: Int) -> Single<[SimplePrintShopInfoEntity]> {
+        request(.fetchBookMarkDetail(id: id))
+            .map([SimplePrintShopResponseDTO].self)
+            .map{$0.map{$0.toDomain()}}
     }
     
 

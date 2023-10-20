@@ -17,5 +17,6 @@ public protocol BookMarkDomainFactory {
     var linkBookMarkUseCase: any LinkBookMarkUseCase { get }
     var generateBookMarkUseCase: any GenerateBookMarkUseCase { get }
     var removeBookMarkGroupUseCase: any RemoveBookMarkGroupUseCase { get }
+    var fetchBookMarkDetailUseCase: any FetchBookMarkDetailUseCase { get }
     
 }

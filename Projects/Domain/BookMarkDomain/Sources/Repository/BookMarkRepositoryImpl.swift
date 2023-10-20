@@ -12,8 +12,7 @@ import RxSwift
 import BaseDomainInterface
 
 struct BookMarkRepositoryImpl: BookMarkRepository {
-    
-    
+
     
     private let remoteBookMarkDataSource: any RemoteBookMarkDataSource
     
@@ -43,6 +42,10 @@ struct BookMarkRepositoryImpl: BookMarkRepository {
     
     func removeBookMarkGroup(ids: [Int]) -> Single<BaseEntity> {
         remoteBookMarkDataSource.removeBookMarkGroup(ids: ids)
+    }
+    
+    func fetchBookMarkDetail(id: Int) -> Single<[SimplePrintShopInfoEntity]> {
+        remoteBookMarkDataSource.fetchBookMarkDetail(id: id)
     }
     
  

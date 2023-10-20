@@ -20,6 +20,7 @@ enum BookMarkAPI {
     case linkBookMark(bookMarkId: Int, groupId: Int)
     case generateBookMark(name: String)
     case removeBookMarkGroup(ids: [Int])
+    case fetchBookMarkDetail(id: Int)
 }
 
 extension BookMarkAPI: AlleyAPI {
@@ -33,17 +34,27 @@ extension BookMarkAPI: AlleyAPI {
             
         case .myBookMark:
             return "/my-bookmarks"
+            
+        case .fetchBookMarkDetail:
+            return "/group"
+            
         case .addBookMark:
             return ""
+            
         case .removeBookMark:
             return ""
+            
         case .linkBookMark:
             return "/group"
+            
         case .generateBookMark:
             return "/group"
+            
         case .removeBookMarkGroup:
             return "/groups"
+            
         }
+       
     }
     
     var errorMap: [Int: Network.AlleyError] {
@@ -61,7 +72,6 @@ extension BookMarkAPI: AlleyAPI {
     
     var method: Moya.Method {
         switch self {
-            
         case .myBookMark:
             return .get
         case .addBookMark:
@@ -74,6 +84,9 @@ extension BookMarkAPI: AlleyAPI {
             return .post
         case .removeBookMarkGroup:
             return .delete
+         
+        case .fetchBookMarkDetail:
+            return .get
         }
     }
     
@@ -92,6 +105,9 @@ extension BookMarkAPI: AlleyAPI {
                 return .requestJSONEncodable(GenerateBookMarkGroupRequestDTO(name: name))
             case .removeBookMarkGroup(ids: let ids):
                 return .requestJSONEncodable(RemoveBookMarkGroupRequestDTO(groupIds: ids))
+                
+            case .fetchBookMarkDetail(id: let id):
+                return .requestParameters(parameters: ["groupId" : id], encoding: URLEncoding.queryString)
             }
         }
     

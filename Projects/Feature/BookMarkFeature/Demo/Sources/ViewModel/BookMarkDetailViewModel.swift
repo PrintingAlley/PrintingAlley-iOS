@@ -39,7 +39,7 @@ struct TmpModel {
     let types: [String]
     
     static func makeDummy() -> [Self] {
-        [TmpModel(name: "정다운 인쇄소124124125125215152", location: "경북 포항시 남구 지곡로 801241241242515215", types: ["인쇄", "후가공"]),
+        [TmpModel(name: "정다운 인쇄소124124125125215152ㅁㅎㅎ", location: "경북 포항시 남구 지곡로 801241241242515215", types: ["인쇄", "후가공"]),
          TmpModel(name: "정다운 인쇄소123451251251251251251", location: "경북 포항시 남구 지곡로 80125151251241241241241241421", types: ["인쇄", "비가공"])
         ]
     }

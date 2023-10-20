@@ -10,6 +10,8 @@ import UIKit
 import DesignSystem
 import UtilityModule
 
+//TODO: 글자짤림
+
 public protocol BookMarkTableViewCellDelegate: AnyObject {
     func tapChecked(index: Int?) //편집 모드일 때만 index 전달
 }
@@ -23,7 +25,9 @@ class BookMarkDetailTableViewCell: UITableViewCell {
         $0.numberOfLines = 1
     }
     lazy var subtitleLabel: AlleyLabel = AlleyLabel().then {
+
         $0.numberOfLines = 1
+    
     }
     lazy var tagLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 1
@@ -32,7 +36,7 @@ class BookMarkDetailTableViewCell: UITableViewCell {
         $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
     }
     
-    lazy var baseLine: UIView = UIView().then{
+    lazy var baseLine: UIView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
     }
     
@@ -71,19 +75,20 @@ extension BookMarkDetailTableViewCell {
         
         titleLabel.snp.makeConstraints {
             $0.top.left.equalToSuperview()
+            $0.right.equalTo(tagLabel.snp.left).offset(-5)
+            
             
         }
         
         tagLabel.snp.makeConstraints {
             $0.centerY.equalTo(titleLabel.snp.centerY)
-            $0.left.equalTo(titleLabel.snp.right).offset(4)
-            $0.right.equalToSuperview()
+            $0.right.equalToSuperview().inset(5)
         }
         
         subtitleLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(5)
             $0.left.equalTo(titleLabel.snp.left)
-            $0.right.equalToSuperview()
+            $0.right.equalTo(tagLabel.snp.right)
             $0.bottom.equalToSuperview()
         }
         
@@ -95,7 +100,8 @@ extension BookMarkDetailTableViewCell {
         
         baseLine.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.left.right.equalToSuperview().inset(24)
+            $0.left.equalToSuperview().inset(24)
+            $0.right.equalToSuperview().inset(26)
             $0.top.equalTo(containerView.snp.bottom).offset(16)
             $0.bottom.equalToSuperview()
         }
@@ -109,6 +115,9 @@ extension BookMarkDetailTableViewCell {
         titleLabel.setTitle(title: model.name, textColor: .sub(.black), font: .subtitle1)
         subtitleLabel.setTitle(title: model.location, textColor: .sub(.black), font: .body1)
         tagLabel.setTitle(title: model.types.joined(separator: "·"), textColor: .grey(.grey500), font: .caption1)
+        
+        titleLabel.lineBreakMode = .byTruncatingTail
+        subtitleLabel.lineBreakMode = .byTruncatingTail
         
         baseLine.layer.opacity = isLast ? 0 : 1
     }
