@@ -17,6 +17,18 @@ extension BookMarkViewController {
         input.fetchDataSource.onNext(())
     }
     
+    /// 뒤로가기 버튼
+    func bindBackButton() {
+        backButton.rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                
+                self?.navigationController?.popViewController(animated: true)
+                
+            })
+            .disposed(by: disposeBag)
+    }
+    
     // 편집 및 완료 버튼
     func bindStateInputWithButton(input: BookMarkViewModel.Input) {
         

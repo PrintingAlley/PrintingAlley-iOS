@@ -14,10 +14,13 @@ public struct SimplePrintShopResponseDTO: Decodable {
     public let name: String
     public let address: String
     public let tags: [SimpleTagDTO]
+    let statusCode: Int?
+    let message: String?
     
 
     public func toDomain() -> SimplePrintShopInfoEntity {
-        SimplePrintShopInfoEntity(id: self.id, name: self.name, address: self.address,tags: tags.map{SimpleTagEntity(id: $0.id, name: $0.name)})
+        
+        SimplePrintShopInfoEntity(id: self.id, name: self.name, address: self.address, tags: tags.map{SimpleTagEntity(id: $0.id, name: $0.name)}, statusCode: self.statusCode ?? 0, message: self.message ?? "")
     }
 }
 

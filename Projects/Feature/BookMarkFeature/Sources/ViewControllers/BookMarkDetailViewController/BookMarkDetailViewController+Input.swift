@@ -15,7 +15,21 @@ import RxDataSources
 import UtilityModule
 
 
-extension BookMarkViewController {
+extension BookMarkDetailViewController {
     
+    func bindViewDidLoad(input: BookMarkDetailViewModel.Input) {
+        input.fetchDataSource.onNext(())
+    }
     
+    /// 뒤로가기 버튼
+    func bindBackButton() {
+        backButton.rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                
+                self?.navigationController?.popViewController(animated: true)
+                
+            })
+            .disposed(by: disposeBag)
+    }
 }

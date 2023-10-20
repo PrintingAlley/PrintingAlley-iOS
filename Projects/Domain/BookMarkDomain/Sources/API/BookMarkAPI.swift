@@ -35,17 +35,17 @@ extension BookMarkAPI: AlleyAPI {
         case .myBookMark:
             return "/my-bookmarks"
             
-        case .fetchBookMarkDetail:
-            return "/group"
+        case .fetchBookMarkDetail(id: let id):
+            return "/group/\(id)"
             
         case .addBookMark:
             return ""
             
-        case .removeBookMark:
-            return ""
+        case .removeBookMark(id: let id):
+            return "/\(id)"
             
-        case .linkBookMark:
-            return "/group"
+        case .linkBookMark(bookMarkId: let bookMarkId, groupId: let groupId):
+            return "/group/\(bookMarkId)/\(groupId)"
             
         case .generateBookMark:
             return "/group"
@@ -98,11 +98,11 @@ extension BookMarkAPI: AlleyAPI {
             case .addBookMark(printShopId: let printShopId, bookmarkGroupId: let bookmarkGroupId):
                 return .requestJSONEncodable(AddBookMarkRequestDTO(printShopId: printShopId , bookmarkGroupId: bookmarkGroupId))
                 
-            case .removeBookMark(id: let id):
-                return .requestParameters(parameters: ["id": String(id)], encoding: URLEncoding.queryString)
+            case .removeBookMark:
+                return .requestPlain
                 
-            case .linkBookMark(bookMarkId: let bookMarkId, groupId: let groupId):
-                return .requestParameters(parameters: ["bookmarkId": String(bookMarkId) , "groupId" : String(groupId)], encoding: URLEncoding.queryString)
+            case .linkBookMark:
+                return .requestPlain
                 
             case .generateBookMark(name: let name):
                 return .requestJSONEncodable(GenerateBookMarkGroupRequestDTO(name: name))
@@ -110,8 +110,8 @@ extension BookMarkAPI: AlleyAPI {
             case .removeBookMarkGroup(ids: let ids):
                 return .requestJSONEncodable(RemoveBookMarkGroupRequestDTO(groupIds: ids))
                 
-            case .fetchBookMarkDetail(id: let id):
-                return .requestParameters(parameters: ["groupId" : id], encoding: URLEncoding.queryString)
+            case .fetchBookMarkDetail:
+                return .requestPlain
             }
         }
     

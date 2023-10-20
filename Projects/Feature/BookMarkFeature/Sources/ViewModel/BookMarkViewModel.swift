@@ -102,6 +102,8 @@ extension BookMarkViewModel {
     }
     
     func bindFetchDataSource(input: Input, output: Output) {
+        
+        //TODO: 에러 처리 
         input.fetchDataSource
             .flatMap{ [weak self] _ -> Observable<[MyBookMarkEntity]> in
             

@@ -13,10 +13,16 @@ public struct MyBookMarkEntity {
     public let name: String
     public let bookmarks: [Int]
     public var isSelected: Bool = false
+    public let statusCode: Int
+    public let message: String
     
-    public init(id: Int, name: String, bookmarks: [Int]) {
+    public init(id: Int, name: String, bookmarks: [Int], statusCode: Int, message: String) {
         self.id = id
         self.name = name
         self.bookmarks = bookmarks
+        self.statusCode = statusCode
+        self.message = message
     }
+    
+
 }

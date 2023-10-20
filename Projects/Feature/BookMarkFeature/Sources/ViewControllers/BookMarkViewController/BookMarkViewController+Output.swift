@@ -47,17 +47,7 @@ extension BookMarkViewController {
         
     }
     
-    /// 뒤로가기 버튼
-    func bindBackButton() {
-        backButton.rx
-            .tap
-            .subscribe(onNext: { [weak self] _ in
-                
-                self?.navigationController?.popViewController(animated: true)
-                
-            })
-            .disposed(by: disposeBag)
-    }
+    
     
     /// 아이템 선택 이벤트 바인딩
     func bindIndexOfSelectedItem(output: BookMarkViewModel.Output) {
@@ -128,7 +118,10 @@ extension BookMarkViewController {
                 
                 let model = dataSource[indexPath.row]
                 
-                let vc = self.bookMarkDetailFactory.makeView()
+                let vc = self.bookMarkDetailFactory.makeView(id: model.id,name: model.name)
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+                
                 
             
             })

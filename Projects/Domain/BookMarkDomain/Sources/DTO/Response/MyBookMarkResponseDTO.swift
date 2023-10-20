@@ -14,9 +14,12 @@ struct MyBookMarkResponseDTO: Decodable {
     let id: Int
     let name: String
     let bookmarks: [BookmarkDTO]
+    let statusCode: Int?
+    let message: String?
     
     func toDomain() -> MyBookMarkEntity {
-        MyBookMarkEntity(id:self.id,name: self.name, bookmarks: self.bookmarks.map{$0.id})
+        MyBookMarkEntity(id: self.id, name: self.name, bookmarks: self.bookmarks.map{$0.id}, statusCode: self.statusCode ?? 0, message: self.message ?? "")
+        
     }
     
 }
