@@ -16,8 +16,10 @@ import UtilityModule
 import BaseFeatureInterface
 
 //TODO: 인디케이터 , 삭제 , 태그 오토레이아웃 설정
+// 이름 수정 API
 //오른쪽 위 이름 편집
 // 델리게이트에서 메모리 누수 발생
+// 비어 있을 때 헤더 
 
 class BookMarkDetailViewController: UIViewController {
 
@@ -44,6 +46,7 @@ class BookMarkDetailViewController: UIViewController {
     
     
     lazy var countLabel: AlleyLabel = AlleyLabel()
+    
     
     lazy var tableView :UITableView = UITableView().then {
         $0.register(BookMarkDetailTableViewCell.self, forCellReuseIdentifier: BookMarkDetailTableViewCell.identifier)
@@ -149,6 +152,7 @@ extension BookMarkDetailViewController {
         
         bindViewDidLoad(input: input)
         bindBackButton()
+        bindeditButton()
         ///bind Output
         bindDataSource(input: input, output: output)
         bindItemSelected(output: output)

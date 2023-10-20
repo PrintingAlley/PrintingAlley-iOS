@@ -17,6 +17,14 @@ extension BookMarkViewController {
         input.fetchDataSource.onNext(())
     }
     
+    /// refreshEvent
+    func bindRefreshControl(input: BookMarkViewModel.Input) {
+        refreshControl.rx
+            .controlEvent(.valueChanged)
+            .bind(to: input.fetchDataSource)
+            .disposed(by: disposeBag)
+    }
+    
     /// 뒤로가기 버튼
     func bindBackButton() {
         backButton.rx

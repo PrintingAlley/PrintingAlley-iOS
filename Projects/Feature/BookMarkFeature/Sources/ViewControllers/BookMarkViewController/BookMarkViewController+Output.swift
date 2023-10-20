@@ -20,6 +20,12 @@ extension BookMarkViewController {
             .do(onNext: { [weak self] _ in
                 guard let self else {return}
                 self.indicator.stopAnimating()
+                
+                if self.refreshControl.isRefreshing {
+                    self.refreshControl.endRefreshing()
+                }
+                
+                
             })
             .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell in
                 

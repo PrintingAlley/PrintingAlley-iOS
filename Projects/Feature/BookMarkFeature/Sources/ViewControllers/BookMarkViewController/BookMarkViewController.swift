@@ -21,7 +21,9 @@ class BookMarkViewController: UIViewController {
     var viewModel: BookMarkViewModel!
     var bookMarkDetailFactory: any BookMarkDetailFactory
     
-
+    var refreshControl = UIRefreshControl().then {
+        $0.tintColor = DesignSystemAsset.MainBlue.blue500.color
+    }
     let input = BookMarkViewModel.Input()
     
     let disposeBag = DisposeBag()
@@ -67,6 +69,7 @@ class BookMarkViewController: UIViewController {
     lazy var tableView :UITableView = UITableView().then {
         $0.register(BookMarkTableViewCell.self, forCellReuseIdentifier: BookMarkTableViewCell.identifier)
         $0.separatorStyle = .none
+        $0.refreshControl = refreshControl
     }
     
 
@@ -160,6 +163,7 @@ extension BookMarkViewController {
         bindViewDidLoad(input: input)
         bindRefresh(input: input)
         bindTapDelete(input: input)
+        bindRefreshControl(input: input)
         
         
         ///bind Output

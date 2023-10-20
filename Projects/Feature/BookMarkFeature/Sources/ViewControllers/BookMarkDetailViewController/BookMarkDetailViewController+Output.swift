@@ -32,9 +32,9 @@ extension BookMarkDetailViewController {
                     return UITableViewCell()
                 }
                 
-                //cell.deleagte = self
+                cell.deleagte = self
                 cell.selectionStyle = .none
-                cell.update(model: model.printShop, isLast: output.dataSource.value.count-1 == index)
+                cell.update(model: model, isLast: output.dataSource.value.count-1 == index)
                 
                 return cell
             }

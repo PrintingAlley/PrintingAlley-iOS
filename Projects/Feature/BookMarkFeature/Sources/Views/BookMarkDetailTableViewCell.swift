@@ -43,7 +43,7 @@ class BookMarkDetailTableViewCell: UITableViewCell {
     }
     
     public weak var deleagte: BookMarkDetailTableViewCellDelegate?
-    var model: SimplePrintShopInfoEntity!
+    var model: BookMarkDetailEntity!
     var index: Int!
     var isEdit: Bool!
     
@@ -111,12 +111,12 @@ extension BookMarkDetailTableViewCell {
         
     }
     
-    public func update(model: SimplePrintShopInfoEntity, isLast: Bool) {
+    public func update(model: BookMarkDetailEntity, isLast: Bool) {
         self.model = model
 
-        titleLabel.setTitle(title: model.name, textColor: .sub(.black), font: .subtitle1)
-        subtitleLabel.setTitle(title: model.address, textColor: .sub(.black), font: .body1)
-        tagLabel.setTitle(title: model.tags.map{$0.name}.joined(separator: "·"), textColor: .grey(.grey500), font: .caption1)
+        titleLabel.setTitle(title: model.printShop.name, textColor: .sub(.black), font: .subtitle1)
+        subtitleLabel.setTitle(title: model.printShop.address, textColor: .sub(.black), font: .body1)
+        tagLabel.setTitle(title: model.printShop.tags.map{$0.name}.joined(separator: "·"), textColor: .grey(.grey500), font: .caption1)
         
         titleLabel.lineBreakMode = .byTruncatingTail
         subtitleLabel.lineBreakMode = .byTruncatingTail
