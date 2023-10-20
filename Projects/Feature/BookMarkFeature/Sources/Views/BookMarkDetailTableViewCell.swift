@@ -9,6 +9,7 @@
 import UIKit
 import DesignSystem
 import UtilityModule
+import BookMarkDomainInterface
 
 
 public protocol BookMarkDetailTableViewCellDelegate: AnyObject {
@@ -40,7 +41,7 @@ class BookMarkDetailTableViewCell: UITableViewCell {
     }
     
     public weak var deleagte: BookMarkDetailTableViewCellDelegate?
-    var model: TmpModel!
+    var model: SimplePrintShopInfoEntity!
     var index: Int!
     var isEdit: Bool!
     
@@ -108,12 +109,12 @@ extension BookMarkDetailTableViewCell {
         
     }
     
-    public func update(model: TmpModel,isLast: Bool) {
+    public func update(model: SimplePrintShopInfoEntity, isLast: Bool) {
         self.model = model
 
         titleLabel.setTitle(title: model.name, textColor: .sub(.black), font: .subtitle1)
-        subtitleLabel.setTitle(title: model.location, textColor: .sub(.black), font: .body1)
-        tagLabel.setTitle(title: model.types.joined(separator: "·"), textColor: .grey(.grey500), font: .caption1)
+        subtitleLabel.setTitle(title: model.address, textColor: .sub(.black), font: .body1)
+        tagLabel.setTitle(title: model.tags.map{$0.name}.joined(separator: "·"), textColor: .grey(.grey500), font: .caption1)
         
         titleLabel.lineBreakMode = .byTruncatingTail
         subtitleLabel.lineBreakMode = .byTruncatingTail
