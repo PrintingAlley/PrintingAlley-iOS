@@ -9,6 +9,5 @@
 import UIKit
 
 public protocol BookMarkFactory {
-    func makeBookMarkGroupView() -> UIViewController
-    func makeBookDetailView() -> UIViewController
+    func makeView() -> UIViewController
 }

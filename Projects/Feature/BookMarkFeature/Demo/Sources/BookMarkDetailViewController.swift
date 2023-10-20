@@ -161,13 +161,6 @@ extension BookMarkDetailViewController {
         
             .disposed(by: disposeBag)
         
-        tableView.rx.itemSelected
-            .subscribe(onNext: {
-                
-                print($0)
-            })
-            .disposed(by: disposeBag)
-        
     }
     
 

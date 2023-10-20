@@ -153,6 +153,9 @@ private class BookMarkDependency8b686eab048ca50fc073Provider: BookMarkDependency
     var bookMarkDomainFactory: any BookMarkDomainFactory {
         return appComponent.bookMarkDomainFactory
     }
+    var bookMarkDetailFactory: any BookMarkDetailFactory {
+        return appComponent.bookMarkDetailFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -161,6 +164,19 @@ private class BookMarkDependency8b686eab048ca50fc073Provider: BookMarkDependency
 /// ^->AppComponent->BookMarkComponent
 private func factory28d0c1b9536190951087f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BookMarkDependency8b686eab048ca50fc073Provider(appComponent: parent1(component) as! AppComponent)
+}
+private class BookMarkDetailDependency82d727e486e840545c2dProvider: BookMarkDetailDependency {
+    var bookMarkDomainFactory: any BookMarkDomainFactory {
+        return appComponent.bookMarkDomainFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->BookMarkDetailComponent
+private func factoryc8e52bb402c24cd9a5e2f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return BookMarkDetailDependency82d727e486e840545c2dProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class BaseDependency859c0dc7c01380fd4dcdProvider: BaseDependency {
     var bookMarkDomainFactory: any BookMarkDomainFactory {
@@ -260,6 +276,12 @@ extension NearByMeComponent: Registration {
 extension BookMarkComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
+        keyPathToName[\BookMarkDependency.bookMarkDetailFactory] = "bookMarkDetailFactory-any BookMarkDetailFactory"
+    }
+}
+extension BookMarkDetailComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\BookMarkDetailDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
     }
 }
 extension BaseComponent: Registration {
@@ -304,6 +326,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->NearByMeComponent", factory53f303ca6b0d301565d8e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BookMarkComponent", factory28d0c1b9536190951087f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->BookMarkDetailComponent", factoryc8e52bb402c24cd9a5e2f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BaseComponent", factory8d6553a65a3e0710b1b5f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)

@@ -14,10 +14,13 @@ import RxSwift
 import RxDataSources
 import UtilityModule
 import BaseFeatureInterface
+import BookMarkFeatureInterface
 
 class BookMarkViewController: UIViewController {
 
     var viewModel: BookMarkViewModel!
+    var bookMarkDetailFactory: any BookMarkDetailFactory
+    
 
     let input = BookMarkViewModel.Input()
     
@@ -68,8 +71,9 @@ class BookMarkViewController: UIViewController {
     
 
     
-    init(viewModel: BookMarkViewModel!) {
+    init(bookMarkDetailFactory: BookMarkDetailFactory ,viewModel: BookMarkViewModel!) {
         self.viewModel = viewModel
+        self.bookMarkDetailFactory = bookMarkDetailFactory
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -153,12 +157,14 @@ extension BookMarkViewController {
         bindRefresh(input: input)
         bindTapDelete(input: input)
         
+        
         ///bind Output
         bindDataSource(input:input, output:output)
         bindIndexOfSelectedItem(output: output)
         bindBackButton()
         bindResult(input: input, output: output)
         bindIndicator(output: output)
+        bindItemSelected(output: output)
     }
     
   

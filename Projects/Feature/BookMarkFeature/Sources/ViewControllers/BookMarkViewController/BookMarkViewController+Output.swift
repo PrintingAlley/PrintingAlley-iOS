@@ -118,6 +118,22 @@ extension BookMarkViewController {
             .disposed(by: disposeBag)
     }
     
+    /// 셀 선택
+    func bindItemSelected(output: BookMarkViewModel.Output) {
+        tableView.rx.itemSelected
+            .withLatestFrom(output.dataSource){($0, $1)}
+            .subscribe(onNext: { [weak self] (indexPath, dataSource) in
+                
+                guard let self else {return}
+                
+                let model = dataSource[indexPath.row]
+                
+                let vc = self.bookMarkDetailFactory.makeView()
+                
+            
+            })
+            .disposed(by: disposeBag)
+    }
     
     
 }
