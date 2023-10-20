@@ -187,7 +187,7 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
             DEBUG_LOG(type)
         case .bookMark:
             
-            let vc = bookMarkFactory.makeView()
+            let vc = bookMarkFactory.makeBookMarkGroupView()
             self.navigationController?.pushViewController(vc, animated: true)
             
         case .review:

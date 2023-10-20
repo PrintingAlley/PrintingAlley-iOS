@@ -10,9 +10,20 @@ import Foundation
 import RxSwift
 import RxRelay
 import UtilityModule
+import BookMarkDomainInterface
 
 
 public final class BookMarkDetailViewModel: ViewModelType {
+    
+    
+    var fetchBookMarkDetailUseCase: any FetchBookMarkDetailUseCase
+    var removeBookMarkUseCase: any RemoveBookMarkUseCase
+    
+    init(fetchBookMarkDetailUseCase: FetchBookMarkDetailUseCase, removeBookMarkUseCase: RemoveBookMarkUseCase) {
+        self.fetchBookMarkDetailUseCase = fetchBookMarkDetailUseCase
+        self.removeBookMarkUseCase = removeBookMarkUseCase
+    }
+    
     public struct Input {
         
     }
