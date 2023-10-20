@@ -15,10 +15,9 @@ import RxDataSources
 import UtilityModule
 import BaseFeatureInterface
 
-//TODO: 인디케이터 , 삭제 , 태그 오토레이아웃 설정
+//TODO:  태그 오토레이아웃 설정
 // 이름 수정 API
-//오른쪽 위 이름 편집
-// 델리게이트에서 메모리 누수 발생
+// 오른쪽 위 이름 편집
 // 비어 있을 때 헤더 
 
 class BookMarkDetailViewController: UIViewController {
@@ -31,7 +30,7 @@ class BookMarkDetailViewController: UIViewController {
     
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
-        
+    
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
     }
@@ -47,6 +46,8 @@ class BookMarkDetailViewController: UIViewController {
     
     lazy var countLabel: AlleyLabel = AlleyLabel()
     
+    
+    lazy var emptyHeaderView: EmptyTableHeaderView = EmptyTableHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80), text: "아직 저장목록이 없어요.")
     
     lazy var tableView :UITableView = UITableView().then {
         $0.register(BookMarkDetailTableViewCell.self, forCellReuseIdentifier: BookMarkDetailTableViewCell.identifier)
@@ -67,7 +68,7 @@ class BookMarkDetailViewController: UIViewController {
     }
     
     deinit {
-        //NotificationCenter.default.post(name: .refreshBookMark, object: nil)
+        NotificationCenter.default.post(name: .refreshBookMark, object: nil)
         DEBUG_LOG("\(Self.self) Denit ❌ ")
         
     }
