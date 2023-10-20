@@ -19,11 +19,13 @@ public class EditModalViewModel: ViewModelType {
     let disposeBag = DisposeBag()
     var type: EditType!
     var generateBookMarkUseCase: any GenerateBookMarkUseCase
+    var renameBookMarkGroupUseCase: any RenameBookMarkGroupUseCase
     //TODO: 프로필 이름 변경 유즈 케이스
     
-    init(type: EditType!, generateBookMarkUseCase: GenerateBookMarkUseCase) {
+    init(type: EditType!, generateBookMarkUseCase: GenerateBookMarkUseCase,renameBookMarkGroupUseCase: RenameBookMarkGroupUseCase) {
         self.type = type
         self.generateBookMarkUseCase = generateBookMarkUseCase
+        self.renameBookMarkGroupUseCase = renameBookMarkGroupUseCase
     }
     
     deinit {
@@ -61,7 +63,9 @@ extension EditModalViewModel {
             .flatMap({ [weak self] text -> Observable<BaseEntity> in
                 
                 guard let self else { return Observable.empty()}
-                 
+                
+                //TODO: type 별 유즈케이스 처리 
+                
                 return self.generateBookMarkUseCase.execute(name: text)
                     .catch({ error in
                         

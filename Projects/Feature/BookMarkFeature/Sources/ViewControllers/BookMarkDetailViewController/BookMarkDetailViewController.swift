@@ -15,8 +15,6 @@ import RxDataSources
 import UtilityModule
 import BaseFeatureInterface
 
-// 이름 수정 API
-// 오른쪽 위 이름 편집
 
 class BookMarkDetailViewController: UIViewController {
 

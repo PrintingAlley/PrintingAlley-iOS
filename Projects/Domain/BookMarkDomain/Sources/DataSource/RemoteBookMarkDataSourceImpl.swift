@@ -16,9 +16,9 @@ import BaseDomainInterface
 final class RemoteBookMarkDataSourceImpl: BaseRemoteDataSource<BookMarkAPI>, RemoteBookMarkDataSource {
    
     
-    func renameBookMarkGroup(id: Int, name: String) -> RxSwift.Single<BookMarkDomainInterface.RenameBookMarkEntity> {
+    func renameBookMarkGroup(id: Int, name: String) -> Single<BaseEntity> {
         request(.renameBookMarkGroup(id: id, name: name))
-            .map(RenameBookMarkGroupResponseDTO.self)
+            .map(BaseResponseDTO.self)
             .map{$0.toDomain()}
     }
     

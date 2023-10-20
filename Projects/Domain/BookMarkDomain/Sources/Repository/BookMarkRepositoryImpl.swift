@@ -50,7 +50,7 @@ struct BookMarkRepositoryImpl: BookMarkRepository {
         remoteBookMarkDataSource.fetchBookMarkDetail(id: id)
     }
     
-    func renameBookMarkGroup(id: Int, name: String) -> Single<RenameBookMarkEntity> {
+    func renameBookMarkGroup(id: Int, name: String) -> Single<BaseEntity> {
         self.remoteBookMarkDataSource.renameBookMarkGroup(id: id, name: name)
     }
  

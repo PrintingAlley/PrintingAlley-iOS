@@ -23,7 +23,7 @@ public final class BaseComponent: Component<BaseDependency>, BaseFactory {
     }
     
     public func makeEditModal(title: String, type: EditType) -> UIViewController {
-        EditModalViewController(title: title, viewModel: EditModalViewModel(type: type, generateBookMarkUseCase: dependency.bookMarkDomainFactory.generateBookMarkUseCase))
+        EditModalViewController(title: title, viewModel: EditModalViewModel(type: type, generateBookMarkUseCase: dependency.bookMarkDomainFactory.generateBookMarkUseCase, renameBookMarkGroupUseCase: dependency.bookMarkDomainFactory.renameBookMarkGroupUseCase))
     }
     
     

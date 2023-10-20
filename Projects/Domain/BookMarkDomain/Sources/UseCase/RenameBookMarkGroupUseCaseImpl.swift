@@ -22,7 +22,7 @@ struct RenameBookMarkGroupUseCaseImpl: RenameBookMarkGroupUseCase {
         self.bookMarkRepository = bookMarkRepository
     }
     
-    func execute(id: Int, name: String) -> Single<RenameBookMarkEntity> {
+    func execute(id: Int, name: String) -> Single<BaseEntity> {
         bookMarkRepository.renameBookMarkGroup(id: id, name: name)
     }
     

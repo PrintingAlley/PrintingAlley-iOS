@@ -11,5 +11,5 @@ import RxSwift
 import BaseDomainInterface
 
 public protocol RenameBookMarkGroupUseCase {
-    func execute(id:Int, name: String) -> Single<RenameBookMarkEntity>
+    func execute(id:Int, name: String) -> Single<BaseEntity>
 }
