@@ -13,11 +13,14 @@ import DesignSystem
 import RxSwift
 import RxDataSources
 import UtilityModule
+import BaseFeatureInterface
+
+//TODO: 인디케이터 , 삭제 , 업데이트 유즈 케이스 , 태그 오토레이아웃 설정 , 오른쪽 위 이름 편집
 
 class BookMarkDetailViewController: UIViewController {
 
     var viewModel: BookMarkDetailViewModel!
-
+    var baseFactory: any BaseFactory
     
     let disposeBag = DisposeBag()
     
@@ -26,6 +29,11 @@ class BookMarkDetailViewController: UIViewController {
         
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
+    }
+    
+    lazy var editButton: UIButton = UIButton().then{
+        $0.setImage(DesignSystemAsset.Icon.more.image, for: .normal)
+        $0.imageView?.contentMode = .scaleAspectFit
     }
     
     
@@ -45,9 +53,11 @@ class BookMarkDetailViewController: UIViewController {
     
 
     
-    init(viewModel: BookMarkDetailViewModel!) {
-        super.init(nibName: nil, bundle: nil)
+    init(baseFactory: BaseFactory, viewModel: BookMarkDetailViewModel!) {
+
+        self.baseFactory = baseFactory
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -78,7 +88,7 @@ extension BookMarkDetailViewController {
     
     func addSubviews() {
         self.view.addSubviews(naviTitleView, countLabel, baseLine, tableView)
-        naviTitleView.addSubviews(backButton, naviTitleLabel)
+        naviTitleView.addSubviews(backButton, naviTitleLabel,editButton)
     }
     
     func makeConstraints() {
@@ -101,6 +111,12 @@ extension BookMarkDetailViewController {
         countLabel.snp.makeConstraints {
             $0.top.equalTo(naviTitleView.snp.bottom).offset(4)
             $0.horizontalEdges.equalToSuperview()
+        }
+        
+        editButton.snp.makeConstraints {
+            $0.width.height.equalTo(24)
+            $0.centerY.equalToSuperview()
+            $0.right.equalToSuperview().inset(24)
         }
         
         baseLine.snp.makeConstraints {

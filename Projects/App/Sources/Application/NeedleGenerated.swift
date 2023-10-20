@@ -169,6 +169,9 @@ private class BookMarkDetailDependency82d727e486e840545c2dProvider: BookMarkDeta
     var bookMarkDomainFactory: any BookMarkDomainFactory {
         return appComponent.bookMarkDomainFactory
     }
+    var baseFactory: any BaseFactory {
+        return appComponent.baseFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -282,6 +285,7 @@ extension BookMarkComponent: Registration {
 extension BookMarkDetailComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDetailDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
+        keyPathToName[\BookMarkDetailDependency.baseFactory] = "baseFactory-any BaseFactory"
     }
 }
 extension BaseComponent: Registration {

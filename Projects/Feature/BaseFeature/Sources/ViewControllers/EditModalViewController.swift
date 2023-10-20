@@ -24,7 +24,6 @@ public class EditModalViewController: UIViewController {
     var titleString: String = ""
     
     let disposeBag = DisposeBag()
-    let appHeight =  UIScreen.main.bounds.size.height
     
     lazy var contentView: UIView = UIView().then {
         $0.backgroundColor = .white
@@ -43,7 +42,6 @@ public class EditModalViewController: UIViewController {
     lazy var textField: UITextField = UITextField().then {
         $0.font = .setFont(.body1)
         $0.autocorrectionType = .no // 자동완성 끄기
-        $0.setPlaceHolder(text: "이름을 입력하세요.", textColor: .setColor(.grey(.grey300)), font: .body1)
     }
     
     lazy var limitLabel: AlleyLabel = AlleyLabel()
@@ -99,8 +97,8 @@ public class EditModalViewController: UIViewController {
         super.viewDidLoad()
        
         addSubViews()
-        preProcessing()
         makeConstraints()
+        preProcessing()
         bindViewModel()
 
     }
@@ -112,6 +110,7 @@ extension EditModalViewController {
     func isWhite(_ str: String) -> Bool {
         str.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
     }
+    
     
     func bindViewModel() {
         let input = EditModalViewModel.Input()
@@ -195,7 +194,7 @@ extension EditModalViewController {
             
             self.contentView.snp.updateConstraints {
                 $0.left.right.equalToSuperview().inset(14)
-                $0.bottom.equalToSuperview().inset( tmp <= .zero ?  self.appHeight/3 : tmp + 50)
+                $0.bottom.equalToSuperview().inset( tmp <= .zero ?  APP_HEIGHT()/3 : tmp + 50)
             }
             
             UIView.animate(withDuration: 1.0) {
@@ -254,7 +253,7 @@ extension EditModalViewController {
     }
     
     func preProcessing() {
-        
+        textField.setPlaceHolder(text: viewModel.type.placeHolder, textColor: .setColor(.grey(.grey300)), font: .body1)
         self.view.backgroundColor = .black.withAlphaComponent(0.4)
         titleLabel.setTitle(title: self.titleString, textColor: .sub(.black), font: .header3, alignment: .center)
     }
@@ -263,7 +262,7 @@ extension EditModalViewController {
         
         contentView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(14)
-            $0.bottom.equalToSuperview().inset(appHeight/4)
+            $0.bottom.equalToSuperview().inset(APP_HEIGHT()/4)
         }
         
         

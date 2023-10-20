@@ -32,4 +32,21 @@ extension BookMarkDetailViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    func bindeditButton() {
+        editButton.rx
+            .tap
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,_) in
+                
+                let vc = owner.baseFactory.makeEditModal(title: "저장목록 이름 수정", type: .reNameBookMark)
+                
+                vc.modalPresentationStyle = .overFullScreen
+                
+                owner.present(vc, animated: false)
+                
+            })
+            .disposed(by: disposeBag)
+            
+    }
 }
