@@ -19,5 +19,6 @@ public protocol RemoteBookMarkDataSource {
     func generateBookMark(name: String) -> Single<BaseEntity> // 북마크 그룹 생성
     func removeBookMarkGroup(ids: [Int]) -> Single<BaseEntity> // 북마크 그룹 삭제
     func fetchBookMarkDetail(id: Int) -> Single<[BookMarkDetailEntity]> // 북마크 그룹 디테일 가져오기
+    func renameBookMarkGroup(id:Int, name: String) -> Single<RenameBookMarkEntity>  // 북마크 그룹 이름 수정
     
 }

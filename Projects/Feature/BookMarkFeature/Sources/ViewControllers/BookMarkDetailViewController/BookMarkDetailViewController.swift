@@ -15,10 +15,8 @@ import RxDataSources
 import UtilityModule
 import BaseFeatureInterface
 
-//TODO:  태그 오토레이아웃 설정
 // 이름 수정 API
 // 오른쪽 위 이름 편집
-// 비어 있을 때 헤더 
 
 class BookMarkDetailViewController: UIViewController {
 

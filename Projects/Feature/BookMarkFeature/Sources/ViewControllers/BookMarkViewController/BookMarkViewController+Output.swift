@@ -17,7 +17,7 @@ extension BookMarkViewController {
     func bindDataSource(input: BookMarkViewModel.Input, output: BookMarkViewModel.Output) {
         
         output.dataSource
-            .do(onNext: { [weak self] _ in
+            .do(onNext: { [weak self] dataSource in
                 guard let self else {return}
                 self.indicator.stopAnimating()
                 
@@ -25,7 +25,7 @@ extension BookMarkViewController {
                     self.refreshControl.endRefreshing()
                 }
                 
-                
+                self.tableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
             })
             .bind(to: tableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
                 

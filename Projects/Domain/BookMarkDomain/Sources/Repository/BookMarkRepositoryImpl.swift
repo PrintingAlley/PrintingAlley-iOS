@@ -14,6 +14,8 @@ import BaseDomainInterface
 struct BookMarkRepositoryImpl: BookMarkRepository {
 
     
+
+    
     private let remoteBookMarkDataSource: any RemoteBookMarkDataSource
     
     init(remoteBookMarkDataSource: any RemoteBookMarkDataSource) {
@@ -48,6 +50,9 @@ struct BookMarkRepositoryImpl: BookMarkRepository {
         remoteBookMarkDataSource.fetchBookMarkDetail(id: id)
     }
     
+    func renameBookMarkGroup(id: Int, name: String) -> Single<RenameBookMarkEntity> {
+        self.remoteBookMarkDataSource.renameBookMarkGroup(id: id, name: name)
+    }
  
     
 

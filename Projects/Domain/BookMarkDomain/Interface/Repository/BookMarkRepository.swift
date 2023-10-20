@@ -19,5 +19,6 @@ public protocol BookMarkRepository {
     func generateBookMark(name: String) -> Single<BaseEntity>
     func removeBookMarkGroup(ids: [Int]) -> Single<BaseEntity>
     func fetchBookMarkDetail(id: Int) -> Single<[BookMarkDetailEntity]>
+    func renameBookMarkGroup(id:Int, name: String) -> Single<RenameBookMarkEntity>
     
 }

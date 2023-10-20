@@ -66,6 +66,8 @@ class BookMarkViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel("저장목록", textColor: .sub(.black), font: .header3, alignment: .center)
     
+    lazy var emptyHeaderView: EmptyTableHeaderView = EmptyTableHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80), text: "아직 저장목록이 없어요.")
+    
     lazy var tableView :UITableView = UITableView().then {
         $0.register(BookMarkTableViewCell.self, forCellReuseIdentifier: BookMarkTableViewCell.identifier)
         $0.separatorStyle = .none

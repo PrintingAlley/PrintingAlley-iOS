@@ -11,7 +11,7 @@ import BaseDomain
 import Network
 import Moya
 import JwtStoreInterface
-import BookMarkDomain
+
 
 enum BookMarkAPI {
     case myBookMark
@@ -21,6 +21,7 @@ enum BookMarkAPI {
     case generateBookMark(name: String)
     case removeBookMarkGroup(ids: [Int])
     case fetchBookMarkDetail(id: Int)
+    case renameBookMarkGroup(id: Int, name: String)
 }
 
 extension BookMarkAPI: AlleyAPI {
@@ -53,6 +54,9 @@ extension BookMarkAPI: AlleyAPI {
         case .removeBookMarkGroup:
             return "/groups"
             
+
+        case .renameBookMarkGroup(id: let id, name: let name):
+            return "/group/\(id)"
         }
        
     }
@@ -87,6 +91,8 @@ extension BookMarkAPI: AlleyAPI {
          
         case .fetchBookMarkDetail:
             return .get
+        case .renameBookMarkGroup:
+            return .put
         }
     }
     
@@ -112,6 +118,8 @@ extension BookMarkAPI: AlleyAPI {
                 
             case .fetchBookMarkDetail:
                 return .requestPlain
+            case .renameBookMarkGroup(id: _, name: let name):
+                return .requestJSONEncodable(RenameBookMarkGroupRequestDTO(name: name))
             }
         }
     
