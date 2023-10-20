@@ -36,7 +36,7 @@ public final class BookMarkDetailViewModel: ViewModelType {
     }
     
     public struct Output {
-        let dataSource: BehaviorRelay<[SimplePrintShopInfoEntity]> = .init(value: [])
+        let dataSource: BehaviorRelay<[BookMarkDetailEntity]> = .init(value: [])
     }
     
     public func transform(input: Input) -> Output {
@@ -44,14 +44,14 @@ public final class BookMarkDetailViewModel: ViewModelType {
         
         input.fetchDataSource
             .withUnretained(self){($0,$1)}
-            .flatMap({ (owner,_) -> Observable<[SimplePrintShopInfoEntity]> in
+            .flatMap({ (owner,_) -> Observable<[BookMarkDetailEntity]> in
                 return owner.fetchBookMarkDetailUseCase
                         .execute(id: owner.bookMarkGroupId)
                         .catch({ error in
     
                             let alleryError = error.asAlleyError
-                            DEBUG_LOG(alleryError.errorDescription)
-                                return Single<[SimplePrintShopInfoEntity]>.create { single in
+                            DEBUG_LOG(alleryError.asAFError?.responseCode)
+                                return Single<[BookMarkDetailEntity]>.create { single in
                                     single(.success([]))
                                     return Disposables.create()
                                 }

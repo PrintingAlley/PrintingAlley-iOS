@@ -18,6 +18,6 @@ public protocol RemoteBookMarkDataSource {
     func linkBookMark(bookMarkId: Int, groupId: Int) -> Single<BaseEntity> // 연결하기
     func generateBookMark(name: String) -> Single<BaseEntity> // 북마크 그룹 생성
     func removeBookMarkGroup(ids: [Int]) -> Single<BaseEntity> // 북마크 그룹 삭제
-    func fetchBookMarkDetail(id: Int) -> Single<[SimplePrintShopInfoEntity]> // 북마크 그룹 디테일 가져오기
+    func fetchBookMarkDetail(id: Int) -> Single<[BookMarkDetailEntity]> // 북마크 그룹 디테일 가져오기
     
 }

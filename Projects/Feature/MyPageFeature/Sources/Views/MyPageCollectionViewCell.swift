@@ -26,7 +26,7 @@ class MyPageCollectionViewCell: UICollectionViewCell {
     var type: HeaderItemType!
     
     lazy var imageView: UIImageView = UIImageView().then {
-        $0.contentMode = .scaleToFill
+        $0.contentMode = .scaleAspectFit
     }
     lazy var label: AlleyLabel = AlleyLabel()
     

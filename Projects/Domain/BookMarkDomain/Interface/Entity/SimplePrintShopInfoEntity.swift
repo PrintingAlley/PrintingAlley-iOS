@@ -14,17 +14,14 @@ public struct SimplePrintShopInfoEntity {
     public let name: String
     public let address: String
     public let tags: [SimpleTagEntity]
-    public let statusCode: Int
-    public let message: String
+
 
     
- public init(id: Int, name: String, address: String, tags: [SimpleTagEntity], statusCode: Int, message: String) {
+ public init(id: Int, name: String, address: String, tags: [SimpleTagEntity]) {
         self.id = id
         self.name = name
         self.address = address
         self.tags = tags
-        self.statusCode = statusCode
-        self.message = message
     }
 
 }

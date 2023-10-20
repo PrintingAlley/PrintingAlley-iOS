@@ -123,10 +123,10 @@ extension BookMarkDetailViewController {
         let output = self.viewModel.transform(input: input)
         
         bindViewDidLoad(input: input)
-        
+        bindBackButton()
         ///bind Output
         bindDataSource(input:input, output: output)
-        
+        bindItemSelected(output: output)
     }
 
 

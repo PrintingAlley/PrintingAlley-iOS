@@ -44,7 +44,7 @@ struct BookMarkRepositoryImpl: BookMarkRepository {
         remoteBookMarkDataSource.removeBookMarkGroup(ids: ids)
     }
     
-    func fetchBookMarkDetail(id: Int) -> Single<[SimplePrintShopInfoEntity]> {
+    func fetchBookMarkDetail(id: Int) -> Single<[BookMarkDetailEntity]> {
         remoteBookMarkDataSource.fetchBookMarkDetail(id: id)
     }
     

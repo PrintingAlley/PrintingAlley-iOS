@@ -34,20 +34,22 @@ extension BookMarkDetailViewController {
                 
                 cell.deleagte = self
                 cell.selectionStyle = .none
-                cell.update(model: model, isLast: output.dataSource.value.count-1 == index)
+                cell.update(model: model.printShop, isLast: output.dataSource.value.count-1 == index)
                 
                 return cell
             }
         
             .disposed(by: disposeBag)
         
+    }
+    
+    func bindItemSelected(output: BookMarkDetailViewModel.Output) {
         tableView.rx.itemSelected
             .subscribe(onNext: {
                 
                 print($0)
             })
             .disposed(by: disposeBag)
-        
     }
 }
 

@@ -110,6 +110,15 @@ extension BookMarkViewModel {
                 guard let self else {return Observable.empty()}
                 
                 return self.fetchMyBookMarksUseCase.execute()
+                    .catch({ error in
+                        let alleryError = error.asAlleyError
+                            return Single<[MyBookMarkEntity]>.create { single in
+                                single(.success([]))
+                                return Disposables.create()
+                            }
+
+                        
+                    })
                     .asObservable()
                 
             }
@@ -126,22 +135,22 @@ extension BookMarkViewModel {
             
                 return owner.removeBookMarkGroupUseCase
                     .execute(ids: ids)
-//                    .catch({ error in
-//                        
-//                        let alleryError = error.asAlleyError
-//                        
-//                        if alleryError == .tokenExpired {
-//                            return Single<BaseEntity>.create { single in
-//                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
-//                                return Disposables.create()
-//                            }
-//                        }
-//                        
-//                        return Single<BaseEntity>.create { single in
-//                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
-//                            return Disposables.create()
-//                        }
-//                    })
+                    .catch({ error in
+                        
+                        let alleryError = error.asAlleyError
+                        
+                        if alleryError == .tokenExpired {
+                            return Single<BaseEntity>.create { single in
+                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                return Disposables.create()
+                            }
+                        }
+                        
+                        return Single<BaseEntity>.create { single in
+                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                            return Disposables.create()
+                        }
+                    })
                     .asObservable()
             })
             .bind(to: output.showToast)

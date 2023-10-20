@@ -19,7 +19,7 @@ struct FetchMyBookMarksDetailUseCaseImpl: FetchBookMarkDetailUseCase {
         self.bookMarkRepository = bookMarkRepository
     }
     
-    func execute(id: Int) -> Single<[SimplePrintShopInfoEntity]> {
+    func execute(id: Int) -> Single<[BookMarkDetailEntity]> {
         bookMarkRepository.fetchBookMarkDetail(id: id)
     }
     
