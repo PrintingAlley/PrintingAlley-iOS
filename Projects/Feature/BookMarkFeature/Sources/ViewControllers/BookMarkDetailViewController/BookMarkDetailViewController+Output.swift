@@ -20,11 +20,15 @@ extension BookMarkDetailViewController {
                 
                 guard let self else {return}
                 
+                self.tableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
+                
                 self.countLabel.setTitle(title: "장소 \(dataSource.count)개", textColor: .grey(.grey400), font: .caption1,alignment: .center)
                 
                 
             })
-            .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell in
+            .bind(to: tableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
+                
+                guard let self else { return UITableViewCell() }
                 
                 let indexPath: IndexPath = IndexPath(row: index, section: 0)
                 

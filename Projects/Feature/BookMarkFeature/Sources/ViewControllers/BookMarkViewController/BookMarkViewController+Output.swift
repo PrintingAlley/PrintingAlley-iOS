@@ -27,7 +27,9 @@ extension BookMarkViewController {
                 
                 
             })
-            .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell in
+            .bind(to: tableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
+                
+                guard let self else { return UITableViewCell() }
                 
                 let indexPath: IndexPath = IndexPath(row: index, section: 0)
                 
@@ -35,7 +37,7 @@ extension BookMarkViewController {
                     return UITableViewCell()
                 }
                 
-               // cell.deleagte = self
+                cell.deleagte = self
                 cell.selectionStyle = .none
                 cell.update(model: model,isEditing: input.isEdit.value , isLast: output.dataSource.value.count-1 == index )
                 

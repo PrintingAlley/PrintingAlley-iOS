@@ -25,6 +25,7 @@ class BookMarkDetailTableViewCell: UITableViewCell {
     lazy var containerView: UIView = UIView()
     lazy var titleLabel: AlleyLabel = AlleyLabel().then{
         $0.numberOfLines = 1
+        $0.horizontalCompressionResistancePriority = .required
     }
     lazy var subtitleLabel: AlleyLabel = AlleyLabel().then {
 
@@ -33,6 +34,7 @@ class BookMarkDetailTableViewCell: UITableViewCell {
     }
     lazy var tagLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 1
+
     }
     lazy var button: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
@@ -82,9 +84,12 @@ extension BookMarkDetailTableViewCell {
             
         }
         
+        
+        
         tagLabel.snp.makeConstraints {
             $0.centerY.equalTo(titleLabel.snp.centerY)
             $0.right.equalToSuperview().inset(5)
+            
         }
         
         subtitleLabel.snp.makeConstraints {
@@ -120,6 +125,7 @@ extension BookMarkDetailTableViewCell {
         
         titleLabel.lineBreakMode = .byTruncatingTail
         subtitleLabel.lineBreakMode = .byTruncatingTail
+        tagLabel.lineBreakMode = .byTruncatingTail
         
         baseLine.layer.opacity = isLast ? 0 : 1
     }
