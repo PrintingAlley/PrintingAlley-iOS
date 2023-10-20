@@ -24,6 +24,10 @@ final class BookMarkViewModel: ViewModelType {
         self.removeBookMarkGroupUseCase = removeBookMarkGroupUseCase
     }
     
+    deinit {
+        DEBUG_LOG("\(Self.self) Denit ❌ ")
+    }
+    
     struct Input {
         let fetchDataSource: PublishSubject<Void> = .init()
         let isEdit: BehaviorRelay<Bool> = .init(value: false)

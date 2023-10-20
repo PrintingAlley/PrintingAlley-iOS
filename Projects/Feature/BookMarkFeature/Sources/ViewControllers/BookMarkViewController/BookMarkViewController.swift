@@ -77,6 +77,10 @@ class BookMarkViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    deinit {
+        DEBUG_LOG("\(Self.self) Denit ❌ ")
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

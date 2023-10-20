@@ -32,7 +32,7 @@ extension BookMarkDetailViewController {
                     return UITableViewCell()
                 }
                 
-                cell.deleagte = self
+                //cell.deleagte = self
                 cell.selectionStyle = .none
                 cell.update(model: model.printShop, isLast: output.dataSource.value.count-1 == index)
                 
@@ -51,6 +51,26 @@ extension BookMarkDetailViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    
+    func bindShowToast(input: BookMarkDetailViewModel.Input, output: BookMarkDetailViewModel.Output) {
+        
+        output.showToast
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,result) in
+                
+                
+                if result.statusCode == 200 {
+                    owner.view.showToast(text: "성공적으로 제거햇습니다.")
+                    input.fetchDataSource.onNext(()) // 업데이트
+                }
+                
+                else {
+                    owner.view.showToast(text: result.message)
+                }
+                
+            })
+            .disposed(by: disposeBag)
+        
+    }
 }
-
-

@@ -29,7 +29,7 @@ extension BookMarkViewController {
                     return UITableViewCell()
                 }
                 
-                cell.deleagte = self
+               // cell.deleagte = self
                 cell.selectionStyle = .none
                 cell.update(model: model,isEditing: input.isEdit.value , isLast: output.dataSource.value.count-1 == index )
                 

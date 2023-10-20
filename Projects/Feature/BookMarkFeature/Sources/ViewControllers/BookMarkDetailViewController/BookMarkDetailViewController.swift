@@ -15,7 +15,9 @@ import RxDataSources
 import UtilityModule
 import BaseFeatureInterface
 
-//TODO: 인디케이터 , 삭제 , 업데이트 유즈 케이스 , 태그 오토레이아웃 설정 , 오른쪽 위 이름 편집
+//TODO: 인디케이터 , 삭제 , 태그 오토레이아웃 설정
+//오른쪽 위 이름 편집
+// 델리게이트에서 메모리 누수 발생
 
 class BookMarkDetailViewController: UIViewController {
 
@@ -23,6 +25,7 @@ class BookMarkDetailViewController: UIViewController {
     var baseFactory: any BaseFactory
     
     let disposeBag = DisposeBag()
+    let input = BookMarkDetailViewModel.Input()
     
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
@@ -54,10 +57,16 @@ class BookMarkDetailViewController: UIViewController {
 
     
     init(baseFactory: BaseFactory, viewModel: BookMarkDetailViewModel!) {
-
+        DEBUG_LOG("\(Self.self) Init ✅ ")
         self.baseFactory = baseFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        //NotificationCenter.default.post(name: .refreshBookMark, object: nil)
+        DEBUG_LOG("\(Self.self) Denit ❌ ")
+        
     }
     
     required init?(coder: NSCoder) {
@@ -135,14 +144,15 @@ extension BookMarkDetailViewController {
     }
     
     func bindViewModel() {
-        let input = BookMarkDetailViewModel.Input()
+       
         let output = self.viewModel.transform(input: input)
         
         bindViewDidLoad(input: input)
         bindBackButton()
         ///bind Output
-        bindDataSource(input:input, output: output)
+        bindDataSource(input: input, output: output)
         bindItemSelected(output: output)
+        bindShowToast(input: input, output: output)
     }
 
 
@@ -150,10 +160,13 @@ extension BookMarkDetailViewController {
 
 
 extension BookMarkDetailViewController: BookMarkDetailTableViewCellDelegate {
+    
     func tapBookMark(id: Int?) {
         guard let id = id as? Int else {
             return
         }
+        
+        input.removePrintShop.onNext(id)
     }
 
     
