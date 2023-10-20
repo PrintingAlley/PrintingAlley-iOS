@@ -97,12 +97,16 @@ extension BookMarkAPI: AlleyAPI {
                 return .requestPlain
             case .addBookMark(printShopId: let printShopId, bookmarkGroupId: let bookmarkGroupId):
                 return .requestJSONEncodable(AddBookMarkRequestDTO(printShopId: printShopId , bookmarkGroupId: bookmarkGroupId))
+                
             case .removeBookMark(id: let id):
                 return .requestParameters(parameters: ["id": String(id)], encoding: URLEncoding.queryString)
+                
             case .linkBookMark(bookMarkId: let bookMarkId, groupId: let groupId):
                 return .requestParameters(parameters: ["bookmarkId": String(bookMarkId) , "groupId" : String(groupId)], encoding: URLEncoding.queryString)
+                
             case .generateBookMark(name: let name):
                 return .requestJSONEncodable(GenerateBookMarkGroupRequestDTO(name: name))
+                
             case .removeBookMarkGroup(ids: let ids):
                 return .requestJSONEncodable(RemoveBookMarkGroupRequestDTO(groupIds: ids))
                 

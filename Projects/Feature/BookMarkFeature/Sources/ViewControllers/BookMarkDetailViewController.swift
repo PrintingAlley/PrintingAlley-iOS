@@ -14,7 +14,7 @@ import RxSwift
 import RxDataSources
 import UtilityModule
 
-class BookMarkViewController: UIViewController {
+class BookMarkDetailViewController: UIViewController {
 
     var viewModel: BookMarkDetailViewModel!
     let input = BookMarkDetailViewModel.Input()
@@ -71,20 +71,20 @@ class BookMarkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCommonUI()
-        preProcessing()
         addSubviews()
         makeConstraints()
         bindViewModel()
     }
     
-}
-
-extension BookMarkViewController {
-    
-    func preProcessing() {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        configureSwipeBack()
     }
     
+}
+
+extension BookMarkDetailViewController {
+
     func addSubviews() {
         self.view.addSubviews(naviTitleView,tableView)
         naviTitleView.addSubviews(backButton, naviTitleLabel,deleteButton, editOrDoneButton)
@@ -174,15 +174,12 @@ extension BookMarkViewController {
 }
 
 
-extension BookMarkViewController: BookMarkTableViewCellDelegate {
-    func tapChecked(index: Int?) {
-        
-        guard let index = index as? Int else {
+extension BookMarkDetailViewController: BookMarkDetailTableViewCellDelegate {
+    func tapBookMark(id: Int?) {
+        guard let id = id as? Int else {
             return
         }
-
-       
-        
     }
+
     
 }
