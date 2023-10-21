@@ -26,6 +26,7 @@ import RootFeature
 import SignInFeature
 import SignInFeatureInterface
 import UIKit
+import UserDomainInterface
 
 // swiftlint:disable unused_declaration
 private let needleDependenciesHash : String? = nil
