@@ -26,6 +26,7 @@ import RootFeature
 import SignInFeature
 import SignInFeatureInterface
 import UIKit
+import UserDomain
 import UserDomainInterface
 
 // swiftlint:disable unused_declaration
@@ -237,6 +238,19 @@ private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDepend
 private func factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return AuthDomainDependency4518b8977185a5c9ff71Provider(appComponent: parent1(component) as! AppComponent)
 }
+private class UserDomainDependencyf39d2a2922733361cbe1Provider: UserDomainDependency {
+    var jwtStoreFactory: any JwtStoreFactory {
+        return appComponent.jwtStoreFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->UserDomainComponent
+private func factory46488402f315d7f9530cf47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return UserDomainDependencyf39d2a2922733361cbe1Provider(appComponent: parent1(component) as! AppComponent)
+}
 
 #else
 extension JwtStoreComponent: Registration {
@@ -326,6 +340,11 @@ extension AuthDomainComponent: Registration {
         keyPathToName[\AuthDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
+extension UserDomainComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\UserDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+    }
+}
 
 
 #endif
@@ -358,6 +377,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->UserDomainComponent", factory46488402f315d7f9530cf47b58f8f304c97af4d5)
 }
 #endif
 
