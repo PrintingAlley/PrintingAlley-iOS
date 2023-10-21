@@ -19,7 +19,7 @@ import BaseFeatureInterface
 class BookMarkDetailViewController: UIViewController {
 
     var viewModel: BookMarkDetailViewModel!
-    var baseFactory: any BaseFactory
+    var editModalFactory: any EditModalFactory
     
     let disposeBag = DisposeBag()
     let input = BookMarkDetailViewModel.Input()
@@ -30,7 +30,7 @@ class BookMarkDetailViewController: UIViewController {
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
     }
-    
+    //TODO: 이미지 교체 
     lazy var editButton: UIButton = UIButton().then{
         $0.setImage(DesignSystemAsset.Icon.pencil.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFit
@@ -56,9 +56,9 @@ class BookMarkDetailViewController: UIViewController {
     
 
     
-    init(baseFactory: BaseFactory, viewModel: BookMarkDetailViewModel!) {
+    init(editModalFactory: EditModalFactory, viewModel: BookMarkDetailViewModel!) {
         DEBUG_LOG("\(Self.self) Init ✅ ")
-        self.baseFactory = baseFactory
+        self.editModalFactory = editModalFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

@@ -11,7 +11,11 @@ import BaseFeatureInterface
 import BaseFeature
 
 extension AppComponent {
-    var baseFactory: any BaseFactory {
-        BaseComponent(parent: self)
+    var editModalFactory: any EditModalFactory {
+        EditModalComponent(parent: self)
+    }
+    
+    var bookMarkBottomSheetFactory: any BookMarkBottomSheetFactory {
+        BookMarkBottomSheetComponent(parent: self)
     }
 }

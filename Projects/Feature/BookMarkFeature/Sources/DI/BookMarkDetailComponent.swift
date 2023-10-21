@@ -16,14 +16,14 @@ import BaseFeatureInterface
 public protocol BookMarkDetailDependency: Dependency {
     
     var bookMarkDomainFactory: any BookMarkDomainFactory { get }
-    var baseFactory: any BaseFactory { get }
+    var editModalFactory: any EditModalFactory { get }
 }
 
 public final class BookMarkDetailComponent: Component<BookMarkDetailDependency>, BookMarkDetailFactory {
 
     
     public func makeView(id: Int) -> UIViewController {
-        BookMarkDetailViewController(baseFactory:dependency.baseFactory,
+        BookMarkDetailViewController(editModalFactory:dependency.editModalFactory,
                                      viewModel: BookMarkDetailViewModel(id: id,fetchBookMarkDetailUseCase: dependency.bookMarkDomainFactory.fetchBookMarkDetailUseCase, removeBookMarkUseCase: dependency.bookMarkDomainFactory.removeBookMarkUseCase))
     }
 }

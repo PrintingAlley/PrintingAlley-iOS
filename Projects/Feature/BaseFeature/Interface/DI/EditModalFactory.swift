@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public protocol BaseFactory {
-    func makeBookMarkBottomSheet() -> UIViewController
-    func makeEditModal(id:Int, title: String, type: EditType) -> UIViewController
+public protocol EditModalFactory {
+   
+    func makeView(id:Int, title: String, type: EditType) -> UIViewController
 }

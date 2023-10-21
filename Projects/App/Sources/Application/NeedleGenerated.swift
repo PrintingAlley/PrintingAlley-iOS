@@ -169,8 +169,8 @@ private class BookMarkDetailDependency82d727e486e840545c2dProvider: BookMarkDeta
     var bookMarkDomainFactory: any BookMarkDomainFactory {
         return appComponent.bookMarkDomainFactory
     }
-    var baseFactory: any BaseFactory {
-        return appComponent.baseFactory
+    var editModalFactory: any EditModalFactory {
+        return appComponent.editModalFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -181,7 +181,23 @@ private class BookMarkDetailDependency82d727e486e840545c2dProvider: BookMarkDeta
 private func factoryc8e52bb402c24cd9a5e2f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BookMarkDetailDependency82d727e486e840545c2dProvider(appComponent: parent1(component) as! AppComponent)
 }
-private class BaseDependency859c0dc7c01380fd4dcdProvider: BaseDependency {
+private class BookMarkBottomSheetDependency573e6d5ba0463bb7b63bProvider: BookMarkBottomSheetDependency {
+    var bookMarkDomainFactory: any BookMarkDomainFactory {
+        return appComponent.bookMarkDomainFactory
+    }
+    var editModalFactory: any EditModalFactory {
+        return appComponent.editModalFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->BookMarkBottomSheetComponent
+private func factory04ad8419cbe014f877eaf47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return BookMarkBottomSheetDependency573e6d5ba0463bb7b63bProvider(appComponent: parent1(component) as! AppComponent)
+}
+private class EditModalDependencye914ce2425a804be0d58Provider: EditModalDependency {
     var bookMarkDomainFactory: any BookMarkDomainFactory {
         return appComponent.bookMarkDomainFactory
     }
@@ -190,9 +206,9 @@ private class BaseDependency859c0dc7c01380fd4dcdProvider: BaseDependency {
         self.appComponent = appComponent
     }
 }
-/// ^->AppComponent->BaseComponent
-private func factory8d6553a65a3e0710b1b5f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return BaseDependency859c0dc7c01380fd4dcdProvider(appComponent: parent1(component) as! AppComponent)
+/// ^->AppComponent->EditModalComponent
+private func factory05e011369db72b170e1ef47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return EditModalDependencye914ce2425a804be0d58Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
@@ -285,12 +301,18 @@ extension BookMarkComponent: Registration {
 extension BookMarkDetailComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDetailDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
-        keyPathToName[\BookMarkDetailDependency.baseFactory] = "baseFactory-any BaseFactory"
+        keyPathToName[\BookMarkDetailDependency.editModalFactory] = "editModalFactory-any EditModalFactory"
     }
 }
-extension BaseComponent: Registration {
+extension BookMarkBottomSheetComponent: Registration {
     public func registerItems() {
-        keyPathToName[\BaseDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
+        keyPathToName[\BookMarkBottomSheetDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
+        keyPathToName[\BookMarkBottomSheetDependency.editModalFactory] = "editModalFactory-any EditModalFactory"
+    }
+}
+extension EditModalComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\EditModalDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
     }
 }
 extension BookMarkDomainComponent: Registration {
@@ -331,7 +353,8 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->NearByMeComponent", factory53f303ca6b0d301565d8e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BookMarkComponent", factory28d0c1b9536190951087f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDetailComponent", factoryc8e52bb402c24cd9a5e2f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->BaseComponent", factory8d6553a65a3e0710b1b5f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
 }

@@ -39,7 +39,7 @@ extension BookMarkDetailViewController {
             .withUnretained(self)
             .subscribe(onNext: { (owner,_) in
                 
-                let vc = owner.baseFactory.makeEditModal(id:owner.viewModel.bookMarkGroupId, title: "저장목록 이름 수정", type: .reNameBookMark)
+                let vc = owner.editModalFactory.makeView(id:owner.viewModel.bookMarkGroupId, title: "저장목록 이름 수정", type: .reNameBookMark)
                 
                 vc.modalPresentationStyle = .overFullScreen
                 

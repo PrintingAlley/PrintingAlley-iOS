@@ -13,10 +13,12 @@ import DesignSystem
 import RxDataSources
 import RxSwift
 import UtilityModule
+import BaseFeatureInterface
 
 public class BookMarkBottomSheetViewController: UIViewController {
     
     var viewModel: BookMarkBottomSheetViewModel!
+    var editModalFactory: any EditModalFactory
     
     let disposeBag = DisposeBag()
     
@@ -47,11 +49,11 @@ public class BookMarkBottomSheetViewController: UIViewController {
     
     
     
-    init(viewModel: BookMarkBottomSheetViewModel!) {
-        super.init(nibName: nil, bundle: nil)
+    init(editModalFactory: EditModalFactory, viewModel: BookMarkBottomSheetViewModel!) {        
 
-        
+        self.editModalFactory = editModalFactory
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
         
     }
     
