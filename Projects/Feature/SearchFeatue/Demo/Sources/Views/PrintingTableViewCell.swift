@@ -12,16 +12,26 @@ import Then
 import DesignSystem
 
 final class PrintingTableViewCell: UITableViewCell {
+    static let identifier = "PrintingTableViewCell"
+    
     private let image = UIImageView().then {
+        $0.image = DesignSystemAsset.Icon.bookMark.image
+        $0.contentMode = .scaleAspectFit
+        $0.backgroundColor = .lightGray
         $0.setRound([.allCorners], radius: 9)
     }
     
-    private let name = UILabel().then {
-        $0.text = "정다운인쇄소"
-        $0.font = UIFont.setFont(.subtitle1)
-    }
+    private let name = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .subtitle1)
     
-    static let identifier = "PrintingTableViewCell"
+    private let printingTag = AlleyLabel("인쇄 / 후가공", textColor: .mainBlue(.blue500), font: .subtitle3)
+    
+    private let descriptioin = AlleyLabel("엽서, 카드 #상담가능", textColor: .sub(.black), font: .body2)
+    
+    private let address = AlleyLabel("서울 중구 퇴계로39길 11", textColor: .grey(.grey300), font: .body2)
+    
+    private let separator = UIView().then {
+        $0.backgroundColor = .setColor(.grey(.grey100))
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -36,12 +46,45 @@ final class PrintingTableViewCell: UITableViewCell {
 
 extension PrintingTableViewCell {
     private func addSubview() {
-        contentView.addSubviews(image)
+        contentView.addSubviews(separator, image, name, printingTag, descriptioin, address)
     }
     
     private func makeConstraints() {
-//        image.snp.makeConstraints {
-//
-//        }
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        separator.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+        image.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(24)
+            $0.bottom.equalToSuperview().inset(16)
+            $0.width.height.equalTo(74)
+        }
+
+        name.snp.makeConstraints {
+            $0.top.equalTo(image)
+            $0.leading.equalTo(image.snp.trailing).offset(16)
+        }
+        
+        printingTag.snp.makeConstraints {
+            $0.leading.equalTo(name.snp.trailing).offset(6)
+            $0.centerY.equalTo(name)
+        }
+        
+        descriptioin.snp.makeConstraints {
+            $0.leading.equalTo(name)
+            $0.top.equalTo(name.snp.bottom).offset(2)
+        }
+        
+        address.snp.makeConstraints {
+            $0.leading.equalTo(name)
+            $0.top.equalTo(descriptioin.snp.bottom).offset(2)
+        }
     }
 }

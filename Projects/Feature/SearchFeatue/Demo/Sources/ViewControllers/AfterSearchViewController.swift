@@ -10,15 +10,24 @@ import UIKit
 import DesignSystem
 
 final class AfterSearchViewController: UIViewController {
+    var testRecommend: [RecommendModel] = [
+        RecommendModel(title: "소량인쇄"),
+        RecommendModel(title: "인쇄상담"),
+        RecommendModel(title: "당일인쇄"),
+        RecommendModel(title: "24시수령"),
+        RecommendModel(title: "대형인쇄")
+    ]
+    
     private lazy var filterCollectionview = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .horizontal).then {
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
     
-    private let printingTableView = UITableView().then {
+    private lazy var printingTableView = UITableView().then {
         $0.backgroundColor = .clear
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.separatorStyle = .singleLine
-        $0.separatorColor = .black.withAlphaComponent(0.1)
+        $0.separatorStyle = .none
+//        $0.separatorColor = .setColor(.grey(.grey100))
+//        $0.separatorInset = UIEdgeInsets.zero
         $0.delegate = self
         $0.dataSource = self
         $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
@@ -47,52 +56,65 @@ extension AfterSearchViewController {
 
 extension AfterSearchViewController {
     private func addSubview() {
-        view.addSubviews(filterCollectionview)
+        view.addSubviews(filterCollectionview, printingTableView)
     }
     
     private func makeConstraints() {
         filterCollectionview.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().inset(100)
             $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(50) // 컬렉션뷰 height, 위치 수정 필요
+            $0.height.equalTo(32) // 컬렉션뷰 height, 위치 수정 필요
+        }
+        printingTableView.snp.makeConstraints {
+            $0.top.equalTo(filterCollectionview.snp.bottom).offset(8)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
 
 extension AfterSearchViewController: UICollectionViewDelegateFlowLayout {
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // 셀 크기
+        let tempLabel = AlleyLabel(testRecommend[indexPath.row].title, font: .body1).then {
+            $0.sizeToFit()
+        }
+        return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        4
+    }
 }
 
 extension AfterSearchViewController: UICollectionViewDataSource {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        3
-    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath)
                 as? FilterButtonCollectionViewCell else { return UICollectionViewCell() }
-//        cell.dummyDataBind(model: testRecommend[indexPath.row], type: .basic)
+        cell.dummyDataBind(model: testRecommend[indexPath.row], type: .basic)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // 아이템 개수
+        return testRecommend.count
     }
 }
 
 extension AfterSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
+        106
     }
 }
 
 extension AfterSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: PrintingTableViewCell.identifier, for: indexPath)
                 as? PrintingTableViewCell else { return UITableViewCell() }
-        
 //        cell.dataBind(model: musicList[indexPath.row])
         return cell
     }
