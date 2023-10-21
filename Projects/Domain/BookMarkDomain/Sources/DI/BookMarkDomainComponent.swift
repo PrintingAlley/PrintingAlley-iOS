@@ -16,6 +16,12 @@ public protocol BookMarkDomainDependency: Dependency {
 }
 
 public final class BookMarkDomainComponent: Component<BookMarkDomainDependency>, BookMarkDomainFactory {
+    
+    
+    public var fetchBookMarkDetailUseCase: any FetchBookMarkDetailUseCase {
+        FetchMyBookMarksDetailUseCaseImpl(bookMarkRepository: bookMarkRepository)
+    }
+    
     public var fetchMyBookMarksUseCase:  any FetchMyBookMarksUseCase {
         FetchMyBookMarksUseCaseImpl(bookMarkRepository: bookMarkRepository)
     }
@@ -40,10 +46,16 @@ public final class BookMarkDomainComponent: Component<BookMarkDomainDependency>,
         RemoveBookMarkGroupUseCaseImpl(bookMarkRepository: bookMarkRepository)
     }
     
+    public var renameBookMarkGroupUseCase: any RenameBookMarkGroupUseCase {
+        RenameBookMarkGroupUseCaseImpl(bookMarkRepository: bookMarkRepository)
+    }
     
     var remoteBookMarkDataSource: any RemoteBookMarkDataSource {
         RemoteBookMarkDataSourceImpl(jwtStore: dependency.jwtStoreFactory.jwtStore)
     }
+    
+
+
     
     
     public var bookMarkRepository: any BookMarkRepository {
@@ -52,7 +64,7 @@ public final class BookMarkDomainComponent: Component<BookMarkDomainDependency>,
         )
     }
     
-
+   
     
 }
 

@@ -17,6 +17,26 @@ extension BookMarkViewController {
         input.fetchDataSource.onNext(())
     }
     
+    /// refreshEvent
+    func bindRefreshControl(input: BookMarkViewModel.Input) {
+        refreshControl.rx
+            .controlEvent(.valueChanged)
+            .bind(to: input.fetchDataSource)
+            .disposed(by: disposeBag)
+    }
+    
+    /// 뒤로가기 버튼
+    func bindBackButton() {
+        backButton.rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                
+                self?.navigationController?.popViewController(animated: true)
+                
+            })
+            .disposed(by: disposeBag)
+    }
+    
     // 편집 및 완료 버튼
     func bindStateInputWithButton(input: BookMarkViewModel.Input) {
         
@@ -48,15 +68,7 @@ extension BookMarkViewController {
         
     }
     
-    // 리프래시 바인딩
-    func bindRefresh(input: BookMarkViewModel.Input) {
-        
-        NotificationCenter.default.rx.notification(.refreshBookMark)
-            .map{_ in ()}
-            .bind(to: input.fetchDataSource)
-            .disposed(by: disposeBag)
-    }
-    
+ 
     /// 삭제버튼 이벤트 바인딩
     func bindTapDelete(input: BookMarkViewModel.Input) {
         deleteButton.rx
@@ -73,4 +85,6 @@ extension BookMarkViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+
 }

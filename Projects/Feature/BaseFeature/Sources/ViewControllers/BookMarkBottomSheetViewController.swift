@@ -13,10 +13,12 @@ import DesignSystem
 import RxDataSources
 import RxSwift
 import UtilityModule
+import BaseFeatureInterface
 
 public class BookMarkBottomSheetViewController: UIViewController {
     
     var viewModel: BookMarkBottomSheetViewModel!
+    var editModalFactory: any EditModalFactory
     
     let disposeBag = DisposeBag()
     
@@ -47,11 +49,11 @@ public class BookMarkBottomSheetViewController: UIViewController {
     
     
     
-    init(viewModel: BookMarkBottomSheetViewModel!) {
-        super.init(nibName: nil, bundle: nil)
+    init(editModalFactory: EditModalFactory, viewModel: BookMarkBottomSheetViewModel!) {        
 
-        
+        self.editModalFactory = editModalFactory
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
         
     }
     
@@ -163,8 +165,8 @@ extension BookMarkBottomSheetViewController {
 
 extension BookMarkBottomSheetViewController: ListHeaderViewDelegate {
     public func generateNewList() {
-        print("Hello")
+        //TODO: 나중에 ..
+        // let vc = editModalFactory.makeView(id: -1, title: <#T##String#>, type: .newBookMark)
     }
-    
     
 }

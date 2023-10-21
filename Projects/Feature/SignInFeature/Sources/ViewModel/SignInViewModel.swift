@@ -93,7 +93,6 @@ final class SignInViewModel: NSObject, ViewModelType {
                     }
                     .asObservable()
             }
-            .debug("WHAT")
             .subscribe(onNext: { _ in
                 PreferenceManager.shared.setUserInfo(id: "TMP", name: "아라라", platform: .apple)
             })

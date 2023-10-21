@@ -24,7 +24,6 @@ public class EditModalViewController: UIViewController {
     var titleString: String = ""
     
     let disposeBag = DisposeBag()
-    let appHeight =  UIScreen.main.bounds.size.height
     
     lazy var contentView: UIView = UIView().then {
         $0.backgroundColor = .white
@@ -43,7 +42,7 @@ public class EditModalViewController: UIViewController {
     lazy var textField: UITextField = UITextField().then {
         $0.font = .setFont(.body1)
         $0.autocorrectionType = .no // 자동완성 끄기
-        $0.setPlaceHolder(text: "이름을 입력하세요.", textColor: .setColor(.grey(.grey300)), font: .body1)
+        $0.delegate = self
     }
     
     lazy var limitLabel: AlleyLabel = AlleyLabel()
@@ -99,8 +98,8 @@ public class EditModalViewController: UIViewController {
         super.viewDidLoad()
        
         addSubViews()
-        preProcessing()
         makeConstraints()
+        preProcessing()
         bindViewModel()
 
     }
@@ -112,6 +111,7 @@ extension EditModalViewController {
     func isWhite(_ str: String) -> Bool {
         str.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
     }
+    
     
     func bindViewModel() {
         let input = EditModalViewModel.Input()
@@ -149,32 +149,20 @@ extension EditModalViewController {
     
     func bindTextField(input: EditModalViewModel.Input) {
         
+        // TextField 델리게이트로 .. 
         textField
             .rx
             .text
             .orEmpty
-            .observe(on: MainScheduler.asyncInstance)
-            .map({ str -> String in
-                
-                var str: String = str
-                if str.count > 14 { // 길이 제한
-                    let index = str.index(str.startIndex, offsetBy: 14)
-                    str = String(str[..<index])
-                }
-                
-                return str
-                
-            })
             .do(onNext: { [weak self] str in
                 
                 guard let self else {return}
                 
                 self.confirmButton.isEnabled  = !((str.first?.isWhitespace ?? true)) // 앞에 시작이 공백일 때
-                input.text.accept(str)
                 self.limitLabel.setTitle(title: "\(str.count)/14자", textColor: .grey(.grey400), font: .caption1)
                
             })
-            .bind(to:textField.rx.text)
+            .bind(to:input.text)
             .disposed(by: disposeBag)
         
     }
@@ -195,7 +183,7 @@ extension EditModalViewController {
             
             self.contentView.snp.updateConstraints {
                 $0.left.right.equalToSuperview().inset(14)
-                $0.bottom.equalToSuperview().inset( tmp <= .zero ?  self.appHeight/3 : tmp + 50)
+                $0.bottom.equalToSuperview().inset( tmp <= .zero ?  APP_HEIGHT()/3 : tmp + 50)
             }
             
             UIView.animate(withDuration: 1.0) {
@@ -231,9 +219,13 @@ extension EditModalViewController {
                     switch viewModel.type {
                     
                     case .newBookMark:
-                        NotificationCenter.default.post(name: .refreshBookMark, object: nil) // 리프래쉬
+                        NotificationCenter.default.post(name: .refreshBookMarkGroup, object: nil) // 리프래쉬 그룹
                         self.dismiss(animated: false)
                     
+                    case .reNameBookMark:
+                        NotificationCenter.default.post(name: .refreshBookMark, object: nil) // 리프래쉬 북마크
+                        self.dismiss(animated: false)
+                        
                     default:
                         
                         self.dismiss(animated: false)
@@ -254,7 +246,7 @@ extension EditModalViewController {
     }
     
     func preProcessing() {
-        
+        textField.setPlaceHolder(text: viewModel.type.placeHolder, textColor: .setColor(.grey(.grey300)), font: .body1)
         self.view.backgroundColor = .black.withAlphaComponent(0.4)
         titleLabel.setTitle(title: self.titleString, textColor: .sub(.black), font: .header3, alignment: .center)
     }
@@ -263,7 +255,7 @@ extension EditModalViewController {
         
         contentView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(14)
-            $0.bottom.equalToSuperview().inset(appHeight/4)
+            $0.bottom.equalToSuperview().inset(APP_HEIGHT()/4)
         }
         
         
@@ -306,4 +298,21 @@ extension EditModalViewController {
     }
     
 
+}
+
+
+extension EditModalViewController : UITextFieldDelegate {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        // 백스페이스 처리
+           if let char = string.cString(using: String.Encoding.utf8) {
+                  let isBackSpace = strcmp(char, "\\b") //  백스페이스는 UInt32값으로  -92
+                  if isBackSpace == -92 {
+                      return true
+                  }
+            }
+        
+        guard textField.text!.count < 14 else { return false } // 15 글자로 제한
+             return true
+    }
 }

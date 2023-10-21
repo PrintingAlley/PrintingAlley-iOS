@@ -17,11 +17,20 @@ extension BookMarkViewController {
     func bindDataSource(input: BookMarkViewModel.Input, output: BookMarkViewModel.Output) {
         
         output.dataSource
-            .do(onNext: { [weak self] _ in
+            .skip(1)
+            .do(onNext: { [weak self] dataSource in
                 guard let self else {return}
                 self.indicator.stopAnimating()
+                
+                if self.refreshControl.isRefreshing {
+                    self.refreshControl.endRefreshing()
+                }
+                
+                self.tableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
             })
-            .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell in
+            .bind(to: tableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
+                
+                guard let self else { return UITableViewCell() }
                 
                 let indexPath: IndexPath = IndexPath(row: index, section: 0)
                 
@@ -47,17 +56,7 @@ extension BookMarkViewController {
         
     }
     
-    /// 뒤로가기 버튼
-    func bindBackButton() {
-        backButton.rx
-            .tap
-            .subscribe(onNext: { [weak self] _ in
-                
-                self?.navigationController?.popViewController(animated: true)
-                
-            })
-            .disposed(by: disposeBag)
-    }
+    
     
     /// 아이템 선택 이벤트 바인딩
     func bindIndexOfSelectedItem(output: BookMarkViewModel.Output) {
@@ -118,6 +117,25 @@ extension BookMarkViewController {
             .disposed(by: disposeBag)
     }
     
+    /// 셀 선택
+    func bindItemSelected(output: BookMarkViewModel.Output) {
+        tableView.rx.itemSelected
+            .withLatestFrom(output.dataSource){($0, $1)}
+            .subscribe(onNext: { [weak self] (indexPath, dataSource) in
+                
+                guard let self else {return}
+                
+                let model = dataSource[indexPath.row]
+                
+                let vc = self.bookMarkDetailFactory.makeView(id: model.id)
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+                
+            
+            })
+            .disposed(by: disposeBag)
+    }
     
     
 }

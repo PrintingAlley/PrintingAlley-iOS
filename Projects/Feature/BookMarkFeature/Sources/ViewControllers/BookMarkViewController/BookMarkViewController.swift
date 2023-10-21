@@ -14,11 +14,16 @@ import RxSwift
 import RxDataSources
 import UtilityModule
 import BaseFeatureInterface
+import BookMarkFeatureInterface
 
 class BookMarkViewController: UIViewController {
 
     var viewModel: BookMarkViewModel!
-
+    var bookMarkDetailFactory: any BookMarkDetailFactory
+    
+    var refreshControl = UIRefreshControl().then {
+        $0.tintColor = DesignSystemAsset.MainBlue.blue500.color
+    }
     let input = BookMarkViewModel.Input()
     
     let disposeBag = DisposeBag()
@@ -61,16 +66,24 @@ class BookMarkViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel("저장목록", textColor: .sub(.black), font: .header3, alignment: .center)
     
+    lazy var emptyHeaderView: EmptyTableHeaderView = EmptyTableHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80), text: "아직 저장목록이 없어요.")
+    
     lazy var tableView :UITableView = UITableView().then {
         $0.register(BookMarkTableViewCell.self, forCellReuseIdentifier: BookMarkTableViewCell.identifier)
         $0.separatorStyle = .none
+        $0.refreshControl = refreshControl
     }
     
 
     
-    init(viewModel: BookMarkViewModel!) {
+    init(bookMarkDetailFactory: BookMarkDetailFactory ,viewModel: BookMarkViewModel!) {
         self.viewModel = viewModel
+        self.bookMarkDetailFactory = bookMarkDetailFactory
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        DEBUG_LOG("\(Self.self) Denit ❌ ")
     }
     
     required init?(coder: NSCoder) {
@@ -152,6 +165,8 @@ extension BookMarkViewController {
         bindViewDidLoad(input: input)
         bindRefresh(input: input)
         bindTapDelete(input: input)
+        bindRefreshControl(input: input)
+        
         
         ///bind Output
         bindDataSource(input:input, output:output)
@@ -159,6 +174,7 @@ extension BookMarkViewController {
         bindBackButton()
         bindResult(input: input, output: output)
         bindIndicator(output: output)
+        bindItemSelected(output: output)
     }
     
   

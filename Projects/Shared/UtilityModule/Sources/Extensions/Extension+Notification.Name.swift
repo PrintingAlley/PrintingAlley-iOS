@@ -10,6 +10,6 @@ import Foundation
 
 public extension Notification.Name {
 
+    static let refreshBookMarkGroup = Notification.Name("refreshBookMarkGroup")
     static let refreshBookMark = Notification.Name("refreshBookMark")
-    
 }

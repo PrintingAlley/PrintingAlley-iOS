@@ -24,6 +24,10 @@ final class BookMarkViewModel: ViewModelType {
         self.removeBookMarkGroupUseCase = removeBookMarkGroupUseCase
     }
     
+    deinit {
+        DEBUG_LOG("\(Self.self) Denit ❌ ")
+    }
+    
     struct Input {
         let fetchDataSource: PublishSubject<Void> = .init()
         let isEdit: BehaviorRelay<Bool> = .init(value: false)
@@ -102,12 +106,22 @@ extension BookMarkViewModel {
     }
     
     func bindFetchDataSource(input: Input, output: Output) {
+        
         input.fetchDataSource
             .flatMap{ [weak self] _ -> Observable<[MyBookMarkEntity]> in
             
                 guard let self else {return Observable.empty()}
                 
                 return self.fetchMyBookMarksUseCase.execute()
+                    .catch({ error in
+                        let alleryError = error.asAlleyError
+                            return Single<[MyBookMarkEntity]>.create { single in
+                                single(.success([]))
+                                return Disposables.create()
+                            }
+
+                        
+                    })
                     .asObservable()
                 
             }

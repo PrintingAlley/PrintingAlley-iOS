@@ -16,7 +16,7 @@ class BookMarkListTableViewCell: UITableViewCell {
     static let identifier: String = "BookMarkListTableViewCell"
     
     lazy var frontImageView: UIImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
         $0.image = DesignSystemAsset.Icon.blackBookMark.image
     }
     
@@ -24,7 +24,7 @@ class BookMarkListTableViewCell: UITableViewCell {
     lazy var subtitleLabel: AlleyLabel = AlleyLabel()
     
     lazy var rightArrowImageView: UIImageView = UIImageView().then{
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
         $0.image = DesignSystemAsset.Icon.rightArrow.image
     }
     

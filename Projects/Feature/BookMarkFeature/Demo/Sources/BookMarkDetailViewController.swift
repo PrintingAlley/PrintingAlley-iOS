@@ -14,10 +14,10 @@ import RxSwift
 import RxDataSources
 import UtilityModule
 
-class BookMarkViewController: UIViewController {
+class BookMarkDetailViewController: UIViewController {
 
-    var viewModel: BookMarkViewModel!
-    let input = BookMarkViewModel.Input()
+    var viewModel: BookMarkDetailViewModel!
+    let input = BookMarkDetailViewModel.Input()
     
     let disposeBag = DisposeBag()
     
@@ -53,13 +53,13 @@ class BookMarkViewController: UIViewController {
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel("저장목록", textColor: .sub(.black), font: .header3, alignment: .center)
     
     lazy var tableView :UITableView = UITableView().then {
-        $0.register(BookMarkTableViewCell.self, forCellReuseIdentifier: BookMarkTableViewCell.identifier)
+        $0.register(BookMarkDetailTableViewCell.self, forCellReuseIdentifier: BookMarkDetailTableViewCell.identifier)
         $0.separatorStyle = .none
     }
     
 
     
-    init(viewModel: BookMarkViewModel!) {
+    init(viewModel: BookMarkDetailViewModel!) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
@@ -70,7 +70,7 @@ class BookMarkViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCommonUI
+        configureCommonUI()
         preProcessing()
         addSubviews()
         makeConstraints()
@@ -79,7 +79,7 @@ class BookMarkViewController: UIViewController {
     
 }
 
-extension BookMarkViewController {
+extension BookMarkDetailViewController {
     
     func preProcessing() {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -133,103 +133,46 @@ extension BookMarkViewController {
        
         let output = self.viewModel.transform(input: input)
         
-        ///bind Input
-        bindEditState(input: input)
-        bindStateInputWithButton(input: input)
-        
         ///bind Output
         bindDataSource(input:input, output:output)
-        bindIndexOfSelectedItem(output: output)
     }
     
-    func bindStateInputWithButton(input: BookMarkViewModel.Input) {
-        
-        editOrDoneButton.rx
-            .tap
-            .bind(to: input.tapStateButton)
-            .disposed(by: disposeBag)
-        
-    }
+
     
-    func bindEditState(input: BookMarkViewModel.Input) {
-        
-        input.isEdit
-            .asDriver()
-            .drive(onNext: { [weak self] isEdit  in
-            
-            guard let self else {return}
-            
-            self.backButton.isHidden = isEdit
-            self.deleteButton.isHidden = !isEdit
-            
-            self.editOrDoneButton.setTitle(isEdit ? "완료" : "편집", for: .normal)
-            self.editOrDoneButton.titleLabel?.font = .setFont(.body1)
-            self.editOrDoneButton.setTitleColor(isEdit ? DesignSystemAsset.MainBlue.blue500.color : .black, for: .normal)
-            
-            
-        })
-        .disposed(by: disposeBag)
-        
-    }
+
     
-    func bindDataSource(input: BookMarkViewModel.Input, output: BookMarkViewModel.Output) {
+    func bindDataSource(input: BookMarkDetailViewModel.Input, output: BookMarkDetailViewModel.Output) {
         
         output.dataSource
             .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell in
                 
                 let indexPath: IndexPath = IndexPath(row: index, section: 0)
                 
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: BookMarkTableViewCell.identifier, for: indexPath) as? BookMarkTableViewCell  else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: BookMarkDetailTableViewCell.identifier, for: indexPath) as? BookMarkDetailTableViewCell  else {
                     return UITableViewCell()
                 }
                 
                 cell.deleagte = self
                 cell.selectionStyle = .none
-                cell.update(model: model,index: index, isEditing: input.isEdit.value , isLast: output.dataSource.value.count-1 == index )
+                cell.update(model: model, isLast: output.dataSource.value.count-1 == index)
                 
                 return cell
             }
         
             .disposed(by: disposeBag)
         
-        tableView.rx.itemSelected
-            .subscribe(onNext: {
-                
-                print($0)
-            })
-            .disposed(by: disposeBag)
-        
     }
     
-    func bindIndexOfSelectedItem(output: BookMarkViewModel.Output) {
-        
-        output.indexOfSelectedItem
-            .asDriver()
-            .drive(onNext:{ [weak self] selectedIndex in
-                
-                guard let self else {return}
-                
-                self.deleteButton.isEnabled = !selectedIndex.isEmpty
-                
-                // 선택된게 비어있으면 삭제는 비활성 화
-                
-            })
-            .disposed(by: disposeBag)
-        
-    }
+
 }
 
 
-extension BookMarkViewController: BookMarkTableViewCellDelegate {
-    func tapChecked(index: Int?) {
-        
-        guard let index = index as? Int else {
+extension BookMarkDetailViewController: BookMarkDetailTableViewCellDelegate {
+    func tapBookMark(id: Int?) {
+        guard let id = id as? Int else {
             return
         }
-        
-        input.tapItem.onNext(index)
-       
-        
     }
+
     
 }

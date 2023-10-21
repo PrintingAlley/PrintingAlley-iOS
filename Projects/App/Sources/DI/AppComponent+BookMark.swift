@@ -14,4 +14,8 @@ extension AppComponent {
     var bookMarkFactory: any BookMarkFactory {
         BookMarkComponent(parent: self)
     }
+    
+    var bookMarkDetailFactory: any BookMarkDetailFactory {
+        BookMarkDetailComponent(parent: self)
+    }
 }

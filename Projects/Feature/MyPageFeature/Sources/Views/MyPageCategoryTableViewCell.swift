@@ -18,7 +18,7 @@ class MyPageCategoryTableViewCell: UITableViewCell {
     lazy var label: AlleyLabel = AlleyLabel()
     
     lazy var arrowImageView: UIImageView = UIImageView().then {
-        $0.contentMode = .scaleToFill
+        $0.contentMode = .scaleAspectFit
 
         $0.image = DesignSystemAsset.Icon.rightArrow.image
     }
