@@ -31,8 +31,9 @@ let targets: [Target] = [
         dependencies: [
             .feature(target: .RootFeature),
             .core(target: .JwtStore),
-            .domain(target: .AuthDomain), // TODO: 임시 디펜던시
-            .domain(target: .BookMarkDomain)
+            .domain(target: .AuthDomain),
+            .domain(target: .BookMarkDomain),
+            .domain(target: .UserDomain)
         ],
         settings: .settings(base: env.baseSetting)
     )
