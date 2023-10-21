@@ -17,6 +17,7 @@ extension BookMarkViewController {
     func bindDataSource(input: BookMarkViewModel.Input, output: BookMarkViewModel.Output) {
         
         output.dataSource
+            .skip(1)
             .do(onNext: { [weak self] dataSource in
                 guard let self else {return}
                 self.indicator.stopAnimating()
