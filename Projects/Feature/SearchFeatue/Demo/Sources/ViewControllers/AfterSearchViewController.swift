@@ -19,15 +19,14 @@ final class AfterSearchViewController: UIViewController {
     ]
     
     private lazy var filterCollectionview = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .horizontal).then {
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
     
     private lazy var printingTableView = UITableView().then {
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.separatorStyle = .none
-//        $0.separatorColor = .setColor(.grey(.grey100))
-//        $0.separatorInset = UIEdgeInsets.zero
         $0.delegate = self
         $0.dataSource = self
         $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
