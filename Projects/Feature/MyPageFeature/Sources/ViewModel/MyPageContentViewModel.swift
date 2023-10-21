@@ -8,6 +8,7 @@
 
 import Foundation
 import UtilityModule
+import UserDomainInterface
 
 public enum MyPageCategory: String {
     case pushAlarmSetting = "앱 푸시 알림 설정"
@@ -20,7 +21,15 @@ final class MyPageContentViewModel : ViewModelType {
  
     let categories:[MyPageCategory] = [.pushAlarmSetting, .faq, .request, .service]
     
-    struct Input{
+    var fetchUserInfoUseCase: any FetchUserInfoUseCase
+    var renameUserUseCase: any RenameUserUseCase
+    
+    init(fetchUserInfoUseCase: FetchUserInfoUseCase, renameUserUseCase: RenameUserUseCase) {
+        self.fetchUserInfoUseCase = fetchUserInfoUseCase
+        self.renameUserUseCase = renameUserUseCase
+    }
+    
+    struct Input {
         
     }
     

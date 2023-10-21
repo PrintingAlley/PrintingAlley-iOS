@@ -11,13 +11,15 @@ import NeedleFoundation
 import MyPageFeatureInterface
 import UIKit
 import BookMarkFeatureInterface
+import UserDomainInterface
 
 public protocol MyPageContentDependency: Dependency {
     var bookMarkFactory: any BookMarkFactory { get }
+    var userDomainFactory: any UserDomainFactory { get }
 }
 
 public final class MyPageContentComponent: Component<MyPageContentDependency>, MyPageContentFactory {
     public func makeView() -> UIViewController {
-        MyPageContentViewController(bookMarkFactory: dependency.bookMarkFactory,viewModel: MyPageContentViewModel())
+        MyPageContentViewController(bookMarkFactory: dependency.bookMarkFactory,viewModel: MyPageContentViewModel(fetchUserInfoUseCase: dependency.userDomainFactory.fetchUserInfoUseCase, renameUserUseCase: dependency.userDomainFactory.renameUserUseCase))
     }
 }
