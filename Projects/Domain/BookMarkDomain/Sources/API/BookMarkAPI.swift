@@ -45,8 +45,8 @@ extension BookMarkAPI: AlleyAPI {
         case .removeBookMark(id: let id):
             return "/\(id)"
             
-        case .linkBookMark(bookMarkId: let bookMarkId, groupId: let groupId):
-            return "/group/\(bookMarkId)/\(groupId)"
+        case .linkBookMark(bookMarkId: let bookMarkId, groupId: _):
+            return "/group/\(bookMarkId)"
             
         case .generateBookMark:
             return "/group"
@@ -107,8 +107,8 @@ extension BookMarkAPI: AlleyAPI {
             case .removeBookMark:
                 return .requestPlain
                 
-            case .linkBookMark:
-                return .requestPlain
+            case .linkBookMark(bookMarkId: _, groupId: let groupId):
+                return .requestJSONEncodable(LinkBookMarkRequestDTO(groupId: groupId))
                 
             case .generateBookMark(name: let name):
                 return .requestJSONEncodable(GenerateBookMarkGroupRequestDTO(name: name))
