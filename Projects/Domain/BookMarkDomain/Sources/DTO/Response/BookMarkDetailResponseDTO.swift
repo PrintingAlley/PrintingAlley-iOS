@@ -10,14 +10,14 @@ import Foundation
 import BookMarkDomainInterface
 
 public struct BookMarkDetailResponseDTO: Decodable {
-    let id:Int
-    
+    let id: Int
+    let name: String
     let printShop: SimplePrintShopResponseDTO
     
     let statusCode: Int?
     let message: String?
  
     public func toDomain() -> BookMarkDetailEntity {
-        BookMarkDetailEntity(id: id, printShop: SimplePrintShopInfoEntity(id: self.printShop.id, name: self.printShop.name, address: self.printShop.address, tags: self.printShop.tags.map{$0.toDomain()}), statusCode: statusCode ?? 0, message: message ?? "")
+        BookMarkDetailEntity(id: id,name: self.name, printShop: SimplePrintShopInfoEntity(id: self.printShop.id, name: self.printShop.name, address: self.printShop.address, tags: self.printShop.tags.map{$0.toDomain()}), statusCode: statusCode ?? 0, message: message ?? "")
     }
 }
