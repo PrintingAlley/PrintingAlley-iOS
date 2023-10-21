@@ -12,7 +12,7 @@ import RxCocoa
 
 extension MyPageContentViewController {
     
-    func bindPreference(){
+    func bindPreference() {
         PreferenceManager
             .$user
             .withUnretained(self)

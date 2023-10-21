@@ -100,6 +100,9 @@ private class MyPageContentDependencyc8db405cbc62d6eda9bfProvider: MyPageContent
     var editModalFactory: any EditModalFactory {
         return appComponent.editModalFactory
     }
+    var authDomainFactory: any AuthDomainFactory {
+        return appComponent.authDomainFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -299,6 +302,7 @@ extension MyPageContentComponent: Registration {
         keyPathToName[\MyPageContentDependency.bookMarkFactory] = "bookMarkFactory-any BookMarkFactory"
         keyPathToName[\MyPageContentDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
         keyPathToName[\MyPageContentDependency.editModalFactory] = "editModalFactory-any EditModalFactory"
+        keyPathToName[\MyPageContentDependency.authDomainFactory] = "authDomainFactory-any AuthDomainFactory"
     }
 }
 extension RootComponent: Registration {

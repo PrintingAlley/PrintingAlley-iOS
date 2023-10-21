@@ -13,7 +13,7 @@ import BaseDomainInterface
 
 struct AuthRepositoryImpl: AuthRepository {
     
-    
+    let disposeBag = DisposeBag()
 
     
     private let localAuthDataSource: any LocalAuthDataSource
@@ -33,13 +33,20 @@ struct AuthRepositoryImpl: AuthRepository {
     }
     
     func logout() -> Single<BaseEntity> {
-        localAuthDataSource.removeToken()
-        return remoteAuthDataSource.logout()
+    
+       remoteAuthDataSource.logout()
+            .do(onSuccess: { _ in
+                localAuthDataSource.removeToken()
+            })
+            
     }
     
     func withdraw() -> Single<BaseEntity> {
-        localAuthDataSource.removeToken()
-        return  remoteAuthDataSource.withdraw()
+
+        remoteAuthDataSource.withdraw()
+            .do(onSuccess: { _ in
+                localAuthDataSource.removeToken()
+            })
     }
     
 }

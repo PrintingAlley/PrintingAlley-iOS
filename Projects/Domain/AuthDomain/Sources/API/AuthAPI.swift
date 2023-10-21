@@ -36,7 +36,7 @@ extension AuthAPI: AlleyAPI {
         case .logout:
             return "/logout"
         case .withdraw:
-            return "/withdraw"
+            return "/withdrawl"
         }
     }
     
@@ -61,7 +61,7 @@ extension AuthAPI: AlleyAPI {
             return .get
         
         case .logout:
-            return .get
+            return .post
             
         case .withdraw:
             return .delete
@@ -88,7 +88,7 @@ extension AuthAPI: AlleyAPI {
         switch self {
         case .login:
             return .none
-        case .jwt,.logout,.withdraw:
+        case .jwt, .logout, .withdraw:
             return .accessToken
         }
     }

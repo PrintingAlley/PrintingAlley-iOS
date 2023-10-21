@@ -21,4 +21,22 @@ extension MyPageContentViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    func bindShowToast(output: MyPageContentViewModel.Output) {
+        output.showToast
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,result) in
+                
+                if result.statusCode != 0 {
+                   LOGOUT()
+                }
+                
+                else {
+                    owner.view.showToast(text: result.message)
+                }
+                
+                
+            })
+            .disposed(by: disposeBag)
+    }
 }

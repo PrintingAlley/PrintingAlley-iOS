@@ -15,4 +15,5 @@ public protocol AuthRepository {
     func jwtTest() -> Single<TokenTestEntity>
     func logout() -> Single<BaseEntity>
     func withdraw() -> Single<BaseEntity>
+
 }

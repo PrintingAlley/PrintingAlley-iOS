@@ -33,7 +33,15 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
 
 extension MyPageContentViewController: MyPageFooterViewDelegate {
     public func action(type: UserLogoutAction) {
-        DEBUG_LOG(type)
+        
+        switch type {
+            
+        case .logout:
+            input.tapLogOut.onNext(())
+        case .withdraw:
+            input.tapWithDraw.onNext(())
+        }
+        
     }
     
 }

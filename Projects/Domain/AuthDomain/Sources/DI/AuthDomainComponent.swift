@@ -15,6 +15,8 @@ public protocol AuthDomainDependency: Dependency {
 }
 
 public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDomainFactory {
+   
+    
     
     
     public var fetchLoginUseCase: any FetchLoginUseCase {
@@ -29,11 +31,17 @@ public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDom
         LogOutUseCaseImpl(authRepository: authRepository)
     }
     
+    public var withDrawUseCase: any WithDrawUseCase {
+        WithDrawUseCaseImpl(authRepository: authRepository)
+    }
+    
     public var authRepository: any AuthRepository {
         AuthRepositoryImpl(
             localAuthDataSource: localAuthDataSource, remoteAuthDataSource: remoteAuthDataSource
         )
     }
+    
+    
     
     var remoteAuthDataSource: any RemoteAuthDataSource {
         RemoteAuthDataSourceImpl(jwtStore: dependency.jwtStoreFactory.jwtStore)

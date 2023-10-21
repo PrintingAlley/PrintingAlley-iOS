@@ -11,6 +11,8 @@ import UtilityModule
 import UserDomainInterface
 import RxSwift
 import RxRelay
+import AuthDomainInterface
+import BaseDomainInterface
 
 public enum MyPageCategory: String {
     case pushAlarmSetting = "앱 푸시 알림 설정"
@@ -26,17 +28,24 @@ final class MyPageContentViewModel : ViewModelType {
     let disposeBag = DisposeBag()
     
     var fetchUserInfoUseCase: any FetchUserInfoUseCase
+    var logOutUseCase: any LogOutUseCase
+    var withDrawUseCase: any WithDrawUseCase
    
-    init(fetchUserInfoUseCase: FetchUserInfoUseCase) {
+    init(fetchUserInfoUseCase: FetchUserInfoUseCase,logOutUseCase : LogOutUseCase,withDrawUseCase : WithDrawUseCase) {
         self.fetchUserInfoUseCase = fetchUserInfoUseCase
+        self.logOutUseCase = logOutUseCase
+        self.withDrawUseCase = withDrawUseCase
     }
     
     struct Input {
         let fetchUserInfo: PublishSubject<Void> = .init()
+        let tapLogOut: PublishSubject<Void> = .init()
+        let tapWithDraw: PublishSubject<Void> = .init()
     }
     
     struct Output {
         let userData: PublishRelay<UserInfoEntity> = .init()
+        let showToast: PublishSubject<BaseEntity> = .init()
     }
     
     func transform(input: Input) -> Output {
@@ -69,6 +78,50 @@ final class MyPageContentViewModel : ViewModelType {
                 /// 유저 데이터에 업데이트
                 PreferenceManager.shared.setUserInfo(id: $0.id, name: $0.name, profileImage: $0.profileImage, email: $0.email, platform: .init(rawValue: $0.provider) ?? .apple)
             })
+            .disposed(by: disposeBag)
+        
+        input.tapLogOut
+            .flatMap({ [weak self] _  -> Observable<BaseEntity> in
+                guard let self else {return Observable.empty()}
+                
+                /// jwt 토큰을 통해 유저 데이터 가져오기
+                return self.logOutUseCase.execute()
+                    .catch{ err in
+                        
+                        let alleryError = err.asAlleyError
+                        DEBUG_LOG(err.localizedDescription)
+                        
+                        return Single<BaseEntity>.create { single in
+                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                            return Disposables.create()
+                
+                        }
+                    }
+                    .asObservable()
+            })
+            .bind(to: output.showToast)
+            .disposed(by: disposeBag)
+        
+        input.tapWithDraw
+            .flatMap({ [weak self] _  -> Observable<BaseEntity> in
+                guard let self else {return Observable.empty()}
+                
+                /// jwt 토큰을 통해 유저 데이터 가져오기
+                return self.withDrawUseCase.execute()
+                    .catch{ err in
+                        
+                        let alleryError = err.asAlleyError
+                        DEBUG_LOG(err.localizedDescription)
+                        
+                        return Single<BaseEntity>.create { single in
+                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                            return Disposables.create()
+                
+                        }
+                    }
+                    .asObservable()
+            })
+            .bind(to: output.showToast)
             .disposed(by: disposeBag)
         
         return output

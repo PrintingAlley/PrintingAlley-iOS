@@ -15,6 +15,7 @@ import MessageUI // import For MailSystem
 import BookMarkFeatureInterface
 import RxSwift
 import BaseFeatureInterface
+import AuthDomainInterface
 
 public class MyPageContentViewController: UIViewController {
 
@@ -22,7 +23,7 @@ public class MyPageContentViewController: UIViewController {
     var editModalFactory: EditModalFactory!
     var viewModel: MyPageContentViewModel!
     let disposeBag = DisposeBag()
-    
+    let input = MyPageContentViewModel.Input()
     lazy var profileImage: UIButton = UIButton().then { // TODO: 프로필 이미지 편집 연결
         $0.setImage(DesignSystemAsset.Icon.profilePlaceHolder.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
@@ -142,13 +143,14 @@ extension MyPageContentViewController {
     }
     
     func bindViewModel() {
-        let input = MyPageContentViewModel.Input()
+        
         let output = viewModel.transform(input: input)
         
         bindRefresh(input: input)
         bindPreference()
         bindUserInfo(output: output)
         bindEditName()
+        bindShowToast(output: output)
         
         
     }
