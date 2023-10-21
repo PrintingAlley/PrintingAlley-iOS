@@ -34,7 +34,7 @@ extension BookMarkAPI: AlleyAPI {
         switch self {
             
         case .myBookMark:
-            return "/my-bookmarks"
+            return "/group"
             
         case .fetchBookMarkDetail(id: let id):
             return "/group/\(id)"

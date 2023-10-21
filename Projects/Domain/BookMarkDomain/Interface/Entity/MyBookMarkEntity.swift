@@ -11,15 +11,15 @@ import Foundation
 public struct MyBookMarkEntity {
     public let id: Int
     public let name: String
-    public let bookmarks: [Int]
+    public let count: Int
     public var isSelected: Bool = false
     public let statusCode: Int
     public let message: String
     
-    public init(id: Int, name: String, bookmarks: [Int], statusCode: Int, message: String) {
+    public init(id: Int, name: String, count: Int, statusCode: Int, message: String) {
         self.id = id
         self.name = name
-        self.bookmarks = bookmarks
+        self.count = count
         self.statusCode = statusCode
         self.message = message
     }

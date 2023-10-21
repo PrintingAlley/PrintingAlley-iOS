@@ -105,7 +105,7 @@ extension BookMarkTableViewCell {
         self.isEdit = isEditing
         
         titleLabel.setTitle(title: model.name, textColor: .grey(.grey1000), font: .body1)
-        subtitleLabel.setTitle(title: "장소 \(model.bookmarks.count)개", textColor: .grey(.grey500), font: .caption1)
+        subtitleLabel.setTitle(title: "장소 \(model.count)개", textColor: .grey(.grey500), font: .caption1)
         
 
         
