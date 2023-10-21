@@ -226,6 +226,11 @@ extension EditModalViewController {
                         NotificationCenter.default.post(name: .refreshBookMark, object: nil) // 리프래쉬 북마크
                         self.dismiss(animated: false)
                         
+                    
+                    case .reNameprofileName:
+                        NotificationCenter.default.post(name: .refreshUserInfo, object: nil)
+                        self.dismiss(animated: false)
+                        
                     default:
                         
                         self.dismiss(animated: false)

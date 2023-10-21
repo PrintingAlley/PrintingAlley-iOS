@@ -113,7 +113,26 @@ extension EditModalViewModel {
                         })
                         .asObservable()
                     
-//                case .reNameprofileName:
+                case .reNameprofileName:
+                    return self.renameUserUseCase.execute(name: text)
+                        .catch({ error in
+                            
+                            let alleryError = error.asAlleyError
+                            
+                            if alleryError == .tokenExpired {
+                                return Single<BaseEntity>.create { single in
+                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                    return Disposables.create()
+                                }
+                            }
+                            
+                            return Single<BaseEntity>.create { single in
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                return Disposables.create()
+                            }
+                        })
+                        .asObservable()
+                    
                     
                     
                 default:
