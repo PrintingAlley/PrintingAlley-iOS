@@ -15,12 +15,18 @@ public protocol AuthDomainDependency: Dependency {
 }
 
 public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDomainFactory {
+    
+    
     public var fetchLoginUseCase: any FetchLoginUseCase {
         FetchLoginUseCaseImpl(authRepository: authRepository)
     }
     
     public var fetchTokenTestUseCase: any FetchTokenTestUseCase {
         FetchTokenTestUseCaseImpl(authRepository: authRepository)
+    }
+    
+    public var logOutUseCase: any LogOutUseCase {
+        LogOutUseCaseImpl(authRepository: authRepository)
     }
     
     public var authRepository: any AuthRepository {

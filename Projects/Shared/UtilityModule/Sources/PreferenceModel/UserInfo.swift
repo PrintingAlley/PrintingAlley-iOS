@@ -35,4 +35,5 @@ struct UserInfo: Codable, Equatable {
     public func setUserInfo(id: Int, name: String, profileImage: String, email: String, platform: LoginType) {
         PreferenceManager.user = UserInfo(id: id, name: name, platform: platform, profileImage: profileImage, email: email)
     }
+    
 }
