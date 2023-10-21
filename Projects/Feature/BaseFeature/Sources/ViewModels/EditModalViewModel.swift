@@ -20,9 +20,11 @@ public class EditModalViewModel: ViewModelType {
     var type: EditType!
     var generateBookMarkUseCase: any GenerateBookMarkUseCase
     var renameBookMarkGroupUseCase: any RenameBookMarkGroupUseCase
+    var id: Int = -1
     //TODO: 프로필 이름 변경 유즈 케이스
     
-    init(type: EditType!, generateBookMarkUseCase: GenerateBookMarkUseCase,renameBookMarkGroupUseCase: RenameBookMarkGroupUseCase) {
+    init(id:Int = -1, type: EditType!, generateBookMarkUseCase: GenerateBookMarkUseCase,renameBookMarkGroupUseCase: RenameBookMarkGroupUseCase) {
+        self.id = id
         self.type = type
         self.generateBookMarkUseCase = generateBookMarkUseCase
         self.renameBookMarkGroupUseCase = renameBookMarkGroupUseCase
@@ -65,25 +67,59 @@ extension EditModalViewModel {
                 guard let self else { return Observable.empty()}
                 
                 //TODO: type 별 유즈케이스 처리 
+                    
+                switch self.type {
                 
-                return self.generateBookMarkUseCase.execute(name: text)
-                    .catch({ error in
-                        
-                        let alleryError = error.asAlleyError
-                        
-                        if alleryError == .tokenExpired {
+                case .newBookMark:
+                    return self.generateBookMarkUseCase.execute(name: text)
+                        .catch({ error in
+                            
+                            let alleryError = error.asAlleyError
+                            
+                            if alleryError == .tokenExpired {
+                                return Single<BaseEntity>.create { single in
+                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                    return Disposables.create()
+                                }
+                            }
+                            
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
                                 return Disposables.create()
                             }
-                        }
-                        
-                        return Single<BaseEntity>.create { single in
-                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
-                            return Disposables.create()
-                        }
-                    })
+                        })
+                        .asObservable()
+                    
+                case .reNameBookMark:
+                    return self.renameBookMarkGroupUseCase.execute(id: self.id, name: text)
+                        .catch({ error in
+                            
+                            let alleryError = error.asAlleyError
+                            
+                            if alleryError == .tokenExpired {
+                                return Single<BaseEntity>.create { single in
+                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                    return Disposables.create()
+                                }
+                            }
+                            
+                            return Single<BaseEntity>.create { single in
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                return Disposables.create()
+                            }
+                        })
+                        .asObservable()
+                    
+                default:
+                    return Single<BaseEntity>.create { single in
+                        single(.success(BaseEntity(statusCode: 401, message: "")))
+                        return Disposables.create()
+                    }
                     .asObservable()
+                    
+                }
+                
+                
             })
             .bind(to: output.showToast)
             .disposed(by: disposeBag)

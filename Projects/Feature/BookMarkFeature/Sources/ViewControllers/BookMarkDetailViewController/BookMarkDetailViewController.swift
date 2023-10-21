@@ -32,7 +32,7 @@ class BookMarkDetailViewController: UIViewController {
     }
     
     lazy var editButton: UIButton = UIButton().then{
-        $0.setImage(DesignSystemAsset.Icon.more.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.pencil.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFit
     }
     
@@ -145,7 +145,8 @@ extension BookMarkDetailViewController {
         
         bindViewDidLoad(input: input)
         bindBackButton()
-        bindeditButton()
+        bindEditButton()
+        bindRefresh(input: input)
         ///bind Output
         bindDataSource(input: input, output: output)
         bindItemSelected(output: output)

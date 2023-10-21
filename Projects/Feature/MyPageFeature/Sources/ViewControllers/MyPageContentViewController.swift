@@ -170,7 +170,7 @@ extension MyPageContentViewController: UITableViewDelegate {
 //        case .service:
             
         default:
-            print(viewModel.categories[indexPath.row])
+            DEBUG_LOG(viewModel.categories[indexPath.row])
             
         }
         

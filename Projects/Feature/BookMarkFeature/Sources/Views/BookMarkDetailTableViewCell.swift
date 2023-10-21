@@ -16,7 +16,6 @@ public protocol BookMarkDetailTableViewCellDelegate: AnyObject {
     func tapBookMark(id: Int?)
 }
 
-//TODO: 태그 위치 확인
 
 class BookMarkDetailTableViewCell: UITableViewCell {
 

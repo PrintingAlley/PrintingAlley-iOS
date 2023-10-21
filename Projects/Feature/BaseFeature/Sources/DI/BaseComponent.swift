@@ -22,8 +22,8 @@ public final class BaseComponent: Component<BaseDependency>, BaseFactory {
         BookMarkBottomSheetViewController(viewModel: BookMarkBottomSheetViewModel())
     }
     
-    public func makeEditModal(title: String, type: EditType) -> UIViewController {
-        EditModalViewController(title: title, viewModel: EditModalViewModel(type: type, generateBookMarkUseCase: dependency.bookMarkDomainFactory.generateBookMarkUseCase, renameBookMarkGroupUseCase: dependency.bookMarkDomainFactory.renameBookMarkGroupUseCase))
+    public func makeEditModal(id:Int, title: String, type: EditType) -> UIViewController {
+        EditModalViewController(title: title, viewModel: EditModalViewModel(id: id, type: type, generateBookMarkUseCase: dependency.bookMarkDomainFactory.generateBookMarkUseCase, renameBookMarkGroupUseCase: dependency.bookMarkDomainFactory.renameBookMarkGroupUseCase))
     }
     
     
