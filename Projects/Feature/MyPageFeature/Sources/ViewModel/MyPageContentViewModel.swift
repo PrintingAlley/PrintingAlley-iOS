@@ -24,11 +24,9 @@ final class MyPageContentViewModel : ViewModelType {
     let categories:[MyPageCategory] = [.pushAlarmSetting, .faq, .request, .service]
     
     var fetchUserInfoUseCase: any FetchUserInfoUseCase
-    var renameUserUseCase: any RenameUserUseCase
-    
-    init(fetchUserInfoUseCase: FetchUserInfoUseCase, renameUserUseCase: RenameUserUseCase) {
+   
+    init(fetchUserInfoUseCase: FetchUserInfoUseCase) {
         self.fetchUserInfoUseCase = fetchUserInfoUseCase
-        self.renameUserUseCase = renameUserUseCase
     }
     
     struct Input {

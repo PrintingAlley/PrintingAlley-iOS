@@ -212,6 +212,9 @@ private class EditModalDependencye914ce2425a804be0d58Provider: EditModalDependen
     var bookMarkDomainFactory: any BookMarkDomainFactory {
         return appComponent.bookMarkDomainFactory
     }
+    var userDomainFactory: any UserDomainFactory {
+        return appComponent.userDomainFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -340,6 +343,7 @@ extension BookMarkBottomSheetComponent: Registration {
 extension EditModalComponent: Registration {
     public func registerItems() {
         keyPathToName[\EditModalDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
+        keyPathToName[\EditModalDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
     }
 }
 extension BookMarkDomainComponent: Registration {

@@ -22,6 +22,6 @@ public protocol MyPageContentDependency: Dependency {
 
 public final class MyPageContentComponent: Component<MyPageContentDependency>, MyPageContentFactory {
     public func makeView() -> UIViewController {
-        MyPageContentViewController(bookMarkFactory: dependency.bookMarkFactory, editModalFactory: dependency.editModalFactory,viewModel: MyPageContentViewModel(fetchUserInfoUseCase: dependency.userDomainFactory.fetchUserInfoUseCase, renameUserUseCase: dependency.userDomainFactory.renameUserUseCase))
+        MyPageContentViewController(bookMarkFactory: dependency.bookMarkFactory, editModalFactory: dependency.editModalFactory,viewModel: MyPageContentViewModel(fetchUserInfoUseCase: dependency.userDomainFactory.fetchUserInfoUseCase))
     }
 }

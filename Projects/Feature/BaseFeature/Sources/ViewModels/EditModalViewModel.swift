@@ -13,6 +13,7 @@ import UtilityModule
 import BookMarkDomainInterface
 import BaseFeatureInterface
 import BaseDomainInterface
+import UserDomainInterface
 
 public class EditModalViewModel: ViewModelType {
     
@@ -20,14 +21,17 @@ public class EditModalViewModel: ViewModelType {
     var type: EditType!
     var generateBookMarkUseCase: any GenerateBookMarkUseCase
     var renameBookMarkGroupUseCase: any RenameBookMarkGroupUseCase
+    var renameUserUseCase: any RenameUserUseCase
+    
     var id: Int = -1
     //TODO: 프로필 이름 변경 유즈 케이스
     
-    init(id:Int = -1, type: EditType!, generateBookMarkUseCase: GenerateBookMarkUseCase,renameBookMarkGroupUseCase: RenameBookMarkGroupUseCase) {
+    init(id:Int = -1, type: EditType!, generateBookMarkUseCase: GenerateBookMarkUseCase,renameBookMarkGroupUseCase: RenameBookMarkGroupUseCase, renameUserUseCase: RenameUserUseCase) {
         self.id = id
         self.type = type
         self.generateBookMarkUseCase = generateBookMarkUseCase
         self.renameBookMarkGroupUseCase = renameBookMarkGroupUseCase
+        self.renameUserUseCase = renameUserUseCase
     }
     
     deinit {
@@ -109,7 +113,7 @@ extension EditModalViewModel {
                         })
                         .asObservable()
                     
-                case .reNameprofileName:
+//                case .reNameprofileName:
                     
                     
                 default:
