@@ -23,6 +23,8 @@ final class MyPageContentViewModel : ViewModelType {
  
     let categories:[MyPageCategory] = [.pushAlarmSetting, .faq, .request, .service]
     
+    let disposeBag = DisposeBag()
+    
     var fetchUserInfoUseCase: any FetchUserInfoUseCase
    
     init(fetchUserInfoUseCase: FetchUserInfoUseCase) {
@@ -39,6 +41,35 @@ final class MyPageContentViewModel : ViewModelType {
     
     func transform(input: Input) -> Output {
         let output = Output()
+        
+        
+        input
+            .fetchUserInfo
+            .flatMap({ [weak self]  _  -> Observable<UserInfoEntity> in
+                
+                guard let self else {return Observable.empty()}
+                
+                /// jwt 토큰을 통해 유저 데이터 가져오기
+                return self.fetchUserInfoUseCase.execute()
+                    .catch{ err in
+                        
+                        let alleryError = err.asAlleyError
+                        DEBUG_LOG(err.localizedDescription)
+                        
+                        return Single<UserInfoEntity>.create { single in
+                            single(.success(UserInfoEntity(id: 0, provider: "apple", name: "", profileImage: "", email: "", statusCode: 401, message: "")))
+                            return Disposables.create()
+                
+                        }
+                    }
+                    .asObservable()
+                
+            })
+            .subscribe(onNext: {
+                /// 유저 데이터에 업데이트
+                PreferenceManager.shared.setUserInfo(id: $0.id, name: $0.name, profileImage: $0.profileImage, email: $0.email, platform: .init(rawValue: $0.provider) ?? .apple)
+            })
+            .disposed(by: disposeBag)
         
         return output
     }

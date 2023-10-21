@@ -145,8 +145,11 @@ extension MyPageContentViewController {
         let input = MyPageContentViewModel.Input()
         let output = viewModel.transform(input: input)
         
+        bindRefresh(input: input)
         bindPreference()
         bindUserInfo(output: output)
+        bindEditName()
+        
         
     }
 }

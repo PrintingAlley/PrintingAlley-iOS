@@ -28,9 +28,17 @@ extension MyPageContentViewController {
         profileNameEditButton
             .rx
             .tap
-            .subscribe(onNext: {
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, _ ) in
+                
+                let vc = owner.editModalFactory.makeView(id: -1, title: "이름 수정", type: .reNameprofileName)
+                
+                vc.modalPresentationStyle = .overFullScreen
+                
+                owner.present(vc, animated: false)
                 
             })
             .disposed(by: disposeBag)
     }
+    
 }

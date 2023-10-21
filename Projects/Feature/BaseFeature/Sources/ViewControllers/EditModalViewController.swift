@@ -16,8 +16,6 @@ import RxKeyboard
 import UtilityModule
 
 
-//TODO:  업데이트 노티 쏴주기
-
 public class EditModalViewController: UIViewController {
 
     var viewModel: EditModalViewModel!
