@@ -11,16 +11,28 @@ import Foundation
 public extension PreferenceManager {
     
 struct UserInfo: Codable, Equatable {
-        public var id, name: String
+        public var id: Int
+        public var name: String
         public var platform: LoginType
+        public var profileImage: String?
+        public var email: String?
+    
 
         public static func == (lhs: Self, rhs: Self) -> Bool {
             lhs.id == rhs.id
         }
+    
+    init(id: Int, name: String, platform: LoginType, profileImage: String? = nil, email: String? = nil) {
+        self.id = id
+        self.name = name
+        self.platform = platform
+        self.profileImage = profileImage
+        self.email = email
+    }
                 
     }
     
-    public func setUserInfo(id: String, name: String, platform: LoginType) {
-        PreferenceManager.user = UserInfo(id: id, name: name, platform: platform)
+    public func setUserInfo(id: Int, name: String, profileImage: String, email: String, platform: LoginType) {
+        PreferenceManager.user = UserInfo(id: id, name: name, platform: platform, profileImage: profileImage, email: email)
     }
 }

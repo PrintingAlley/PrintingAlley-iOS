@@ -12,10 +12,10 @@ import UIKit
 
 public enum LoginType: String, Codable  {
     
-    case kakao = "kakao"
-    case naver = "naver"
-    case google = "google"
-    case apple = "apple"
+    case kakao 
+    case naver
+    case google
+    case apple
     
     public var image: UIImage {
         switch self {

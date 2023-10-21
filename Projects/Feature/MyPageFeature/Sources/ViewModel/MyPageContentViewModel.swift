@@ -9,6 +9,8 @@
 import Foundation
 import UtilityModule
 import UserDomainInterface
+import RxSwift
+import RxRelay
 
 public enum MyPageCategory: String {
     case pushAlarmSetting = "앱 푸시 알림 설정"
@@ -30,11 +32,11 @@ final class MyPageContentViewModel : ViewModelType {
     }
     
     struct Input {
-        
+        let fetchUserInfo: PublishSubject<Void> = .init()
     }
     
-    struct Output{
-        
+    struct Output {
+        let userData: PublishRelay<UserInfoEntity> = .init()
     }
     
     func transform(input: Input) -> Output {

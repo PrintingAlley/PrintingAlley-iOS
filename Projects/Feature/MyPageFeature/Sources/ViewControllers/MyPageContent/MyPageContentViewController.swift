@@ -13,10 +13,15 @@ import UtilityModule
 import DesignSystem
 import MessageUI // import For MailSystem
 import BookMarkFeatureInterface
+import RxSwift
+import BaseFeatureInterface
 
 public class MyPageContentViewController: UIViewController {
 
     var bookMarkFactory: BookMarkFactory!
+    var editModalFactory: EditModalFactory!
+    var viewModel: MyPageContentViewModel!
+    let disposeBag = DisposeBag()
     
     lazy var profileImage: UIButton = UIButton().then { // TODO: 프로필 이미지 편집 연결
         $0.setImage(DesignSystemAsset.Icon.profilePlaceHolder.image, for: .normal)
@@ -54,12 +59,14 @@ public class MyPageContentViewController: UIViewController {
         $0.tableFooterView = footerView
     }
     
-    var viewModel: MyPageContentViewModel!
     
-    init(bookMarkFactory: BookMarkFactory, viewModel: MyPageContentViewModel!) {
-        super.init(nibName: nil, bundle: nil)
+    
+    init(bookMarkFactory: BookMarkFactory, editModalFactory: EditModalFactory, viewModel: MyPageContentViewModel!) {
+        
         self.viewModel = viewModel
         self.bookMarkFactory = bookMarkFactory
+        self.editModalFactory = editModalFactory
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -72,6 +79,7 @@ public class MyPageContentViewController: UIViewController {
         addSubViews()
         preProcessing()
         makeConstraints()
+        bindViewModel()
 
     }
     
@@ -81,8 +89,7 @@ extension MyPageContentViewController {
     func preProcessing() {
         
         footerView.deleagte = self
-        // TODO: 닉네임 프리퍼런스 매니저 연결
-        profileLabel.setTitle(title: "첫 번째 골목대장 ", textColor: .sub(.black), font: .subtitle1)
+        
     }
     
     func addSubViews() {
@@ -133,6 +140,15 @@ extension MyPageContentViewController {
         }
         
     }
+    
+    func bindViewModel() {
+        let input = MyPageContentViewModel.Input()
+        let output = viewModel.transform(input: input)
+        
+        bindPreference()
+        bindUserInfo(output: output)
+        
+    }
 }
 
 
@@ -177,42 +193,6 @@ extension MyPageContentViewController: UITableViewDelegate {
     }
 }
 
-extension MyPageContentViewController: MyPageHeaderViewDelegate {
-    public func headerTap(type: HeaderItemType) {
-        
-        
-        switch type {
-            
-        case .notice:
-            DEBUG_LOG(type)
-        case .bookMark:
-            
-            let vc = bookMarkFactory.makeView()
-            self.navigationController?.pushViewController(vc, animated: true)
-            
-        case .review:
-            DEBUG_LOG(type)
-        }
-    }
- 
-}
 
-extension MyPageContentViewController: MyPageFooterViewDelegate {
-    public func action(type: UserLogoutAction) {
-        DEBUG_LOG(type)
-    }
-    
-}
-
-extension MyPageContentViewController: MFMailComposeViewControllerDelegate {
-    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true) {
-            if let error = error {
-                DEBUG_LOG(error.localizedDescription)
-            }
-            
-        }
-    }
-}
 
 

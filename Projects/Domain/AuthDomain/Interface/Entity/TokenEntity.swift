@@ -9,10 +9,14 @@
 import Foundation
 
 public struct TokenEntity {
-    let access_token: String
+    public let access_token: String
+    public let statusCode: Int
+    public let message: String
     
-    public init(access_token: String) {
+    public init(access_token: String, statusCode: Int, message: String) {
         self.access_token = access_token
+        self.statusCode = statusCode
+        self.message = message
     }
     
 }

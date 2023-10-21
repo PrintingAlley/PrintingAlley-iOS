@@ -66,7 +66,6 @@ extension EditModalViewModel {
                 
                 guard let self else { return Observable.empty()}
                 
-                //TODO: type 별 유즈케이스 처리 
                     
                 switch self.type {
                 
@@ -109,6 +108,9 @@ extension EditModalViewModel {
                             }
                         })
                         .asObservable()
+                    
+                case .reNameprofileName:
+                    
                     
                 default:
                     return Single<BaseEntity>.create { single in

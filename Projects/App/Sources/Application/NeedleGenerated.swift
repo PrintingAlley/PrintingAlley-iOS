@@ -94,6 +94,12 @@ private class MyPageContentDependencyc8db405cbc62d6eda9bfProvider: MyPageContent
     var bookMarkFactory: any BookMarkFactory {
         return appComponent.bookMarkFactory
     }
+    var userDomainFactory: any UserDomainFactory {
+        return appComponent.userDomainFactory
+    }
+    var editModalFactory: any EditModalFactory {
+        return appComponent.editModalFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -117,6 +123,9 @@ private func factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb(_ component: Needle
 private class SignInDependency5dda0dd015447272446cProvider: SignInDependency {
     var authDomainFactory: any AuthDomainFactory {
         return appComponent.authDomainFactory
+    }
+    var userDomainFactory: any UserDomainFactory {
+        return appComponent.userDomainFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -285,6 +294,8 @@ extension MyPageComponent: Registration {
 extension MyPageContentComponent: Registration {
     public func registerItems() {
         keyPathToName[\MyPageContentDependency.bookMarkFactory] = "bookMarkFactory-any BookMarkFactory"
+        keyPathToName[\MyPageContentDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
+        keyPathToName[\MyPageContentDependency.editModalFactory] = "editModalFactory-any EditModalFactory"
     }
 }
 extension RootComponent: Registration {
@@ -295,6 +306,7 @@ extension RootComponent: Registration {
 extension SignInComponent: Registration {
     public func registerItems() {
         keyPathToName[\SignInDependency.authDomainFactory] = "authDomainFactory-any AuthDomainFactory"
+        keyPathToName[\SignInDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
     }
 }
 extension HomeComponent: Registration {
