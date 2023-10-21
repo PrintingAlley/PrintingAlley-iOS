@@ -31,7 +31,7 @@ final class RemoteBookMarkDataSourceImpl: BaseRemoteDataSource<BookMarkAPI>, Rem
     }
     
     func addBookMark(printShopId: Int, bookmarkGroupId: Int) -> RxSwift.Single<BaseEntity> {
-        request(.addBookMark(printShopId: printShopId, bookmarkGroupId: bookmarkGroupId))
+        request(.addBookMark(printShopId: printShopId, groupId: bookmarkGroupId))
             .map(BaseResponseDTO.self)
             .map{$0.toDomain()}
             
