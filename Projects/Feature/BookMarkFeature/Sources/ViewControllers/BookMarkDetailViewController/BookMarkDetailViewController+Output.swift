@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxDataSources
 import UIKit
-
+import BookMarkDomainInterface
 
 extension BookMarkDetailViewController {
     func bindDataSource(input: BookMarkDetailViewModel.Input, output: BookMarkDetailViewModel.Output) {
@@ -20,12 +20,13 @@ extension BookMarkDetailViewController {
                 
                 guard let self else {return}
                 
-                self.tableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
+                self.tableView.tableHeaderView = dataSource.bookmarks.isEmpty ? emptyHeaderView : nil
+                self.naviTitleLabel.setTitle(title: dataSource.name, textColor: .sub(.black), font: .header3,alignment: .center)
                 
-                self.countLabel.setTitle(title: "장소 \(dataSource.count)개", textColor: .grey(.grey400), font: .caption1,alignment: .center)
-                
+                self.countLabel.setTitle(title: "장소 \(dataSource.bookmarks.count)개", textColor: .grey(.grey400), font: .caption1,alignment: .center)
                 
             })
+            .map({$0.bookmarks})
             .bind(to: tableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
                 
                 guard let self else { return UITableViewCell() }
@@ -38,7 +39,7 @@ extension BookMarkDetailViewController {
                 
                 cell.deleagte = self
                 cell.selectionStyle = .none
-                cell.update(model: model, isLast: output.dataSource.value.count-1 == index)
+                cell.update(model: model, isLast: output.dataSource.value.bookmarks.count-1 == index)
                 
                 return cell
             }

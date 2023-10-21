@@ -219,7 +219,7 @@ extension EditModalViewController {
                     switch viewModel.type {
                     
                     case .newBookMark:
-                        NotificationCenter.default.post(name: .refreshBookMark, object: nil) // 리프래쉬
+                        NotificationCenter.default.post(name: .refreshBookMarkGroup, object: nil) // 리프래쉬
                         self.dismiss(animated: false)
                     
                     default:

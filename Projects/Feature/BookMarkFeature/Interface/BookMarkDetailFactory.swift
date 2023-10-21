@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public protocol BookMarkDetailFactory {
-    func makeView(id: Int,name : String) -> UIViewController
+    func makeView(id: Int) -> UIViewController
 }
 
 

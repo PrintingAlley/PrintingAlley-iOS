@@ -127,7 +127,7 @@ extension BookMarkViewController {
                 
                 let model = dataSource[indexPath.row]
                 
-                let vc = self.bookMarkDetailFactory.makeView(id: model.id,name: model.name)
+                let vc = self.bookMarkDetailFactory.makeView(id: model.id)
                 
                 self.navigationController?.pushViewController(vc, animated: true)
                 

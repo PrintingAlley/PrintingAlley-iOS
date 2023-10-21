@@ -64,7 +64,7 @@ class BookMarkDetailViewController: UIViewController {
     }
     
     deinit {
-        NotificationCenter.default.post(name: .refreshBookMark, object: nil)
+        NotificationCenter.default.post(name: .refreshBookMarkGroup, object: nil)
         DEBUG_LOG("\(Self.self) Denit ❌ ")
         
     }
@@ -78,7 +78,6 @@ class BookMarkDetailViewController: UIViewController {
         configureCommonUI()
         addSubviews()
         makeConstraints()
-        preProcessing()
         bindViewModel()
     }
     
@@ -91,9 +90,6 @@ class BookMarkDetailViewController: UIViewController {
 
 extension BookMarkDetailViewController {
     
-    func preProcessing() {
-        self.naviTitleLabel.setTitle(title: "\(viewModel.bookMarkGroupName)", textColor: .sub(.black), font: .header3,alignment: .center)
-    }
     
     func addSubviews() {
         self.view.addSubviews(naviTitleView, countLabel, baseLine, tableView)

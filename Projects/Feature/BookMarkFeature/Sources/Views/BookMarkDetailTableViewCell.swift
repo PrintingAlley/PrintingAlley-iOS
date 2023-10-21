@@ -45,7 +45,7 @@ class BookMarkDetailTableViewCell: UITableViewCell {
     }
     
     public weak var deleagte: BookMarkDetailTableViewCellDelegate?
-    var model: BookMarkDetailEntity!
+    var model: BookMarkEntity!
     var index: Int!
     var isEdit: Bool!
     
@@ -116,7 +116,7 @@ extension BookMarkDetailTableViewCell {
         
     }
     
-    public func update(model: BookMarkDetailEntity, isLast: Bool) {
+    public func update(model: BookMarkEntity, isLast: Bool) {
         self.model = model
 
         titleLabel.setTitle(title: model.printShop.name, textColor: .sub(.black), font: .subtitle1)

@@ -22,8 +22,8 @@ public protocol BookMarkDetailDependency: Dependency {
 public final class BookMarkDetailComponent: Component<BookMarkDetailDependency>, BookMarkDetailFactory {
 
     
-    public func makeView(id: Int, name: String) -> UIViewController {
+    public func makeView(id: Int) -> UIViewController {
         BookMarkDetailViewController(baseFactory:dependency.baseFactory,
-                                     viewModel: BookMarkDetailViewModel(id: id,bookMarkGroupName: name, fetchBookMarkDetailUseCase: dependency.bookMarkDomainFactory.fetchBookMarkDetailUseCase, removeBookMarkUseCase: dependency.bookMarkDomainFactory.removeBookMarkUseCase))
+                                     viewModel: BookMarkDetailViewModel(id: id,fetchBookMarkDetailUseCase: dependency.bookMarkDomainFactory.fetchBookMarkDetailUseCase, removeBookMarkUseCase: dependency.bookMarkDomainFactory.removeBookMarkUseCase))
     }
 }

@@ -20,13 +20,11 @@ public final class BookMarkDetailViewModel: ViewModelType {
     var removeBookMarkUseCase: any RemoveBookMarkUseCase
     
     var bookMarkGroupId: Int!
-    var bookMarkGroupName: String = ""
     
     let disposeBag = DisposeBag()
     
-    init(id: Int, bookMarkGroupName: String , fetchBookMarkDetailUseCase: FetchBookMarkDetailUseCase, removeBookMarkUseCase: RemoveBookMarkUseCase) {
+    init(id: Int,fetchBookMarkDetailUseCase: FetchBookMarkDetailUseCase, removeBookMarkUseCase: RemoveBookMarkUseCase) {
         self.bookMarkGroupId = id
-        self.bookMarkGroupName = bookMarkGroupName
         self.fetchBookMarkDetailUseCase = fetchBookMarkDetailUseCase
         self.removeBookMarkUseCase = removeBookMarkUseCase
     }
@@ -42,7 +40,7 @@ public final class BookMarkDetailViewModel: ViewModelType {
     }
     
     public struct Output {
-        let dataSource: BehaviorRelay<[BookMarkDetailEntity]> = .init(value: [])
+        let dataSource: BehaviorRelay<BookMarkDetailEntity> = .init(value: BookMarkDetailEntity(id: 0, name: "", bookmarks: [], statusCode: 0, message: ""))
         let showToast: PublishRelay<BaseEntity> = .init()
     }
     
@@ -51,15 +49,15 @@ public final class BookMarkDetailViewModel: ViewModelType {
         
         input.fetchDataSource
             .withUnretained(self){($0,$1)}
-            .flatMap({ (owner,_) -> Observable<[BookMarkDetailEntity]> in
+            .flatMap({ (owner,_) -> Observable<BookMarkDetailEntity> in
                 return owner.fetchBookMarkDetailUseCase
                         .execute(id: owner.bookMarkGroupId)
                         .catch({ error in
     
                             let alleryError = error.asAlleyError
                             DEBUG_LOG(alleryError.asAFError?.responseCode)
-                                return Single<[BookMarkDetailEntity]>.create { single in
-                                    single(.success([]))
+                                return Single<BookMarkDetailEntity>.create { single in
+                                    single(.success(BookMarkDetailEntity(id: 0, name: "", bookmarks: [], statusCode: 0, message: alleryError.errorDescription)))
                                     return Disposables.create()
                                 }
 
