@@ -165,8 +165,8 @@ extension BookMarkBottomSheetViewController {
 
 extension BookMarkBottomSheetViewController: ListHeaderViewDelegate {
     public func generateNewList() {
-        print("Hello")
+        //TODO: 나중에 ..
+        // let vc = editModalFactory.makeView(id: -1, title: <#T##String#>, type: .newBookMark)
     }
-    
     
 }
