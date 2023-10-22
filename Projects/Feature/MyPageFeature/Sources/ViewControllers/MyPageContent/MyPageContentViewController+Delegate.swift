@@ -15,17 +15,23 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
     public func headerTap(type: HeaderItemType) {
         
         
+        
+        let vc = AlertViewController(title:"준비중입니다.", content: "조금만 기다려주세요!", type:  .onlyConfirm)
+        
+        vc.modalPresentationStyle = .overFullScreen
+        
+        
         switch type {
             
         case .notice:
-            DEBUG_LOG(type)
+            self.present(vc, animated: false)
         case .bookMark:
             
             let vc = bookMarkFactory.makeView()
             self.navigationController?.pushViewController(vc, animated: true)
             
         case .review:
-            DEBUG_LOG(type)
+            self.present(vc, animated: false)
         }
     }
  
@@ -40,7 +46,7 @@ extension MyPageContentViewController: MyPageFooterViewDelegate {
             input.tapLogOut.onNext(())
         case .withdraw:
             
-            let vc = AlertViewController(title:"탈퇴하시나요?", content: "탈퇴하시면 이용 중인 인쇄골목이\n패쇄되며, 모든 데이터는 복구가 불\n가능합니다.",type:  .delete, completion: { [weak self] in
+            let vc = AlertViewController(title:"탈퇴하시나요?", content: "탈퇴하시면 이용 중인 인쇄골목이\n패쇄되며, 모든 데이터는 복구가 불\n가능합니다.", type:  .delete, completion: { [weak self] in
                 
                 guard let self else {return}
                 
