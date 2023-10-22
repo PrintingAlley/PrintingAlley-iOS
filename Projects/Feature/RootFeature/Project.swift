@@ -11,7 +11,9 @@ let project = Project.module(
             .feature(target: .MyPageFeature),
             .feature(target: .SignInFeature),
             .feature(target: .NearByMeFeature),
-            .feature(target: .BookMarkFeature)
+            .feature(target: .BookMarkFeature),
+            .domain(target: .AuthDomain, type: .interface),
+            .domain(target: .UserDomain, type: .interface)
         ])
     ]
 )
