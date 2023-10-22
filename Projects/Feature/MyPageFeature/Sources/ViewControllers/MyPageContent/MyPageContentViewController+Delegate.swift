@@ -39,7 +39,18 @@ extension MyPageContentViewController: MyPageFooterViewDelegate {
         case .logout:
             input.tapLogOut.onNext(())
         case .withdraw:
-            input.tapWithDraw.onNext(())
+            
+            let vc = AlertViewController(title:"탈퇴하시나요?", content: "탈퇴하시면 이용 중인 인쇄골목이\n패쇄되며, 모든 데이터는 복구가 불\n가능합니다.",type:  .delete, completion: { [weak self] in
+                
+                guard let self else {return}
+                
+                self.input.tapWithDraw.onNext(())
+                
+            })
+            
+            vc.modalPresentationStyle = .overFullScreen
+            self.present(vc, animated: false)
+            
         }
         
     }
