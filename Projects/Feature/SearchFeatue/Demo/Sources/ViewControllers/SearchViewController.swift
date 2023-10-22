@@ -15,8 +15,9 @@ final class SearchViewController: UIViewController {
     
     private let navigationView = UIView()
     
-    private let backButton = UIButton().then {
+    private lazy var backButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
+        $0.addTarget(self, action: #selector(touchBackbtn), for: .touchUpInside)
     }
     
     private let searchBar = SearchBar()
@@ -28,10 +29,16 @@ final class SearchViewController: UIViewController {
         view.backgroundColor = .setColor(.sub(.white))
         addSubviews()
         makeConstraints()
+        setKeyboardDown()
     }
 }
 
 extension SearchViewController {
+    private func setKeyboardDown() {
+        let keyboardDownGesture = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
+        self.view.addGestureRecognizer(keyboardDownGesture)
+    }
+    
     private func addSubviews() {
         view.addSubviews(navigationView, recommendView)
         navigationView.addSubviews(backButton, searchBar)
@@ -41,6 +48,7 @@ extension SearchViewController {
         navigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(17)
             $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
             $0.height.equalTo(32)
         }
         
@@ -61,5 +69,24 @@ extension SearchViewController {
             $0.top.equalToSuperview().inset(125)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+}
+
+// MARK: - TextField Delegate
+extension SearchViewController: UITextFieldDelegate {
+    public func textFieldDidChangeSelection(_ textField: UITextField) {
+        textField.becomeFirstResponder()
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+    }
+}
+
+// MARK: - Objc 함수
+extension SearchViewController {
+    @objc
+    private func touchBackbtn() {
+        print("back button")
     }
 }
