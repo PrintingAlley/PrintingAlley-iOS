@@ -176,29 +176,7 @@ extension MyPageContentViewController: UITableViewDataSource {
     
 }
 
-extension MyPageContentViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let vc = AlertViewController(title:"준비중입니다.", content: "조금만 기다려주세요!", type:  .onlyConfirm)
-        
-        vc.modalPresentationStyle = .overFullScreen
-        
-        switch viewModel.categories[indexPath.row] {
-            //TODO: 추후 해당 화면 이동 코드
-        case .pushAlarmSetting:
-            self.present(vc, animated: false)
-        case .faq:
-            self.present(vc, animated: false)
-        case .request:
-            showMail()
-            
-        case .service:
-            self.present(vc, animated: false)
-            
-            
-        }
-    }
-}
+
 
 
 
