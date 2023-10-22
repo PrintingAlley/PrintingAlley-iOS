@@ -53,6 +53,7 @@ public class MainTabBarController: UITabBarController {
         self.tabBar.backgroundColor = .brown
         configureUI()
         styleTabBar()
+        
     }
 }
 

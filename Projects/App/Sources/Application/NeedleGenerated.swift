@@ -113,15 +113,23 @@ private func factory0dbf0a2ebe9a0bf09f32f47b58f8f304c97af4d5(_ component: Needle
     return MyPageContentDependencyc8db405cbc62d6eda9bfProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class RootDependency3944cc797a4a88956fb5Provider: RootDependency {
-
-
-    init() {
-
+    var mainTabFactory: any MainTabFactory {
+        return appComponent.mainTabFactory
+    }
+    var userDomainFactory: any UserDomainFactory {
+        return appComponent.userDomainFactory
+    }
+    var authDomainFactory: any AuthDomainFactory {
+        return appComponent.authDomainFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->RootComponent
-private func factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return RootDependency3944cc797a4a88956fb5Provider()
+private func factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return RootDependency3944cc797a4a88956fb5Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class SignInDependency5dda0dd015447272446cProvider: SignInDependency {
     var authDomainFactory: any AuthDomainFactory {
@@ -307,7 +315,9 @@ extension MyPageContentComponent: Registration {
 }
 extension RootComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\RootDependency.mainTabFactory] = "mainTabFactory-any MainTabFactory"
+        keyPathToName[\RootDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
+        keyPathToName[\RootDependency.authDomainFactory] = "authDomainFactory-any AuthDomainFactory"
     }
 }
 extension SignInComponent: Registration {
@@ -387,7 +397,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->MainTabComponent", factory1ab5a747ddf21e1393f9f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MyPageComponent", factory0f6f456ebf157d02dfb3f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MyPageContentComponent", factory0dbf0a2ebe9a0bf09f32f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652af47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->NearByMeComponent", factory53f303ca6b0d301565d8e3b0c44298fc1c149afb)

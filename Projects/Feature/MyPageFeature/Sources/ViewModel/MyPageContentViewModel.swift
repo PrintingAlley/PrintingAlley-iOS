@@ -88,6 +88,8 @@ final class MyPageContentViewModel : ViewModelType {
                 return self.logOutUseCase.execute()
                     .catch{ err in
                         
+                       
+
                         let alleryError = err.asAlleyError
                         DEBUG_LOG(err.localizedDescription)
                         
