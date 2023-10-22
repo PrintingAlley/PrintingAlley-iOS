@@ -13,11 +13,17 @@ import UtilityModule
 import DesignSystem
 import MessageUI // import For MailSystem
 import BookMarkFeatureInterface
+import RxSwift
+import BaseFeatureInterface
+import AuthDomainInterface
 
 public class MyPageContentViewController: UIViewController {
 
     var bookMarkFactory: BookMarkFactory!
-    
+    var editModalFactory: EditModalFactory!
+    var viewModel: MyPageContentViewModel!
+    let disposeBag = DisposeBag()
+    let input = MyPageContentViewModel.Input()
     lazy var profileImage: UIButton = UIButton().then { // TODO: 프로필 이미지 편집 연결
         $0.setImage(DesignSystemAsset.Icon.profilePlaceHolder.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
@@ -54,12 +60,14 @@ public class MyPageContentViewController: UIViewController {
         $0.tableFooterView = footerView
     }
     
-    var viewModel: MyPageContentViewModel!
     
-    init(bookMarkFactory: BookMarkFactory, viewModel: MyPageContentViewModel!) {
-        super.init(nibName: nil, bundle: nil)
+    
+    init(bookMarkFactory: BookMarkFactory, editModalFactory: EditModalFactory, viewModel: MyPageContentViewModel!) {
+        
         self.viewModel = viewModel
         self.bookMarkFactory = bookMarkFactory
+        self.editModalFactory = editModalFactory
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -72,6 +80,7 @@ public class MyPageContentViewController: UIViewController {
         addSubViews()
         preProcessing()
         makeConstraints()
+        bindViewModel()
 
     }
     
@@ -81,8 +90,7 @@ extension MyPageContentViewController {
     func preProcessing() {
         
         footerView.deleagte = self
-        // TODO: 닉네임 프리퍼런스 매니저 연결
-        profileLabel.setTitle(title: "첫 번째 골목대장 ", textColor: .sub(.black), font: .subtitle1)
+        
     }
     
     func addSubViews() {
@@ -133,6 +141,19 @@ extension MyPageContentViewController {
         }
         
     }
+    
+    func bindViewModel() {
+        
+        let output = viewModel.transform(input: input)
+        
+        bindRefresh(input: input)
+        bindPreference()
+        bindUserInfo(output: output)
+        bindEditName()
+        bindShowToast(output: output)
+        
+        
+    }
 }
 
 
@@ -155,64 +176,8 @@ extension MyPageContentViewController: UITableViewDataSource {
     
 }
 
-extension MyPageContentViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        switch viewModel.categories[indexPath.row] {
-                // TODO: 추후 해당 화면 이동 코드
-//        case .notice:
-//
-//        case .faq:
-//
-        case .request:
-            showMail()
-//
-//        case .service:
-            
-        default:
-            DEBUG_LOG(viewModel.categories[indexPath.row])
-            
-        }
-        
-    }
-}
 
-extension MyPageContentViewController: MyPageHeaderViewDelegate {
-    public func headerTap(type: HeaderItemType) {
-        
-        
-        switch type {
-            
-        case .notice:
-            DEBUG_LOG(type)
-        case .bookMark:
-            
-            let vc = bookMarkFactory.makeView()
-            self.navigationController?.pushViewController(vc, animated: true)
-            
-        case .review:
-            DEBUG_LOG(type)
-        }
-    }
- 
-}
 
-extension MyPageContentViewController: MyPageFooterViewDelegate {
-    public func action(type: UserLogoutAction) {
-        DEBUG_LOG(type)
-    }
-    
-}
 
-extension MyPageContentViewController: MFMailComposeViewControllerDelegate {
-    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true) {
-            if let error = error {
-                DEBUG_LOG(error.localizedDescription)
-            }
-            
-        }
-    }
-}
 
 

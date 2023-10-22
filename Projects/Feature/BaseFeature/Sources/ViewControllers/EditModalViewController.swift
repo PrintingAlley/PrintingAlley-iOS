@@ -16,8 +16,6 @@ import RxKeyboard
 import UtilityModule
 
 
-//TODO:  업데이트 노티 쏴주기
-
 public class EditModalViewController: UIViewController {
 
     var viewModel: EditModalViewModel!
@@ -224,6 +222,11 @@ extension EditModalViewController {
                     
                     case .reNameBookMark:
                         NotificationCenter.default.post(name: .refreshBookMark, object: nil) // 리프래쉬 북마크
+                        self.dismiss(animated: false)
+                        
+                    
+                    case .reNameprofileName:
+                        NotificationCenter.default.post(name: .refreshUserInfo, object: nil)
                         self.dismiss(animated: false)
                         
                     default:

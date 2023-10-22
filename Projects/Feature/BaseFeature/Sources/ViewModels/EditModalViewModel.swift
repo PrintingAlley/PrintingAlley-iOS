@@ -13,6 +13,7 @@ import UtilityModule
 import BookMarkDomainInterface
 import BaseFeatureInterface
 import BaseDomainInterface
+import UserDomainInterface
 
 public class EditModalViewModel: ViewModelType {
     
@@ -20,14 +21,17 @@ public class EditModalViewModel: ViewModelType {
     var type: EditType!
     var generateBookMarkUseCase: any GenerateBookMarkUseCase
     var renameBookMarkGroupUseCase: any RenameBookMarkGroupUseCase
+    var renameUserUseCase: any RenameUserUseCase
+    
     var id: Int = -1
     //TODO: 프로필 이름 변경 유즈 케이스
     
-    init(id:Int = -1, type: EditType!, generateBookMarkUseCase: GenerateBookMarkUseCase,renameBookMarkGroupUseCase: RenameBookMarkGroupUseCase) {
+    init(id:Int = -1, type: EditType!, generateBookMarkUseCase: GenerateBookMarkUseCase,renameBookMarkGroupUseCase: RenameBookMarkGroupUseCase, renameUserUseCase: RenameUserUseCase) {
         self.id = id
         self.type = type
         self.generateBookMarkUseCase = generateBookMarkUseCase
         self.renameBookMarkGroupUseCase = renameBookMarkGroupUseCase
+        self.renameUserUseCase = renameUserUseCase
     }
     
     deinit {
@@ -66,7 +70,6 @@ extension EditModalViewModel {
                 
                 guard let self else { return Observable.empty()}
                 
-                //TODO: type 별 유즈케이스 처리 
                     
                 switch self.type {
                 
@@ -109,6 +112,28 @@ extension EditModalViewModel {
                             }
                         })
                         .asObservable()
+                    
+                case .reNameprofileName:
+                    return self.renameUserUseCase.execute(name: text)
+                        .catch({ error in
+                            
+                            let alleryError = error.asAlleyError
+                            
+                            if alleryError == .tokenExpired {
+                                return Single<BaseEntity>.create { single in
+                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                    return Disposables.create()
+                                }
+                            }
+                            
+                            return Single<BaseEntity>.create { single in
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                return Disposables.create()
+                            }
+                        })
+                        .asObservable()
+                    
+                    
                     
                 default:
                     return Single<BaseEntity>.create { single in

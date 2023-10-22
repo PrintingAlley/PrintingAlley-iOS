@@ -20,4 +20,8 @@ class  LocalAuthDataSourcesImpl: LocalAuthDataSource {
     func loadJwtToken() -> String {
         jwtStore.load(property: .accessToken)
     }
+    
+    func removeToken() {
+        jwtStore.delete(property: .accessToken)
+    }
 }

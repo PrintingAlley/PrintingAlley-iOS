@@ -11,9 +11,11 @@ import AuthDomainInterface
 
 struct TokenResponseDTO: Decodable {
     let access_token: String
+    let statusCode: Int?
+    let message: String?
     
     public func toDomain() -> TokenEntity {
-        return TokenEntity(access_token: self.access_token)
+        return TokenEntity(access_token: self.access_token,statusCode: self.statusCode ?? 0,message: self.message ?? "")
     }
 }
 

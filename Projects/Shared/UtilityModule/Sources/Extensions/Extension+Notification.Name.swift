@@ -12,4 +12,5 @@ public extension Notification.Name {
 
     static let refreshBookMarkGroup = Notification.Name("refreshBookMarkGroup")
     static let refreshBookMark = Notification.Name("refreshBookMark")
+    static let refreshUserInfo = Notification.Name("refreshUserInfo")
 }

@@ -26,6 +26,8 @@ import RootFeature
 import SignInFeature
 import SignInFeatureInterface
 import UIKit
+import UserDomain
+import UserDomainInterface
 
 // swiftlint:disable unused_declaration
 private let needleDependenciesHash : String? = nil
@@ -92,6 +94,15 @@ private class MyPageContentDependencyc8db405cbc62d6eda9bfProvider: MyPageContent
     var bookMarkFactory: any BookMarkFactory {
         return appComponent.bookMarkFactory
     }
+    var userDomainFactory: any UserDomainFactory {
+        return appComponent.userDomainFactory
+    }
+    var editModalFactory: any EditModalFactory {
+        return appComponent.editModalFactory
+    }
+    var authDomainFactory: any AuthDomainFactory {
+        return appComponent.authDomainFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -115,6 +126,9 @@ private func factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb(_ component: Needle
 private class SignInDependency5dda0dd015447272446cProvider: SignInDependency {
     var authDomainFactory: any AuthDomainFactory {
         return appComponent.authDomainFactory
+    }
+    var userDomainFactory: any UserDomainFactory {
+        return appComponent.userDomainFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -201,6 +215,9 @@ private class EditModalDependencye914ce2425a804be0d58Provider: EditModalDependen
     var bookMarkDomainFactory: any BookMarkDomainFactory {
         return appComponent.bookMarkDomainFactory
     }
+    var userDomainFactory: any UserDomainFactory {
+        return appComponent.userDomainFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -236,6 +253,19 @@ private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDepend
 private func factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return AuthDomainDependency4518b8977185a5c9ff71Provider(appComponent: parent1(component) as! AppComponent)
 }
+private class UserDomainDependencyf39d2a2922733361cbe1Provider: UserDomainDependency {
+    var jwtStoreFactory: any JwtStoreFactory {
+        return appComponent.jwtStoreFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->UserDomainComponent
+private func factory46488402f315d7f9530cf47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return UserDomainDependencyf39d2a2922733361cbe1Provider(appComponent: parent1(component) as! AppComponent)
+}
 
 #else
 extension JwtStoreComponent: Registration {
@@ -270,6 +300,9 @@ extension MyPageComponent: Registration {
 extension MyPageContentComponent: Registration {
     public func registerItems() {
         keyPathToName[\MyPageContentDependency.bookMarkFactory] = "bookMarkFactory-any BookMarkFactory"
+        keyPathToName[\MyPageContentDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
+        keyPathToName[\MyPageContentDependency.editModalFactory] = "editModalFactory-any EditModalFactory"
+        keyPathToName[\MyPageContentDependency.authDomainFactory] = "authDomainFactory-any AuthDomainFactory"
     }
 }
 extension RootComponent: Registration {
@@ -280,6 +313,7 @@ extension RootComponent: Registration {
 extension SignInComponent: Registration {
     public func registerItems() {
         keyPathToName[\SignInDependency.authDomainFactory] = "authDomainFactory-any AuthDomainFactory"
+        keyPathToName[\SignInDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
     }
 }
 extension HomeComponent: Registration {
@@ -313,6 +347,7 @@ extension BookMarkBottomSheetComponent: Registration {
 extension EditModalComponent: Registration {
     public func registerItems() {
         keyPathToName[\EditModalDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
+        keyPathToName[\EditModalDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
     }
 }
 extension BookMarkDomainComponent: Registration {
@@ -323,6 +358,11 @@ extension BookMarkDomainComponent: Registration {
 extension AuthDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\AuthDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+    }
+}
+extension UserDomainComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\UserDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
 
@@ -357,6 +397,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->UserDomainComponent", factory46488402f315d7f9530cf47b58f8f304c97af4d5)
 }
 #endif
 

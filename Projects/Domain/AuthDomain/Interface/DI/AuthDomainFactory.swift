@@ -12,4 +12,6 @@ public protocol AuthDomainFactory {
     
     var fetchLoginUseCase: any FetchLoginUseCase { get }
     var fetchTokenTestUseCase: any FetchTokenTestUseCase { get }
+    var logOutUseCase: any LogOutUseCase { get }
+    var withDrawUseCase: any WithDrawUseCase { get }
 }

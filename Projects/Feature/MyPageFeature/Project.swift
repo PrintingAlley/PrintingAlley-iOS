@@ -13,7 +13,8 @@ let project = Project.module(
         .implements(module: .feature(.MyPageFeature), dependencies: [
             .feature(target: .MyPageFeature, type: .interface),
             .feature(target: .SignInFeature,type: .interface),
-            .feature(target: .BaseFeature)
+            .feature(target: .BaseFeature),
+            .domain(target: .AuthDomain, type: .interface)
         ])
     ]
 )
