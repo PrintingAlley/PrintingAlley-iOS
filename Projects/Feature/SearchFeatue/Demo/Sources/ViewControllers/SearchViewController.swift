@@ -15,12 +15,16 @@ import RxSwift
 import RxDataSources
 import UtilityModule
 
-final class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController, ContainerViewType {
+    var contentView: UIView! = UIView()
     
     private var viewModel: SearchViewModel!
     
     let disposeBag = DisposeBag()
     private let input = SearchViewModel.Input()
+    
+    let beforeVc = BeforeSearchViewController()
+    let afterVc = AfterSearchViewController()
     
     private let navigationBar = UIView()
     
@@ -31,7 +35,7 @@ final class SearchViewController: UIViewController {
     
     private let searchBar = SearchBar()
     
-    private let recommendView = UIView()
+//    private let recommendView = UIView()
     
     init(viewModel: SearchViewModel!) {
         self.viewModel = viewModel
@@ -45,16 +49,21 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCommonUI()
+        configureUI()
         addSubviews()
         makeConstraints()
         setKeyboardDown()
-        bindViewModel()
+//        bindViewModel()
     }
 }
 
 extension SearchViewController {
+    private func configureUI() {
+        self.add(asChildViewController: beforeVc)
+    }
+    
     private func addSubviews() {
-        view.addSubviews(navigationBar, recommendView)
+        view.addSubviews(navigationBar, contentView)
         navigationBar.addSubviews(backButton, searchBar)
     }
     
@@ -79,7 +88,7 @@ extension SearchViewController {
             $0.centerY.equalToSuperview()
         }
         
-        recommendView.snp.makeConstraints {
+        contentView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(125)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
@@ -112,6 +121,6 @@ extension SearchViewController: UITextFieldDelegate {
 extension SearchViewController {
     @objc
     private func touchBackbtn() {
-        print("back button")
+        self.navigationController?.popViewController(animated: true)
     }
 }

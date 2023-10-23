@@ -10,8 +10,21 @@ import UIKit
 import Then
 import SnapKit
 import DesignSystem
+import BaseFeatureInterface
+import RxSwift
+import RxDataSources
+import UtilityModule
 
-final class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController, ContainerViewType {
+    var contentView: UIView! = UIView()
+    
+    private var viewModel: SearchViewModel!
+    
+    let disposeBag = DisposeBag()
+    private let input = SearchViewModel.Input()
+    
+    let beforeVc = BeforeSearchViewController()
+    let afterVc = AfterSearchViewController()
     
     private let navigationBar = UIView()
     
@@ -22,25 +35,35 @@ final class SearchViewController: UIViewController {
     
     private let searchBar = SearchBar()
     
-    private let recommendView = UIView()
+//    private let recommendView = UIView()
+    
+    init(viewModel: SearchViewModel!) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .setColor(.sub(.white))
+        configureCommonUI()
+        configureUI()
         addSubviews()
         makeConstraints()
         setKeyboardDown()
+//        bindViewModel()
     }
 }
 
 extension SearchViewController {
-    private func setKeyboardDown() {
-        let keyboardDownGesture = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
-        self.view.addGestureRecognizer(keyboardDownGesture)
+    private func configureUI() {
+        self.add(asChildViewController: beforeVc)
     }
     
     private func addSubviews() {
-        view.addSubviews(navigationBar, recommendView)
+        view.addSubviews(navigationBar, contentView)
         navigationBar.addSubviews(backButton, searchBar)
     }
     
@@ -65,10 +88,21 @@ extension SearchViewController {
             $0.centerY.equalToSuperview()
         }
         
-        recommendView.snp.makeConstraints {
+        contentView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(125)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func setKeyboardDown() {
+        let keyboardDownGesture = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
+        self.view.addGestureRecognizer(keyboardDownGesture)
+    }
+    
+    private func bindViewModel() {
+        let output = self.viewModel.transform(input: input)
+        bindTagDataSource(output: output)
+        bindViewDidLoad(input: input)
     }
 }
 
@@ -87,6 +121,6 @@ extension SearchViewController: UITextFieldDelegate {
 extension SearchViewController {
     @objc
     private func touchBackbtn() {
-        print("back button")
+        self.navigationController?.popViewController(animated: true)
     }
 }
