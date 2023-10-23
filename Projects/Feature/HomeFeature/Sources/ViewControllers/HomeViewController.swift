@@ -17,7 +17,6 @@ final class HomeViewController: UIViewController {
     private var searchFactory: any SearchFactory
     private var viewModel: HomeViewModel!
     
-    
     private let blueBackgroundView = UIView().then {
         $0.backgroundColor = .setColor(.mainBlue(.blue500))
     }
@@ -73,6 +72,7 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
         addSubViews()
         makeConstraints()
     }
@@ -81,7 +81,9 @@ final class HomeViewController: UIViewController {
 // MARK: - Objc 함수
 extension HomeViewController {
     @objc private func navigateToSearch() {
-        print("네비게이션하렴")
+        let vc = searchFactory.makeView()
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
