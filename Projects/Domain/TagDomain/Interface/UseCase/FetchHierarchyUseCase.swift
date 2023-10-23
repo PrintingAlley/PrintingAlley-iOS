@@ -7,3 +7,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol FetchHierarchyUseCase {
+    func execute() -> Single<[TagToplevelEntity]>
+}

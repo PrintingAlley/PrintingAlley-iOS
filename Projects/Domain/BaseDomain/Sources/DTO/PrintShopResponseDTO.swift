@@ -10,7 +10,7 @@ import Foundation
 import BaseDomainInterface
 
 // MARK: - PrintShop
-public struct PrintShopResponseDTO: Codable {
+public struct PrintShopResponseDTO: Decodable {
     let id: Int
     let name, address, phone, email: String
     let homepage: String
