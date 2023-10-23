@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "icon-back-left-24.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
