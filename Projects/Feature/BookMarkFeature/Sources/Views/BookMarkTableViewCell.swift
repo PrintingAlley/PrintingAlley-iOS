@@ -27,7 +27,7 @@ class BookMarkTableViewCell: UITableViewCell {
     lazy var button: UIButton = UIButton()
     
     lazy var rightArrowImageView: UIImageView = UIImageView().then{
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
         $0.image = DesignSystemAsset.Icon.rightArrow.image
     }
     
@@ -45,6 +45,7 @@ class BookMarkTableViewCell: UITableViewCell {
             makeConstraints()
             button.addTarget(self, action: #selector(tapCheck), for: .touchUpInside)
         
+            
     }
 
     public required init?(coder: NSCoder) {
@@ -62,7 +63,7 @@ extension BookMarkTableViewCell {
     func makeConstraints() {
         
         containerView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().inset(13)
             $0.right.equalToSuperview().inset(26)
             $0.left.equalTo(button.snp.right)
         }
@@ -73,7 +74,7 @@ extension BookMarkTableViewCell {
         }
         
         subtitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(5)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(2)
             $0.left.equalTo(titleLabel.snp.left)
             $0.bottom.equalToSuperview()
         }
@@ -93,10 +94,9 @@ extension BookMarkTableViewCell {
         baseLine.snp.makeConstraints {
             $0.height.equalTo(1)
             $0.left.right.equalToSuperview().inset(26)
-            $0.top.equalTo(containerView.snp.bottom).offset(16)
+            $0.top.equalTo(containerView.snp.bottom).offset(18)
             $0.bottom.equalToSuperview()
         }
-        
         
     }
     
@@ -107,17 +107,18 @@ extension BookMarkTableViewCell {
         titleLabel.setTitle(title: model.name, textColor: .grey(.grey1000), font: .body1)
         subtitleLabel.setTitle(title: "장소 \(model.count)개", textColor: .grey(.grey500), font: .caption1)
         
-
+        rightArrowImageView.isHidden = isEditing
         
         if isEditing == false {
             button.setImage(DesignSystemAsset.Icon.roundBookMark.image, for: .normal)
-            button.imageView?.contentMode = .scaleAspectFill
+            button.imageView?.contentMode = .scaleAspectFit
         }
         
         else {
             button.setImage(model.isSelected == true ? DesignSystemAsset.Icon.check.image : DesignSystemAsset.Icon.unCheck.image, for: .normal)
-            button.imageView?.contentMode = .scaleAspectFill
+            button.imageView?.contentMode = .scaleAspectFit
         }
+        
         
         baseLine.layer.opacity = isLast ? 0 : 1
     }

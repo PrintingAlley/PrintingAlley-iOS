@@ -35,6 +35,11 @@ class BookMarkViewController: UIViewController {
     }
         
     lazy var naviTitleView: UIView = UIView()
+    
+    lazy var baseLine: UIView = UIView().then {
+        $0.backgroundColor = .black.withAlphaComponent(0.1)
+    }
+    
     lazy var backButton: UIButton = UIButton().then {
         
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
@@ -108,7 +113,7 @@ class BookMarkViewController: UIViewController {
 
 extension BookMarkViewController {
     func addSubviews() {
-        self.view.addSubviews(naviTitleView, tableView, indicator)
+        self.view.addSubviews(naviTitleView, tableView, indicator, baseLine)
         naviTitleView.addSubviews(backButton, naviTitleLabel,deleteButton, editOrDoneButton)
     }
     
@@ -129,6 +134,12 @@ extension BookMarkViewController {
             $0.edges.equalToSuperview()
         }
         
+        baseLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(naviTitleView.snp.bottom).offset(19)
+        }
+        
         
         deleteButton.snp.makeConstraints {
             $0.width.height.equalTo(29)
@@ -143,7 +154,7 @@ extension BookMarkViewController {
         }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(naviTitleView.snp.bottom).offset(23)
+            $0.top.equalTo(baseLine.snp.bottom)
             $0.left.right.bottom.equalToSuperview()
         }
         

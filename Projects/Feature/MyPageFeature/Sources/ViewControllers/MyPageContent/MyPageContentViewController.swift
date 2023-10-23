@@ -44,7 +44,7 @@ public class MyPageContentViewController: UIViewController {
         //$0.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15) //<- 중요
     }
     
-    lazy var headerView: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 75)).then {
+    lazy var headerView: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 78)).then {
         $0.deleagte = self
     }
     
@@ -118,7 +118,7 @@ extension MyPageContentViewController {
         }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(profileImage.snp.bottom).offset(40)
+            $0.top.equalTo(profileImage.snp.bottom).offset(41)
             $0.left.right.bottom.equalToSuperview()
         }
         

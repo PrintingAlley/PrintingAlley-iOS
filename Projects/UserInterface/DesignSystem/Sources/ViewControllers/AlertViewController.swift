@@ -53,7 +53,7 @@ public class AlertViewController: UIViewController {
     }
     
     lazy var baseLine: UIView = UIView().then{
-        $0.backgroundColor = .blue.withAlphaComponent(0.1)
+        $0.backgroundColor = .black.withAlphaComponent(0.1)
     }
     
     lazy var titleLabel: AlleyLabel = AlleyLabel().then {
@@ -72,7 +72,7 @@ public class AlertViewController: UIViewController {
     lazy var confirmButton: UIButton = UIButton()
     
     
-    lazy var buttonStack: UIStackView = UIStackView().then{
+    lazy var buttonStack: UIStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 4
         $0.distribution = .fillEqually
@@ -158,15 +158,26 @@ extension AlertViewController {
         baseLine.snp.makeConstraints {
             $0.height.equalTo(1)
             $0.left.right.equalToSuperview()
-            $0.top.equalTo(contentLabel.snp.bottom).offset(24)
+            $0.top.equalTo(contentLabel.snp.bottom).offset(16)
         }
         
         buttonStack.snp.makeConstraints {
-            $0.top.equalTo(baseLine.snp.bottom).offset(16)
+            $0.top.equalTo(baseLine.snp.bottom).offset(13)
             $0.horizontalEdges.equalTo(titleLabel.snp.horizontalEdges)
-            $0.bottom.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(13)
         }
         
+        cancelButton.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+        confirmButton.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+
     }
     
     @objc func cancelAction() {

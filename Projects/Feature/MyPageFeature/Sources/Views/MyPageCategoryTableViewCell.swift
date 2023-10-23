@@ -41,7 +41,7 @@ extension MyPageCategoryTableViewCell {
     func makeConstraints() {
         
         label.snp.makeConstraints {
-            $0.left.top.equalToSuperview().inset(32)
+            $0.left.top.equalToSuperview().inset(24)
             $0.bottom.equalToSuperview()
         }
         
@@ -50,6 +50,7 @@ extension MyPageCategoryTableViewCell {
             $0.right.equalToSuperview().inset(24)
             $0.centerY.equalTo(label.snp.centerY)
         }
+    
     }
     
     public func update(category: MyPageCategory) {

@@ -133,10 +133,10 @@ extension MyPageFooterView {
     }
     
     func makeConstraints() {
-        
+  
         baseLine.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.top.equalToSuperview().inset(32)
+            $0.top.equalToSuperview().inset(24)
             $0.left.right.equalToSuperview()
         }
         
