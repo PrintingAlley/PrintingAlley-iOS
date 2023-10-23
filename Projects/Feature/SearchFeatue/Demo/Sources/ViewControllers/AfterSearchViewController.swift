@@ -60,7 +60,7 @@ extension AfterSearchViewController {
     
     private func makeConstraints() {
         filterCollectionview.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(100)
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(24)
             $0.height.equalTo(32) // 컬렉션뷰 height, 위치 수정 필요
         }
@@ -114,7 +114,6 @@ extension AfterSearchViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: PrintingTableViewCell.identifier, for: indexPath)
                 as? PrintingTableViewCell else { return UITableViewCell() }
-//        cell.dataBind(model: musicList[indexPath.row])
         return cell
     }
 
