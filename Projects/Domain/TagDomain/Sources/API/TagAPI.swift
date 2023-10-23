@@ -17,6 +17,7 @@ import TagDomain
 
 enum TagAPI {
     case topLevel
+    case hierarchy(id: Int)
 }
 
 extension TagAPI: AlleyAPI {
@@ -30,6 +31,9 @@ extension TagAPI: AlleyAPI {
           
         case .topLevel:
             return "/top-level"
+    
+        case .hierarchy(id: let id):
+            return "/\(id)/hierarchy"
         }
     }
     
@@ -49,7 +53,7 @@ extension TagAPI: AlleyAPI {
     var method: Moya.Method {
         switch self {
          
-        case .topLevel:
+        case .topLevel,.hierarchy:
             return .get
         }
     }
@@ -57,7 +61,7 @@ extension TagAPI: AlleyAPI {
         var task: Task {
             switch self {
               
-            case .topLevel:
+            case .topLevel,.hierarchy:
                 return .requestPlain
             }
         }
@@ -65,7 +69,7 @@ extension TagAPI: AlleyAPI {
     
     var jwtStoreProperties: JwtStoreProperties {
         switch self {
-        case .topLevel:
+        case .topLevel,.hierarchy:
             return .none // token 있을 땐 .aceessToken
         }
     }
