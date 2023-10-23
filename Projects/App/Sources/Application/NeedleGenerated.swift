@@ -23,6 +23,10 @@ import NearByMeFeature
 import NearByMeFeatureInterface
 import NeedleFoundation
 import RootFeature
+import SearchDomain
+import SearchDomainInterface
+import SearchFeatue
+import SearchFeatueInterface
 import SignInFeature
 import SignInFeatureInterface
 import UIKit
@@ -112,6 +116,19 @@ private class MyPageContentDependencyc8db405cbc62d6eda9bfProvider: MyPageContent
 private func factory0dbf0a2ebe9a0bf09f32f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return MyPageContentDependencyc8db405cbc62d6eda9bfProvider(appComponent: parent1(component) as! AppComponent)
 }
+private class SearchDependencya86903a2c751a4f762e8Provider: SearchDependency {
+    var searchDomainFactory: any SearchDomainFactory {
+        return appComponent.searchDomainFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->SearchComponent
+private func factorye3d049458b2ccbbcb3b6f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return SearchDependencya86903a2c751a4f762e8Provider(appComponent: parent1(component) as! AppComponent)
+}
 private class RootDependency3944cc797a4a88956fb5Provider: RootDependency {
     var mainTabFactory: any MainTabFactory {
         return appComponent.mainTabFactory
@@ -150,6 +167,9 @@ private func factoryda2925fd76da866a652af47b58f8f304c97af4d5(_ component: Needle
 private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var homeFactory: any HomeFactory {
         return appComponent.homeFactory
+    }
+    var searchFactory: any SearchFactory {
+        return appComponent.searchFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -248,6 +268,19 @@ private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDoma
 private func factory9b3fac1bd377f0830537f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BookMarkDomainDependency2ef018453822a996a9abProvider(appComponent: parent1(component) as! AppComponent)
 }
+private class SearchDomainDependencyb3556c153b9920da1f67Provider: SearchDomainDependency {
+    var jwtStoreFactory: any JwtStoreFactory {
+        return appComponent.jwtStoreFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->SearchDomainComponent
+private func factoryf0c6bf6699cff1bf3dc4f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return SearchDomainDependencyb3556c153b9920da1f67Provider(appComponent: parent1(component) as! AppComponent)
+}
 private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
@@ -313,6 +346,11 @@ extension MyPageContentComponent: Registration {
         keyPathToName[\MyPageContentDependency.authDomainFactory] = "authDomainFactory-any AuthDomainFactory"
     }
 }
+extension SearchComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\SearchDependency.searchDomainFactory] = "searchDomainFactory-any SearchDomainFactory"
+    }
+}
 extension RootComponent: Registration {
     public func registerItems() {
         keyPathToName[\RootDependency.mainTabFactory] = "mainTabFactory-any MainTabFactory"
@@ -329,6 +367,7 @@ extension SignInComponent: Registration {
 extension HomeComponent: Registration {
     public func registerItems() {
         keyPathToName[\HomeDependency.homeFactory] = "homeFactory-any HomeFactory"
+        keyPathToName[\HomeDependency.searchFactory] = "searchFactory-any SearchFactory"
     }
 }
 extension NearByMeComponent: Registration {
@@ -365,6 +404,11 @@ extension BookMarkDomainComponent: Registration {
         keyPathToName[\BookMarkDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
+extension SearchDomainComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\SearchDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+    }
+}
 extension AuthDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\AuthDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
@@ -397,6 +441,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->MainTabComponent", factory1ab5a747ddf21e1393f9f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MyPageComponent", factory0f6f456ebf157d02dfb3f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MyPageContentComponent", factory0dbf0a2ebe9a0bf09f32f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->SearchComponent", factorye3d049458b2ccbbcb3b6f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652af47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
@@ -406,6 +451,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->SearchDomainComponent", factoryf0c6bf6699cff1bf3dc4f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->UserDomainComponent", factory46488402f315d7f9530cf47b58f8f304c97af4d5)
 }

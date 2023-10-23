@@ -10,13 +10,14 @@ import Foundation
 import NeedleFoundation
 import UIKit
 import SearchFeatueInterface
+import SearchDomainInterface
 
 public protocol SearchDependency: Dependency {
-    var searchFactory: any SearchFactory { get }
+    var searchDomainFactory: any SearchDomainFactory { get }
 }
 
 public final class SearchComponent: Component<SearchDependency>, SearchFactory {
     public func makeView() -> UIViewController {
-        SearchViewController()
+        SearchViewController(viewModel: SearchViewModel(fetchPrintShopListUseCase: self.dependency.searchDomainFactory.fetchPrintShopListUseCase))
     }
 }
