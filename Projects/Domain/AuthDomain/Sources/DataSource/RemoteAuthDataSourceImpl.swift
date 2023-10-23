@@ -21,9 +21,9 @@ final class RemoteAuthDataSourceImpl: BaseRemoteDataSource<AuthAPI>, RemoteAuthD
             .map{$0.toDomain()}
     }
     
-    func jwtTest() -> Single<TokenTestEntity> {
-        request(.jwt)
-            .map(TokenTestDTO.self)
+    func verify() -> Single<VerifyEntity> {
+        request(.verify)
+            .map(VerifyResponseDTO.self)
             .map{$0.toDomain()}
     }
     

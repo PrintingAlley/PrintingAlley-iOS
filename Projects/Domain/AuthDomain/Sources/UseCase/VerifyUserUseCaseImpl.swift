@@ -12,7 +12,7 @@ import AuthDomainInterface
 import RxSwift
 import Network
 
-struct FetchTokenTestUseCaseImpl: FetchTokenTestUseCase {
+struct VerifyUserUseCaseImpl: VerifyUserUseCase {
 
     
 
@@ -22,8 +22,8 @@ struct FetchTokenTestUseCaseImpl: FetchTokenTestUseCase {
         self.authRepository = authRepository
     }
     
-    func execute() -> RxSwift.Single<TokenTestEntity> {
-        authRepository.jwtTest()
+    func execute() -> RxSwift.Single<VerifyEntity> {
+        authRepository.verify()
     }
 
 }

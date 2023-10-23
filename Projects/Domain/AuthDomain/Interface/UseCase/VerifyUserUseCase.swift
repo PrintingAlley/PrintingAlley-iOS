@@ -9,6 +9,6 @@
 import Foundation
 import RxSwift
 
-public protocol FetchTokenTestUseCase {
-    func execute() -> Single<TokenTestEntity>
+public protocol VerifyUserUseCase {
+    func execute() -> Single<VerifyEntity>
 }
