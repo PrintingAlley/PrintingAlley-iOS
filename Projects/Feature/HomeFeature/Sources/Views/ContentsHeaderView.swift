@@ -11,9 +11,12 @@ import UtilityModule
 import Then
 import SnapKit
 import DesignSystem
+import TagDomainInterface
 
 final class ContentsHeaderView: UICollectionReusableView {
     static let identifier = "ContentsHeaderView"
+    
+    private var dataSource: [TagToplevelEntity] = []
     
     private let cellSpacing: CGFloat = 30
     private let collectionViewInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
@@ -25,6 +28,7 @@ final class ContentsHeaderView: UICollectionReusableView {
     }
     
     private let contentsTitle = AlleyLabel("인쇄가 어려운 당신에게", font: .subtitle1)
+    
     
     private lazy var showMoreTouchButton = UIButton().then {
         $0.backgroundColor = .none
@@ -103,6 +107,12 @@ extension ContentsHeaderView {
         return collectionView
     }
     
+    public func update(tagDataSource: [TagToplevelEntity]) {
+        self.dataSource = tagDataSource
+        
+        categoryCollectionView.reloadData()
+    }
+    
     @objc
     private func navigateToAllContents() {
         print("탭탭")
@@ -133,12 +143,19 @@ extension ContentsHeaderView: UICollectionViewDelegateFlowLayout {
 extension ContentsHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 아이템 개수
-        return 6
+        print("Count: \(dataSource.count)")
+        return dataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell { // data bind
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath)
                 as? CategoryCollectionViewCell else { return UICollectionViewCell() }
+        
+        if !dataSource.isEmpty {
+            cell.update(model: dataSource[indexPath.row])
+        }
+        
+        
         return cell
     }
 }

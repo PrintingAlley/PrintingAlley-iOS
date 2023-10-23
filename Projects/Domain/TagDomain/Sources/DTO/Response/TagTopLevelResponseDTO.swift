@@ -9,7 +9,7 @@
 import Foundation
 import TagDomainInterface
 
-struct TagTopLevelResponseDTO: Decodable {
+struct TagTopLevelResponseDTO: Decodable { 
     let id: Int
     let name: String
     let image: String?

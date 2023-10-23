@@ -10,6 +10,7 @@ import UIKit
 import Then
 import SnapKit
 import DesignSystem
+import TagDomainInterface
 
 final class CategoryCollectionViewCell: UICollectionViewCell {
     static let identifier = "CategoryCollectionViewCell"
@@ -19,7 +20,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         $0.contentMode = .scaleAspectFit
     }
     
-    private let label = AlleyLabel("엽서/카드", textColor: .grey(.grey800), font: .body2)
+    private let label = AlleyLabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,5 +49,9 @@ extension CategoryCollectionViewCell {
             $0.top.equalTo(image.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
         }
+    }
+    
+    public func update(model: TagToplevelEntity) {
+        label.setTitle(title: model.name, textColor: .grey(.grey800), font: .body2)
     }
 }

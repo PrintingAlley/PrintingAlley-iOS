@@ -12,6 +12,7 @@ import DesignSystem
 import Then
 import SnapKit
 import RxSwift
+import RxDataSources
 
 final class HomeViewController: UIViewController {
     private let blueBackgroundView = UIView().then {
@@ -61,6 +62,8 @@ final class HomeViewController: UIViewController {
     
     var viewModel: HomeViewModel!
     
+    var output: HomeViewModel.Output!
+    
     init(viewModel: HomeViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -82,7 +85,7 @@ extension HomeViewController {
     func bindViewModel(){
         let input = HomeViewModel.Input()
         
-        let output = viewModel.transform(input: input)
+        output = viewModel.transform(input: input)
         
         bindTagDataSource(output: output)
         bindViewDidLoad(input: input)
@@ -95,9 +98,10 @@ extension HomeViewController {
     func bindTagDataSource(output: HomeViewModel.Output) {
         
         output.tagDataSource
-            .debug("WEST")
-            .subscribe(onNext: {
-                DEBUG_LOG($0)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,dataSoruce) in
+                DEBUG_LOG(dataSoruce)
+                owner.contentsCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
         
@@ -204,6 +208,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ContentsHeaderView.identifier, for: indexPath) as! ContentsHeaderView
+            
+            headerView.update(tagDataSource: output.tagDataSource.value)
             return headerView
         }
         return UICollectionReusableView()
