@@ -11,7 +11,6 @@ import UIKit
 public enum FilterButtonType {
     case basic
     case filter
-    case arrowFilter
     case selected
     case selectedWithX
 }
@@ -20,21 +19,24 @@ public final class FilterButton: UIButton {
     
     public var type: FilterButtonType {
         didSet {
-            configureUI()
+            configureUI(type)
         }
     }
     
     public var title: String {
         didSet {
-            configureUI()
+            configureUI(type)
         }
     }
     
-    public init(title: String, type: FilterButtonType) {
+    public var willChangeUI: Bool = false
+    
+    public init(title: String, type: FilterButtonType, willChangeUI: Bool) {
         self.type = type
         self.title = title
+        self.willChangeUI = willChangeUI
         super.init(frame: .zero)
-        configureUI()
+        configureUI(type)
         addTargets()
     }
     
@@ -44,14 +46,14 @@ public final class FilterButton: UIButton {
 }
 
 extension FilterButton {
-    func configureUI() {
+    func configureUI(_ type: FilterButtonType) {
         let stringSize = (title as NSString).size(withAttributes: [NSAttributedString.Key.font: UIFont.setFont(.body1)])
         
         self.setRound([.allCorners], radius: 16)
         self.setTitle(title, for: .normal)
         self.titleLabel?.font = UIFont.setFont(.body1)
         
-        switch self.type {
+        switch type {
         case .basic:
             self.backgroundColor = .setColor(.sub(.white))
             self.layer.borderColor = UIColor.setColor(.grey(.grey300)).cgColor
@@ -62,13 +64,6 @@ extension FilterButton {
             self.backgroundColor = .setColor(.mainBlue(.blue500))
             self.setImage(DesignSystemAsset.Icon.back.image, for: .normal) // 이미지 변경
             self.setTitleColor(.setColor(.sub(.white)), for: .normal)
-            
-        case .arrowFilter:
-            self.backgroundColor = .setColor(.sub(.white))
-            self.layer.borderColor = UIColor.setColor(.grey(.grey300)).cgColor
-            self.layer.borderWidth = 1.0
-            self.setTitleColor(.setColor(.grey(.grey900)), for: .normal)
-            self.setImage(DesignSystemAsset.Icon.back.image, for: .normal) // 이미지 변경
             
         case .selected:
             self.backgroundColor = .setColor(.mainBlue(.blue50))
@@ -95,6 +90,12 @@ extension FilterButton {
     
     @objc
     private func touchUpFilterButton() {
+        self.isSelected.toggle()
+        if willChangeUI, isSelected {
+            configureUI(.selected)
+        } else {
+            configureUI(type)
+        }
         print("탭 필터버튼")
     }
 }

@@ -15,7 +15,7 @@ final class FilterButtonCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "RecommendCollectionViewCell"
     
-    private var filterButton = FilterButton(title: "기본버튼", type: .basic)
+    private var filterButton = FilterButton(title: "기본버튼", type: .basic, willChangeUI: false)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,8 +39,9 @@ extension FilterButtonCollectionViewCell {
         }
     }
     
-    func dummyDataBind(model: RecommendModel, type: FilterButtonType) {
+    func dummyDataBind(model: RecommendModel, type: FilterButtonType, willChangeUI: Bool) {
         filterButton.title = model.title
         filterButton.type = type
+        filterButton.willChangeUI = willChangeUI
     }
 }

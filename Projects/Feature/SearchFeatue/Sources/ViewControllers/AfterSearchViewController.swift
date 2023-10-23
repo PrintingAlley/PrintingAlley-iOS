@@ -89,7 +89,7 @@ extension AfterSearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath)
                 as? FilterButtonCollectionViewCell else { return UICollectionViewCell() }
-        cell.dummyDataBind(model: testRecommend[indexPath.row], type: .basic)
+        cell.dummyDataBind(model: testRecommend[indexPath.row], type: .basic, willChangeUI: true)
         return cell
     }
     
