@@ -42,6 +42,7 @@ class MyPageHeaderView: UIView {
         super.init(frame: frame)
         self.addSubviews(baseLine, collectionView)
         makeConstraints()
+        
     }
     
     
@@ -62,7 +63,7 @@ extension MyPageHeaderView {
         }
         
         baseLine.snp.makeConstraints {
-            $0.top.equalTo(collectionView.snp.bottom).offset(16)
+            $0.top.equalTo(collectionView.snp.bottom).offset(9)
             $0.height.equalTo(1)
             $0.left.right.bottom.equalToSuperview()
         }
