@@ -11,6 +11,7 @@ import TagDomainInterface
 import RxSwift
 
 struct TagRepositoryImpl: TagRepository {
+
     
     private let remoteTagDatasource: any RemoteTagDatasource
     
@@ -21,5 +22,11 @@ struct TagRepositoryImpl: TagRepository {
     func fetchTagToplevel() -> Single<[TagToplevelEntity]> {
         remoteTagDatasource.fetchTagToplevel()
     }
+    
+    func fetchHierarchy(id: Int) -> Single<HierarchyEntity> {
+        remoteTagDatasource.fetchHierarchy(id: id)
+    }
+    
+   
 
 }

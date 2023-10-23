@@ -20,6 +20,10 @@ public final class TagDomainComponent: Component<TagDomainDependency>, TagDomain
         FetchTagToplevelUseCaseImpl(tagRepository: tagRepository)
     } // 레포지토리를 주입받음
     
+    public var fetchHierarchyUseCase: any FetchHierarchyUseCase {
+        FetchHierarchyUseCaseImpl(tagRepository: tagRepository)
+    }
+    
     public var tagRepository: any TagRepository {
         TagRepositoryImpl(remoteTagDatasource: remoteTagDatasource)
     } // 데이터소스를 주입받음
