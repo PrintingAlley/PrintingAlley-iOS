@@ -8,6 +8,7 @@
 
 import UIKit
 import Then
+import SnapKit
 
 public final class SearchBar: UIView {
     private let searchTextField = UITextField().then {

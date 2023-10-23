@@ -30,8 +30,10 @@ let targets: [Target] = [
         scripts:  generateEnvironment == .dev ? projectDevScripts : scripts, // 니들로 인하여 기본 스크립트와 분리 
         dependencies: [
             .feature(target: .RootFeature),
-            .domain(target: .AuthDomain), // TODO: 임시 디펜던시
-            .core(target: .JwtStore)
+            .core(target: .JwtStore),
+            .domain(target: .AuthDomain),
+            .domain(target: .BookMarkDomain),
+            .domain(target: .UserDomain)
         ],
         settings: .settings(base: env.baseSetting)
     )

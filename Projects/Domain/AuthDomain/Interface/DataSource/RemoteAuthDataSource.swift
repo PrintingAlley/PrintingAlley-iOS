@@ -9,9 +9,12 @@
 import Foundation
 import Network
 import RxSwift
+import BaseDomainInterface
 
 public protocol RemoteAuthDataSource {
     func loadJwtToken(accessToken:String, provider:String) -> Single<TokenEntity>
     func jwtTest() -> Single<TokenTestEntity>
+    func logout() -> Single<BaseEntity>
+    func withdraw() -> Single<BaseEntity>
     
 }

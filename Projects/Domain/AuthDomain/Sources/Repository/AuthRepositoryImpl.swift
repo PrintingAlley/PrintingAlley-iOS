@@ -9,11 +9,13 @@
 import Foundation
 import AuthDomainInterface
 import RxSwift
+import BaseDomainInterface
 
 struct AuthRepositoryImpl: AuthRepository {
- 
     
+    let disposeBag = DisposeBag()
 
+    
     private let localAuthDataSource: any LocalAuthDataSource
     private let remoteAuthDataSource: any RemoteAuthDataSource
     
@@ -30,5 +32,21 @@ struct AuthRepositoryImpl: AuthRepository {
         remoteAuthDataSource.jwtTest()
     }
     
+    func logout() -> Single<BaseEntity> {
+    
+       remoteAuthDataSource.logout()
+            .do(onSuccess: { _ in
+                localAuthDataSource.removeToken()
+            })
+            
+    }
+    
+    func withdraw() -> Single<BaseEntity> {
+
+        remoteAuthDataSource.withdraw()
+            .do(onSuccess: { _ in
+                localAuthDataSource.removeToken()
+            })
+    }
     
 }

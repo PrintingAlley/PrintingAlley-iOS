@@ -143,18 +143,19 @@ extension MyPageFooterView {
         imageView.snp.makeConstraints {
             $0.width.height.equalTo(15)
             $0.left.equalToSuperview().inset(24)
-            $0.top.equalTo(baseLine.snp.bottom).offset(32)
+            $0.centerY.equalTo(label.snp.centerY).offset(2)
+            
         }
         
         label.snp.makeConstraints {
             $0.left.equalTo(imageView.snp.right).offset(8)
-            $0.centerY.equalTo(imageView.snp.centerY)
+            $0.top.equalTo(baseLine.snp.bottom).offset(20)
         
         }
         
         button.snp.makeConstraints {
             $0.right.equalToSuperview().inset(24)
-            $0.centerY.equalTo(imageView.snp.centerY)
+            $0.centerY.equalTo(label.snp.centerY)
         }
         
         infoImageView.snp.makeConstraints {

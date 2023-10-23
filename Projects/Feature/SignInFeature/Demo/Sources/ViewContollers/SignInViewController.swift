@@ -14,28 +14,13 @@ import KakaoSDKCommon
 
 public class SignInViewController: UIViewController {
 
-    var viewModel: SignInViewModel!
-    var input: SignInViewModel.Input!
-    
-    let versionLabel: UILabel = UILabel().then {
-        $0.text = "버전정보 \(APP_VERSION())"
-        $0.textAlignment = .center
+    lazy var button: UIButton = UIButton().then{
+        $0.setTitle("Press", for: .normal)
     }
     
-    let stackView: UIStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.spacing = 8
-    }
-    
-    let kakaoButton: LoginButtonView = LoginButtonView(type: .kakao)
-    let naverButton: LoginButtonView = LoginButtonView(type: .naver)
-    let appleButton: LoginButtonView = LoginButtonView(type: .apple)
-    let googleButton: LoginButtonView = LoginButtonView(type: .google)
-
-    init(viewModel: SignInViewModel!) {
+    init() {
         super.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
-        self.input = SignInViewModel.Input()
+
     }
     
     required init?(coder: NSCoder) {
@@ -44,76 +29,21 @@ public class SignInViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
-        kakaoButton.delegate = self
-        naverButton.delegate = self
-        appleButton.delegate = self
-        googleButton.delegate = self
-        addSubviews()
-        makeConstraints()
-        bindViewModel()
+        
+        self.view.addSubview(button)
+        
+        button.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        button.addTarget(self, action: #selector(tap), for: .touchUpInside)
         
         // Do any additional setup after loading the view.
     }
     
+    @objc func tap() {
+        self.view.showToast(text: "안아마안ㅁㅇㅁ너염ㄴ안ㅁ")
+    }
 }
 
-extension SignInViewController {
-    
-    func addSubviews() {
-        self.view.addSubview(versionLabel)
-        self.view.addSubview(stackView)
-        self.stackView.addArrangedSubview(kakaoButton)
-        self.stackView.addArrangedSubview(naverButton)
-        self.stackView.addArrangedSubview(appleButton)
-        self.stackView.addArrangedSubview(googleButton)
-        
-    }
-    
-    func makeConstraints() {
-        
-        versionLabel.snp.makeConstraints {
-            
-            $0.left.right.equalToSuperview().inset(20)
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(52)
-            
-        }
-        
-        kakaoButton.snp.makeConstraints {
-            $0.height.equalTo(54)
-            $0.left.right.equalToSuperview()
-        }
-        
-        naverButton.snp.makeConstraints {
-            $0.height.equalTo(54)
-            $0.left.right.equalToSuperview()
-        }
-        
-        appleButton.snp.makeConstraints {
-            $0.height.equalTo(54)
-            $0.left.right.equalToSuperview()
-        }
-        
-        googleButton.snp.makeConstraints {
-            $0.height.equalTo(54)
-            $0.left.right.equalToSuperview()
-        }
-        
-        stackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalTo(versionLabel.snp.top).offset(-55)
-        }
-    }
-    
-    func bindViewModel() {
-        let output = viewModel.transform(input: input)
-    }
-    
-}
 
-extension SignInViewController: LoginButtonViewDelegate {
-    public func action(type: LoginType) {
-        input.tapLoginButton.accept(type)
-    }
-    
-}

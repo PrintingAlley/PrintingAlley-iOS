@@ -87,3 +87,7 @@ public func OS_NAME() -> String {
     }()
     return osName
 }
+
+public func LOGOUT() {
+    PreferenceManager.user = nil 
+}

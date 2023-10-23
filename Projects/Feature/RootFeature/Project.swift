@@ -12,7 +12,9 @@ let project = Project.module(
             .feature(target: .SearchFeatue),
             .feature(target: .SignInFeature),
             .feature(target: .NearByMeFeature),
-            .feature(target: .BookMarkModule)
+            .feature(target: .BookMarkFeature),
+            .domain(target: .AuthDomain, type: .interface),
+            .domain(target: .UserDomain, type: .interface)
         ])
     ]
 )
