@@ -24,7 +24,7 @@ class BookMarkDetailTableViewCell: UITableViewCell {
     lazy var containerView: UIView = UIView()
     lazy var titleLabel: AlleyLabel = AlleyLabel().then{
         $0.numberOfLines = 1
-        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal) // 컨텐츠에 딱 맞게 줄어듬
+
     }
     lazy var subtitleLabel: AlleyLabel = AlleyLabel().then {
 
@@ -33,7 +33,6 @@ class BookMarkDetailTableViewCell: UITableViewCell {
     }
     lazy var tagLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 1
-      
 
     }
     lazy var button: UIButton = UIButton().then {
@@ -67,6 +66,7 @@ extension BookMarkDetailTableViewCell {
     func addSubviews() {
         self.contentView.addSubviews(containerView,baseLine,button)
         self.containerView.addSubviews(titleLabel,subtitleLabel,tagLabel)
+        
     }
     
     func makeConstraints() {
@@ -78,22 +78,21 @@ extension BookMarkDetailTableViewCell {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.left.equalToSuperview()
-            $0.left.equalToSuperview()
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(tagLabel.snp.bottom)
             
         }
         
         
         tagLabel.snp.makeConstraints {
-            $0.centerY.equalTo(titleLabel.snp.centerY)
-      
-            $0.left.equalTo(titleLabel.snp.right).offset(4)
+            $0.top.equalToSuperview()
+            $0.left.equalTo(titleLabel.snp.left)
             $0.right.equalToSuperview()
             
         }
         
         subtitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(6)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(4)
             $0.left.equalTo(titleLabel.snp.left)
             $0.right.equalTo(tagLabel.snp.right)
             $0.bottom.equalToSuperview()
@@ -109,7 +108,7 @@ extension BookMarkDetailTableViewCell {
             $0.height.equalTo(1)
             $0.left.equalToSuperview().inset(24)
             $0.right.equalToSuperview().inset(26)
-            $0.top.equalTo(containerView.snp.bottom).offset(14)
+            $0.top.equalTo(containerView.snp.bottom).offset(20)
             $0.bottom.equalToSuperview()
         }
         
@@ -121,15 +120,12 @@ extension BookMarkDetailTableViewCell {
 
         titleLabel.setTitle(title: model.printShop.name, textColor: .sub(.black), font: .subtitle1)
         subtitleLabel.setTitle(title: model.printShop.address, textColor: .sub(.black), font: .body2)
-        tagLabel.setTitle(title: model.printShop.tags.map{$0.name}.joined(separator: "·"), textColor: .grey(.grey500), font: .caption1)
+        tagLabel.setTitle(title: model.printShop.tags.map{$0.name}.joined(separator: " · "), textColor: .mainBlue(.blue500), font: .caption1)
         
         
-        
-        titleLabel.backgroundColor = .red
         titleLabel.lineBreakMode = .byTruncatingTail
         subtitleLabel.lineBreakMode = .byTruncatingTail
         tagLabel.lineBreakMode = .byTruncatingTail
-        
         baseLine.layer.opacity = isLast ? 0 : 1
     }
     

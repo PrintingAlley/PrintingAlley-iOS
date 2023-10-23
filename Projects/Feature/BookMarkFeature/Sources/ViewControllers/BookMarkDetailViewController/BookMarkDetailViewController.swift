@@ -114,7 +114,7 @@ extension BookMarkDetailViewController {
         }
         
         countLabel.snp.makeConstraints {
-            $0.top.equalTo(naviTitleView.snp.bottom).offset(4)
+            $0.top.equalTo(naviTitleView.snp.bottom).offset(5)
             $0.horizontalEdges.equalToSuperview()
         }
         

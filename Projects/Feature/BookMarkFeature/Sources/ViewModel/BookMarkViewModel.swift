@@ -115,6 +115,9 @@ extension BookMarkViewModel {
                 return self.fetchMyBookMarksUseCase.execute()
                     .catch({ error in
                         let alleryError = error.asAlleyError
+                        
+                        output.showToast.onNext(BaseEntity(statusCode: 0, message: alleryError.errorDescription))
+                        
                             return Single<[MyBookMarkEntity]>.create { single in
                                 single(.success([]))
                                 return Disposables.create()
