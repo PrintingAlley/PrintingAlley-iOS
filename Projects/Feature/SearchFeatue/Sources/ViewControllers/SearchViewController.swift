@@ -13,7 +13,7 @@ import DesignSystem
 
 final class SearchViewController: UIViewController {
     
-    private let navigationView = UIView()
+    private let navigationBar = UIView()
     
     private lazy var backButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
@@ -40,12 +40,12 @@ extension SearchViewController {
     }
     
     private func addSubviews() {
-        view.addSubviews(navigationView, recommendView)
-        navigationView.addSubviews(backButton, searchBar)
+        view.addSubviews(navigationBar, recommendView)
+        navigationBar.addSubviews(backButton, searchBar)
     }
     
     private func makeConstraints() {
-        navigationView.snp.makeConstraints {
+        navigationBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(17)
             $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)

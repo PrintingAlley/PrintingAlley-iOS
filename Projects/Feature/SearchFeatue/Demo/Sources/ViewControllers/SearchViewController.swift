@@ -10,10 +10,19 @@ import UIKit
 import Then
 import SnapKit
 import DesignSystem
+import BaseFeatureInterface
+import RxSwift
+import RxDataSources
+import UtilityModule
 
 final class SearchViewController: UIViewController {
     
-    private let navigationView = UIView()
+    private var viewModel: SearchViewModel!
+    
+    let disposeBag = DisposeBag()
+    private let input = SearchViewModel.Input()
+    
+    private let navigationBar = UIView()
     
     private lazy var backButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
@@ -24,28 +33,33 @@ final class SearchViewController: UIViewController {
     
     private let recommendView = UIView()
     
+    init(viewModel: SearchViewModel!) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .setColor(.sub(.white))
+        configureCommonUI()
         addSubviews()
         makeConstraints()
         setKeyboardDown()
+        bindViewModel()
     }
 }
 
 extension SearchViewController {
-    private func setKeyboardDown() {
-        let keyboardDownGesture = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
-        self.view.addGestureRecognizer(keyboardDownGesture)
-    }
-    
     private func addSubviews() {
-        view.addSubviews(navigationView, recommendView)
-        navigationView.addSubviews(backButton, searchBar)
+        view.addSubviews(navigationBar, recommendView)
+        navigationBar.addSubviews(backButton, searchBar)
     }
     
     private func makeConstraints() {
-        navigationView.snp.makeConstraints {
+        navigationBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(17)
             $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
@@ -69,6 +83,17 @@ extension SearchViewController {
             $0.top.equalToSuperview().inset(125)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func setKeyboardDown() {
+        let keyboardDownGesture = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
+        self.view.addGestureRecognizer(keyboardDownGesture)
+    }
+    
+    private func bindViewModel() {
+        let output = self.viewModel.transform(input: input)
+        bindTagDataSource(output: output)
+        bindViewDidLoad(input: input)
     }
 }
 
