@@ -11,8 +11,13 @@ import UtilityModule
 import DesignSystem
 import Then
 import SnapKit
+import SearchFeatueInterface
 
 final class HomeViewController: UIViewController {
+    private var searchFactory: any SearchFactory
+    private var viewModel: HomeViewModel!
+    
+    
     private let blueBackgroundView = UIView().then {
         $0.backgroundColor = .setColor(.mainBlue(.blue500))
     }
@@ -56,11 +61,10 @@ final class HomeViewController: UIViewController {
     
     private let headerViewHeight: CGFloat = 280
     
-    var viewModel: HomeViewModel!
-    
-    init(viewModel: HomeViewModel) {
-        super.init(nibName: nil, bundle: nil)
+    init(viewModel: HomeViewModel, searchFactory: SearchFactory) {
+        self.searchFactory = searchFactory
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
