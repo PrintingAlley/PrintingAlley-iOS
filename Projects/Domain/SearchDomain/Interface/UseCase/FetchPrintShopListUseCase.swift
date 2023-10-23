@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 public protocol FetchPrintShopListUseCase {
-    func execute() -> Single<[PrintShopListEntity]>
+    func execute(searchText: String, tagIds: [Int]) -> Single<[PrintShopListEntity]>
 }

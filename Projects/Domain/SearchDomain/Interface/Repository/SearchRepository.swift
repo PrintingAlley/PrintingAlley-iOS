@@ -11,5 +11,5 @@ import RxSwift
 import BaseDomainInterface
 
 public protocol SearchRepository {
-    func fetchPrintShopList() -> Single<[PrintShopListEntity]>
+    func fetchPrintShopList(searchText: String, tagIds: [Int]) -> Single<[PrintShopListEntity]>
 }
