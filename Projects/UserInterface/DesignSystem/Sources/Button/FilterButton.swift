@@ -47,7 +47,9 @@ public final class FilterButton: UIButton {
 
 extension FilterButton {
     func configureUI(_ type: FilterButtonType) {
-        self.setRound([.allCorners], radius: 16)
+        let stringSize = (title as NSString).size(withAttributes: [NSAttributedString.Key.font: UIFont.setFont(.body1)])
+        
+        self.setRound([.allCorners], radius: (stringSize.height + 8) / 2)
         self.setTitle(title, for: .normal)
         self.titleLabel?.font = UIFont.setFont(.body1)
         
