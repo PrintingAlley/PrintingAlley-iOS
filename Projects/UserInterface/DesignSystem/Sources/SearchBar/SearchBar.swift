@@ -22,6 +22,10 @@ public final class SearchBar: UIView {
         $0.setImage(DesignSystemAsset.Icon.search.image, for: .normal)
     }
     
+    override public func layoutSubviews() {
+        self.setRound([.allCorners], radius: self.frame.height / 2)
+    }
+    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -37,9 +41,6 @@ public final class SearchBar: UIView {
 // MARK: - UI 관련 함수
 extension SearchBar {
     private func configureUI() {
-        DispatchQueue.main.async {
-            self.setRound([.allCorners], radius: self.frame.height / 2)
-        }
         self.backgroundColor = .setColor(.sub(.white))
         self.layer.borderColor = UIColor.setColor(.grey(.grey100)).cgColor
         self.layer.borderWidth = 1.0
