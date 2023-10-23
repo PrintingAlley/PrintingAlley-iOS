@@ -15,11 +15,13 @@ import RxSwift
 final class HomeViewModel: ViewModelType {
     
     var fetchTagToplevelUseCase: any FetchTagToplevelUseCase
+    var fetchHierarchyUseCase: any FetchHierarchyUseCase
     
     let disposeBag = DisposeBag()
     
-    init(fetchTagToplevelUseCase: FetchTagToplevelUseCase) {
+    init(fetchTagToplevelUseCase: FetchTagToplevelUseCase, fetchHierarchyUseCase: FetchHierarchyUseCase) {
         self.fetchTagToplevelUseCase = fetchTagToplevelUseCase
+        self.fetchHierarchyUseCase = fetchHierarchyUseCase
     }
     
     public struct Input {

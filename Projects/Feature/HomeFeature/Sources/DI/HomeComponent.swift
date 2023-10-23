@@ -18,6 +18,6 @@ public protocol HomeDependency: Dependency {
 
 public final class HomeComponent: Component<HomeDependency>, HomeFactory {
     public func makeView() -> UIViewController {
-        HomeViewController(viewModel: HomeViewModel(fetchTagToplevelUseCase: dependency.tagDomainFactory.fetchTagToplevelUseCase ))
+        HomeViewController(viewModel: HomeViewModel(fetchTagToplevelUseCase: dependency.tagDomainFactory.fetchTagToplevelUseCase, fetchHierarchyUseCase: dependency.tagDomainFactory.fetchHierarchyUseCase))
     }
 }
