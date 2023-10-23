@@ -28,8 +28,8 @@ struct AuthRepositoryImpl: AuthRepository {
         remoteAuthDataSource.loadJwtToken(accessToken: accessToken, provider: provider)
     }
     
-    func jwtTest() -> Single<TokenTestEntity> {
-        remoteAuthDataSource.jwtTest()
+    func verify() -> Single<VerifyEntity> {
+        remoteAuthDataSource.verify()
     }
     
     func logout() -> Single<BaseEntity> {

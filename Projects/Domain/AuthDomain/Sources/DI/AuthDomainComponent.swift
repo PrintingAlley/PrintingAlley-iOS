@@ -23,8 +23,8 @@ public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDom
         FetchLoginUseCaseImpl(authRepository: authRepository)
     }
     
-    public var fetchTokenTestUseCase: any FetchTokenTestUseCase {
-        FetchTokenTestUseCaseImpl(authRepository: authRepository)
+    public var verifyUserUseCase: any VerifyUserUseCase {
+        VerifyUserUseCaseImpl(authRepository: authRepository)
     }
     
     public var logOutUseCase: any LogOutUseCase {

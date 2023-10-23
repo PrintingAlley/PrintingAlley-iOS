@@ -21,6 +21,6 @@ public protocol SignInDependency: Dependency {
 
 public final class SignInComponent: Component<SignInDependency>, SigninFactory {
     public func makeView() -> UIViewController {
-        SignInViewController(viewModel: SignInViewModel(fetchLoginUseCase: dependency.authDomainFactory.fetchLoginUseCase, fetchTokenTestUseCase: dependency.authDomainFactory.fetchTokenTestUseCase, fetchUserInfoUseCase: dependency.userDomainFactory.fetchUserInfoUseCase))
+        SignInViewController(viewModel: SignInViewModel(fetchLoginUseCase: dependency.authDomainFactory.fetchLoginUseCase, fetchUserInfoUseCase: dependency.userDomainFactory.fetchUserInfoUseCase))
     }
 }

@@ -25,12 +25,10 @@ final class SignInViewModel: NSObject, ViewModelType {
     let oauthToken: PublishRelay<(String,LoginType)> = PublishRelay()
     
     var fetchLoginUseCase: any FetchLoginUseCase
-    var fetchTokenTestUseCase: any FetchTokenTestUseCase
     var fetchUserInfoUseCase: any FetchUserInfoUseCase
     
-    init(fetchLoginUseCase: FetchLoginUseCase!, fetchTokenTestUseCase: FetchTokenTestUseCase, fetchUserInfoUseCase: FetchUserInfoUseCase) {
+    init(fetchLoginUseCase: FetchLoginUseCase!,fetchUserInfoUseCase: FetchUserInfoUseCase) {
         self.fetchLoginUseCase = fetchLoginUseCase
-        self.fetchTokenTestUseCase = fetchTokenTestUseCase
         self.fetchUserInfoUseCase = fetchUserInfoUseCase
     }
     

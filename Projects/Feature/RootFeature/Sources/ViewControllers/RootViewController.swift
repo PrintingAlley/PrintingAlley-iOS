@@ -61,15 +61,31 @@ extension RootViewController {
     
     func bidViewModel() {
         let output = viewModel.transform(input: input)
+     
+        /*
+          1. 앱 버전 체크 하며 네트워크 체크
+          2.
+         
+         */
         
-        bindViewDidLoad(input: input)
+        bindStartLottieAndAppCheck(input: input)
         bindMoveMain(output: output)
         
     }
     
-    func bindViewDidLoad(input: RootViewModel.Input) {
-        input.viewDidLoad.onNext(())
+    func bindStartLottieAndAppCheck(input: RootViewModel.Input) {
+        input.startLottie.onNext(())
+        input.fetchAppCheck.onNext(())
     }
+    
+    func bindEndLottie(output: RootViewModel.Output) {
+        output.endLottie
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,_) in 
+            
+        })
+    }
+    
     func bindMoveMain(output: RootViewModel.Output) {
         output.moveMain
             .withUnretained(self)

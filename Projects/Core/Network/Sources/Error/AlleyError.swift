@@ -17,6 +17,7 @@ public enum AlleyError: Error {
     case conflict
     case tooManyRequest
     case internalServerError
+    case offline
     
     public init(statusCode: Int) {
         
@@ -41,6 +42,9 @@ public enum AlleyError: Error {
 
         case 500:
             self = .internalServerError
+            
+        case 1009:
+            self = .offline
 
         default:
             self = .internalServerError
@@ -69,6 +73,9 @@ extension AlleyError {
             return "요청 횟수를 초과했습니다.\n잠시 후 다시 시도해주세요!"
         case .internalServerError: // 500
             return "서버에서 문제가 발생하였습니다.\n잠시 후 다시 시도해주세요!"
+        
+        case .offline:
+            return "인터넷 연결이 오프라인입니다.\n네트워크 상태를 확인해주세요."
         }
     }
 }
