@@ -8,6 +8,7 @@
 
 import UIKit
 import DesignSystem
+import BaseFeature
 
 final class AfterSearchViewController: UIViewController {
     var testRecommend: [RecommendModel] = [

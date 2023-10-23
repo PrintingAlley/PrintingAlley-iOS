@@ -10,6 +10,7 @@ import UIKit
 import Then
 import SnapKit
 import DesignSystem
+import BaseFeature
 
 final class BeforeSearchViewController: UIViewController {
     var testRecommend: [RecommendModel] = [

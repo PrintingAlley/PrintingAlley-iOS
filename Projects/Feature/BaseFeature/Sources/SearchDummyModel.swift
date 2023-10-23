@@ -8,6 +8,10 @@
 
 import Foundation
 
-struct RecommendModel {
-    let title: String
+public struct RecommendModel {
+    public let title: String
+    
+    public init(title: String) {
+        self.title = title
+    }
 }

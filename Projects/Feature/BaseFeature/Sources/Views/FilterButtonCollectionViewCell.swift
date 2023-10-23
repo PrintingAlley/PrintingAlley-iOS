@@ -11,13 +11,13 @@ import SnapKit
 import Then
 import DesignSystem
 
-final class FilterButtonCollectionViewCell: UICollectionViewCell {
+public final class FilterButtonCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "RecommendCollectionViewCell"
+    public static let identifier = "RecommendCollectionViewCell"
     
     private var filterButton = FilterButton(title: "기본버튼", type: .basic, willChangeUI: false)
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
         makeConstraints()
@@ -39,7 +39,7 @@ extension FilterButtonCollectionViewCell {
         }
     }
     
-    func dummyDataBind(model: RecommendModel, type: FilterButtonType, willChangeUI: Bool) {
+    public func dummyDataBind(model: RecommendModel, type: FilterButtonType, willChangeUI: Bool) {
         filterButton.title = model.title
         filterButton.type = type
         filterButton.willChangeUI = willChangeUI
