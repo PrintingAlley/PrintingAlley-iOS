@@ -13,6 +13,10 @@ import RxSwift
 struct FetchPrintShopListUseCaseImpl: FetchPrintShopListUseCase {
     private let searchRepository: any SearchRepository
     
+    init(searchRepository: SearchRepository) {
+        self.searchRepository = searchRepository
+    }
+    
     func execute(searchText: String, tagIds: [Int]) -> Single<[PrintShopListEntity]> {
         searchRepository.fetchPrintShopList(searchText: searchText, tagIds: tagIds)
     }
