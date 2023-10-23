@@ -126,13 +126,13 @@ extension BookMarkDetailViewController {
         
         baseLine.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.top.equalTo(countLabel.snp.bottom).offset(16)
+            $0.top.equalTo(countLabel.snp.bottom).offset(21)
             $0.horizontalEdges.equalToSuperview()
         }
         
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(baseLine.snp.bottom).offset(16)
+            $0.top.equalTo(baseLine.snp.bottom)
             $0.left.right.bottom.equalToSuperview()
         }
         
