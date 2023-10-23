@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 public protocol FetchHierarchyUseCase {
-    func execute() -> Single<[TagToplevelEntity]>
+    func execute() -> Single<HierarchyEntity>
 }

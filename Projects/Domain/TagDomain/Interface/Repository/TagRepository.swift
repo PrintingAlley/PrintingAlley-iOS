@@ -12,5 +12,6 @@ import BaseDomainInterface // status 와 메세지만 오는 경우를 위해
 
 public protocol TagRepository {
     func fetchTagToplevel() -> Single<[TagToplevelEntity]>
+    func fetchHierarchy() -> Single<HierarchyEntity>
 }
 // Usecase 정의 후 Repository 생성
