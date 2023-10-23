@@ -35,11 +35,10 @@ final class SearchViewController: UIViewController, ContainerViewType {
     
     private let searchBar = SearchBar()
     
-//    private let recommendView = UIView()
-    
     init(viewModel: SearchViewModel!) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.add(asChildViewController: beforeVc)
     }
     
     required init?(coder: NSCoder) {
@@ -49,7 +48,6 @@ final class SearchViewController: UIViewController, ContainerViewType {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCommonUI()
-        configureUI()
         addSubviews()
         makeConstraints()
         setKeyboardDown()
@@ -58,8 +56,9 @@ final class SearchViewController: UIViewController, ContainerViewType {
 }
 
 extension SearchViewController {
-    private func configureUI() {
-        self.add(asChildViewController: beforeVc)
+    private func updateAfterVC() {
+        self.remove(asChildViewController: beforeVc)
+        self.add(asChildViewController: afterVc)
     }
     
     private func addSubviews() {
@@ -108,12 +107,14 @@ extension SearchViewController {
 
 // MARK: - TextField Delegate
 extension SearchViewController: UITextFieldDelegate {
-    public func textFieldDidChangeSelection(_ textField: UITextField) {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.becomeFirstResponder()
+        updateAfterVC() // 수정 필요 ~
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 

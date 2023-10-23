@@ -108,12 +108,18 @@ extension SearchViewController {
 
 // MARK: - TextField Delegate
 extension SearchViewController: UITextFieldDelegate {
-    public func textFieldDidChangeSelection(_ textField: UITextField) {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.becomeFirstResponder()
+        self.remove(asChildViewController: beforeVc)
+        self.add(asChildViewController: afterVc)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
     }
 }
 
