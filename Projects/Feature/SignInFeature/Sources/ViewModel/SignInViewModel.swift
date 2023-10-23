@@ -16,6 +16,7 @@ import KakaoSDKUser
 import KakaoSDKAuth
 import AuthDomainInterface
 import UserDomainInterface
+import BaseDomainInterface
 
 final class SignInViewModel: NSObject, ViewModelType {
 
@@ -40,6 +41,7 @@ final class SignInViewModel: NSObject, ViewModelType {
     struct Output {
         let runGoogleLogin: PublishRelay<Void> = .init()
         let loginResult: PublishSubject<Void> = .init()
+        let showToast: PublishSubject<BaseEntity> = .init()
         
     }
 
@@ -88,7 +90,6 @@ final class SignInViewModel: NSObject, ViewModelType {
                     .catch{ err in
                         
                         let alleryError = err.asAlleyError
-                        DEBUG_LOG(err.localizedDescription)
                         
                         return Single<TokenEntity>.create { single in
                             single(.success(TokenEntity(access_token: "",statusCode: 401,message: alleryError.errorDescription)))
@@ -98,6 +99,12 @@ final class SignInViewModel: NSObject, ViewModelType {
                     }
                     .asObservable()
             }
+            .do(onNext: {
+                if $0.statusCode != 201 && $0.statusCode != 200  {
+                    output.showToast.onNext(BaseEntity(statusCode: $0.statusCode, message: $0.message))
+                }
+                
+            })
             .filter({$0.statusCode != 401})
             .flatMap({ [weak self]  _  -> Observable<UserInfoEntity> in
                 
