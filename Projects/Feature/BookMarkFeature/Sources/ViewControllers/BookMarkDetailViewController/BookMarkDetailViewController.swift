@@ -30,7 +30,7 @@ class BookMarkDetailViewController: UIViewController {
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
     }
-    //TODO: 이미지 교체 
+
     lazy var editButton: UIButton = UIButton().then{
         $0.setImage(DesignSystemAsset.Icon.pencil.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFit
