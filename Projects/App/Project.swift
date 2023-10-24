@@ -34,7 +34,8 @@ let targets: [Target] = [
             .domain(target: .AuthDomain),
             .domain(target: .BookMarkDomain),
             .domain(target: .UserDomain),
-            .domain(target: .SearchDomain)
+            .domain(target: .SearchDomain),
+            .domain(target: .TagDomain)
         ],
         settings: .settings(base: env.baseSetting)
     )
