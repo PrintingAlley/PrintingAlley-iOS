@@ -33,7 +33,8 @@ let targets: [Target] = [
             .core(target: .JwtStore),
             .domain(target: .AuthDomain),
             .domain(target: .BookMarkDomain),
-            .domain(target: .UserDomain)
+            .domain(target: .UserDomain),
+            .domain(target: .SearchDomain)
         ],
         settings: .settings(base: env.baseSetting)
     )
