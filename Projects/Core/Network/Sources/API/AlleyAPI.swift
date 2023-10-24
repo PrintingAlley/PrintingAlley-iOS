@@ -41,7 +41,8 @@ public enum AlleyDomain: String {
     case auth
     case bookmark
     case tag
-    
+    case user
+    case printShop
 }
 
 extension AlleyDomain {
@@ -55,6 +56,10 @@ extension AlleyDomain {
             return "bookmark"
         case .tag:
             return "tag"
+        case .user:
+            return "user"
+        case .printShop:
+            return "print-shop"
         }
     }
     

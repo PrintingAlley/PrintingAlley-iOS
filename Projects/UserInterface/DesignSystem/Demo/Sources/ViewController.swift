@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     }
     
     @objc func action() {
-        let vc = BookMarkBottomSheetViewController(viewModel: BookMarkBottomSheetViewModel())
+       // let vc = BookMarkBottomSheetViewController(viewModel: BookMarkBottomSheetViewModel())
         fpc = FloatingPanelController()
         
         // Create a new appearance.
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         // Set the new appearance
         fpc.surfaceView.appearance = appearance
         
-        fpc.set(contentViewController: vc)
+        //fpc.set(contentViewController: vc)
         fpc.isRemovalInteractionEnabled = true // 끌어 내려 닫기
         fpc.backdropView.dismissalTapGestureRecognizer.isEnabled = true
         

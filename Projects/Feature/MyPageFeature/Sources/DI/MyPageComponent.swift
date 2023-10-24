@@ -11,11 +11,13 @@ import NeedleFoundation
 import MyPageFeatureInterface
 import UIKit
 import SignInFeatureInterface
+import BookMarkFeatureInterface
 
 public protocol MyPageDependency: Dependency {
     
     var signInFactory: any SigninFactory { get }
     var myPageContentFactory: any MyPageContentFactory { get }
+   
     
 }
 

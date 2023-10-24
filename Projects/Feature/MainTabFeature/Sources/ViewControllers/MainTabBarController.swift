@@ -11,6 +11,7 @@ import DesignSystem
 import MyPageFeatureInterface
 import HomeFeatureInterface
 import NearByMeFeatureInterface
+import UtilityModule
 
 public class MainTabBarController: UITabBarController {
     private var myPageFactory: any MyPageFactory
@@ -20,9 +21,9 @@ public class MainTabBarController: UITabBarController {
 
     private lazy var tabbarControllers: [UIViewController] = {
         let viewControllers = [
-            homeFactory.makeView(),
-            nearByMeFactory.makeView(),
-            myPageFactory.makeView()
+            homeFactory.makeView().wrapNavigationController,
+            nearByMeFactory.makeView().wrapNavigationController,
+            myPageFactory.makeView().wrapNavigationController
         ]
         return viewControllers
     }()
@@ -52,6 +53,7 @@ public class MainTabBarController: UITabBarController {
         self.tabBar.backgroundColor = .brown
         configureUI()
         styleTabBar()
+        
     }
 }
 

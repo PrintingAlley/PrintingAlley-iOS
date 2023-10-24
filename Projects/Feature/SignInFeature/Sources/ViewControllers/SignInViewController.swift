@@ -45,7 +45,7 @@ public class SignInViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        configureCommonUI()
         kakaoButton.delegate = self
         naverButton.delegate = self
         appleButton.delegate = self
@@ -105,10 +105,19 @@ extension SignInViewController {
     
     func bindViewModel() {
         let output = viewModel.transform(input: input)
-        
+        bindshowToast(output: output)
         
         
         //bindGoogleLogin(output: output)
+    }
+    
+    func bindshowToast(output: SignInViewModel.Output) {
+        output.showToast
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,content) in
+                owner.view.showToast(text: content.message)
+            })
+            .disposed(by: disposeBag)
     }
     /*
      func bindGoogleLogin(output: SignInViewModel.Output) {

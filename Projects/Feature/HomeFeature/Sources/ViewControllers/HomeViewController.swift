@@ -11,10 +11,17 @@ import UtilityModule
 import DesignSystem
 import Then
 import SnapKit
+import SearchFeatueInterface
 import RxSwift
 import RxDataSources
 
 final class HomeViewController: UIViewController {
+    private var searchFactory: any SearchFactory
+    private var viewModel: HomeViewModel!
+    
+    let disposeBag = DisposeBag()
+    var output: HomeViewModel.Output!
+    
     private let blueBackgroundView = UIView().then {
         $0.backgroundColor = .setColor(.mainBlue(.blue500))
     }
@@ -58,15 +65,10 @@ final class HomeViewController: UIViewController {
     
     private let headerViewHeight: CGFloat = 280
     
-    let disposeBag = DisposeBag()
-    
-    var viewModel: HomeViewModel!
-    
-    var output: HomeViewModel.Output!
-    
-    init(viewModel: HomeViewModel) {
-        super.init(nibName: nil, bundle: nil)
+    init(viewModel: HomeViewModel, searchFactory: SearchFactory) {
+        self.searchFactory = searchFactory
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -75,6 +77,7 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
         addSubViews()
         makeConstraints()
         bindViewModel()
@@ -111,7 +114,9 @@ extension HomeViewController {
 // MARK: - Objc 함수
 extension HomeViewController {
     @objc private func navigateToSearch() {
-        print("네비게이션하렴")
+        let vc = searchFactory.makeView()
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

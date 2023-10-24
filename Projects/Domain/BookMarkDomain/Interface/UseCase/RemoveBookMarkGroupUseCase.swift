@@ -11,5 +11,5 @@ import RxSwift
 import BaseDomainInterface
 
 public protocol RemoveBookMarkGroupUseCase {
-    func execute(id: Int) -> Single<BaseEntity>
+    func execute(ids: [Int]) -> Single<BaseEntity>
 }

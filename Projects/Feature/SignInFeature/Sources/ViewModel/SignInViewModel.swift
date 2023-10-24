@@ -15,7 +15,8 @@ import AuthenticationServices
 import KakaoSDKUser
 import KakaoSDKAuth
 import AuthDomainInterface
-
+import UserDomainInterface
+import BaseDomainInterface
 
 final class SignInViewModel: NSObject, ViewModelType {
 
@@ -24,19 +25,11 @@ final class SignInViewModel: NSObject, ViewModelType {
     let oauthToken: PublishRelay<(String,LoginType)> = PublishRelay()
     
     var fetchLoginUseCase: any FetchLoginUseCase
-    var fetchTokenTestUseCase: any FetchTokenTestUseCase
+    var fetchUserInfoUseCase: any FetchUserInfoUseCase
     
-    
-    init(fetchLoginUseCase: FetchLoginUseCase!, fetchTokenTestUseCase: FetchTokenTestUseCase) {
+    init(fetchLoginUseCase: FetchLoginUseCase!,fetchUserInfoUseCase: FetchUserInfoUseCase) {
         self.fetchLoginUseCase = fetchLoginUseCase
-        self.fetchTokenTestUseCase = fetchTokenTestUseCase
-        
-        self.fetchTokenTestUseCase.execute()
-            .asObservable()
-            .subscribe(onNext: {
-                DEBUG_LOG($0)
-            })
-            .disposed(by: disposeBag)
+        self.fetchUserInfoUseCase = fetchUserInfoUseCase
     }
     
     struct Input {
@@ -46,6 +39,7 @@ final class SignInViewModel: NSObject, ViewModelType {
     struct Output {
         let runGoogleLogin: PublishRelay<Void> = .init()
         let loginResult: PublishSubject<Void> = .init()
+        let showToast: PublishSubject<BaseEntity> = .init()
         
     }
 
@@ -88,12 +82,51 @@ final class SignInViewModel: NSObject, ViewModelType {
                 
                 guard let self else {return Observable.empty()}
                 
+                ///토큰을 통한 jwt 토큰 받아오기
                 return self.fetchLoginUseCase
                     .execute(accessToken: accessToken, provider: type.rawValue)
+                    .catch{ err in
+                        
+                        let alleryError = err.asAlleyError
+                        
+                        return Single<TokenEntity>.create { single in
+                            single(.success(TokenEntity(access_token: "",statusCode: 401,message: alleryError.errorDescription)))
+                            return Disposables.create()
+                
+                        }
+                    }
                     .asObservable()
             }
+            .do(onNext: {
+                if $0.statusCode != 201 && $0.statusCode != 200  {
+                    output.showToast.onNext(BaseEntity(statusCode: $0.statusCode, message: $0.message))
+                }
+                
+            })
+            .filter({$0.statusCode != 401})
+            .flatMap({ [weak self]  _  -> Observable<UserInfoEntity> in
+                
+                guard let self else {return Observable.empty()}
+                
+                /// jwt 토큰을 통해 유저 데이터 가져오기
+                return self.fetchUserInfoUseCase.execute()
+                    .catch{ err in
+                        
+                        let alleryError = err.asAlleyError
+                        DEBUG_LOG(err.localizedDescription)
+                        
+                        return Single<UserInfoEntity>.create { single in
+                            single(.success(UserInfoEntity(id: 0, provider: "apple", name: "", profileImage: "", email: "", statusCode: 401, message: "")))
+                            return Disposables.create()
+                
+                        }
+                    }
+                    .asObservable()
+                
+            })
             .subscribe(onNext: {
-                DEBUG_LOG("제발 받아와 !! \($0) ")
+                /// 유저 데이터에 업데이트
+                PreferenceManager.shared.setUserInfo(id: $0.id, name: $0.name, profileImage: $0.profileImage, email: $0.email, platform: .init(rawValue: $0.provider) ?? .apple)
             })
             .disposed(by: disposeBag)
             

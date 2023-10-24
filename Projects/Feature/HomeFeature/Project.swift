@@ -9,8 +9,9 @@ let project = Project.module(
             .feature(target: .BaseFeature, type: .interface)
         ]),
         .implements(module: .feature(.HomeFeature), dependencies: [
-            .feature(target: .HomeFeature, type: .interface),
             .feature(target: .BaseFeature),
+            .feature(target: .HomeFeature, type: .interface),
+            .feature(target: .SearchFeatue, type: .interface),
             .domain(target: .TagDomain,type: .interface)
         ]),
         .demo(module: .feature(.HomeFeature), dependencies: [

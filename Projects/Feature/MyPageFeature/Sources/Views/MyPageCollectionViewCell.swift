@@ -26,7 +26,7 @@ class MyPageCollectionViewCell: UICollectionViewCell {
     var type: HeaderItemType!
     
     lazy var imageView: UIImageView = UIImageView().then {
-        $0.contentMode = .scaleToFill
+        $0.contentMode = .scaleAspectFit
     }
     lazy var label: AlleyLabel = AlleyLabel()
     
@@ -47,13 +47,15 @@ extension MyPageCollectionViewCell {
     func makeConstraints() {
         
         imageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(14)
-            $0.bottom.equalTo(label.snp.top).offset(-8)
+            $0.top.equalToSuperview().inset(4)
+            $0.width.height.equalTo(30)
+            $0.centerX.equalToSuperview()
+            
         }
         
         label.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(4)
+            $0.top.equalTo(imageView.snp.bottom).offset(-2)
+            $0.bottom.equalToSuperview()
             $0.centerX.equalTo(imageView.snp.centerX)
         }
     }

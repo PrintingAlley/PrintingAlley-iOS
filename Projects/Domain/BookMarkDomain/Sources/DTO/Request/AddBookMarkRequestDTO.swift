@@ -11,6 +11,6 @@ import BookMarkDomainInterface
 
 struct AddBookMarkRequestDTO : Encodable {
     let printShopId: Int
-    let bookmarkGroupId: Int
+    let groupId: Int
     
 }
