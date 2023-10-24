@@ -82,7 +82,7 @@ final class HomeViewController: UIViewController {
 }
 
 extension HomeViewController {
-    func bindViewModel(){
+    func bindViewModel() {
         let input = HomeViewModel.Input()
         
         output = viewModel.transform(input: input)

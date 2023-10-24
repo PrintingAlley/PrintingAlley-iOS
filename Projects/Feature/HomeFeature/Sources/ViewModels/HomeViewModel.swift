@@ -11,16 +11,17 @@ import UtilityModule
 import TagDomainInterface
 import RxRelay
 import RxSwift
+import BaseDomainInterface
 
 final class HomeViewModel: ViewModelType {
     
-    var fetchTagToplevelUseCase: any FetchTagToplevelUseCase
+    var fetchTagUseCase: any FetchTagUseCase
     var fetchHierarchyUseCase: any FetchHierarchyUseCase
     
     let disposeBag = DisposeBag()
     
-    init(fetchTagToplevelUseCase: FetchTagToplevelUseCase, fetchHierarchyUseCase: FetchHierarchyUseCase) {
-        self.fetchTagToplevelUseCase = fetchTagToplevelUseCase
+    init(fetchTagUseCase: FetchTagUseCase, fetchHierarchyUseCase: FetchHierarchyUseCase) {
+        self.fetchTagUseCase = fetchTagUseCase
         self.fetchHierarchyUseCase = fetchHierarchyUseCase
     }
     
@@ -29,18 +30,31 @@ final class HomeViewModel: ViewModelType {
     }
     
     public struct Output{
-        let tagDataSource: BehaviorRelay<[TagToplevelEntity]> = .init(value: [])
+        let tagDataSource: BehaviorRelay<[ChildrenTagEntity]> = .init(value: [])
     }
     
     public func transform(input: Input) -> Output {
         let output = Output()
         
         input.viewDidLoad
-            .flatMap({ [weak self] () -> Observable<[TagToplevelEntity]> in
+            .flatMap({ [weak self] () -> Observable<[ChildrenTagEntity]> in
                 
                 guard let self else { return Observable.empty()}
                 
-                return self.fetchTagToplevelUseCase.execute()
+                return self.fetchHierarchyUseCase.execute()
+                    .debug("HELLO")
+                    .map{$0.hierarchies}
+                    .catch({ error in
+                        
+                        let alleyError = error.asAlleyError
+                        
+                        DEBUG_LOG("Hello\(error.localizedDescription)")
+                        
+                        return Single<[ChildrenTagEntity]>.create { single in
+                            single(.success([]))
+                            return Disposables.create()
+                        }
+                    })
                     .asObservable()
                 
             })

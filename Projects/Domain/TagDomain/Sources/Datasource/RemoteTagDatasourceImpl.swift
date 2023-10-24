@@ -10,24 +10,29 @@ import Foundation
 import BaseDomain
 import TagDomainInterface
 import RxSwift
+import BaseDomainInterface
+
 
 final class RemoteTagDatasourceImpl: BaseRemoteDataSource<TagAPI>, RemoteTagDatasource {
-
     
-
     
-    func fetchTagToplevel() -> Single<[TagToplevelEntity]> {
-        request(.topLevel)
-            .map([TagTopLevelResponseDTO].self)
-            .map({$0.map{$0.toDomain()}})
-        
+    func fetchTag(id: Int) -> Single<ChildrenTagEntity> {
+        request(.tag(id: id))
+            .map(ChildrenTagResponseDTO.self)
+            .map{$0.toDomain()}
     }
     
-    func fetchHierarchy(id: Int) -> Single<HierarchyEntity> {
-        request(.hierarchy(id: id))
+    func fetchHierarchy() -> Single<HierarchyEntity> {
+        request(.hierarchy)
             .map(HierarchyResponseDTO.self)
             .map{$0.toDomain()}
     }
+    
+
+    
+
+    
+
     
 
     

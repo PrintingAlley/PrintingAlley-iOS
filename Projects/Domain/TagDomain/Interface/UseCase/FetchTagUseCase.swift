@@ -8,7 +8,8 @@
 
 import Foundation
 import RxSwift
+import BaseDomainInterface
 
-public protocol FetchTagToplevelUseCase {
-    func execute() -> Single<[TagToplevelEntity]>
+public protocol FetchTagUseCase {
+    func execute(id: Int) -> Single<ChildrenTagEntity>
 }

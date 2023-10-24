@@ -9,8 +9,11 @@
 import Foundation
 import TagDomainInterface
 import RxSwift
+import BaseDomainInterface
 
 struct TagRepositoryImpl: TagRepository {
+
+    
 
     
     private let remoteTagDatasource: any RemoteTagDatasource
@@ -19,12 +22,13 @@ struct TagRepositoryImpl: TagRepository {
         self.remoteTagDatasource = remoteTagDatasource
     }
     
-    func fetchTagToplevel() -> Single<[TagToplevelEntity]> {
-        remoteTagDatasource.fetchTagToplevel()
+
+    func fetchTag(id: Int) -> Single<ChildrenTagEntity> {
+        remoteTagDatasource.fetchTag(id: id)
     }
     
-    func fetchHierarchy(id: Int) -> Single<HierarchyEntity> {
-        remoteTagDatasource.fetchHierarchy(id: id)
+    func fetchHierarchy() -> Single<HierarchyEntity> {
+        remoteTagDatasource.fetchHierarchy()
     }
     
    

@@ -18,8 +18,8 @@ struct FetchHierarchyUseCaseImpl: FetchHierarchyUseCase {
         self.tagRepository = tagRepository
     }
     
-    func execute(id: Int) -> Single<HierarchyEntity> {
-        tagRepository.fetchHierarchy(id: id)
+    func execute() -> Single<HierarchyEntity> {
+        tagRepository.fetchHierarchy()
     }
     
 

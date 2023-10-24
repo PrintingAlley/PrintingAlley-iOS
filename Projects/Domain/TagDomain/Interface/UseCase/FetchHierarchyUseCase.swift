@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 public protocol FetchHierarchyUseCase {
-    func execute(id: Int) -> Single<HierarchyEntity>
+    func execute() -> Single<HierarchyEntity>
 }

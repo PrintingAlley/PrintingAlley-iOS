@@ -16,8 +16,8 @@ public protocol TagDomainDependency: Dependency {
 } // jwt 가 존재하는 곳. dependency에서 주입받음
 
 public final class TagDomainComponent: Component<TagDomainDependency>, TagDomainFactory {
-    public var fetchTagToplevelUseCase: any FetchTagToplevelUseCase {
-        FetchTagToplevelUseCaseImpl(tagRepository: tagRepository)
+    public var fetchTagUseCase: any FetchTagUseCase {
+        FetchTagUseCaseImpl(tagRepository: tagRepository)
     } // 레포지토리를 주입받음
     
     public var fetchHierarchyUseCase: any FetchHierarchyUseCase {

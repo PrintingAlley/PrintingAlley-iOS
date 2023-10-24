@@ -10,20 +10,12 @@ import Foundation
 import TagDomainInterface
 import BaseDomain
 
-struct HierarchyResponseDTO : Decodable { // Decodable no
-    let id: Int
-    let name: String
-    let image: String
-    let parent: String
-    let children: [String]
-    let printShops: [PrintShopResponseDTO]
+public struct HierarchyResponseDTO : Decodable { // Decodable no
+    let hierarchies: [ChildrenTagResponseDTO]
     let statusCode: Int?
     let message: String?
     
-    
-    func toDomain() -> HierarchyEntity {
-        HierarchyEntity(id: id, name: name, image: image, parent: parent, children: children, printShops: printShops.map{$0.toDomain()},statusCode: statusCode ?? 0, message: message ?? "")
+    public func toDomain() -> HierarchyEntity {
+        HierarchyEntity(statusCode: statusCode ?? 0, message: message ?? "",hierarchies: hierarchies.map{$0.toDomain()})
     }
-
-    
 }

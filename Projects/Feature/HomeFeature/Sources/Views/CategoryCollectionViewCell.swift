@@ -11,6 +11,7 @@ import Then
 import SnapKit
 import DesignSystem
 import TagDomainInterface
+import BaseDomainInterface
 
 final class CategoryCollectionViewCell: UICollectionViewCell {
     static let identifier = "CategoryCollectionViewCell"
@@ -51,7 +52,7 @@ extension CategoryCollectionViewCell {
         }
     }
     
-    public func update(model: TagToplevelEntity) {
+    public func update(model: ChildrenTagEntity) {
         label.setTitle(title: model.name, textColor: .grey(.grey800), font: .body2)
     }
 }

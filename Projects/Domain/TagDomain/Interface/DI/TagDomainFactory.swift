@@ -12,7 +12,7 @@ import Foundation
 
 public protocol TagDomainFactory {
     
-    var fetchTagToplevelUseCase: any FetchTagToplevelUseCase { get }
+    var fetchTagUseCase: any FetchTagUseCase { get }
     var fetchHierarchyUseCase: any FetchHierarchyUseCase { get }
 }
 // usecase 이름과 똑같이

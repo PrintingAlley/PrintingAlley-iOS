@@ -9,8 +9,11 @@
 import Foundation
 import TagDomainInterface
 import RxSwift
+import BaseDomainInterface
 
-struct FetchTagToplevelUseCaseImpl: FetchTagToplevelUseCase {
+struct FetchTagUseCaseImpl: FetchTagUseCase {
+
+    
     
     private let tagRepository: any TagRepository // any와 some의 차이 공부 . any - 프로토콜을 채택하고 있는 타입
     
@@ -18,7 +21,9 @@ struct FetchTagToplevelUseCaseImpl: FetchTagToplevelUseCase {
         self.tagRepository = tagRepository
     }
     
-    func execute() -> Single<[TagToplevelEntity]> {
-        tagRepository.fetchTagToplevel()
+
+    func execute(id: Int) -> Single<ChildrenTagEntity> {
+        tagRepository.fetchTag(id: id)
     }
+    
 }

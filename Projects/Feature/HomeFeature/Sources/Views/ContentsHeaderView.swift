@@ -12,11 +12,12 @@ import Then
 import SnapKit
 import DesignSystem
 import TagDomainInterface
+import BaseDomainInterface
 
 final class ContentsHeaderView: UICollectionReusableView {
     static let identifier = "ContentsHeaderView"
     
-    private var dataSource: [TagToplevelEntity] = []
+    private var dataSource: [ChildrenTagEntity] = []
     
     private let cellSpacing: CGFloat = 30
     private let collectionViewInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
@@ -107,7 +108,7 @@ extension ContentsHeaderView {
         return collectionView
     }
     
-    public func update(tagDataSource: [TagToplevelEntity]) {
+    public func update(tagDataSource: [ChildrenTagEntity]) {
         self.dataSource = tagDataSource
         
         categoryCollectionView.reloadData()

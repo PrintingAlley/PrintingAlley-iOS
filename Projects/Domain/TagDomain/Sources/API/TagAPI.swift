@@ -16,8 +16,8 @@ import JwtStoreInterface
 import TagDomain
 
 enum TagAPI {
-    case topLevel
-    case hierarchy(id: Int)
+    case tag(id: Int)
+    case hierarchy
 }
 
 extension TagAPI: AlleyAPI {
@@ -29,11 +29,11 @@ extension TagAPI: AlleyAPI {
         
         switch self {
           
-        case .topLevel:
-            return "/top-level"
+        case .tag(id: let id):
+            return "/\(id)"
     
-        case .hierarchy(id: let id):
-            return "/\(id)/hierarchy"
+        case .hierarchy:
+            return ""
         }
     }
     
@@ -53,7 +53,7 @@ extension TagAPI: AlleyAPI {
     var method: Moya.Method {
         switch self {
          
-        case .topLevel,.hierarchy:
+        case .tag,.hierarchy:
             return .get
         }
     }
@@ -61,7 +61,7 @@ extension TagAPI: AlleyAPI {
         var task: Task {
             switch self {
               
-            case .topLevel,.hierarchy:
+            case .tag,.hierarchy:
                 return .requestPlain
             }
         }
@@ -69,7 +69,7 @@ extension TagAPI: AlleyAPI {
     
     var jwtStoreProperties: JwtStoreProperties {
         switch self {
-        case .topLevel,.hierarchy:
+        case .tag,.hierarchy:
             return .none // token 있을 땐 .aceessToken
         }
     }
