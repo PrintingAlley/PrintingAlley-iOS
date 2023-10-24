@@ -10,13 +10,15 @@ import Foundation
 import NeedleFoundation
 import UIKit
 import HomeFeatureInterface
+import SearchFeatueInterface
 
 public protocol HomeDependency: Dependency {
     var homeFactory: any HomeFactory { get }
+    var searchFactory: any SearchFactory { get }
 }
 
 public final class HomeComponent: Component<HomeDependency>, HomeFactory {
     public func makeView() -> UIViewController {
-        HomeViewController(viewModel: HomeViewModel())
+        HomeViewController(viewModel: HomeViewModel(), searchFactory: dependency.searchFactory)
     }
 }

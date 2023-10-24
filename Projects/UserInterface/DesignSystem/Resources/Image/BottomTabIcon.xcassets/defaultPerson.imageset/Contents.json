@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "mdi-light_account.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
