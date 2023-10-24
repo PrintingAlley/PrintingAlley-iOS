@@ -167,11 +167,14 @@ private func factoryda2925fd76da866a652af47b58f8f304c97af4d5(_ component: Needle
     return SignInDependency5dda0dd015447272446cProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
-    var tagDomainFactory: any TagDomainFactory {
-        return appComponent.tagDomainFactory
+    var homeFactory: any HomeFactory {
+        return appComponent.homeFactory
     }
     var searchFactory: any SearchFactory {
         return appComponent.searchFactory
+    }
+    var tagDomainFactory: any TagDomainFactory {
+        return appComponent.tagDomainFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -270,19 +273,6 @@ private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDoma
 private func factory9b3fac1bd377f0830537f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BookMarkDomainDependency2ef018453822a996a9abProvider(appComponent: parent1(component) as! AppComponent)
 }
-private class SearchDomainDependencyb3556c153b9920da1f67Provider: SearchDomainDependency {
-    var jwtStoreFactory: any JwtStoreFactory {
-        return appComponent.jwtStoreFactory
-    }
-    private let appComponent: AppComponent
-    init(appComponent: AppComponent) {
-        self.appComponent = appComponent
-    }
-}
-/// ^->AppComponent->SearchDomainComponent
-private func factoryf0c6bf6699cff1bf3dc4f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return SearchDomainDependencyb3556c153b9920da1f67Provider(appComponent: parent1(component) as! AppComponent)
-}
 private class TagDomainDependency8436ae71fd9cf2012d70Provider: TagDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
@@ -295,6 +285,19 @@ private class TagDomainDependency8436ae71fd9cf2012d70Provider: TagDomainDependen
 /// ^->AppComponent->TagDomainComponent
 private func factory6a92323f94d86d563660f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return TagDomainDependency8436ae71fd9cf2012d70Provider(appComponent: parent1(component) as! AppComponent)
+}
+private class SearchDomainDependencyb3556c153b9920da1f67Provider: SearchDomainDependency {
+    var jwtStoreFactory: any JwtStoreFactory {
+        return appComponent.jwtStoreFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->SearchDomainComponent
+private func factoryf0c6bf6699cff1bf3dc4f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return SearchDomainDependencyb3556c153b9920da1f67Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
@@ -420,14 +423,14 @@ extension BookMarkDomainComponent: Registration {
         keyPathToName[\BookMarkDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
-extension SearchDomainComponent: Registration {
-    public func registerItems() {
-        keyPathToName[\SearchDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
-    }
-}
 extension TagDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\TagDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+    }
+}
+extension SearchDomainComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\SearchDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
 extension AuthDomainComponent: Registration {
@@ -472,8 +475,8 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->SearchDomainComponent", factoryf0c6bf6699cff1bf3dc4f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->TagDomainComponent", factory6a92323f94d86d563660f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->SearchDomainComponent", factoryf0c6bf6699cff1bf3dc4f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->UserDomainComponent", factory46488402f315d7f9530cf47b58f8f304c97af4d5)
 }
