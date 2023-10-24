@@ -9,7 +9,7 @@
 import Foundation
 import BaseDomainInterface
 
-public struct ChildrenTagResponseDTO: Codable {
+public struct ChildrenTagResponseDTO: Decodable {
     let id: Int
     let name: String
     let image: String?
@@ -23,6 +23,7 @@ public struct ChildrenTagResponseDTO: Codable {
     }
     
     public func toDomain() -> ChildrenTagEntity {
-        ChildrenTagEntity(id: id, name: name, image: image ?? "", parentID: parentID ?? 0,children: children.isEmpty ? [] : children.map{$0.toDomain()})
+    
+        return ChildrenTagEntity(id: id, name: name, image: image ?? "", parentID: parentID ?? 0,children:children.map{$0.toDomain()})
     }
 }

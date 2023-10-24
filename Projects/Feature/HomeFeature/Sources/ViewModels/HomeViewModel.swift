@@ -43,18 +43,17 @@ final class HomeViewModel: ViewModelType {
                 
                 return self.fetchHierarchyUseCase.execute()
                     .debug("HELLO")
-                    .map{$0.hierarchies}
                     .catch({ error in
                         
                         let alleyError = error.asAlleyError
                         
-                        DEBUG_LOG("Hello\(error.localizedDescription)")
                         
-                        return Single<[ChildrenTagEntity]>.create { single in
-                            single(.success([]))
+                        return Single<HierarchyEntity>.create { single in
+                            single(.success(HierarchyEntity(statusCode: 0, message: "", hierarchies: [])))
                             return Disposables.create()
                         }
                     })
+                    .map{$0.hierarchies}
                     .asObservable()
                 
             })
