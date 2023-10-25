@@ -16,6 +16,10 @@ class FirstFillterTableViewCell: UITableViewCell {
     
     public static let identifier = "FirstFillterTableViewCell"
     
+    var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+    }
+    
     lazy var collectionView: UICollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .horizontal).then {
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
@@ -25,6 +29,7 @@ class FirstFillterTableViewCell: UITableViewCell {
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
+        makeConstraints()
         
     }
 
@@ -39,10 +44,10 @@ extension FirstFillterTableViewCell {
     func makeCollectionView(layout: UICollectionViewFlowLayout, scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
         layout.scrollDirection = scrollDirection
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-            $0.delegate = self
-            $0.dataSource = self
             $0.showsHorizontalScrollIndicator = false
             $0.showsVerticalScrollIndicator = false
+            $0.delegate = self
+            $0.dataSource = self
         }
         return collectionView
     }
@@ -59,6 +64,7 @@ extension FirstFillterTableViewCell {
             $0.top.equalToSuperview().offset(16)
             $0.bottom.equalToSuperview()
         }
+        collectionView.backgroundColor = .blue
     }
     
     func update(model: ChildrenTagEntity) {
@@ -69,11 +75,6 @@ extension FirstFillterTableViewCell {
         collectionView.reloadData()
     }
 }
-
-extension FirstFillterTableViewCell : UICollectionViewDelegate {
-    
-}
-
 
 extension FirstFillterTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -90,15 +91,27 @@ extension FirstFillterTableViewCell: UICollectionViewDelegateFlowLayout {
 }
 
 extension FirstFillterTableViewCell: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        model.children.count
-    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath)
-                as? FilterButtonCollectionViewCell else { return UICollectionViewCell() }
+                as? FilterButtonCollectionViewCell else {
+            
+            return UICollectionViewCell()
+            
+        }
+        
+        print("PPP: \(model.children[indexPath.row].name)")
         cell.update(model: model.children[indexPath.row], type: .basic, willChangeUI: true)
         return cell
     }
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            model.children.count
+    }
+    
+    
 
 }

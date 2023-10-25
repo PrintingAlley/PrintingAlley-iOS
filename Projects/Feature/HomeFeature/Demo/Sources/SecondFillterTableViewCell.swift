@@ -17,6 +17,8 @@ class SecondFillterTableViewCell: UITableViewCell {
     lazy var tableView: UITableView = UITableView().then{
         $0.register(ThirdFillterTableViewCell.self, forCellReuseIdentifier: ThirdFillterTableViewCell.identifier)
         $0.dataSource = self
+        $0.separatorStyle = .none
+        $0.delegate = self
     }
     
     var model: ChildrenTagEntity = ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: [])
@@ -44,6 +46,14 @@ class SecondFillterTableViewCell: UITableViewCell {
 
 }
 
+
+
+extension SecondFillterTableViewCell: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        200.0
+    }
+}
+
 extension SecondFillterTableViewCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         model.children.count
@@ -56,7 +66,7 @@ extension SecondFillterTableViewCell: UITableViewDataSource {
         }
         
         cell.update(model: model.children[indexPath.row])
-        
+        cell.selectionStyle = .none
         return cell
     }
     

@@ -25,7 +25,7 @@ class ThirdFillterTableViewCell: UITableViewCell {
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
-        
+        makeConstraints()
     }
 
     public required init?(coder: NSCoder) {
@@ -83,7 +83,7 @@ extension ThirdFillterTableViewCell : UICollectionViewDelegate {
 extension ThirdFillterTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-        let tempLabel = AlleyLabel(model.children[indexPath.row].name, font: .body1).then {
+        let tempLabel = AlleyLabel(model.name, font: .body1).then {
             $0.sizeToFit()
         }
         return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
@@ -96,13 +96,14 @@ extension ThirdFillterTableViewCell: UICollectionViewDelegateFlowLayout {
 
 extension ThirdFillterTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        model.children.count
+
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath)
                 as? FilterButtonCollectionViewCell else { return UICollectionViewCell() }
-        cell.update(model: model.children[indexPath.row], type: .basic, willChangeUI: true)
+        cell.update(model: model, type: .basic, willChangeUI: true)
         return cell
     }
 

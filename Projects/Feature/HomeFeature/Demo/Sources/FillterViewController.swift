@@ -27,6 +27,7 @@ class FillterViewController: UIViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.separatorStyle = . none
+        $0.bounces = false
     }
     
     var dummy:[ChildrenTagEntity] = []
@@ -77,9 +78,15 @@ extension FillterViewController {
             ChildrenTagEntity(id: 13, name: "대량인쇄", image: "", parentID: 12, children: [])
         ]),
         ChildrenTagEntity(id: 12, name: "후가공", image: "", parentID: 12, children: [
-            ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
-            ChildrenTagEntity(id: 14, name: "엠보코팅", image: "", parentID: 12, children: []),
-            ChildrenTagEntity(id: 15, name: "CR코팅", image: "", parentID: 12, children: [])
+            
+            
+            ChildrenTagEntity(id: 0, name: "코딩", image: "", parentID: 8, children: [
+                
+                ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 14, name: "엠보코팅", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 15, name: "CR코팅", image: "", parentID: 12, children: [])
+            
+            ])
         
         ])
     
@@ -91,17 +98,26 @@ extension FillterViewController {
 
 extension FillterViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        300.0
+    }
     
+
 }
 
 extension FillterViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        print("WWW: \(dummy.count)")
-        
-        return dummy.count
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        dummy.count
     }
     
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+        1
+    }
+    
+
 
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -121,12 +137,15 @@ extension FillterViewController: UITableViewDataSource {
         let section = indexPath.section
         let row = indexPath.row
         
+       
+        
+        
         if dummy[section].children[row].children.isEmpty {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: FirstFillterTableViewCell.identifier, for: indexPath) as? FirstFillterTableViewCell else {
                 return UITableViewCell()
             }
             
-            cell.update(model: dummy[section].children[row])
+            cell.update(model: dummy[section])
             cell.selectionStyle = .none
             return cell
         }
