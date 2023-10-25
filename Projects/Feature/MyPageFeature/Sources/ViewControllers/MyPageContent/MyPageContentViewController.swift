@@ -24,7 +24,7 @@ public class MyPageContentViewController: UIViewController {
     var viewModel: MyPageContentViewModel!
     let disposeBag = DisposeBag()
     let input = MyPageContentViewModel.Input()
-    lazy var profileImage: UIButton = UIButton().then { // TODO: 프로필 이미지 편집 연결
+    lazy var profileImage: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.profilePlaceHolder.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
     }
@@ -33,7 +33,7 @@ public class MyPageContentViewController: UIViewController {
         $0.numberOfLines = 0
     }
     
-    lazy var profileNameEditButton: UIButton = UIButton().then { // TODO: 프로필 편집 연결 
+    lazy var profileNameEditButton: UIButton = UIButton().then {
         $0.setTitle("프로필 수정", for: .normal)
         $0.setImage(DesignSystemAsset.Icon.smallPencil.image, for: .normal)
         $0.setTitleColor(DesignSystemAsset.Grey.grey500.color, for: .normal)

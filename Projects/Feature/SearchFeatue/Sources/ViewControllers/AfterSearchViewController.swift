@@ -42,19 +42,6 @@ final class AfterSearchViewController: UIViewController {
 }
 
 extension AfterSearchViewController {
-//    private func makeCollectionView(layout: UICollectionViewFlowLayout, scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
-//        layout.scrollDirection = scrollDirection
-//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-//            $0.delegate = self
-//            $0.dataSource = self
-//            $0.showsHorizontalScrollIndicator = false
-//            $0.showsVerticalScrollIndicator = false
-//        }
-//        return collectionView
-//    }
-}
-
-extension AfterSearchViewController {
     private func addSubview() {
         view.addSubviews(filterCollectionview, printingTableView)
     }

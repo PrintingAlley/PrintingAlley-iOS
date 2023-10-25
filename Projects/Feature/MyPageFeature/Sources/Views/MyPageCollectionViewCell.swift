@@ -14,7 +14,7 @@ import DesignSystem
 public enum HeaderItemType: String {
     
     case notice = "알림"
-    case bookMark = "북마크"
+    case bookMark = "저장목록"
     case review = "리뷰"
 }
 

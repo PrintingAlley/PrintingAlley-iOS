@@ -25,7 +25,7 @@ final class BeforeSearchViewController: UIViewController {
 
     private let recommendTitle = AlleyLabel("추천 검색어", textColor: .sub(.black), font: .subtitle1)
     
-    private lazy var recommendCollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .vertical).then {
+    private lazy var recommendCollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .vertical, delegate: self, dataSource: self).then {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
@@ -54,19 +54,6 @@ extension BeforeSearchViewController {
             $0.leading.trailing.equalToSuperview().inset(24)
             $0.height.equalTo(400)
         }
-    }
-}
-
-extension BeforeSearchViewController {
-    private func makeCollectionView(layout: UICollectionViewFlowLayout, scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
-        layout.scrollDirection = scrollDirection
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-            $0.delegate = self
-            $0.dataSource = self
-            $0.showsHorizontalScrollIndicator = false
-            $0.showsVerticalScrollIndicator = false
-        }
-        return collectionView
     }
 }
 
