@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 import DesignSystem
+import BaseDomainInterface
 
 public final class FilterButtonCollectionViewCell: UICollectionViewCell {
     
@@ -39,8 +40,8 @@ extension FilterButtonCollectionViewCell {
         }
     }
     
-    public func dummyDataBind(model: RecommendModel, type: FilterButtonType, willChangeUI: Bool) {
-        filterButton.title = model.title
+    public func update(model: ChildrenTagEntity, type: FilterButtonType, willChangeUI: Bool) {
+        filterButton.title = model.name
         filterButton.type = type
         filterButton.willChangeUI = willChangeUI
     }

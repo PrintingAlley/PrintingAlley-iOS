@@ -9,8 +9,8 @@
 import UIKit
 
 /// UICollectionViewCell 최대한 왼쪽정렬시켜주는 flowLayout
-final class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+public final class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+    public override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         let attributes = super.layoutAttributesForElements(in: rect)
         
         var leftMargin = sectionInset.left

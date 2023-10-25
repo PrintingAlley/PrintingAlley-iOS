@@ -42,11 +42,7 @@ final class HomeViewModel: ViewModelType {
                 guard let self else { return Observable.empty()}
                 
                 return self.fetchHierarchyUseCase.execute()
-                    .debug("HELLO")
                     .catch({ error in
-                        
-                        let alleyError = error.asAlleyError
-                        
                         
                         return Single<HierarchyEntity>.create { single in
                             single(.success(HierarchyEntity(statusCode: 0, message: "", hierarchies: [])))
