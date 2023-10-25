@@ -23,7 +23,7 @@ final class SearchViewController: UIViewController, ContainerViewType {
     let disposeBag = DisposeBag()
     private let input = SearchViewModel.Input()
     
-    let beforeVc = BeforeSearchViewController()
+    let beforeVc = BeforeSearchViewController(viewModel: BeforeSearchViewModel())
     let afterVc = AfterSearchViewController()
     
     private let navigationBar = UIView()
@@ -51,7 +51,6 @@ final class SearchViewController: UIViewController, ContainerViewType {
         addSubviews()
         makeConstraints()
         setKeyboardDown()
-//        bindViewModel()
     }
 }
 
