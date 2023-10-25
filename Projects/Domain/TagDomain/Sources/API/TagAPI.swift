@@ -1,31 +1,38 @@
 //
-//  SearchAPI.swift
-//  SearchDomain
+//  TagAPI.swift
+//  TagDomainInterface
 //
-//  Created by 박의서 on 2023/10/23.
+//  Created by 박의서 on 2023/10/19.
 //  Copyright © 2023 com. All rights reserved.
 //
+
+ // MOya - Interface 설정 후
 
 import Foundation
 import BaseDomain
 import Network
 import Moya
 import JwtStoreInterface
+import TagDomain
 
-enum SearchAPI {
-    case list(searchText: String, tagIds: [Int])
+enum TagAPI {
+    case tag(id: Int)
+    case hierarchy
 }
 
-extension SearchAPI: AlleyAPI {
+extension TagAPI: AlleyAPI {
     var domain: AlleyDomain {
-        .printShop
+        .tag
     }
     
     var urlPath: String {
         
         switch self {
           
-        case .list:
+        case .tag(id: let id):
+            return "/\(id)"
+    
+        case .hierarchy:
             return ""
         }
     }
@@ -47,7 +54,7 @@ extension SearchAPI: AlleyAPI {
     var method: Moya.Method {
         switch self {
          
-        case .list:
+        case .tag,.hierarchy:
             return .get
         }
     }
@@ -55,17 +62,18 @@ extension SearchAPI: AlleyAPI {
         var task: Task {
             switch self {
               
-            case .list(let searchText, let tagIds):
-                return .requestParameters(parameters: ["searchText": searchText, "tagIds": tagIds], encoding: URLEncoding.queryString)
+            case .tag,.hierarchy:
+                return .requestPlain
             }
         }
     
     
     var jwtStoreProperties: JwtStoreProperties {
         switch self {
-        case .list:
-            return .none
+        case .tag,.hierarchy:
+            return .none // token 있을 땐 .aceessToken
         }
     }
     
 }
+

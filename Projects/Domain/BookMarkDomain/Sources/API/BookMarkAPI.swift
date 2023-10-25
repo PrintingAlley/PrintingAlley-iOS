@@ -69,7 +69,8 @@ extension BookMarkAPI: AlleyAPI {
                 401: .tokenExpired,
                 404: .notFound,
                 429: .tooManyRequest,
-                500: .internalServerError
+                500: .internalServerError,
+                1009: .offline
             ]
         }
     }

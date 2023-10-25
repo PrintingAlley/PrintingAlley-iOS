@@ -29,6 +29,8 @@ import SearchFeatue
 import SearchFeatueInterface
 import SignInFeature
 import SignInFeatureInterface
+import TagDomain
+import TagDomainInterface
 import UIKit
 import UserDomain
 import UserDomainInterface
@@ -171,6 +173,9 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var searchFactory: any SearchFactory {
         return appComponent.searchFactory
     }
+    var tagDomainFactory: any TagDomainFactory {
+        return appComponent.tagDomainFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -267,6 +272,19 @@ private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDoma
 /// ^->AppComponent->BookMarkDomainComponent
 private func factory9b3fac1bd377f0830537f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BookMarkDomainDependency2ef018453822a996a9abProvider(appComponent: parent1(component) as! AppComponent)
+}
+private class TagDomainDependency8436ae71fd9cf2012d70Provider: TagDomainDependency {
+    var jwtStoreFactory: any JwtStoreFactory {
+        return appComponent.jwtStoreFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->TagDomainComponent
+private func factory6a92323f94d86d563660f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return TagDomainDependency8436ae71fd9cf2012d70Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class SearchDomainDependencyb3556c153b9920da1f67Provider: SearchDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
@@ -368,6 +386,7 @@ extension HomeComponent: Registration {
     public func registerItems() {
         keyPathToName[\HomeDependency.homeFactory] = "homeFactory-any HomeFactory"
         keyPathToName[\HomeDependency.searchFactory] = "searchFactory-any SearchFactory"
+        keyPathToName[\HomeDependency.tagDomainFactory] = "tagDomainFactory-any TagDomainFactory"
     }
 }
 extension NearByMeComponent: Registration {
@@ -402,6 +421,11 @@ extension EditModalComponent: Registration {
 extension BookMarkDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+    }
+}
+extension TagDomainComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\TagDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
 extension SearchDomainComponent: Registration {
@@ -451,6 +475,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->TagDomainComponent", factory6a92323f94d86d563660f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->SearchDomainComponent", factoryf0c6bf6699cff1bf3dc4f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->UserDomainComponent", factory46488402f315d7f9530cf47b58f8f304c97af4d5)

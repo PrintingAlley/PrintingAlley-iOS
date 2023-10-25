@@ -8,20 +8,59 @@
 
 import Foundation
 import UtilityModule
+import TagDomainInterface
+import RxRelay
+import RxSwift
+import BaseDomainInterface
 
 final class HomeViewModel: ViewModelType {
-
-    struct Input{
-        
+    
+    var fetchTagUseCase: any FetchTagUseCase
+    var fetchHierarchyUseCase: any FetchHierarchyUseCase
+    
+    let disposeBag = DisposeBag()
+    
+    init(fetchTagUseCase: FetchTagUseCase, fetchHierarchyUseCase: FetchHierarchyUseCase) {
+        self.fetchTagUseCase = fetchTagUseCase
+        self.fetchHierarchyUseCase = fetchHierarchyUseCase
     }
     
-    struct Output{
-        
+    public struct Input {
+        let viewDidLoad: PublishSubject<Void> = .init()
     }
     
-    func transform(input: Input) -> Output {
+    public struct Output{
+        let tagDataSource: BehaviorRelay<[ChildrenTagEntity]> = .init(value: [])
+    }
+    
+    public func transform(input: Input) -> Output {
         let output = Output()
+        
+        input.viewDidLoad
+            .flatMap({ [weak self] () -> Observable<[ChildrenTagEntity]> in
+                
+                guard let self else { return Observable.empty()}
+                
+                return self.fetchHierarchyUseCase.execute()
+                    .debug("HELLO")
+                    .catch({ error in
+                        
+                        let alleyError = error.asAlleyError
+                        
+                        
+                        return Single<HierarchyEntity>.create { single in
+                            single(.success(HierarchyEntity(statusCode: 0, message: "", hierarchies: [])))
+                            return Disposables.create()
+                        }
+                    })
+                    .map{$0.hierarchies}
+                    .asObservable()
+                
+            })
+            .bind(to: output.tagDataSource)
+            .disposed(by: disposeBag)
         
         return output
     }
+    
 }

@@ -12,10 +12,15 @@ import DesignSystem
 import Then
 import SnapKit
 import SearchFeatueInterface
+import RxSwift
+import RxDataSources
 
 final class HomeViewController: UIViewController {
     private var searchFactory: any SearchFactory
     private var viewModel: HomeViewModel!
+    
+    let disposeBag = DisposeBag()
+    var output: HomeViewModel.Output!
     
     private let blueBackgroundView = UIView().then {
         $0.backgroundColor = .setColor(.mainBlue(.blue500))
@@ -75,6 +80,34 @@ final class HomeViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         addSubViews()
         makeConstraints()
+        bindViewModel()
+    }
+}
+
+extension HomeViewController {
+    func bindViewModel() {
+        let input = HomeViewModel.Input()
+        
+        output = viewModel.transform(input: input)
+        
+        bindTagDataSource(output: output)
+        bindViewDidLoad(input: input)
+    }
+    
+    func bindViewDidLoad(input: HomeViewModel.Input){
+        input.viewDidLoad.onNext(())
+    }
+    
+    func bindTagDataSource(output: HomeViewModel.Output) {
+        
+        output.tagDataSource
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,dataSoruce) in
+                DEBUG_LOG(dataSoruce)
+                owner.contentsCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
     }
 }
 
@@ -180,6 +213,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ContentsHeaderView.identifier, for: indexPath) as! ContentsHeaderView
+            
+            headerView.update(tagDataSource: output.tagDataSource.value)
             return headerView
         }
         return UICollectionReusableView()

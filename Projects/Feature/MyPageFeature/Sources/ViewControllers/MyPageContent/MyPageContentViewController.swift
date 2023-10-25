@@ -35,7 +35,7 @@ public class MyPageContentViewController: UIViewController {
     
     lazy var profileNameEditButton: UIButton = UIButton().then {
         $0.setTitle("프로필 수정", for: .normal)
-        $0.setImage(DesignSystemAsset.Icon.pencil.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.smallPencil.image, for: .normal)
         $0.setTitleColor(DesignSystemAsset.Grey.grey500.color, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFit
         $0.titleLabel?.font = .setFont(.caption1)
