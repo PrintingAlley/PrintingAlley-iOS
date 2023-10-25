@@ -16,16 +16,24 @@ class FillterSectionHeaderView: UITableViewHeaderFooterView {
     
     lazy var label: AlleyLabel = AlleyLabel()
     
+    lazy var baseLine: UIView = UIView().then {
+        $0.backgroundColor = .black.withAlphaComponent(0.1)
+    }
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        self.addSubviews(label)
+        self.addSubviews(label, baseLine)
+        
+        baseLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.top.left.right.equalToSuperview()
+        }
         
         label.snp.makeConstraints {
                 $0.left.equalToSuperview().inset(24)
-                $0.top.equalToSuperview()
-                $0.bottom.equalToSuperview()
-                $0.right.equalToSuperview()
+                $0.top.equalTo(baseLine.snp.bottom).offset(16)
+                $0.bottom.right.equalToSuperview()
 
         }
     

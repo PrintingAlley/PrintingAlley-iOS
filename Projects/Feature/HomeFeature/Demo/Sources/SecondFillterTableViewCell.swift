@@ -30,8 +30,9 @@ class SecondFillterTableViewCell: UITableViewCell {
         self.contentView.addSubviews(tableView,subtitleLabel)
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(subtitleLabel.snp.bottom).offset(8)
+            $0.top.equalTo(subtitleLabel.snp.bottom).offset(-8)
             $0.left.right.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
         subtitleLabel.snp.makeConstraints {
@@ -63,8 +64,28 @@ class SecondFillterTableViewCell: UITableViewCell {
 
 extension SecondFillterTableViewCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        200.0
-    }
+        
+        let titleLabel =  AlleyLabel("헤레헝로",font: .subtitle3).then {
+            $0.sizeToFit()
+        }
+        
+        let cell =  AlleyLabel("헤레헝로",font: .body1).then {
+            $0.sizeToFit()
+        }
+        
+        let titleHeight = titleLabel.frame.height
+        let cellHeight = cell.frame.height
+        
+        let offset1: CGFloat = 16.0
+        let offset2: CGFloat = 8.0
+        let offset3: CGFloat = 16.0
+        
+        let numberOfRow = model.children.count % 3 == .zero ?  model.children.count / 3  : (model.children.count / 3)+1
+        
+        print(offset1 + titleHeight + offset2 + (CGFloat(numberOfRow) * cellHeight ) + (CGFloat(numberOfRow-1) * offset2) + offset3)
+        
+        return offset1 + titleHeight + offset2 + (CGFloat(numberOfRow) * cellHeight ) + (CGFloat(numberOfRow-1) * offset2) + offset3
+     }
 }
 
 extension SecondFillterTableViewCell: UITableViewDataSource {

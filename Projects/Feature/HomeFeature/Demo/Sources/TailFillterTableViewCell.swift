@@ -64,18 +64,26 @@ extension TailFillterTableViewCell {
             $0.top.equalToSuperview().offset(16)
             $0.bottom.equalToSuperview()
         }
-        collectionView.backgroundColor = .blue
     }
     
     func update(model: ChildrenTagEntity) {
         self.model = model
-        
+
         
         collectionView.reloadData()
     }
 }
 
+
+
 extension TailFillterTableViewCell: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+        return UIEdgeInsets(top: 0, left: 20.0, bottom: 0, right: 20.0)
+    }
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
         let tempLabel = AlleyLabel(model.children[indexPath.row].name, font: .body1).then {
@@ -85,8 +93,14 @@ extension TailFillterTableViewCell: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { //셀 층간의 간격 (세로)
         4
     }
+    
+
 }
 
 extension TailFillterTableViewCell: UICollectionViewDataSource {
@@ -101,13 +115,15 @@ extension TailFillterTableViewCell: UICollectionViewDataSource {
         }
 
         cell.update(model: model.children[indexPath.row], type: .basic, willChangeUI: true)
+        cell.backgroundColor = .red
         return cell
     }
     
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            model.children.count
+    
+            return model.children.count
     }
     
     
