@@ -11,13 +11,13 @@ import UIKit
 import UtilityModule
 
 extension SearchViewController {
-    func bindTagDataSource(output: SearchViewModel.Output) {
-
-             output.searchDataSource
-                 .debug("검색뷰")
-                 .subscribe(onNext: {
-                     DEBUG_LOG($0)
-                 })
-                 .disposed(by: disposeBag)
-         }
+//    func bindTagDataSource(output: SearchViewModel.Output) {
+//
+//             output.searchDataSource
+//                 .debug("검색뷰")
+//                 .subscribe(onNext: {
+//                     DEBUG_LOG($0)
+//                 })
+//                 .disposed(by: disposeBag)
+//         }
 }

@@ -11,7 +11,7 @@ import Then
 import SnapKit
 
 public final class SearchBar: UIView {
-    private let searchTextField = UITextField().then {
+    public let searchTextField = UITextField().then {
         let attributedPlaceholder = NSAttributedString(string: "플레이스 홀더 색상 바꾸기!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey400)), NSAttributedString.Key.font: UIFont.setFont(.body1)])
         $0.attributedPlaceholder = attributedPlaceholder
         $0.placeholder = "인쇄소, 후가공, 인쇄방식 검색"

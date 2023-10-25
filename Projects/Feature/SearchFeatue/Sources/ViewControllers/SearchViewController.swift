@@ -10,10 +10,11 @@ import UIKit
 import Then
 import SnapKit
 import DesignSystem
-import BaseFeatureInterface
+import UtilityModule
 import RxSwift
 import RxDataSources
-import UtilityModule
+import BaseFeatureInterface
+import RxCocoa
 
 final class SearchViewController: UIViewController, ContainerViewType {
     var contentView: UIView! = UIView()
@@ -51,13 +52,72 @@ final class SearchViewController: UIViewController, ContainerViewType {
         addSubviews()
         makeConstraints()
         setKeyboardDown()
+        bindViewModel()
     }
 }
 
+// MARK: - 네트워크 관련 함수들
 extension SearchViewController {
-    private func updateAfterVC() {
-        self.remove(asChildViewController: beforeVc)
-        self.add(asChildViewController: afterVc)
+    private func bindViewModel() {
+        
+        let input = SearchViewModel.Input()
+        bindUIEvent(input: input)
+        
+        let output = self.viewModel.transform(input: input)
+//        bindDataSource(output: output)
+    }
+    
+    func bindUIEvent(input: SearchViewModel.Input) {
+        searchBar.searchTextField.rx
+            .edit.subscribe(onNext: { [weak self] in
+            guard let self else { return }
+                changeToAfterVC()
+        })
+            .disposed(by: disposeBag)
+        
+        searchBar.searchTextField.rx
+            .endEdit.subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                if searchBar.searchTextField.hasText {
+                    // ??
+                } else {
+                    changeToBeforeVC()
+                }
+            })
+    }
+    
+    func bindDataSource(output: SearchViewModel.Output) {
+        output.dataSource
+            .bind(to: afterVc.printingTableView.rx.items) { (tableView, index, model) -> UITableViewCell in
+                
+                let indexPath = IndexPath(row: index, section: 0)
+                
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: PrintingTableViewCell.identifier, for: indexPath) as? PrintingTableViewCell else {
+                    return UITableViewCell()
+                }
+                
+                cell.bindData(model: model)
+                
+                return cell
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - UI 관련 함수들
+extension SearchViewController {
+    private func changeToAfterVC() {
+        UIView.animate(withDuration: 0.4) {
+            self.remove(asChildViewController: self.beforeVc)
+            self.add(asChildViewController: self.afterVc)
+        }
+    }
+    
+    private func changeToBeforeVC() {
+        UIView.animate(withDuration: 0.4) {
+            self.remove(asChildViewController: self.afterVc)
+            self.add(asChildViewController: self.beforeVc)
+        }
     }
     
     private func addSubviews() {
@@ -96,19 +156,12 @@ extension SearchViewController {
         let keyboardDownGesture = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
         self.view.addGestureRecognizer(keyboardDownGesture)
     }
-    
-    private func bindViewModel() {
-        let output = self.viewModel.transform(input: input)
-        bindTagDataSource(output: output)
-        bindViewDidLoad(input: input)
-    }
 }
 
 // MARK: - TextField Delegate
 extension SearchViewController: UITextFieldDelegate {
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.becomeFirstResponder()
-        updateAfterVC() // 수정 필요 ~
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -122,5 +175,17 @@ extension SearchViewController {
     @objc
     private func touchBackbtn() {
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+// TODO: 따로 뺴기
+extension Reactive where Base: UITextField {
+    
+    public var edit: ControlEvent<Void> {
+        controlEvent(.editingChanged)
+    }
+    
+    public var endEdit: ControlEvent<Void> {
+        controlEvent(.editingDidEndOnExit)
     }
 }

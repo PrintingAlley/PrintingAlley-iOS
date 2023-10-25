@@ -12,7 +12,7 @@ import RxDataSources
 import UtilityModule
 
 extension SearchViewController {
-    func bindViewDidLoad(input: SearchViewModel.Input) {
-        input.viewDidLoad.onNext(())
-    }
+//    func bindViewDidLoad(input: SearchViewModel.Input) {
+//        input.viewDidLoad.onNext(())
+//    }
 }
