@@ -14,6 +14,7 @@ import SnapKit
 import SearchFeatueInterface
 import RxSwift
 import RxDataSources
+import BaseFeature
 
 final class HomeViewController: UIViewController {
     private var searchFactory: any SearchFactory
@@ -51,7 +52,7 @@ final class HomeViewController: UIViewController {
         $0.backgroundColor = .none
     }
 
-    private lazy var contentsCollectionView = makeCollectionView(scrollDirection: .vertical).then {
+    private lazy var contentsCollectionView = makeCollectionView(layout: UICollectionViewFlowLayout(), scrollDirection: .vertical, delegate: self, dataSource: self).then {
         $0.setRound([.topLeft, .topRight], radius: 12)
         $0.backgroundColor = .setColor(.sub(.white))
         $0.register(ContentsCollectionViewCell.self, forCellWithReuseIdentifier: ContentsCollectionViewCell.identifier)
@@ -175,18 +176,6 @@ extension HomeViewController {
 
 // MARK: - CollectionView 관련 함수
 extension HomeViewController {
-    private func makeCollectionView(scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = scrollDirection
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-            $0.delegate = self
-            $0.dataSource = self
-            $0.showsHorizontalScrollIndicator = false
-            $0.showsVerticalScrollIndicator = false
-        }
-        return collectionView
-    }
-    
     private func calculateHeight(count: Int, dividingBy: CGFloat, cellHeight: CGFloat, lineSpacing: CGFloat, insets: UIEdgeInsets) -> CGFloat { // count: List.cound
         let count = CGFloat(count)
         let heightCount = count / dividingBy + count.truncatingRemainder(dividingBy: dividingBy)

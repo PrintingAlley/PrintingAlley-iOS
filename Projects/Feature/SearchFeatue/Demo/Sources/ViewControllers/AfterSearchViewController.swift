@@ -18,7 +18,7 @@ final class AfterSearchViewController: UIViewController {
         RecommendModel(title: "대형인쇄")
     ]
     
-    private lazy var filterCollectionview = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .horizontal).then {
+    private lazy var filterCollectionview = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .horizontal, delegate: self, dataSource: self).then {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
@@ -37,19 +37,6 @@ final class AfterSearchViewController: UIViewController {
         view.backgroundColor = .setColor(.sub(.white))
         addSubview()
         makeConstraints()
-    }
-}
-
-extension AfterSearchViewController {
-    private func makeCollectionView(layout: UICollectionViewFlowLayout, scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
-        layout.scrollDirection = scrollDirection
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-            $0.delegate = self
-            $0.dataSource = self
-            $0.showsHorizontalScrollIndicator = false
-            $0.showsVerticalScrollIndicator = false
-        }
-        return collectionView
     }
 }
 
