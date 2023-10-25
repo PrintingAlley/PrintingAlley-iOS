@@ -8,14 +8,16 @@
 
 import UIKit
 import BaseDomainInterface
-
+import DesignSystem
 
 class SecondFillterTableViewCell: UITableViewCell {
 
     public static let identifier = "SecondFillterTableViewCell"
     
+    lazy var subtitleLabel: AlleyLabel = AlleyLabel()
+    
     lazy var tableView: UITableView = UITableView().then{
-        $0.register(ThirdFillterTableViewCell.self, forCellReuseIdentifier: ThirdFillterTableViewCell.identifier)
+        $0.register(TailFillterTableViewCell.self, forCellReuseIdentifier: TailFillterTableViewCell.identifier)
         $0.dataSource = self
         $0.separatorStyle = .none
         $0.delegate = self
@@ -25,10 +27,17 @@ class SecondFillterTableViewCell: UITableViewCell {
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.contentView.addSubview(tableView)
+        self.contentView.addSubviews(tableView,subtitleLabel)
         
         tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(subtitleLabel.snp.bottom).offset(8)
+            $0.left.right.bottom.equalToSuperview()
+        }
+        
+        subtitleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(16)
+            $0.right.equalToSuperview()
+            $0.left.equalToSuperview().inset(24)
         }
         
     }
@@ -40,6 +49,10 @@ class SecondFillterTableViewCell: UITableViewCell {
     
     public func update(model: ChildrenTagEntity) {
         self.model = model
+        
+        print("꽃: \(model)")
+        self.subtitleLabel.setTitle(title: model.name, textColor: .grey(.grey300), font: .subtitle3)
+        
         
         tableView.reloadData()
     }
@@ -56,16 +69,16 @@ extension SecondFillterTableViewCell: UITableViewDelegate {
 
 extension SecondFillterTableViewCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        model.children.count
+        1
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ThirdFillterTableViewCell.identifier, for: indexPath) as? ThirdFillterTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TailFillterTableViewCell.identifier, for: indexPath) as? TailFillterTableViewCell else {
             return UITableViewCell()
         }
         
-        cell.update(model: model.children[indexPath.row])
+        cell.update(model: model)
         cell.selectionStyle = .none
         return cell
     }

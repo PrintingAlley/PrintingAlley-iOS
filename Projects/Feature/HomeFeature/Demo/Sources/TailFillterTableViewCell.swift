@@ -11,11 +11,15 @@ import DesignSystem
 import BaseDomainInterface
 import BaseFeature
 
-class ThirdFillterTableViewCell: UITableViewCell {
+class TailFillterTableViewCell: UITableViewCell {
 
-    public static let identifier = "ThirdFillterTableViewCell"
     
-    lazy var subtitleLabel: AlleyLabel = AlleyLabel()
+    public static let identifier = "FirstFillterTableViewCell"
+    
+    var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+    }
+    
     lazy var collectionView: UICollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .horizontal).then {
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
@@ -26,6 +30,7 @@ class ThirdFillterTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
         makeConstraints()
+        
     }
 
     public required init?(coder: NSCoder) {
@@ -34,56 +39,46 @@ class ThirdFillterTableViewCell: UITableViewCell {
 
 }
 
-extension ThirdFillterTableViewCell {
+extension TailFillterTableViewCell {
     
     func makeCollectionView(layout: UICollectionViewFlowLayout, scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
         layout.scrollDirection = scrollDirection
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-            $0.delegate = self
-            $0.dataSource = self
             $0.showsHorizontalScrollIndicator = false
             $0.showsVerticalScrollIndicator = false
+            $0.delegate = self
+            $0.dataSource = self
         }
         return collectionView
     }
     
     func addSubviews() {
-        self.contentView.addSubviews(subtitleLabel,collectionView)
+        self.contentView.addSubviews(collectionView)
     }
     
     func makeConstraints() {
-        subtitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(16)
-            $0.right.equalToSuperview()
-            $0.left.equalToSuperview().inset(24)
-        }
+
         
         collectionView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(24)
-            $0.top.equalTo(subtitleLabel.snp.bottom).offset(8)
+            $0.top.equalToSuperview().offset(16)
             $0.bottom.equalToSuperview()
         }
+        collectionView.backgroundColor = .blue
     }
     
     func update(model: ChildrenTagEntity) {
         self.model = model
-        
-        self.subtitleLabel.setTitle(title: model.name, textColor: .grey(.grey300), font: .subtitle3)
         
         
         collectionView.reloadData()
     }
 }
 
-extension ThirdFillterTableViewCell : UICollectionViewDelegate {
-    
-}
-
-
-extension ThirdFillterTableViewCell: UICollectionViewDelegateFlowLayout {
+extension TailFillterTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-        let tempLabel = AlleyLabel(model.name, font: .body1).then {
+        let tempLabel = AlleyLabel(model.children[indexPath.row].name, font: .body1).then {
             $0.sizeToFit()
         }
         return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
@@ -94,17 +89,27 @@ extension ThirdFillterTableViewCell: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension ThirdFillterTableViewCell: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
-        return 1
-    }
+extension TailFillterTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath)
-                as? FilterButtonCollectionViewCell else { return UICollectionViewCell() }
-        cell.update(model: model, type: .basic, willChangeUI: true)
+                as? FilterButtonCollectionViewCell else {
+            
+            return UICollectionViewCell()
+            
+        }
+
+        cell.update(model: model.children[indexPath.row], type: .basic, willChangeUI: true)
         return cell
     }
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            model.children.count
+    }
+    
+    
 
 }

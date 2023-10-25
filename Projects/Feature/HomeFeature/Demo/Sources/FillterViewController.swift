@@ -21,7 +21,7 @@ class FillterViewController: UIViewController {
         $0.setImage(DesignSystemAsset.Icon.downArrow.image, for: .normal)
     }
     lazy var tableView: UITableView = UITableView().then {
-        $0.register(FirstFillterTableViewCell.self, forCellReuseIdentifier: FirstFillterTableViewCell.identifier)
+        $0.register(TailFillterTableViewCell.self, forCellReuseIdentifier: TailFillterTableViewCell.identifier)
         $0.register(SecondFillterTableViewCell.self, forCellReuseIdentifier: SecondFillterTableViewCell.identifier)
         $0.register(FillterSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: FillterSectionHeaderView.identifer)
         $0.delegate = self
@@ -141,7 +141,7 @@ extension FillterViewController: UITableViewDataSource {
         
         
         if dummy[section].children[row].children.isEmpty {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: FirstFillterTableViewCell.identifier, for: indexPath) as? FirstFillterTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TailFillterTableViewCell.identifier, for: indexPath) as? TailFillterTableViewCell else {
                 return UITableViewCell()
             }
             
