@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 import DesignSystem
+import BaseDomainInterface
 
 final class PrintingTableViewCell: UITableViewCell {
     static let identifier = "PrintingTableViewCell"
@@ -44,6 +45,7 @@ final class PrintingTableViewCell: UITableViewCell {
     }
 }
 
+// MARK: - UI 관련 함수
 extension PrintingTableViewCell {
     private func addSubview() {
         contentView.addSubviews(separator, image, name, printingTag, descriptioin, address)
@@ -86,5 +88,16 @@ extension PrintingTableViewCell {
             $0.leading.equalTo(name)
             $0.top.equalTo(descriptioin.snp.bottom).offset(2)
         }
+    }
+}
+
+// MARK: - 데이터 바인딩 함수
+extension PrintingTableViewCell {
+    func bindData(model: PrintShopEntity) {
+        // TODO: 이미지 바인딩
+        self.name.text = model.name
+        self.printingTag.text = model.tags.joined(separator: " ")
+        self.descriptioin.text = model.introduction
+        self.address.text = model.address
     }
 }
