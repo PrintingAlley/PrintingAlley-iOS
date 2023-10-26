@@ -11,15 +11,19 @@ import Then
 import SnapKit
 
 public final class SearchBar: UIView {
-    public let searchTextField = UITextField().then {
+
+    public lazy var searchTextField = UITextField().then {
         let attributedPlaceholder = NSAttributedString(string: "플레이스 홀더 색상 바꾸기!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey400)), NSAttributedString.Key.font: UIFont.setFont(.body1)])
         $0.attributedPlaceholder = attributedPlaceholder
         $0.placeholder = "인쇄소, 후가공, 인쇄방식 검색"
+        $0.textColor = .setColor(.sub(.black))
+        $0.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
     
     private lazy var searchButton = UIButton().then {
         $0.addTarget(self, action: #selector(touchSearchIcon), for: .touchUpInside)
         $0.setImage(DesignSystemAsset.Icon.search.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.roundXmark.image, for: .highlighted)
     }
     
     override public func layoutSubviews() {
@@ -68,6 +72,29 @@ extension SearchBar {
 extension SearchBar {
     @objc
     private func touchSearchIcon() {
-        print("검색")
+        if searchButton.isHighlighted {
+            searchTextField.text?.removeAll()
+            searchButton.isHighlighted = false
+        } else {
+            print("검색")
+        }
+    }
+    
+    @objc
+    private func textFieldDidChange() {
+        if searchTextField.hasText {
+            searchButton.isHighlighted = true
+        }
+    }
+}
+
+extension SearchBar: UITextFieldDelegate {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.becomeFirstResponder()
+    }
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
