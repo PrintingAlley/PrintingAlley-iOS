@@ -31,6 +31,31 @@ class FillterViewController: UIViewController {
         $0.bounces = false
     }
     
+    lazy var baseLine: UIView = UIView().then {
+        $0.backgroundColor = .black.withAlphaComponent(0.1)
+    }
+    
+    lazy var findButton: UIButton = UIButton().then {
+        $0.backgroundColor = DesignSystemAsset.MainBlue.blue500.color
+        $0.setTitle("인쇄소 찾아보기", for: .normal)
+        $0.setTitleColor(DesignSystemAsset.Sub.white.color, for: .normal)
+        $0.titleLabel?.font = .setFont(.subtitle1)
+        $0.layer.cornerRadius = 8
+        $0.clipsToBounds = true
+    }
+    
+    lazy var resetButton: UIButton = UIButton().then {
+        $0.setTitle("재설정", for: .normal)
+        $0.setTitleColor(DesignSystemAsset.Sub.black.color, for: .normal)
+        $0.titleLabel?.font = .setFont(.subtitle2)
+        $0.setImage(DesignSystemAsset.Icon.reFresh.image, for: .normal)
+        $0.imageView?.contentMode = .scaleAspectFit
+        
+    }
+    
+    lazy var buttonContainerView: UIView = UIView()
+    
+    
     var dummy:[ChildrenTagEntity] = []
     
     override func viewDidLoad() {
@@ -47,7 +72,8 @@ class FillterViewController: UIViewController {
 extension FillterViewController {
     
     func addSubviews() {
-        self.view.addSubviews(titleLabel,button,tableView)
+        self.view.addSubviews(titleLabel, button, tableView, buttonContainerView,baseLine)
+        self.buttonContainerView.addSubviews(resetButton,findButton)
     }
     
     func makeConstraints() {
@@ -66,7 +92,34 @@ extension FillterViewController {
         tableView.snp.makeConstraints {
             $0.left.right.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(24)
+            $0.bottom.equalTo(baseLine.snp.top)
+        }
+        
+        baseLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.left.right.equalToSuperview()
+            $0.bottom.equalTo(buttonContainerView.snp.top).offset(-8)
+        }
+        
+        buttonContainerView.snp.makeConstraints {
+            $0.left.right.equalToSuperview().inset(24)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
+        }
+        
+        resetButton.snp.makeConstraints {
+            
+            $0.left.equalToSuperview()
+            $0.right.equalTo(findButton.snp.left).offset(-20)
+            $0.centerY.equalTo(findButton.snp.centerY)
+            $0.height.equalTo(24)
+            $0.width.equalTo(68)
+        }
+        
+        findButton.snp.makeConstraints {
+            $0.top.equalToSuperview()
             $0.bottom.equalToSuperview()
+            $0.right.equalToSuperview()
+            $0.height.equalTo(56)
         }
     }
     
@@ -114,7 +167,22 @@ extension FillterViewController {
                 ChildrenTagEntity(id: 14, name: "엠보코팅", image: "", parentID: 12, children: []),
                 ChildrenTagEntity(id: 15, name: "CR코팅", image: "", parentID: 12, children: []),
                 ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅3", image: "", parentID: 12, children: [])
+                ChildrenTagEntity(id: 12, name: "박 ", image: "", parentID: 12, children: [])
+            
+            ])
+        
+        ]),
+        
+        ChildrenTagEntity(id: 12, name: "후가공", image: "", parentID: 12, children: [
+            
+            
+            ChildrenTagEntity(id: 0, name: "코딩", image: "", parentID: 8, children: [
+                
+                ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 14, name: "엠보코팅", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 15, name: "CR코팅", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 12, name: "박 ", image: "", parentID: 12, children: [])
             
             ])
         
@@ -156,17 +224,12 @@ extension FillterViewController: UITableViewDelegate {
         
         if dummy[section].children[row].children.isEmpty {
             
-        
-            
-            
             // (row 수 * 셀크기 ) + (row-1 셀간격) + 하단에서 보정값
             return CGFloat(numberOfrow) * h1 + (CGFloat(numberOfrow-1)*offset2) + offset1
         }
         
         else  {
-        
-            
-            
+             
             // 셀 상단부터 제목까지 거리(offset1) + 제목 크기(h2) + (행 * 필터크기) + ( 행-1 * 간격) +  하단에서 보정값
             return offset2 + h2 + offset2 + (CGFloat(numberOfrow) * h1 ) + (CGFloat(numberOfrow-1) * offset2) + offset1
         }
@@ -213,8 +276,6 @@ extension FillterViewController: UITableViewDataSource {
             return UIView()
         }
         
-
-        header.backgroundColor = .red
         header.update(name: dummy[section].name)
         return header
         

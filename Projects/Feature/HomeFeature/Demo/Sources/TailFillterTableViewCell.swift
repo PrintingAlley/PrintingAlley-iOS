@@ -62,7 +62,8 @@ extension TailFillterTableViewCell {
 
         
         collectionView.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(24)
+            $0.left.equalToSuperview().inset(24)
+            $0.right.equalToSuperview()
             $0.top.equalToSuperview().offset(16)
             $0.bottom.equalToSuperview()
         }
