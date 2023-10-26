@@ -1,6 +1,6 @@
 //
 //  SearchViewController.swift
-//  SearchFeatueDemo
+//  SearchFeatue
 //
 //  Created by 박의서 on 2023/10/16.
 //  Copyright © 2023 com. All rights reserved.
@@ -10,10 +10,11 @@ import UIKit
 import Then
 import SnapKit
 import DesignSystem
-import BaseFeatureInterface
+import UtilityModule
+import RxCocoa
 import RxSwift
 import RxDataSources
-import UtilityModule
+import BaseFeatureInterface
 
 final class SearchViewController: UIViewController, ContainerViewType {
     var contentView: UIView! = UIView()
@@ -23,7 +24,7 @@ final class SearchViewController: UIViewController, ContainerViewType {
     let disposeBag = DisposeBag()
     private let input = SearchViewModel.Input()
     
-    let beforeVc = BeforeSearchViewController()
+    let beforeVc = BeforeSearchViewController(viewModel: BeforeSearchViewModel())
     let afterVc = AfterSearchViewController()
     
     private let navigationBar = UIView()
@@ -51,14 +52,70 @@ final class SearchViewController: UIViewController, ContainerViewType {
         addSubviews()
         makeConstraints()
         setKeyboardDown()
-//        bindViewModel()
+        bindViewModel()
     }
 }
 
+// MARK: - 네트워크 관련 함수들
 extension SearchViewController {
-    private func updateAfterVC() {
-        self.remove(asChildViewController: beforeVc)
-        self.add(asChildViewController: afterVc)
+    private func bindViewModel() {
+        bindUIEvent(input: input)
+    }
+    
+    func bindUIEvent(input: SearchViewModel.Input) {
+        let editingDidEnd = searchBar.searchTextField.rx.controlEvent(.editingDidEnd)
+        let editingChanged = searchBar.searchTextField.rx.controlEvent(.editingChanged)
+        
+        searchBar.searchTextField.rx.text.orEmpty
+            .skip(1)
+            .distinctUntilChanged()
+            .bind(to: self.input.textString)
+            .disposed(by: disposeBag)
+        
+        editingChanged
+            .subscribe(onNext: { [weak self] _ in
+                guard let searchText = self?.searchBar.searchTextField.text else { return }
+                guard let self = self else { return }
+                
+                if searchText.isEmpty {
+                    self.changeToBeforeVC()
+                } else {
+                    print("\(searchText)")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        editingDidEnd
+            .map { [weak self] in self?.searchBar.searchTextField.text ?? "" } // 텍스트 필드의 현재 텍스트 가져오기
+            .subscribe(onNext: { [weak self] searchText in
+                guard let self = self else { return }
+                
+                if searchText.isEmpty {
+                    print("비었다~")
+                    self.changeToBeforeVC()
+                } else {
+                    self.changeToAfterVC()
+                    print("안 비었다: \(searchText)")
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - UI 관련 함수들
+extension SearchViewController {
+    private func changeToAfterVC() {
+        UIView.animate(withDuration: 0.4) {
+            self.remove(asChildViewController: self.beforeVc)
+            self.add(asChildViewController: self.afterVc)
+        }
+    }
+    
+    private func changeToBeforeVC() {
+        UIView.animate(withDuration: 0.4) {
+            self.remove(asChildViewController: self.afterVc)
+            self.add(asChildViewController: self.beforeVc)
+        }
     }
     
     private func addSubviews() {
@@ -96,25 +153,6 @@ extension SearchViewController {
     private func setKeyboardDown() {
         let keyboardDownGesture = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
         self.view.addGestureRecognizer(keyboardDownGesture)
-    }
-    
-    private func bindViewModel() {
-        let output = self.viewModel.transform(input: input)
-        bindTagDataSource(output: output)
-        bindViewDidLoad(input: input)
-    }
-}
-
-// MARK: - TextField Delegate
-extension SearchViewController: UITextFieldDelegate {
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.becomeFirstResponder()
-        updateAfterVC() // 수정 필요 ~
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
 }
 

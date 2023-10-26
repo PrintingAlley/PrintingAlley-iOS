@@ -1,6 +1,6 @@
 //
 //  AfterSearchViewController.swift
-//  SearchFeatueDemo
+//  SearchFeatue
 //
 //  Created by 박의서 on 2023/10/18.
 //  Copyright © 2023 com. All rights reserved.
@@ -8,23 +8,17 @@
 
 import UIKit
 import DesignSystem
+import BaseDomainInterface
 import BaseFeature
 
 final class AfterSearchViewController: UIViewController {
-    var testRecommend: [RecommendModel] = [
-        RecommendModel(title: "소량인쇄"),
-        RecommendModel(title: "인쇄상담"),
-        RecommendModel(title: "당일인쇄"),
-        RecommendModel(title: "24시수령"),
-        RecommendModel(title: "대형인쇄")
-    ]
     
     private lazy var filterCollectionview = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .horizontal, delegate: self, dataSource: self).then {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
     
-    private lazy var printingTableView = UITableView().then {
+    public lazy var printingTableView = UITableView().then {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.separatorStyle = .none
@@ -41,6 +35,12 @@ final class AfterSearchViewController: UIViewController {
     }
 }
 
+// MARK: - 네트워크 관련 함수들
+extension AfterSearchViewController {
+    
+}
+
+// MARK: - UI 관련 함수들
 extension AfterSearchViewController {
     private func addSubview() {
         view.addSubviews(filterCollectionview, printingTableView)
@@ -59,10 +59,11 @@ extension AfterSearchViewController {
     }
 }
 
+// MARK: - Collectionview 관련 함수들
 extension AfterSearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-        let tempLabel = AlleyLabel(testRecommend[indexPath.row].title, font: .body1).then {
+        let tempLabel = AlleyLabel(ChildrenTagEntity.makeDummy()[indexPath.row].name, font: .body1).then {
             $0.sizeToFit()
         }
         return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
@@ -77,16 +78,17 @@ extension AfterSearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath)
                 as? FilterButtonCollectionViewCell else { return UICollectionViewCell() }
-        cell.dummyDataBind(model: testRecommend[indexPath.row], type: .basic, willChangeUI: true)
+        cell.update(model: ChildrenTagEntity.makeDummy()[indexPath.row], type: .basic, willChangeUI: true)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 아이템 개수
-        return testRecommend.count
+        return ChildrenTagEntity.makeDummy().count
     }
 }
 
+// MARK: - TableView 관련 함수들
 extension AfterSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         106

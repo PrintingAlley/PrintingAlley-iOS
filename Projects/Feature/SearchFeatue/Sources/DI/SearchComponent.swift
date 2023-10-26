@@ -18,6 +18,6 @@ public protocol SearchDependency: Dependency {
 
 public final class SearchComponent: Component<SearchDependency>, SearchFactory {
     public func makeView() -> UIViewController {
-        SearchViewController(viewModel: SearchViewModel(fetchPrintShopListUseCase: self.dependency.searchDomainFactory.fetchPrintShopListUseCase))
+        SearchViewController(viewModel: SearchViewModel())
     }
 }

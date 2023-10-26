@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public struct ChildrenTagEntity {
     public let id: Int
     public let name: String
@@ -17,7 +16,7 @@ public struct ChildrenTagEntity {
     public let children: [ChildrenTagEntity]
     public var isSelected: Bool = false
 
-    public init(id: Int, name: String, image: String, parentID: Int, children : [ChildrenTagEntity]) {
+    public init(id: Int, name: String, image: String, parentID: Int, children: [ChildrenTagEntity]) {
         self.id = id
         self.name = name
         self.image = image
@@ -25,4 +24,11 @@ public struct ChildrenTagEntity {
         self.children = children
     }
 
+    public static func makeDummy() -> [Self] {[
+        ChildrenTagEntity(id: 0, name: "소량인쇄", image: "", parentID: 0, children: []),
+        ChildrenTagEntity(id: 0, name: "인쇄상담", image: "", parentID: 0, children: []),
+        ChildrenTagEntity(id: 0, name: "당일인쇄", image: "", parentID: 0, children: []),
+        ChildrenTagEntity(id: 0, name: "24시수령", image: "", parentID: 0, children: []),
+        ChildrenTagEntity(id: 0, name: "대형인쇄", image: "", parentID: 0, children: [])
+    ]}
 }
