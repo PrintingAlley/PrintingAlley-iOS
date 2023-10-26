@@ -11,6 +11,7 @@ import UtilityModule
 import RxRelay
 import RxSwift
 import BaseFeature
+import BaseDomainInterface
 
 final class BeforeSearchViewModel: ViewModelType {
     public struct Input {
@@ -20,7 +21,7 @@ final class BeforeSearchViewModel: ViewModelType {
     
     public struct Output {
         // TODO: - 추천 검색어 연결 필요
-        let dataSource: BehaviorRelay<[RecommendModel]> = .init(value: RecommendModel.makeDummy()) // 더미모델을 초기값으로 가지는 Relay 생성
+        let dataSource: BehaviorRelay<[ChildrenTagEntity]> = .init(value: ChildrenTagEntity.makeDummy()) // 더미모델을 초기값으로 가지는 Relay 생성
         // Relay 는 .completed, .error를 발생시키지 않고 Dispose 되기 전까지 계속 동작하므로 UI 작업에 용이
     }
     

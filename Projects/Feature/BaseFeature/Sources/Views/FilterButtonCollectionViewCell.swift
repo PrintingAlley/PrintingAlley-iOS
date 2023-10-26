@@ -12,11 +12,9 @@ import Then
 import DesignSystem
 import BaseDomainInterface
 
-
 public final class FilterButtonCollectionViewCell: UICollectionViewCell {
     
     public static let identifier = "RecommendCollectionViewCell"
-    
     
     private var filterButton = FilterButton(title: "기본버튼",id: 0, type: .basic, willChangeUI: false)
     
@@ -49,4 +47,3 @@ extension FilterButtonCollectionViewCell {
         filterButton.willChangeUI = willChangeUI
     }
 }
-

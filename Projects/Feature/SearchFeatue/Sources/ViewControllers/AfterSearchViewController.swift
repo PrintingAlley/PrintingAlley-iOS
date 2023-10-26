@@ -9,15 +9,9 @@
 import UIKit
 import DesignSystem
 import BaseFeature
+import BaseDomainInterface
 
 final class AfterSearchViewController: UIViewController {
-    var testRecommend: [RecommendModel] = [
-        RecommendModel(title: "소량인쇄"),
-        RecommendModel(title: "인쇄상담"),
-        RecommendModel(title: "당일인쇄"),
-        RecommendModel(title: "24시수령"),
-        RecommendModel(title: "대형인쇄")
-    ]
     
     private lazy var filterCollectionview = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .horizontal, delegate: self, dataSource: self).then {
         $0.backgroundColor = .setColor(.sub(.white))
@@ -69,7 +63,7 @@ extension AfterSearchViewController {
 extension AfterSearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-        let tempLabel = AlleyLabel(testRecommend[indexPath.row].title, font: .body1).then {
+        let tempLabel = AlleyLabel(ChildrenTagEntity.makeDummy()[indexPath.row].name, font: .body1).then {
             $0.sizeToFit()
         }
         return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
@@ -84,13 +78,13 @@ extension AfterSearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath)
                 as? FilterButtonCollectionViewCell else { return UICollectionViewCell() }
-//        cell.update(model: testRecommend[indexPath.row].title, type: .basic, willChangeUI: true)
+        cell.update(model: ChildrenTagEntity.makeDummy()[indexPath.row], type: .basic, willChangeUI: true)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 아이템 개수
-        return testRecommend.count
+        return ChildrenTagEntity.makeDummy().count
     }
 }
 

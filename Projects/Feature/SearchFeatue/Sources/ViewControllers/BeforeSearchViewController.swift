@@ -13,6 +13,7 @@ import DesignSystem
 import BaseFeature
 import UtilityModule
 import RxSwift
+import BaseDomainInterface
 
 final class BeforeSearchViewController: UIViewController {
     private var viewModel: BeforeSearchViewModel!
@@ -95,7 +96,7 @@ extension BeforeSearchViewController {
 extension BeforeSearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-        let tempLabel = AlleyLabel(RecommendModel.makeDummy()[indexPath.row].title, font: .body1).then {
+        let tempLabel = AlleyLabel(ChildrenTagEntity.makeDummy()[indexPath.row].name, font: .body1).then {
             $0.sizeToFit()
         }
         return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
@@ -114,13 +115,13 @@ extension BeforeSearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath)
                 as? FilterButtonCollectionViewCell else { return UICollectionViewCell() }
-//        cell.update(model: RecommendModel.makeDummy()[indexPath], type: .basic, willChangeUI: false)
+        cell.update(model: ChildrenTagEntity.makeDummy()[indexPath.row], type: .basic, willChangeUI: false)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 아이템 개수
-        return RecommendModel.makeDummy().count
+        return ChildrenTagEntity.makeDummy().count
     }
 
 }

@@ -14,15 +14,4 @@ public struct RecommendModel {
     public init(title: String) {
         self.title = title
     }
-    
-    public static func makeDummy() -> [Self] {[
-        RecommendModel(title: "스프링노트"),
-        RecommendModel(title: "리소인쇄"),
-        RecommendModel(title: "레터프레스"),
-        RecommendModel(title: "하이"),
-        RecommendModel(title: "아아아아아아아아아"),
-        RecommendModel(title: "리소인쇄"),
-        RecommendModel(title: "카테고리"),
-        RecommendModel(title: "카테고리")
-    ]}
 }
