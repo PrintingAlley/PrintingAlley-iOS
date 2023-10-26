@@ -12,16 +12,24 @@ import Then
 import DesignSystem
 import BaseDomainInterface
 
+public protocol FilterButtonCollectionViewCellDelegate: AnyObject {
+    func press(id: Int)
+}
+
+
 public final class FilterButtonCollectionViewCell: UICollectionViewCell {
     
     public static let identifier = "RecommendCollectionViewCell"
     
-    private var filterButton = FilterButton(title: "기본버튼", type: .basic, willChangeUI: false)
+    public weak var delegate: FilterButtonCollectionViewCellDelegate?
+    
+    private var filterButton = FilterButton(title: "기본버튼",id: 0, type: .basic, willChangeUI: false)
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
         makeConstraints()
+        self.filterButton.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -42,7 +50,14 @@ extension FilterButtonCollectionViewCell {
     
     public func update(model: ChildrenTagEntity, type: FilterButtonType, willChangeUI: Bool) {
         filterButton.title = model.name
+        filterButton.id = model.id
         filterButton.type = type
         filterButton.willChangeUI = willChangeUI
+    }
+}
+
+extension FilterButtonCollectionViewCell: FilterButtonDelegate {
+    public func press(id: Int) {
+        delegate?.press(id: id)
     }
 }

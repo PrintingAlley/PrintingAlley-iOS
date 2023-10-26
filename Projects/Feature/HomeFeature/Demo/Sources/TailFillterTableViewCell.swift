@@ -11,6 +11,10 @@ import DesignSystem
 import BaseDomainInterface
 import BaseFeature
 
+public protocol TailFillterTableViewCellDelegate : AnyObject {
+    func press(id: Int)
+}
+
 class TailFillterTableViewCell: UITableViewCell {
 
     
@@ -26,7 +30,12 @@ class TailFillterTableViewCell: UITableViewCell {
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
     
+   
+    
     var model:ChildrenTagEntity = ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: [])
+    
+    
+    public weak var delegate: TailFillterTableViewCellDelegate?
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -122,6 +131,7 @@ extension TailFillterTableViewCell: UICollectionViewDataSource {
         }
 
         cell.update(model: model.children[indexPath.row], type: .basic, willChangeUI: true)
+        cell.delegate = self
 
         return cell
     }
@@ -135,4 +145,12 @@ extension TailFillterTableViewCell: UICollectionViewDataSource {
     
     
 
+}
+
+
+extension TailFillterTableViewCell : FilterButtonCollectionViewCellDelegate {
+    func press(id: Int) {
+        delegate?.press(id: id)
+    }
+    
 }

@@ -15,6 +15,10 @@ public enum FilterButtonType {
     case selectedWithX
 }
 
+public protocol FilterButtonDelegate : AnyObject {
+    func press(id: Int)
+}
+
 public final class FilterButton: UIButton {
     
     public var type: FilterButtonType {
@@ -29,11 +33,15 @@ public final class FilterButton: UIButton {
         }
     }
     
-    public var willChangeUI: Bool = false
+    public var id: Int!
     
-    public init(title: String, type: FilterButtonType, willChangeUI: Bool) {
+    public var willChangeUI: Bool = false
+    public weak var delegate: FilterButtonDelegate?
+    
+    public init(title: String,id: Int, type: FilterButtonType, willChangeUI: Bool) {
         self.type = type
         self.title = title
+        self.id = id
         self.willChangeUI = willChangeUI
         super.init(frame: .zero)
         configureUI(type)
@@ -96,6 +104,9 @@ extension FilterButton {
         } else {
             configureUI(type)
         }
+        
+        delegate?.press(id: self.id)
         print("탭 필터버튼")
+        
     }
 }

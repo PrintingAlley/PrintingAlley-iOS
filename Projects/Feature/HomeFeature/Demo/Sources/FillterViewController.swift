@@ -16,6 +16,8 @@ import UtilityModule
 
 class FillterViewController: UIViewController {
 
+    var completion: (([Int]) -> Void)?
+    
     lazy var titleLabel: AlleyLabel = AlleyLabel("필터",textColor: .sub(.black),font: .subtitle1)
     lazy var button: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.downArrow.image, for: .normal)
@@ -57,6 +59,17 @@ class FillterViewController: UIViewController {
     
     
     var dummy:[ChildrenTagEntity] = []
+    
+    
+    init(completion: (([Int]) -> Void)? = nil) {
+        super.init(nibName: nil, bundle: nil)
+        self.completion = completion
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -310,6 +323,7 @@ extension FillterViewController: UITableViewDataSource {
             
             cell.update(model: dummy[section])
             cell.selectionStyle = .none
+            cell.delegate = self 
             return cell
         }
         
@@ -321,6 +335,7 @@ extension FillterViewController: UITableViewDataSource {
             
             cell.update(model: dummy[section].children[row])
             cell.selectionStyle = .none
+            cell.delegate = self
             return cell
             
         }
@@ -329,4 +344,19 @@ extension FillterViewController: UITableViewDataSource {
     }
     
     
+}
+
+
+extension FillterViewController: TailFillterTableViewCellDelegate {
+    func press(id: Int) {
+        print("Tail: \(id)")
+    }
+    
+    
+}
+
+extension FillterViewController: SecondFillterTableViewCellDelegate {
+    func secondPress(id: Int ) {
+        print("Second: \(id )")
+    }
 }

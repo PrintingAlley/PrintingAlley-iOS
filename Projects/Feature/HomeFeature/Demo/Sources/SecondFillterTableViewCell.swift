@@ -10,6 +10,10 @@ import UIKit
 import BaseDomainInterface
 import DesignSystem
 
+protocol SecondFillterTableViewCellDelegate: AnyObject {
+    func secondPress(id: Int)
+}
+
 class SecondFillterTableViewCell: UITableViewCell {
 
     public static let identifier = "SecondFillterTableViewCell"
@@ -24,6 +28,8 @@ class SecondFillterTableViewCell: UITableViewCell {
     }
     
     var model: ChildrenTagEntity = ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: [])
+    
+    public weak var delegate:SecondFillterTableViewCellDelegate?
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -103,7 +109,15 @@ extension SecondFillterTableViewCell: UITableViewDataSource {
         
         cell.update(model: model)
         cell.selectionStyle = .none
+        cell.delegate = self
         return cell
     }
     
+}
+
+
+extension SecondFillterTableViewCell: TailFillterTableViewCellDelegate {
+    func press(id: Int) {
+        delegate?.secondPress(id: id)
+    }
 }
