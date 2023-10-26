@@ -59,22 +59,16 @@ final class SearchViewController: UIViewController, ContainerViewType {
 // MARK: - 네트워크 관련 함수들
 extension SearchViewController {
     private func bindViewModel() {
-        
-        let input = SearchViewModel.Input()
         bindUIEvent(input: input)
-        
-        let output = self.viewModel.transform(input: input)
-        bindDataSource(output: output)
     }
     
     func bindUIEvent(input: SearchViewModel.Input) {
         let editingDidEnd = searchBar.searchTextField.rx.controlEvent(.editingDidEnd)
         let editingChanged = searchBar.searchTextField.rx.controlEvent(.editingChanged)
         
-        // searchBar의 textField에 입력된 텍스트 관찰, 변경될 때마다 input.textString에 바인딩
-        searchBar.searchTextField.rx.text.orEmpty // 텍스트필드와 input 바인딩
+        searchBar.searchTextField.rx.text.orEmpty
             .skip(1)
-            .distinctUntilChanged() // 이전 값과 변경된 값이 같으면 무시
+            .distinctUntilChanged()
             .bind(to: self.input.textString)
             .disposed(by: disposeBag)
         
@@ -104,23 +98,6 @@ extension SearchViewController {
                     print("안 비었다: \(searchText)")
                 }
             })
-            .disposed(by: disposeBag)
-    }
-    
-    func bindDataSource(output: SearchViewModel.Output) {
-        output.dataSource
-            .bind(to: afterVc.printingTableView.rx.items) { (tableView, index, model) -> UITableViewCell in
-                
-                let indexPath = IndexPath(row: index, section: 0)
-                
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: PrintingTableViewCell.identifier, for: indexPath) as? PrintingTableViewCell else {
-                    return UITableViewCell()
-                }
-                
-                cell.bindData(model: model)
-                
-                return cell
-            }
             .disposed(by: disposeBag)
     }
 }

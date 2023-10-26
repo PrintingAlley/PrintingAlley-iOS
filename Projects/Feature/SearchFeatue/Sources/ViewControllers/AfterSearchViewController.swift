@@ -29,7 +29,7 @@ final class AfterSearchViewController: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.separatorStyle = .none
         $0.delegate = self
-//        $0.dataSource = self
+        $0.dataSource = self
         $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
     }
     
@@ -41,6 +41,12 @@ final class AfterSearchViewController: UIViewController {
     }
 }
 
+// MARK: - 네트워크 관련 함수들
+extension AfterSearchViewController {
+    
+}
+
+// MARK: - UI 관련 함수들
 extension AfterSearchViewController {
     private func addSubview() {
         view.addSubviews(filterCollectionview, printingTableView)
@@ -59,6 +65,7 @@ extension AfterSearchViewController {
     }
 }
 
+// MARK: - Collectionview 관련 함수들
 extension AfterSearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
@@ -87,6 +94,7 @@ extension AfterSearchViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - TableView 관련 함수들
 extension AfterSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         106
