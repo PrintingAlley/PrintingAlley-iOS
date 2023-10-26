@@ -68,18 +68,13 @@ extension SearchViewController {
     }
     
     func bindUIEvent(input: SearchViewModel.Input) {
-        let editingDidEndOnExit = searchBar.searchTextField.rx.controlEvent(.editingDidEndOnExit)
+        let editingDidEnd = searchBar.searchTextField.rx.controlEvent(.editingDidEnd)
         let editingChanged = searchBar.searchTextField.rx.controlEvent(.editingChanged)
-        
-        let mergeObservable = Observable.merge(
-            editingDidEndOnExit.map { UIControl.Event.editingDidEndOnExit },
-            editingChanged.map { UIControl.Event.editingChanged }
-        )
         
         // searchBar의 textField에 입력된 텍스트 관찰, 변경될 때마다 input.textString에 바인딩
         searchBar.searchTextField.rx.text.orEmpty // 텍스트필드와 input 바인딩
             .skip(1)
-            .distinctUntilChanged()
+            .distinctUntilChanged() // 이전 값과 변경된 값이 같으면 무시
             .bind(to: self.input.textString)
             .disposed(by: disposeBag)
         
@@ -88,7 +83,7 @@ extension SearchViewController {
                 guard let searchText = self?.searchBar.searchTextField.text else { return }
                 guard let self = self else { return }
                 
-                if searchText.isEmpty  {
+                if searchText.isEmpty {
                     self.changeToBeforeVC()
                 } else {
                     print("\(searchText)")
@@ -96,9 +91,8 @@ extension SearchViewController {
             })
             .disposed(by: disposeBag)
         
-        editingDidEndOnExit
+        editingDidEnd
             .map { [weak self] in self?.searchBar.searchTextField.text ?? "" } // 텍스트 필드의 현재 텍스트 가져오기
-            .distinctUntilChanged() // 이전 값과 변경된 값이 같으면 무시
             .subscribe(onNext: { [weak self] searchText in
                 guard let self = self else { return }
                 
@@ -192,4 +186,3 @@ extension SearchViewController {
         self.navigationController?.popViewController(animated: true)
     }
 }
-
