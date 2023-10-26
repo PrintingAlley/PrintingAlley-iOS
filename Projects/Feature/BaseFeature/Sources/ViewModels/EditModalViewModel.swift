@@ -14,6 +14,7 @@ import BookMarkDomainInterface
 import BaseFeatureInterface
 import BaseDomainInterface
 import UserDomainInterface
+import Network
 
 public class EditModalViewModel: ViewModelType {
     
@@ -65,11 +66,11 @@ public class EditModalViewModel: ViewModelType {
 extension EditModalViewModel {
     func bindTapConfirm(input: Input, output: Output) {
         input.tapConfirm
-            .withLatestFrom(input.text){($1)}
-            .flatMap({ [weak self] text -> Observable<BaseEntity> in
+            .withLatestFrom(input.text){($0,$1)}
+            .flatMap({ [weak self] (_,text) -> Observable<BaseEntity> in
                 
                 guard let self else { return Observable.empty()}
-                
+            
                     
                 switch self.type {
                 
@@ -77,17 +78,18 @@ extension EditModalViewModel {
                     return self.generateBookMarkUseCase.execute(name: text)
                         .catch({ error in
                             
-                            let alleryError = error.asAlleyError
-                            
-                            if alleryError == .tokenExpired {
-                                return Single<BaseEntity>.create { single in
-                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
-                                    return Disposables.create()
-                                }
-                            }
+//                            let alleryError = error.asAlleyError
+//                            
+//                            if alleryError == .tokenExpired {
+//                                return Single<BaseEntity>.create { single in
+//                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+//                                    return Disposables.create()
+//                                }
+//                            }
                             
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 0, message: error.localizedDescription)))
+                                //single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
                                 return Disposables.create()
                             }
                         })
@@ -97,17 +99,19 @@ extension EditModalViewModel {
                     return self.renameBookMarkGroupUseCase.execute(id: self.id, name: text)
                         .catch({ error in
                             
-                            let alleryError = error.asAlleyError
+//                            let alleryError = error.asAlleyError
                             
-                            if alleryError == .tokenExpired {
-                                return Single<BaseEntity>.create { single in
-                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
-                                    return Disposables.create()
-                                }
-                            }
+//                            if alleryError == .tokenExpired {
+//                                return Single<BaseEntity>.create { single in
+//                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+//                                    return Disposables.create()
+//                                }
+//                            }
+                            
                             
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+//                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 0, message: error.localizedDescription)))
                                 return Disposables.create()
                             }
                         })
@@ -117,17 +121,18 @@ extension EditModalViewModel {
                     return self.renameUserUseCase.execute(name: text)
                         .catch({ error in
                             
-                            let alleryError = error.asAlleyError
+                            //let alleryError = error.asAlleyError
                             
-                            if alleryError == .tokenExpired {
-                                return Single<BaseEntity>.create { single in
-                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
-                                    return Disposables.create()
-                                }
-                            }
+//                            if alleryError == .tokenExpired {
+//                                return Single<BaseEntity>.create { single in
+//                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+//                                    return Disposables.create()
+//                                }
+//                            }
                             
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+//                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 0, message: error.localizedDescription)))
                                 return Disposables.create()
                             }
                         })

@@ -15,6 +15,7 @@ public struct ChildrenTagEntity {
     public let image: String
     public let parentID: Int
     public let children: [ChildrenTagEntity]
+    public var isSelected: Bool = false
 
     public init(id: Int, name: String, image: String, parentID: Int, children : [ChildrenTagEntity]) {
         self.id = id

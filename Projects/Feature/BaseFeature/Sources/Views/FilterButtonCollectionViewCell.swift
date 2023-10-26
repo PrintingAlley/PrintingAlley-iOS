@@ -10,12 +10,15 @@ import UIKit
 import SnapKit
 import Then
 import DesignSystem
+import BaseDomainInterface
+
 
 public final class FilterButtonCollectionViewCell: UICollectionViewCell {
     
     public static let identifier = "RecommendCollectionViewCell"
     
-    private var filterButton = FilterButton(title: "기본버튼", type: .basic, willChangeUI: false)
+    
+    private var filterButton = FilterButton(title: "기본버튼",id: 0, type: .basic, willChangeUI: false)
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,9 +42,11 @@ extension FilterButtonCollectionViewCell {
         }
     }
     
-    public func dummyDataBind(model: RecommendModel, type: FilterButtonType, willChangeUI: Bool) {
-        filterButton.title = model.title
+    public func update(model: ChildrenTagEntity, type: FilterButtonType, willChangeUI: Bool) {
+        filterButton.title = model.name
+        filterButton.id = model.id
         filterButton.type = type
         filterButton.willChangeUI = willChangeUI
     }
 }
+
