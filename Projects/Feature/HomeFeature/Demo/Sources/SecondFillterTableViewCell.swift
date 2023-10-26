@@ -30,16 +30,18 @@ class SecondFillterTableViewCell: UITableViewCell {
         self.contentView.addSubviews(tableView,subtitleLabel)
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(subtitleLabel.snp.bottom).offset(-8)
+            $0.top.equalTo(subtitleLabel.snp.bottom).offset(-4)
             $0.left.right.bottom.equalToSuperview()
-            $0.bottom.equalToSuperview()
         }
         
         subtitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().inset(8)
             $0.right.equalToSuperview()
             $0.left.equalToSuperview().inset(24)
         }
+        
+//        tableView.backgroundColor = .black
+//        subtitleLabel.backgroundColor = .red
         
     }
 
@@ -51,7 +53,6 @@ class SecondFillterTableViewCell: UITableViewCell {
     public func update(model: ChildrenTagEntity) {
         self.model = model
         
-        print("꽃: \(model)")
         self.subtitleLabel.setTitle(title: model.name, textColor: .grey(.grey300), font: .subtitle3)
         
         
@@ -73,24 +74,25 @@ extension SecondFillterTableViewCell: UITableViewDelegate {
             $0.sizeToFit()
         }
         
-        let titleHeight = titleLabel.frame.height
-        let cellHeight = cell.frame.height
+        let h1 = cell.frame.height + 8
+        let h2 = titleLabel.frame.height
+      
         
         let offset1: CGFloat = 16.0
         let offset2: CGFloat = 8.0
-        let offset3: CGFloat = 16.0
         
-        let numberOfRow = model.children.count % 3 == .zero ?  model.children.count / 3  : (model.children.count / 3)+1
+        let numberOfrow = model.children.count % 3 == .zero ?  model.children.count / 3  : (model.children.count / 3)+1
         
-        print(offset1 + titleHeight + offset2 + (CGFloat(numberOfRow) * cellHeight ) + (CGFloat(numberOfRow-1) * offset2) + offset3)
-        
-        return offset1 + titleHeight + offset2 + (CGFloat(numberOfRow) * cellHeight ) + (CGFloat(numberOfRow-1) * offset2) + offset3
+            
+        // (행 * 필터크기) + ( 행-1 * 간격) +
+        return CGFloat(numberOfrow) * h1 + (CGFloat(numberOfrow-1) * offset2) + offset1
      }
 }
 
 extension SecondFillterTableViewCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        
+        return 1
     }
     
     

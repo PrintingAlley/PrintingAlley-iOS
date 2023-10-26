@@ -16,11 +16,13 @@ class TailFillterTableViewCell: UITableViewCell {
     
     public static let identifier = "FirstFillterTableViewCell"
     
-    var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .horizontal
-    }
+//    var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
+//        $0.scrollDirection = .vertical
+//        
+//    }
     
-    lazy var collectionView: UICollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .horizontal).then {
+    
+    lazy var collectionView: UICollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .vertical).then {
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
     }
     
@@ -78,26 +80,30 @@ extension TailFillterTableViewCell {
 
 extension TailFillterTableViewCell: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
-        return UIEdgeInsets(top: 0, left: 20.0, bottom: 0, right: 20.0)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        
+//        return UIEdgeInsets(top: 0, left: 0.0, bottom: 0, right: .zero)
+//    }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
         let tempLabel = AlleyLabel(model.children[indexPath.row].name, font: .body1).then {
             $0.sizeToFit()
+            
         }
+        
+        
+        
         return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        .zero
+        4
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { //셀 층간의 간격 (세로)
-        4
+        8
     }
     
 
@@ -115,7 +121,7 @@ extension TailFillterTableViewCell: UICollectionViewDataSource {
         }
 
         cell.update(model: model.children[indexPath.row], type: .basic, willChangeUI: true)
-        cell.backgroundColor = .red
+
         return cell
     }
     

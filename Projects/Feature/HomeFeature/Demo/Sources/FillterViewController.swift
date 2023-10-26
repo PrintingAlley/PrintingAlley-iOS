@@ -91,9 +91,20 @@ extension FillterViewController {
                 ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
                 ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅3", image: "", parentID: 12, children: [])
             
+            ]),
+            
+            ChildrenTagEntity(id: 0, name: "코딩123", image: "", parentID: 8, children: [
+                
+                ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 14, name: "엠보코팅", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 15, name: "CR코팅", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅3", image: "", parentID: 12, children: [])
+            
             ])
         
         ]),
+        
         ChildrenTagEntity(id: 12, name: "후가공", image: "", parentID: 12, children: [
             
             
@@ -133,30 +144,31 @@ extension FillterViewController: UITableViewDelegate {
             $0.sizeToFit()
         }
         
-        let height1: CGFloat = tempLabel.frame.height + 8
+        let h1: CGFloat = tempLabel.frame.height + 8
         
-        let height2: CGFloat = subtitleLabel.frame.height
+        let h2: CGFloat = subtitleLabel.frame.height
         
-        let numberOfrow = numberOfItem % 3 == .zero ?  numberOfItem / 3 : numberOfItem / 3 + 1
+        let numberOfrow = numberOfItem % 3 == .zero ?  numberOfItem / 3 : numberOfItem / 3 + 1 // 필터 줄
         
         let offset1: CGFloat = 16.0
         let offset2: CGFloat = 8.0
-        let offset3: CGFloat = 16.0
+
         
         if dummy[section].children[row].children.isEmpty {
             
-            print("Type 1: \(CGFloat(numberOfrow) * height1 + CGFloat(8 * numberOfrow)-1)")
+        
             
-            print("Type 2: \(numberOfItem)")
-            return CGFloat(numberOfrow) * height1 + CGFloat(8 * numberOfrow)-1 + 16
+            
+            // (row 수 * 셀크기 ) + (row-1 셀간격) + 하단에서 보정값
+            return CGFloat(numberOfrow) * h1 + (CGFloat(numberOfrow-1)*offset2) + offset1
         }
         
         else  {
-            print("Type 3: \(offset1 + height2 + offset2 + (CGFloat(numberOfrow) * height1 ) + (CGFloat(numberOfrow-1) * offset2) + offset3)")
+        
             
-            print("Type 4: \(numberOfItem)")
             
-            return offset1 + height2 + offset2 + (CGFloat(numberOfrow) * height1 ) + (CGFloat(numberOfrow-1) * offset2) + offset3 + 16
+            // 셀 상단부터 제목까지 거리(offset1) + 제목 크기(h2) + (행 * 필터크기) + ( 행-1 * 간격) +  하단에서 보정값
+            return offset2 + h2 + offset2 + (CGFloat(numberOfrow) * h1 ) + (CGFloat(numberOfrow-1) * offset2) + offset1
         }
         
 
@@ -181,7 +193,11 @@ extension FillterViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+    
+
+        //  2층 구조면 1개 , 아니면 children 개수 만큼 row
+        return dummy[section].children.first?.children.isEmpty ?? true ? 1 : dummy[section].children.count
+        
     }
     
 
@@ -198,7 +214,7 @@ extension FillterViewController: UITableViewDataSource {
         }
         
 
-        
+        header.backgroundColor = .red
         header.update(name: dummy[section].name)
         return header
         
