@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 public enum FilterButtonType {
     case basic
@@ -33,6 +35,8 @@ public final class FilterButton: UIButton {
         }
     }
     
+    let disposeBag = DisposeBag()
+    
     public var id: Int!
     
     public var willChangeUI: Bool = false
@@ -46,6 +50,18 @@ public final class FilterButton: UIButton {
         super.init(frame: .zero)
         configureUI(type)
         addTargets()
+        
+        NotificationCenter.default.rx.notification(Notification.Name("refreshFilter"))
+            .map{_ in ()}
+            .subscribe(onNext: { [weak self] _ in
+                
+                guard let self else {return}
+                configureUI(self.type)
+                self.isSelected = false
+                
+                
+            })
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
@@ -98,6 +114,12 @@ extension FilterButton {
     
     @objc
     private func touchUpFilterButton() {
+      
+        toggle()
+        
+    }
+    
+    private func toggle() {
         self.isSelected.toggle()
         if willChangeUI, isSelected {
             configureUI(.selected)
@@ -107,6 +129,5 @@ extension FilterButton {
         
         delegate?.press(id: self.id)
         print("탭 필터버튼")
-        
     }
 }
