@@ -12,6 +12,7 @@ import SnapKit
 import DesignSystem
 import TagDomainInterface
 import BaseDomainInterface
+import Kingfisher
 
 final class CategoryCollectionViewCell: UICollectionViewCell {
     static let identifier = "CategoryCollectionViewCell"
@@ -43,6 +44,7 @@ extension CategoryCollectionViewCell {
     private func makeConstraints() {
         image.snp.makeConstraints {
             $0.top.equalToSuperview()
+            $0.width.height.equalTo(44)
             $0.centerX.equalToSuperview()
         }
         
@@ -54,5 +56,9 @@ extension CategoryCollectionViewCell {
     
     public func update(model: ChildrenTagEntity) {
         label.setTitle(title: model.name, textColor: .grey(.grey800), font: .body2)
+        
+        image.kf
+            .setImage(with: URL(string: model.image))
+        
     }
 }
