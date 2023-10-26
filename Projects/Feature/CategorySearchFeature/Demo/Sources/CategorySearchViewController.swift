@@ -9,7 +9,11 @@
 import UIKit
 import DesignSystem
 import UtilityModule
-
+import BaseFeature
+import RxSwift
+import RxDataSources
+import SnapKit
+import Then
 
 class CategorySearchViewController: UIViewController {
 
@@ -39,6 +43,10 @@ class CategorySearchViewController: UIViewController {
         $0.clipsToBounds = true
     }
     
+    lazy var tableView: UITableView = UITableView().then {
+        $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -65,7 +73,7 @@ class CategorySearchViewController: UIViewController {
 
 extension CategorySearchViewController {
     func addSubviews() {
-        self.view.addSubviews(naviTitleView,filterButton)
+        self.view.addSubviews(naviTitleView,filterButton,tableView)
         
         naviTitleView.addSubviews(backButton,naviTitleLabel)
         
@@ -96,5 +104,9 @@ extension CategorySearchViewController {
             $0.right.equalToSuperview().inset(27)
         }
         
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(filterButton.snp.bottom).offset(16)
+            $0.left.right.bottom.equalToSuperview()
+        }
     }
 }
