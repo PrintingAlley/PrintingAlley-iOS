@@ -114,7 +114,7 @@ extension BeforeSearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath)
                 as? FilterButtonCollectionViewCell else { return UICollectionViewCell() }
-        cell.dummyDataBind(model: RecommendModel.makeDummy()[indexPath.row], type: .basic, willChangeUI: false)
+//        cell.update(model: RecommendModel.makeDummy()[indexPath], type: .basic, willChangeUI: false)
         return cell
     }
     

@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public struct ChildrenTagEntity {
     public let id: Int
     public let name: String
@@ -17,7 +16,7 @@ public struct ChildrenTagEntity {
     public let children: [ChildrenTagEntity]
     public var isSelected: Bool = false
 
-    public init(id: Int, name: String, image: String, parentID: Int, children : [ChildrenTagEntity]) {
+    public init(id: Int, name: String, image: String, parentID: Int, children: [ChildrenTagEntity]) {
         self.id = id
         self.name = name
         self.image = image
