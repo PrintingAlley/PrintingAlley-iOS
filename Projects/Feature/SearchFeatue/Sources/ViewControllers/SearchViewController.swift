@@ -1,6 +1,6 @@
 //
 //  SearchViewController.swift
-//  SearchFeatueDemo
+//  SearchFeatue
 //
 //  Created by 박의서 on 2023/10/16.
 //  Copyright © 2023 com. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  PrintingTableViewCell.swift
-//  SearchFeatueDemo
+//  BaseFeature
 //
 //  Created by 박의서 on 2023/10/18.
 //  Copyright © 2023 com. All rights reserved.
@@ -12,8 +12,8 @@ import Then
 import DesignSystem
 import BaseDomainInterface
 
-final class PrintingTableViewCell: UITableViewCell {
-    static let identifier = "PrintingTableViewCell"
+public final class PrintingTableViewCell: UITableViewCell {
+    public static let identifier = "PrintingTableViewCell"
     
     private let image = UIImageView().then {
         $0.image = DesignSystemAsset.Icon.bookMark.image

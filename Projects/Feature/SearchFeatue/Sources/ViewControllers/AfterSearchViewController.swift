@@ -1,6 +1,6 @@
 //
 //  AfterSearchViewController.swift
-//  SearchFeatueDemo
+//  SearchFeatue
 //
 //  Created by 박의서 on 2023/10/18.
 //  Copyright © 2023 com. All rights reserved.
@@ -8,8 +8,8 @@
 
 import UIKit
 import DesignSystem
-import BaseFeature
 import BaseDomainInterface
+import BaseFeature
 
 final class AfterSearchViewController: UIViewController {
     
