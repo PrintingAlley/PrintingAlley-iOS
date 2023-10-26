@@ -74,6 +74,10 @@ class FilterViewController: UIViewController {
         
     }
     
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
