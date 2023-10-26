@@ -17,9 +17,7 @@ public enum FilterButtonType {
     case selectedWithX
 }
 
-public protocol FilterButtonDelegate : AnyObject {
-    func press(id: Int)
-}
+
 
 public final class FilterButton: UIButton {
     
@@ -40,7 +38,6 @@ public final class FilterButton: UIButton {
     public var id: Int!
     
     public var willChangeUI: Bool = false
-    public weak var delegate: FilterButtonDelegate?
     
     public init(title: String,id: Int, type: FilterButtonType, willChangeUI: Bool) {
         self.type = type
@@ -127,7 +124,8 @@ extension FilterButton {
             configureUI(type)
         }
         
-        delegate?.press(id: self.id)
+        NotificationCenter.default.post(name: Notification.Name("filterToggle"), object: self.id)
+        
         print("탭 필터버튼")
     }
 }

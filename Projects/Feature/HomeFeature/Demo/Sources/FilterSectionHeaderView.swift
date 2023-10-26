@@ -10,9 +10,9 @@ import UIKit
 import UtilityModule
 import DesignSystem
 
-class FillterSectionHeaderView: UITableViewHeaderFooterView {
+class FilterSectionHeaderView: UITableViewHeaderFooterView {
     
-    static let identifer = "FillterSectionHeaderView"
+    static let identifer = "FilterSectionHeaderView"
     
     lazy var label: AlleyLabel = AlleyLabel()
     

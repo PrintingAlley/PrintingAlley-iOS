@@ -9,7 +9,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = FillterViewController()
+        let viewController = FilterViewController()
 
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()

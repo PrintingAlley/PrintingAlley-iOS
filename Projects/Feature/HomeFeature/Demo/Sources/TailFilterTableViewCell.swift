@@ -11,11 +11,8 @@ import DesignSystem
 import BaseDomainInterface
 import BaseFeature
 
-public protocol TailFillterTableViewCellDelegate : AnyObject {
-    func press(id: Int)
-}
 
-class TailFillterTableViewCell: UITableViewCell {
+class TailFilterTableViewCell: UITableViewCell {
 
     
     public static let identifier = "FirstFillterTableViewCell"
@@ -34,9 +31,7 @@ class TailFillterTableViewCell: UITableViewCell {
     
     var model:ChildrenTagEntity = ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: [])
     
-    
-    public weak var delegate: TailFillterTableViewCellDelegate?
-    
+
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
@@ -50,7 +45,7 @@ class TailFillterTableViewCell: UITableViewCell {
 
 }
 
-extension TailFillterTableViewCell {
+extension TailFilterTableViewCell {
     
     func makeCollectionView(layout: UICollectionViewFlowLayout, scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
         layout.scrollDirection = scrollDirection
@@ -88,7 +83,7 @@ extension TailFillterTableViewCell {
 
 
 
-extension TailFillterTableViewCell: UICollectionViewDelegateFlowLayout {
+extension TailFilterTableViewCell: UICollectionViewDelegateFlowLayout {
     
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 //        
@@ -119,7 +114,7 @@ extension TailFillterTableViewCell: UICollectionViewDelegateFlowLayout {
 
 }
 
-extension TailFillterTableViewCell: UICollectionViewDataSource {
+extension TailFilterTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -131,8 +126,7 @@ extension TailFillterTableViewCell: UICollectionViewDataSource {
         }
 
         cell.update(model: model.children[indexPath.row], type: .basic, willChangeUI: true)
-        cell.delegate = self
-
+    
         return cell
     }
     
@@ -148,9 +142,3 @@ extension TailFillterTableViewCell: UICollectionViewDataSource {
 }
 
 
-extension TailFillterTableViewCell : FilterButtonCollectionViewCellDelegate {
-    func press(id: Int) {
-        delegate?.press(id: id)
-    }
-    
-}

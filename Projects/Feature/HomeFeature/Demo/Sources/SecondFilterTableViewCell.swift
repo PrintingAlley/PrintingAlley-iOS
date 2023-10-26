@@ -10,18 +10,16 @@ import UIKit
 import BaseDomainInterface
 import DesignSystem
 
-protocol SecondFillterTableViewCellDelegate: AnyObject {
-    func secondPress(id: Int)
-}
 
-class SecondFillterTableViewCell: UITableViewCell {
 
-    public static let identifier = "SecondFillterTableViewCell"
+class SecondFilterTableViewCell: UITableViewCell {
+
+    public static let identifier = "SecondFilterTableViewCell"
     
     lazy var subtitleLabel: AlleyLabel = AlleyLabel()
     
     lazy var tableView: UITableView = UITableView().then{
-        $0.register(TailFillterTableViewCell.self, forCellReuseIdentifier: TailFillterTableViewCell.identifier)
+        $0.register(TailFilterTableViewCell.self, forCellReuseIdentifier: TailFilterTableViewCell.identifier)
         $0.dataSource = self
         $0.separatorStyle = .none
         $0.delegate = self
@@ -29,7 +27,6 @@ class SecondFillterTableViewCell: UITableViewCell {
     
     var model: ChildrenTagEntity = ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: [])
     
-    public weak var delegate:SecondFillterTableViewCellDelegate?
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -69,7 +66,7 @@ class SecondFillterTableViewCell: UITableViewCell {
 
 
 
-extension SecondFillterTableViewCell: UITableViewDelegate {
+extension SecondFilterTableViewCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let titleLabel =  AlleyLabel("헤레헝로",font: .subtitle3).then {
@@ -95,7 +92,7 @@ extension SecondFillterTableViewCell: UITableViewDelegate {
      }
 }
 
-extension SecondFillterTableViewCell: UITableViewDataSource {
+extension SecondFilterTableViewCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return 1
@@ -103,21 +100,14 @@ extension SecondFillterTableViewCell: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TailFillterTableViewCell.identifier, for: indexPath) as? TailFillterTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TailFilterTableViewCell.identifier, for: indexPath) as? TailFilterTableViewCell else {
             return UITableViewCell()
         }
         
         cell.update(model: model)
         cell.selectionStyle = .none
-        cell.delegate = self
         return cell
     }
     
 }
 
-
-extension SecondFillterTableViewCell: TailFillterTableViewCellDelegate {
-    func press(id: Int) {
-        delegate?.secondPress(id: id)
-    }
-}

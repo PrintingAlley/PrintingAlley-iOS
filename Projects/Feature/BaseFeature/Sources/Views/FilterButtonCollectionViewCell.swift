@@ -12,16 +12,11 @@ import Then
 import DesignSystem
 import BaseDomainInterface
 
-public protocol FilterButtonCollectionViewCellDelegate: AnyObject {
-    func press(id: Int)
-}
-
 
 public final class FilterButtonCollectionViewCell: UICollectionViewCell {
     
     public static let identifier = "RecommendCollectionViewCell"
     
-    public weak var delegate: FilterButtonCollectionViewCellDelegate?
     
     private var filterButton = FilterButton(title: "기본버튼",id: 0, type: .basic, willChangeUI: false)
     
@@ -29,7 +24,6 @@ public final class FilterButtonCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         addSubviews()
         makeConstraints()
-        self.filterButton.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -56,8 +50,3 @@ extension FilterButtonCollectionViewCell {
     }
 }
 
-extension FilterButtonCollectionViewCell: FilterButtonDelegate {
-    public func press(id: Int) {
-        delegate?.press(id: id)
-    }
-}

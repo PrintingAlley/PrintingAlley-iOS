@@ -13,8 +13,9 @@ import SnapKit
 import Then
 import BaseDomainInterface
 import UtilityModule
+import RxSwift
 
-class FillterViewController: UIViewController {
+class FilterViewController: UIViewController {
 
    
     
@@ -23,9 +24,9 @@ class FillterViewController: UIViewController {
         $0.setImage(DesignSystemAsset.Icon.downArrow.image, for: .normal)
     }
     lazy var tableView: UITableView = UITableView().then {
-        $0.register(TailFillterTableViewCell.self, forCellReuseIdentifier: TailFillterTableViewCell.identifier)
-        $0.register(SecondFillterTableViewCell.self, forCellReuseIdentifier: SecondFillterTableViewCell.identifier)
-        $0.register(FillterSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: FillterSectionHeaderView.identifer)
+        $0.register(TailFilterTableViewCell.self, forCellReuseIdentifier: TailFilterTableViewCell.identifier)
+        $0.register(SecondFilterTableViewCell.self, forCellReuseIdentifier: SecondFilterTableViewCell.identifier)
+        $0.register(FilterSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: FilterSectionHeaderView.identifer)
         $0.register(TopCellSectionFooterView.self, forHeaderFooterViewReuseIdentifier: TopCellSectionFooterView.identifer)
         $0.delegate = self
         $0.dataSource = self
@@ -59,6 +60,8 @@ class FillterViewController: UIViewController {
     
     lazy var buttonContainerView: UIView = UIView()
     
+    let disposeBag = DisposeBag()
+    
     var completion: (([Int]) -> Void)?
     var idSet:Set<Int> = .init()
     
@@ -83,6 +86,22 @@ class FillterViewController: UIViewController {
         dummy = makeDummy()
         tableView.reloadData()
         
+        NotificationCenter.default.rx.notification(Notification.Name("filterToggle"))
+            .subscribe(onNext: { [weak self] (notification) in
+                
+                guard let self else {return}
+                guard let id = notification.object as? Int else { return }
+                
+                if idSet.contains(id) {
+                    idSet.remove(id)
+                } else {
+                    idSet.insert(id)
+                }
+                
+                DEBUG_LOG(idSet)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     
@@ -96,7 +115,7 @@ class FillterViewController: UIViewController {
     }
 }
 
-extension FillterViewController {
+extension FilterViewController {
     
     func addSubviews() {
         self.view.addSubviews(titleLabel, button, tableView, buttonContainerView,baseLine)
@@ -221,7 +240,7 @@ extension FillterViewController {
 }
 
 
-extension FillterViewController: UITableViewDelegate {
+extension FilterViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -275,7 +294,7 @@ extension FillterViewController: UITableViewDelegate {
 
 }
 
-extension FillterViewController: UITableViewDataSource {
+extension FilterViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         dummy.count
@@ -299,7 +318,7 @@ extension FillterViewController: UITableViewDataSource {
             return nil
         }
         
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: FillterSectionHeaderView.identifer) as? FillterSectionHeaderView else {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: FilterSectionHeaderView.identifer) as? FilterSectionHeaderView else {
             return UIView()
         }
         
@@ -331,25 +350,23 @@ extension FillterViewController: UITableViewDataSource {
              
         
         if dummy[section].children[row].children.isEmpty {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TailFillterTableViewCell.identifier, for: indexPath) as? TailFillterTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TailFilterTableViewCell.identifier, for: indexPath) as? TailFilterTableViewCell else {
                 return UITableViewCell()
             }
             
             cell.update(model: dummy[section])
-            cell.selectionStyle = .none
-            cell.delegate = self 
+            cell.selectionStyle = .none 
             return cell
         }
         
         else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SecondFillterTableViewCell.identifier, for: indexPath) as? SecondFillterTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SecondFilterTableViewCell.identifier, for: indexPath) as? SecondFilterTableViewCell else {
                 
                 return UITableViewCell()
             }
             
             cell.update(model: dummy[section].children[row])
             cell.selectionStyle = .none
-            cell.delegate = self
             return cell
             
         }
@@ -361,35 +378,3 @@ extension FillterViewController: UITableViewDataSource {
 }
 
 
-extension FillterViewController: TailFillterTableViewCellDelegate {
-    func press(id: Int) {
-        print("Tail: \(id)")
-        
-        
-        if idSet.contains(id) {
-            idSet.remove(id)
-        } else {
-            idSet.insert(id)
-        }
-        
-
-       
-    }
-    
-  
-    
-    
-}
-
-extension FillterViewController: SecondFillterTableViewCellDelegate {
-    func secondPress(id: Int ) {
-        print("Second: \(id )")
-        
-        if idSet.contains(id) {
-            idSet.remove(id)
-        } else {
-            idSet.insert(id)
-        }
-        
-    }
-}
