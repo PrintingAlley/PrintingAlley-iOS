@@ -29,7 +29,7 @@ final class AfterSearchViewController: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.separatorStyle = .none
         $0.delegate = self
-        $0.dataSource = self
+//        $0.dataSource = self
         $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
     }
     

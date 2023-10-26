@@ -11,10 +11,10 @@ import Then
 import SnapKit
 import DesignSystem
 import UtilityModule
+import RxCocoa
 import RxSwift
 import RxDataSources
 import BaseFeatureInterface
-import RxCocoa
 
 final class SearchViewController: UIViewController, ContainerViewType {
     var contentView: UIView! = UIView()
@@ -64,26 +64,53 @@ extension SearchViewController {
         bindUIEvent(input: input)
         
         let output = self.viewModel.transform(input: input)
-//        bindDataSource(output: output)
+        bindDataSource(output: output)
     }
     
     func bindUIEvent(input: SearchViewModel.Input) {
-        searchBar.searchTextField.rx
-            .edit.subscribe(onNext: { [weak self] in
-            guard let self else { return }
-                changeToAfterVC()
-        })
+        let editingDidEndOnExit = searchBar.searchTextField.rx.controlEvent(.editingDidEndOnExit)
+        let editingChanged = searchBar.searchTextField.rx.controlEvent(.editingChanged)
+        
+        let mergeObservable = Observable.merge(
+            editingDidEndOnExit.map { UIControl.Event.editingDidEndOnExit },
+            editingChanged.map { UIControl.Event.editingChanged }
+        )
+        
+        // searchBar의 textField에 입력된 텍스트 관찰, 변경될 때마다 input.textString에 바인딩
+        searchBar.searchTextField.rx.text.orEmpty // 텍스트필드와 input 바인딩
+            .skip(1)
+            .distinctUntilChanged()
+            .bind(to: self.input.textString)
             .disposed(by: disposeBag)
         
-        searchBar.searchTextField.rx
-            .endEdit.subscribe(onNext: { [weak self] in
-                guard let self else { return }
-                if searchBar.searchTextField.hasText {
-                    // ??
+        editingChanged
+            .subscribe(onNext: { [weak self] _ in
+                guard let searchText = self?.searchBar.searchTextField.text else { return }
+                guard let self = self else { return }
+                
+                if searchText.isEmpty  {
+                    self.changeToBeforeVC()
                 } else {
-                    changeToBeforeVC()
+                    print("\(searchText)")
                 }
             })
+            .disposed(by: disposeBag)
+        
+        editingDidEndOnExit
+            .map { [weak self] in self?.searchBar.searchTextField.text ?? "" } // 텍스트 필드의 현재 텍스트 가져오기
+            .distinctUntilChanged() // 이전 값과 변경된 값이 같으면 무시
+            .subscribe(onNext: { [weak self] searchText in
+                guard let self = self else { return }
+                
+                if searchText.isEmpty {
+                    print("비었다~")
+                    self.changeToBeforeVC()
+                } else {
+                    self.changeToAfterVC()
+                    print("안 비었다: \(searchText)")
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindDataSource(output: SearchViewModel.Output) {
@@ -158,18 +185,6 @@ extension SearchViewController {
     }
 }
 
-// MARK: - TextField Delegate
-extension SearchViewController: UITextFieldDelegate {
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.becomeFirstResponder()
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-}
-
 // MARK: - Objc 함수
 extension SearchViewController {
     @objc
@@ -178,14 +193,3 @@ extension SearchViewController {
     }
 }
 
-// TODO: 따로 뺴기
-extension Reactive where Base: UITextField {
-    
-    public var edit: ControlEvent<Void> {
-        controlEvent(.editingChanged)
-    }
-    
-    public var endEdit: ControlEvent<Void> {
-        controlEvent(.editingDidEndOnExit)
-    }
-}
