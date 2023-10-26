@@ -45,6 +45,29 @@ class CategorySearchViewController: UIViewController {
     
     lazy var tableView: UITableView = UITableView().then {
         $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
+        $0.separatorStyle = .none
+    }
+    
+    lazy var headerView: CategoryEmptyHeaderView = CategoryEmptyHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: APP_HEIGHT()/2)).then {
+        $0.delegate = self
+    }
+    
+    
+    var viewModel: CategorySearchViewModel!
+    
+    let disposeBag = DisposeBag()
+    
+    init(viewModel: CategorySearchViewModel) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+    
+    deinit {
+        DEBUG_LOG("\(Self.self) deinit ❌")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -52,7 +75,9 @@ class CategorySearchViewController: UIViewController {
 
         addSubviews()
         makeConstraints()
+        self.naviTitleLabel.setTitle(title: viewModel.title, textColor: .sub(.black), font: .subtitle1,alignment: .center)
         configureCommonUI()
+        bindViewModel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,13 +86,7 @@ class CategorySearchViewController: UIViewController {
     }
     
 
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
     
 }
 
@@ -108,5 +127,14 @@ extension CategorySearchViewController {
             $0.top.equalTo(filterButton.snp.bottom).offset(16)
             $0.left.right.bottom.equalToSuperview()
         }
+    }
+    
+    func bindViewModel() {
+        let input = CategorySearchViewModel.Input()
+        let output = viewModel.transform(input: input)
+        
+        bindDataSource(output: output)
+        
+        
     }
 }

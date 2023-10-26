@@ -43,12 +43,12 @@ class CategoryEmptyHeaderView: UIView {
         super.init(frame: frame)
         
         
-          self.addSubviews(titleLabel,subtitleLabel)
+          self.addSubviews(titleLabel,subtitleLabel,button)
         
         
         titleLabel.snp.makeConstraints {
             $0.left.right.equalToSuperview()
-            $0.centerY.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
         }
         
         subtitleLabel.snp.makeConstraints {

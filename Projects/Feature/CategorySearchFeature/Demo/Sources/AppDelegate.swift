@@ -9,7 +9,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = CategorySearchViewController()
+        let viewController = CategorySearchViewController(viewModel: CategorySearchViewModel(title: "엽서/카드", id: 0))
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 
