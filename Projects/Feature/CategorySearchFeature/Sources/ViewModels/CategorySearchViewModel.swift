@@ -30,6 +30,11 @@ class CategorySearchViewModel: ViewModelType {
         self.fetchPrintShopListUseCase = fetchPrintShopListUseCase
     }
     
+    
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
+    }
+    
     public struct Input {
         
     }

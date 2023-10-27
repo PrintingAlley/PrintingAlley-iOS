@@ -15,3 +15,9 @@ extension CategorySearchViewController: CategoryEmptyHeaderViewDelegate {
     }
 
 }
+
+extension CategorySearchViewController: FilterViewControllerDelegate {
+    func receive(result: [Int]) {
+        DEBUG_LOG("RESULT: \(result)")
+    }
+}

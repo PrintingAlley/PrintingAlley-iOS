@@ -14,6 +14,7 @@ import RxSwift
 import RxDataSources
 import SnapKit
 import Then
+import CategorySearchFeatureInterface
 
 
 class CategorySearchViewController: UIViewController {
@@ -53,16 +54,16 @@ class CategorySearchViewController: UIViewController {
         $0.delegate = self
     }
     
- 
-    
-    
+
     var viewModel: CategorySearchViewModel!
-    
+    var filterFactory: any FilterFactory
+
     let disposeBag = DisposeBag()
     
-    init(viewModel: CategorySearchViewModel) {
-        super.init(nibName: nil, bundle: nil)
+    init(filterFactory: FilterFactory, viewModel: CategorySearchViewModel) {
+        self.filterFactory = filterFactory
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     deinit {
@@ -136,9 +137,22 @@ extension CategorySearchViewController {
         let input = CategorySearchViewModel.Input()
         let output = viewModel.transform(input: input)
         
+        bindBackEvent()
         bindDataSource(output: output)
         
         bindFilterButton()
-        
+    }
+    
+    func bindBackEvent() {
+        backButton
+            .rx
+            .tap
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,_) in
+                
+                owner.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+
     }
 }

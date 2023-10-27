@@ -16,12 +16,13 @@ import UIKit
 public protocol CategorySearchDependency: Dependency {
     
     var searchDomainFactory: any SearchDomainFactory { get }
+    var filterFactory: any FilterFactory { get }
     
 }
 
 public final class CategorySearchComponent: Component<CategorySearchDependency>, CategorySearchFactory {
     public func makeView(id: Int, title: String) -> UIViewController {
-        CategorySearchViewController(viewModel: CategorySearchViewModel(title: title, id: id,fetchPrintShopListUseCase: dependency.searchDomainFactory.fetchPrintShopListUseCase))
+        CategorySearchViewController(filterFactory: dependency.filterFactory, viewModel: CategorySearchViewModel(title: title, id: id,fetchPrintShopListUseCase: dependency.searchDomainFactory.fetchPrintShopListUseCase))
     }
     
 }

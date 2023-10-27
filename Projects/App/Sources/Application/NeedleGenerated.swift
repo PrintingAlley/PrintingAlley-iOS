@@ -205,6 +205,9 @@ private class CategorySearchDependencybc5b867b843f81f14b34Provider: CategorySear
     var searchDomainFactory: any SearchDomainFactory {
         return appComponent.searchDomainFactory
     }
+    var filterFactory: any FilterFactory {
+        return appComponent.filterFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -213,6 +216,19 @@ private class CategorySearchDependencybc5b867b843f81f14b34Provider: CategorySear
 /// ^->AppComponent->CategorySearchComponent
 private func factory89ce28b4b2dfd923cbdcf47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return CategorySearchDependencybc5b867b843f81f14b34Provider(appComponent: parent1(component) as! AppComponent)
+}
+private class FilterDependencya3adf5d0affb84ca15efProvider: FilterDependency {
+    var tagDomainFactory: any TagDomainFactory {
+        return appComponent.tagDomainFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->FilterComponent
+private func factoryf50b858bcdf190c46b17f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return FilterDependencya3adf5d0affb84ca15efProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class BookMarkDependency8b686eab048ca50fc073Provider: BookMarkDependency {
     var bookMarkDomainFactory: any BookMarkDomainFactory {
@@ -416,6 +432,12 @@ extension NearByMeComponent: Registration {
 extension CategorySearchComponent: Registration {
     public func registerItems() {
         keyPathToName[\CategorySearchDependency.searchDomainFactory] = "searchDomainFactory-any SearchDomainFactory"
+        keyPathToName[\CategorySearchDependency.filterFactory] = "filterFactory-any FilterFactory"
+    }
+}
+extension FilterComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\FilterDependency.tagDomainFactory] = "tagDomainFactory-any TagDomainFactory"
     }
 }
 extension BookMarkComponent: Registration {
@@ -495,6 +517,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->NearByMeComponent", factory53f303ca6b0d301565d8e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CategorySearchComponent", factory89ce28b4b2dfd923cbdcf47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->FilterComponent", factoryf50b858bcdf190c46b17f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkComponent", factory28d0c1b9536190951087f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDetailComponent", factoryc8e52bb402c24cd9a5e2f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)

@@ -14,5 +14,10 @@ extension AppComponent {
     var categorySearchFactory: any CategorySearchFactory {
         CategorySearchComponent(parent: self)
     }
+    
+    
+    var filterFactory: any FilterFactory {
+        FilterComponent(parent: self)
+    }
 }
 

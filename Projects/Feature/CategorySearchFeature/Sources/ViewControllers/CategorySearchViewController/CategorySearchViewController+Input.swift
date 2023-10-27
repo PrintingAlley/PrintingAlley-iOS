@@ -20,10 +20,12 @@ extension CategorySearchViewController {
             .withUnretained(self)
             .subscribe(onNext: { (owner,_) in
                 
-                var filterVc = FilterViewController(completion: { result in
-                    DEBUG_LOG(result)
-                }, viewModel: FilterViewModel(id: 123))
+                guard let filterVc = owner.filterFactory.makeView(id: owner.viewModel.id) as? FilterViewController else {
+                    return
+                }
+                
                 filterVc.modalPresentationStyle = .overFullScreen
+                filterVc.deleagte = owner
                 
                 owner.present(filterVc, animated: true)
                 

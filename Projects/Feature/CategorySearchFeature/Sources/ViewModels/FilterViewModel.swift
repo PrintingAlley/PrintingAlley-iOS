@@ -11,6 +11,7 @@ import UtilityModule
 import RxSwift
 import RxRelay
 import BaseDomainInterface
+import TagDomainInterface
 
 class FilterViewModel: ViewModelType {
     
@@ -20,8 +21,14 @@ class FilterViewModel: ViewModelType {
     
     let dataSource:BehaviorRelay<[ChildrenTagEntity]> = .init(value: [])
     
-    init(id: Int) {
+    var fetchTagUseCase: any FetchTagUseCase
+    
+    init(id: Int, fetchTagUseCase: FetchTagUseCase) {
         self.id = id
+        self.fetchTagUseCase = fetchTagUseCase
+        
+
+        
     }
     
     public struct Input {
@@ -37,6 +44,14 @@ class FilterViewModel: ViewModelType {
         
         let output = Output()
         
+        
+        fetchTagUseCase
+            .execute(id: id)
+            .catchAndReturn(ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: []))
+            .asObservable()
+            .map{$0.children}
+            .bind(to:self.dataSource)
+            .disposed(by: disposeBag)
         
         return output
     }

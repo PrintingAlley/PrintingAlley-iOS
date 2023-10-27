@@ -15,10 +15,13 @@ import BaseDomainInterface
 import UtilityModule
 import RxSwift
 
+public protocol FilterViewControllerDelegate: AnyObject {
+    func receive(result: [Int])
+}
+
+
 class FilterViewController: UIViewController {
 
-   
-    
     lazy var titleLabel: AlleyLabel = AlleyLabel("필터",textColor: .sub(.black),font: .subtitle1)
     lazy var closeButton: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.downArrow.image, for: .normal)
@@ -62,17 +65,16 @@ class FilterViewController: UIViewController {
     lazy var buttonContainerView: UIView = UIView()
     
     var viewModel: FilterViewModel!
+    public weak var deleagte: FilterViewControllerDelegate?
     
     let disposeBag = DisposeBag()
     
-    var completion: (([Int]) -> Void)?
     var idSet:Set<Int> = .init()
     private var panGestureRecognizer: UIPanGestureRecognizer!
     
     
-    init(completion: (([Int]) -> Void)? = nil, viewModel: FilterViewModel) {
+    init(viewModel: FilterViewModel) {
         super.init(nibName: nil, bundle: nil)
-        self.completion = completion
         self.viewModel = viewModel
         
     }
@@ -92,8 +94,6 @@ class FilterViewController: UIViewController {
         configureCommonUI()
         bindViewModel()
         bindGesture()
-        
-        tableView.reloadData()
         
         NotificationCenter.default.rx.notification(Notification.Name("filterToggle"))
             .subscribe(onNext: { [weak self] (notification) in
@@ -121,7 +121,7 @@ class FilterViewController: UIViewController {
     
     @objc func tapFind() {
         self.dismiss(animated: true)
-        self.completion?(Array<Int>(idSet))
+        self.deleagte?.receive(result: (Array<Int>(idSet)))
     }
     
     @objc func tapClose() {
@@ -232,76 +232,18 @@ extension FilterViewController {
     }
     
     func bindViewModel() {
-        makeDummy()
+        let input = FilterViewModel.Input()
+        let output = viewModel.transform(input: input)
+        
+        viewModel.dataSource
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,dataSource) in
+                owner.tableView.reloadData()
+        })
+        .disposed(by: disposeBag)
+        
     }
     
-    func makeDummy(){
-        viewModel.dataSource.accept([
-            ChildrenTagEntity(id: 1, name: "수량", image: "", parentID: 2, children: [
-                
-                ChildrenTagEntity(id: 2, name: "소량인쇄", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 3, name: "대량인쇄", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 4, name: "대량인쇄", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 5, name: "대량인쇄", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 6, name: "대량인쇄", image: "", parentID: 12, children: []),
-            ]),
-            ChildrenTagEntity(id: 7, name: "후가공", image: "", parentID: 12, children: [
-                
-                
-                ChildrenTagEntity(id: 8, name: "코딩", image: "", parentID: 8, children: [
-                    
-                    ChildrenTagEntity(id: 9, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 10, name: "엠보코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 11, name: "CR코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 13, name: "무광/ 유광 코팅3", image: "", parentID: 12, children: [])
-                
-                ]),
-                
-                ChildrenTagEntity(id: 14, name: "코딩123", image: "", parentID: 8, children: [
-                    
-                    ChildrenTagEntity(id: 15, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 16, name: "엠보코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 17, name: "CR코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 18, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 19, name: "무광/ 유광 코팅3", image: "", parentID: 12, children: [])
-                
-                ])
-            
-            ]),
-            
-            ChildrenTagEntity(id: 20, name: "후가공", image: "", parentID: 12, children: [
-                
-                
-                ChildrenTagEntity(id: 21, name: "코딩", image: "", parentID: 8, children: [
-                    
-                    ChildrenTagEntity(id: 22, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 23, name: "엠보코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 24, name: "CR코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 25, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 26, name: "박 ", image: "", parentID: 12, children: [])
-                
-                ])
-            
-            ]),
-            
-            ChildrenTagEntity(id: 27, name: "후가공", image: "", parentID: 12, children: [
-                
-                
-                ChildrenTagEntity(id: 28, name: "코딩", image: "", parentID: 8, children: [
-                    
-                    ChildrenTagEntity(id: 29, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 30, name: "엠보코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 31, name: "CR코팅", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 32, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
-                    ChildrenTagEntity(id: 33, name: "박 ", image: "", parentID: 12, children: [])
-                
-                ])
-            
-            ])
-        
-        ])
-    }
     
 }
 
@@ -316,7 +258,7 @@ extension FilterViewController: UITableViewDelegate {
         let numberOfItem = viewModel.dataSource.value[section].children[row].children.isEmpty ? viewModel.dataSource.value[section].children.count : viewModel.dataSource.value[section].children[row].children.count
         
         
-        let tempLabel = AlleyLabel("않입값히", font: .body1).then {
+        let tempLabel = AlleyLabel("않입값히ㅁㄴㅇ", font: .body1).then {
             $0.sizeToFit()
         }
         
@@ -363,7 +305,8 @@ extension FilterViewController: UITableViewDelegate {
 extension FilterViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.dataSource.value.count
+        DEBUG_LOG("COUNT: \( viewModel.dataSource.value.count)")
+        return viewModel.dataSource.value.count
     }
     
     
