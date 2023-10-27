@@ -11,7 +11,7 @@ import CategorySearchFeatureInterface
 import CategorySearchFeature
 
 extension AppComponent {
-    var categorySearchComponent: any CategorySearchFactory {
+    var categorySearchFactory: any CategorySearchFactory {
         CategorySearchComponent(parent: self)
     }
 }
