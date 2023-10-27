@@ -11,6 +11,8 @@ import DesignSystem
 import BaseDomainInterface
 import BaseFeature
 import RxSwift
+import UtilityModule
+
 // TODO: 데이터소스를 받아와 셀에 뿌려주기
 final class AfterSearchViewController: UIViewController {
     

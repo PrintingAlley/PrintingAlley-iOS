@@ -28,9 +28,9 @@ extension SearchViewController {
                 guard let self = self else { return }
                 
                 if searchText.isEmpty {
-                    self.changeToBeforeVC()
+                    changeToBeforeVC()
                 } else {
-                    print("\(searchText)")
+                    DEBUG_LOG("\(searchText)")
                 }
             })
             .disposed(by: disposeBag)
@@ -41,11 +41,11 @@ extension SearchViewController {
                 guard let self = self else { return }
                 
                 if searchText.isEmpty {
-                    print("비었다~")
-                    self.changeToBeforeVC()
+                    DEBUG_LOG("비었다~")
+                    changeToBeforeVC()
                 } else {
-                    self.changeToAfterVC()
-                    print("안 비었다: \(searchText)")
+                    changeToAfterVC()
+                    DEBUG_LOG("안 비었다: \(searchText)")
                 }
             })
             .disposed(by: disposeBag)

@@ -26,11 +26,12 @@ final class SearchViewController: UIViewController, ContainerViewType {
     
     private var searchDomainFactory: SearchDomainFactory!
     
-    private var afterSearchFactory: AfterSearchFactory!
-    private var beforeSearchFactory: BeforeSearchFactory!
+    var afterSearchFactory: AfterSearchFactory!
+    var beforeSearchFactory: BeforeSearchFactory!
     
-    private lazy var beforeVc = beforeSearchFactory.makeView()
-    private lazy var afterVc = afterSearchFactory.makeView(dataSource: [])
+    // 지울 필요 있는 변수 ..
+    lazy var beforeVc = beforeSearchFactory.makeView()
+    lazy var afterVc = afterSearchFactory.makeView(dataSource: [])
     
     var contentView: UIView! = UIView()
     
@@ -81,14 +82,14 @@ extension SearchViewController {
 
 // MARK: - UI 관련 함수들
 extension SearchViewController {
-    private func changeToAfterVC() {
+    func changeToAfterVC() {
         UIView.animate(withDuration: 0.4) {
             self.remove(asChildViewController: self.beforeVc)
             self.add(asChildViewController: self.afterVc)
         }
     }
     
-    private func changeToBeforeVC() {
+    func changeToBeforeVC() {
         UIView.animate(withDuration: 0.4) {
             self.remove(asChildViewController: self.afterVc)
             self.add(asChildViewController: self.beforeVc)
