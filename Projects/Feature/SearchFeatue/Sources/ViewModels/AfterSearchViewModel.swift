@@ -11,26 +11,25 @@ import UtilityModule
 import RxRelay
 import RxSwift
 import BaseDomainInterface
-import SearchDomainInterface
 
 final class AfterSearchViewModel: ViewModelType {
-    var fetchPrintShopListUseCase: any FetchPrintShopListUseCase
+    private var dataSource: [PrintShopEntity]
     
-    public init(fetchPrintShopListUseCase: any FetchPrintShopListUseCase) {
-        self.fetchPrintShopListUseCase = fetchPrintShopListUseCase
+    init(dataSource: [PrintShopEntity]) {
+        self.dataSource = dataSource
     }
     
-    struct Input {
+    public struct Input {
         let text = BehaviorRelay<String>(value: "")
     }
     
-    struct Output {
-        
+    public struct Output {
+        let dataSource: BehaviorRelay<[PrintShopEntity]> = .init(value: [])
     }
     
-    func transform(input: Input) -> Output {
+    public func transform(input: Input) -> Output {
         let output = Output()
-        
+
         return output
     }
 }
