@@ -25,6 +25,7 @@ class TailFilterTableViewCell: UITableViewCell {
     
     lazy var collectionView: UICollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .vertical).then {
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
+        $0.bounces = false
     }
     
    

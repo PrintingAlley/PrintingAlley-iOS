@@ -84,7 +84,7 @@ extension SecondFilterTableViewCell: UITableViewDelegate {
         let offset1: CGFloat = 16.0
         let offset2: CGFloat = 8.0
         
-        let numberOfrow = model.children.count % 3 == .zero ?  model.children.count / 3  : (model.children.count / 3)+1
+        let numberOfrow = model.children.count % 4 == .zero ?  model.children.count / 4  : (model.children.count / 4)+1
         
             
         // (행 * 필터크기) + ( 행-1 * 간격) +

@@ -27,7 +27,9 @@ class FilterViewController: UIViewController {
         $0.setImage(DesignSystemAsset.Icon.downArrow.image, for: .normal)
         $0.addTarget(self, action: #selector(tapClose), for: .touchUpInside)
     }
-    lazy var tableView: UITableView = UITableView().then {
+    
+    
+    lazy var tableView: UITableView = UITableView(frame: .zero, style: .grouped).then {
         $0.register(TailFilterTableViewCell.self, forCellReuseIdentifier: TailFilterTableViewCell.identifier)
         $0.register(SecondFilterTableViewCell.self, forCellReuseIdentifier: SecondFilterTableViewCell.identifier)
         $0.register(FilterSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: FilterSectionHeaderView.identifer)
@@ -36,6 +38,7 @@ class FilterViewController: UIViewController {
         $0.dataSource = self
         $0.separatorStyle = . none
         $0.bounces = false
+        $0.backgroundColor = .white
     }
     
     lazy var baseLine: UIView = UIView().then {
@@ -270,7 +273,7 @@ extension FilterViewController: UITableViewDelegate {
         
         let h2: CGFloat = subtitleLabel.frame.height
         
-        let numberOfrow = numberOfItem % 3 == .zero ?  numberOfItem / 3 : numberOfItem / 3 + 1 // 필터 줄
+        let numberOfrow = numberOfItem % 4 == .zero ?  numberOfItem / 4 : numberOfItem / 4 + 1 // 필터 줄
         
         let offset1: CGFloat = 16.0
         let offset2: CGFloat = 8.0
@@ -292,11 +295,12 @@ extension FilterViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        section != .zero ? UITableView.automaticDimension : .zero
+        
+        section == .zero ? .zero :  UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        section == .zero ? UITableView.automaticDimension : .zero
+        section != .zero ? 16 : UITableView.automaticDimension
     }
     
 
@@ -305,16 +309,28 @@ extension FilterViewController: UITableViewDelegate {
 extension FilterViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        DEBUG_LOG("COUNT: \( viewModel.dataSource.value.count)")
+        DEBUG_LOG(viewModel.dataSource.value.count)
         return viewModel.dataSource.value.count
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-
-        //  2층 구조면 1개 , 아니면 children 개수 만큼 row
-        return viewModel.dataSource.value[section].children.first?.children.isEmpty ?? true ? 1 : viewModel.dataSource.value[section].children.count
+        var thirdFloor: Int = 0
+        var secondFloor: Int = 0
+        
+        
+        for child in  viewModel.dataSource.value[section].children {
+            if child.children.isEmpty {
+                secondFloor += 1
+            }
+            
+            else {
+                thirdFloor += 1
+            }
+        }
+        
+        return thirdFloor + (secondFloor != .zero ? 1 : 0) // 마지막 +1은 2층구조를 더해주기 위해
         
     }
     
@@ -323,11 +339,14 @@ extension FilterViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
+        
         if section == .zero {
             return nil
         }
         
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: FilterSectionHeaderView.identifer) as? FilterSectionHeaderView else {
+            
+            
             return UIView()
         }
         
@@ -338,18 +357,23 @@ extension FilterViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
-        if section != .zero {
-            return nil
+        
+        if section == .zero {
+            guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: TopCellSectionFooterView.identifer) as? TopCellSectionFooterView else {
+                return UIView()
+            }
+            
+            return footer
         }
         
-        guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: TopCellSectionFooterView.identifer) as? TopCellSectionFooterView else {
-            return UIView()
+        else {
+        
+            let view = UIView(frame: CGRect(x: 0, y: 0, width: APP_WIDTH(), height: 16))
+            
+            return view
+
         }
-        
-        
-        
-        return footer
-        
+                
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -365,6 +389,8 @@ extension FilterViewController: UITableViewDataSource {
             
             cell.update(model: viewModel.dataSource.value[section])
             cell.selectionStyle = .none
+        
+            
             return cell
         }
         
