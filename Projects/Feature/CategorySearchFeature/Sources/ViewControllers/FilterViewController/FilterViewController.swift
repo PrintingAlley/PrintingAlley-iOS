@@ -61,18 +61,19 @@ class FilterViewController: UIViewController {
     
     lazy var buttonContainerView: UIView = UIView()
     
+    var viewModel: FilterViewModel!
+    
     let disposeBag = DisposeBag()
     
     var completion: (([Int]) -> Void)?
     var idSet:Set<Int> = .init()
     private var panGestureRecognizer: UIPanGestureRecognizer!
     
-    var dummy:[ChildrenTagEntity] = []
     
-    
-    init(completion: (([Int]) -> Void)? = nil) {
+    init(completion: (([Int]) -> Void)? = nil, viewModel: FilterViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.completion = completion
+        self.viewModel = viewModel
         
     }
     
@@ -89,7 +90,7 @@ class FilterViewController: UIViewController {
         addSubviews()
         makeConstraints()
         configureCommonUI()
-        dummy = makeDummy()
+        bindViewModel()
         bindGesture()
         
         tableView.reloadData()
@@ -230,72 +231,76 @@ extension FilterViewController {
         self.view.layer.opacity = value
     }
     
-    func makeDummy() -> [ChildrenTagEntity] {
-        return [
-        ChildrenTagEntity(id: 1, name: "수량", image: "", parentID: 2, children: [
-            
-            ChildrenTagEntity(id: 2, name: "소량인쇄", image: "", parentID: 12, children: []),
-            ChildrenTagEntity(id: 3, name: "대량인쇄", image: "", parentID: 12, children: []),
-            ChildrenTagEntity(id: 4, name: "대량인쇄", image: "", parentID: 12, children: []),
-            ChildrenTagEntity(id: 5, name: "대량인쇄", image: "", parentID: 12, children: []),
-            ChildrenTagEntity(id: 6, name: "대량인쇄", image: "", parentID: 12, children: []),
-        ]),
-        ChildrenTagEntity(id: 7, name: "후가공", image: "", parentID: 12, children: [
-            
-            
-            ChildrenTagEntity(id: 8, name: "코딩", image: "", parentID: 8, children: [
+    func bindViewModel() {
+        makeDummy()
+    }
+    
+    func makeDummy(){
+        viewModel.dataSource.accept([
+            ChildrenTagEntity(id: 1, name: "수량", image: "", parentID: 2, children: [
                 
-                ChildrenTagEntity(id: 9, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 10, name: "엠보코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 11, name: "CR코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 13, name: "무광/ 유광 코팅3", image: "", parentID: 12, children: [])
+                ChildrenTagEntity(id: 2, name: "소량인쇄", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 3, name: "대량인쇄", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 4, name: "대량인쇄", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 5, name: "대량인쇄", image: "", parentID: 12, children: []),
+                ChildrenTagEntity(id: 6, name: "대량인쇄", image: "", parentID: 12, children: []),
+            ]),
+            ChildrenTagEntity(id: 7, name: "후가공", image: "", parentID: 12, children: [
+                
+                
+                ChildrenTagEntity(id: 8, name: "코딩", image: "", parentID: 8, children: [
+                    
+                    ChildrenTagEntity(id: 9, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 10, name: "엠보코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 11, name: "CR코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 12, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 13, name: "무광/ 유광 코팅3", image: "", parentID: 12, children: [])
+                
+                ]),
+                
+                ChildrenTagEntity(id: 14, name: "코딩123", image: "", parentID: 8, children: [
+                    
+                    ChildrenTagEntity(id: 15, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 16, name: "엠보코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 17, name: "CR코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 18, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 19, name: "무광/ 유광 코팅3", image: "", parentID: 12, children: [])
+                
+                ])
             
             ]),
             
-            ChildrenTagEntity(id: 14, name: "코딩123", image: "", parentID: 8, children: [
+            ChildrenTagEntity(id: 20, name: "후가공", image: "", parentID: 12, children: [
                 
-                ChildrenTagEntity(id: 15, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 16, name: "엠보코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 17, name: "CR코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 18, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 19, name: "무광/ 유광 코팅3", image: "", parentID: 12, children: [])
-            
-            ])
-        
-        ]),
-        
-        ChildrenTagEntity(id: 20, name: "후가공", image: "", parentID: 12, children: [
-            
-            
-            ChildrenTagEntity(id: 21, name: "코딩", image: "", parentID: 8, children: [
                 
-                ChildrenTagEntity(id: 22, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 23, name: "엠보코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 24, name: "CR코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 25, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 26, name: "박 ", image: "", parentID: 12, children: [])
-            
-            ])
-        
-        ]),
-        
-        ChildrenTagEntity(id: 27, name: "후가공", image: "", parentID: 12, children: [
-            
-            
-            ChildrenTagEntity(id: 28, name: "코딩", image: "", parentID: 8, children: [
+                ChildrenTagEntity(id: 21, name: "코딩", image: "", parentID: 8, children: [
+                    
+                    ChildrenTagEntity(id: 22, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 23, name: "엠보코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 24, name: "CR코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 25, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 26, name: "박 ", image: "", parentID: 12, children: [])
                 
-                ChildrenTagEntity(id: 29, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 30, name: "엠보코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 31, name: "CR코팅", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 32, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
-                ChildrenTagEntity(id: 33, name: "박 ", image: "", parentID: 12, children: [])
+                ])
+            
+            ]),
+            
+            ChildrenTagEntity(id: 27, name: "후가공", image: "", parentID: 12, children: [
+                
+                
+                ChildrenTagEntity(id: 28, name: "코딩", image: "", parentID: 8, children: [
+                    
+                    ChildrenTagEntity(id: 29, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 30, name: "엠보코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 31, name: "CR코팅", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 32, name: "무광/ 유광 코팅2", image: "", parentID: 12, children: []),
+                    ChildrenTagEntity(id: 33, name: "박 ", image: "", parentID: 12, children: [])
+                
+                ])
             
             ])
         
         ])
-    
-    ]
     }
     
 }
@@ -308,7 +313,7 @@ extension FilterViewController: UITableViewDelegate {
         let section = indexPath.section
         let row = indexPath.row
         
-        let numberOfItem = dummy[section].children[row].children.isEmpty ? dummy[section].children.count : dummy[section].children[row].children.count
+        let numberOfItem = viewModel.dataSource.value[section].children[row].children.isEmpty ? viewModel.dataSource.value[section].children.count : viewModel.dataSource.value[section].children[row].children.count
         
         
         let tempLabel = AlleyLabel("않입값히", font: .body1).then {
@@ -329,7 +334,7 @@ extension FilterViewController: UITableViewDelegate {
         let offset2: CGFloat = 8.0
 
         
-        if dummy[section].children[row].children.isEmpty {
+        if viewModel.dataSource.value[section].children[row].children.isEmpty {
             
             // (row 수 * 셀크기 ) + (row-1 셀간격) + 하단에서 보정값
             return CGFloat(numberOfrow) * h1 + (CGFloat(numberOfrow-1)*offset2) + offset1
@@ -358,7 +363,7 @@ extension FilterViewController: UITableViewDelegate {
 extension FilterViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        dummy.count
+        viewModel.dataSource.value.count
     }
     
     
@@ -366,7 +371,7 @@ extension FilterViewController: UITableViewDataSource {
     
 
         //  2층 구조면 1개 , 아니면 children 개수 만큼 row
-        return dummy[section].children.first?.children.isEmpty ?? true ? 1 : dummy[section].children.count
+        return viewModel.dataSource.value[section].children.first?.children.isEmpty ?? true ? 1 : viewModel.dataSource.value[section].children.count
         
     }
     
@@ -383,7 +388,7 @@ extension FilterViewController: UITableViewDataSource {
             return UIView()
         }
         
-        header.update(name: dummy[section].name)
+        header.update(name: viewModel.dataSource.value[section].name)
         return header
         
     }
@@ -410,13 +415,13 @@ extension FilterViewController: UITableViewDataSource {
         let row = indexPath.row
              
         
-        if dummy[section].children[row].children.isEmpty {
+        if viewModel.dataSource.value[section].children[row].children.isEmpty {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TailFilterTableViewCell.identifier, for: indexPath) as? TailFilterTableViewCell else {
                 return UITableViewCell()
             }
             
-            cell.update(model: dummy[section])
-            cell.selectionStyle = .none 
+            cell.update(model: viewModel.dataSource.value[section])
+            cell.selectionStyle = .none
             return cell
         }
         
@@ -426,7 +431,7 @@ extension FilterViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             
-            cell.update(model: dummy[section].children[row])
+            cell.update(model: viewModel.dataSource.value[section].children[row])
             cell.selectionStyle = .none
             return cell
             
