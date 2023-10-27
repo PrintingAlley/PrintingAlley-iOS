@@ -172,6 +172,6 @@ extension ContentsHeaderView: UICollectionViewDataSource {
 
 extension ContentsHeaderView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        DEBUG_LOG(dataSource[indexPath.row])
+        delgate?.categoryTap(id: dataSource[indexPath.row].id, title: dataSource[indexPath.row].name)
     }
 }

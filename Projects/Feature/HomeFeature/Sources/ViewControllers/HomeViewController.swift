@@ -208,6 +208,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ContentsHeaderView.identifier, for: indexPath) as! ContentsHeaderView
             
             headerView.update(tagDataSource: output.tagDataSource.value)
+            headerView.delgate = self
             return headerView
         }
         return UICollectionReusableView()
@@ -233,5 +234,12 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentsCollectionViewCell.identifier, for: indexPath)
                 as? ContentsCollectionViewCell else { return UICollectionViewCell() }
         return cell
+    }
+}
+
+
+extension HomeViewController: ContentsHeaderViewDelegate {
+    func categoryTap(id: Int, title: String) {
+        self.navigationController?.pushViewController(categorySearchFactory.makeView(id: id, title: title), animated: true)
     }
 }
