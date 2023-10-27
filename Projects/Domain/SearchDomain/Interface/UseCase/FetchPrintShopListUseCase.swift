@@ -8,7 +8,8 @@
 
 import Foundation
 import RxSwift
+import BaseDomainInterface
 
 public protocol FetchPrintShopListUseCase {
-    func execute(searchText: String, tagIds: [Int]) -> Single<[PrintShopListEntity]>
+    func execute(searchText: String, tagIds: [Int]) -> Single<[PrintShopEntity]>
 }
