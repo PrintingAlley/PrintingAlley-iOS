@@ -18,6 +18,8 @@ class CategorySearchViewModel: ViewModelType {
     public var title: String!
     public var id: Int!
     
+    
+    
     init(title: String, id: Int) {
         self.title = title
         self.id = id

@@ -15,6 +15,7 @@ import RxDataSources
 import SnapKit
 import Then
 
+
 class CategorySearchViewController: UIViewController {
 
     
@@ -51,6 +52,8 @@ class CategorySearchViewController: UIViewController {
     lazy var headerView: CategoryEmptyHeaderView = CategoryEmptyHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: APP_HEIGHT()/2)).then {
         $0.delegate = self
     }
+    
+ 
     
     
     var viewModel: CategorySearchViewModel!
@@ -135,6 +138,7 @@ extension CategorySearchViewController {
         
         bindDataSource(output: output)
         
+        bindFilterButton()
         
     }
 }
