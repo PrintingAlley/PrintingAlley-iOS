@@ -2,6 +2,7 @@
 
 import AuthDomain
 import AuthDomainInterface
+import BaseDomainInterface
 import BaseFeature
 import BaseFeatureInterface
 import BookMarkDomain
@@ -118,9 +119,26 @@ private class MyPageContentDependencyc8db405cbc62d6eda9bfProvider: MyPageContent
 private func factory0dbf0a2ebe9a0bf09f32f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return MyPageContentDependencyc8db405cbc62d6eda9bfProvider(appComponent: parent1(component) as! AppComponent)
 }
+private class AfterSearchDependency61822c19bc2eb46d7c52Provider: AfterSearchDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->AfterSearchComponent
+private func factoryeb2da679e35e2c4fb9a5e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return AfterSearchDependency61822c19bc2eb46d7c52Provider()
+}
 private class SearchDependencya86903a2c751a4f762e8Provider: SearchDependency {
     var searchDomainFactory: any SearchDomainFactory {
         return appComponent.searchDomainFactory
+    }
+    var beforeSearchFactory: any BeforeSearchFactory {
+        return appComponent.beforeSearchFactory
+    }
+    var afterSearchFactory: any AfterSearchFactory {
+        return appComponent.afterSearchFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -130,6 +148,17 @@ private class SearchDependencya86903a2c751a4f762e8Provider: SearchDependency {
 /// ^->AppComponent->SearchComponent
 private func factorye3d049458b2ccbbcb3b6f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return SearchDependencya86903a2c751a4f762e8Provider(appComponent: parent1(component) as! AppComponent)
+}
+private class BeforeSearchDependencyebdecb1d478a4766488dProvider: BeforeSearchDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->BeforeSearchComponent
+private func factory9bb852337d5550979293e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return BeforeSearchDependencyebdecb1d478a4766488dProvider()
 }
 private class RootDependency3944cc797a4a88956fb5Provider: RootDependency {
     var mainTabFactory: any MainTabFactory {
@@ -364,9 +393,21 @@ extension MyPageContentComponent: Registration {
         keyPathToName[\MyPageContentDependency.authDomainFactory] = "authDomainFactory-any AuthDomainFactory"
     }
 }
+extension AfterSearchComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension SearchComponent: Registration {
     public func registerItems() {
         keyPathToName[\SearchDependency.searchDomainFactory] = "searchDomainFactory-any SearchDomainFactory"
+        keyPathToName[\SearchDependency.beforeSearchFactory] = "beforeSearchFactory-any BeforeSearchFactory"
+        keyPathToName[\SearchDependency.afterSearchFactory] = "afterSearchFactory-any AfterSearchFactory"
+    }
+}
+extension BeforeSearchComponent: Registration {
+    public func registerItems() {
+
     }
 }
 extension RootComponent: Registration {
@@ -465,7 +506,9 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->MainTabComponent", factory1ab5a747ddf21e1393f9f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MyPageComponent", factory0f6f456ebf157d02dfb3f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MyPageContentComponent", factory0dbf0a2ebe9a0bf09f32f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->AfterSearchComponent", factoryeb2da679e35e2c4fb9a5e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SearchComponent", factorye3d049458b2ccbbcb3b6f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->BeforeSearchComponent", factory9bb852337d5550979293e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652af47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)

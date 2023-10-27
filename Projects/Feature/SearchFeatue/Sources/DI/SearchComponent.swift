@@ -6,7 +6,6 @@
 //  Copyright © 2023 com. All rights reserved.
 //
 
-import Foundation
 import NeedleFoundation
 import UIKit
 import SearchFeatueInterface
@@ -14,10 +13,12 @@ import SearchDomainInterface
 
 public protocol SearchDependency: Dependency {
     var searchDomainFactory: any SearchDomainFactory { get }
+    var beforeSearchFactory: any BeforeSearchFactory { get }
+    var afterSearchFactory: any AfterSearchFactory { get }
 }
 
 public final class SearchComponent: Component<SearchDependency>, SearchFactory {
     public func makeView() -> UIViewController {
-        SearchViewController(viewModel: SearchViewModel())
+        SearchViewController(viewModel: SearchViewModel(), beforeSearchFactory: dependency.beforeSearchFactory, afterSearchFactory: dependency.afterSearchFactory)
     }
 }
