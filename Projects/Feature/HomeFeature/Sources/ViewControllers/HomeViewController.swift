@@ -15,9 +15,11 @@ import SearchFeatueInterface
 import RxSwift
 import RxDataSources
 import BaseFeature
+import CategorySearchFeatureInterface
 
 final class HomeViewController: UIViewController {
     private var searchFactory: any SearchFactory
+    private var categorySearchFactory: any CategorySearchFactory
     private var viewModel: HomeViewModel!
     
     let disposeBag = DisposeBag()
@@ -66,8 +68,9 @@ final class HomeViewController: UIViewController {
     
     private let headerViewHeight: CGFloat = 280
     
-    init(viewModel: HomeViewModel, searchFactory: SearchFactory) {
+    init(viewModel: HomeViewModel, searchFactory: SearchFactory, categorySearchFactory: CategorySearchFactory) {
         self.searchFactory = searchFactory
+        self.categorySearchFactory = categorySearchFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

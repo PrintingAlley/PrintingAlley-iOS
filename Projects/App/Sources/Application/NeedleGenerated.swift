@@ -8,6 +8,8 @@ import BookMarkDomain
 import BookMarkDomainInterface
 import BookMarkFeature
 import BookMarkFeatureInterface
+import CategorySearchFeature
+import CategorySearchFeatureInterface
 import Foundation
 import HomeFeature
 import HomeFeatureInterface
@@ -195,6 +197,19 @@ private class NearByMeDependencyfb289c9eb0cc94c83621Provider: NearByMeDependency
 /// ^->AppComponent->NearByMeComponent
 private func factory53f303ca6b0d301565d8e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return NearByMeDependencyfb289c9eb0cc94c83621Provider()
+}
+private class CategorySearchDependencybc5b867b843f81f14b34Provider: CategorySearchDependency {
+    var searchDomainFactory: any SearchDomainFactory {
+        return appComponent.searchDomainFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->CategorySearchComponent
+private func factory89ce28b4b2dfd923cbdcf47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return CategorySearchDependencybc5b867b843f81f14b34Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class BookMarkDependency8b686eab048ca50fc073Provider: BookMarkDependency {
     var bookMarkDomainFactory: any BookMarkDomainFactory {
@@ -394,6 +409,11 @@ extension NearByMeComponent: Registration {
 
     }
 }
+extension CategorySearchComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\CategorySearchDependency.searchDomainFactory] = "searchDomainFactory-any SearchDomainFactory"
+    }
+}
 extension BookMarkComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
@@ -470,6 +490,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652af47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->NearByMeComponent", factory53f303ca6b0d301565d8e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->CategorySearchComponent", factory89ce28b4b2dfd923cbdcf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkComponent", factory28d0c1b9536190951087f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDetailComponent", factoryc8e52bb402c24cd9a5e2f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)
