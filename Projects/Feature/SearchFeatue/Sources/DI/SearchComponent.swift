@@ -12,13 +12,13 @@ import SearchFeatueInterface
 import SearchDomainInterface
 
 public protocol SearchDependency: Dependency {
-    var searchDomainFactory: any SearchDomainFactory { get }
+    var fetchPrintShopListUseCase: any FetchPrintShopListUseCase { get }
     var beforeSearchFactory: any BeforeSearchFactory { get }
     var afterSearchFactory: any AfterSearchFactory { get }
 }
 
 public final class SearchComponent: Component<SearchDependency>, SearchFactory {
     public func makeView() -> UIViewController {
-        SearchViewController(viewModel: SearchViewModel(), beforeSearchFactory: dependency.beforeSearchFactory, afterSearchFactory: dependency.afterSearchFactory)
+        SearchViewController(viewModel: SearchViewModel(fetchPrintShopListUseCase: dependency.fetchPrintShopListUseCase), beforeSearchFactory: dependency.beforeSearchFactory, afterSearchFactory: dependency.afterSearchFactory)
     }
 }

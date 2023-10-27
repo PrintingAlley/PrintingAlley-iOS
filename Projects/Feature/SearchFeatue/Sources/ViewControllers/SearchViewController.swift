@@ -15,7 +15,6 @@ import RxCocoa
 import RxSwift
 import RxDataSources
 import BaseFeatureInterface
-import SearchDomainInterface
 import SearchFeatueInterface
 
 final class SearchViewController: UIViewController, ContainerViewType {
@@ -23,8 +22,6 @@ final class SearchViewController: UIViewController, ContainerViewType {
     
     let disposeBag = DisposeBag()
     let input = SearchViewModel.Input()
-    
-    private var searchDomainFactory: SearchDomainFactory!
     
     var afterSearchFactory: AfterSearchFactory!
     var beforeSearchFactory: BeforeSearchFactory!
@@ -46,9 +43,9 @@ final class SearchViewController: UIViewController, ContainerViewType {
     
     init(viewModel: SearchViewModel!, beforeSearchFactory: BeforeSearchFactory, afterSearchFactory: AfterSearchFactory) {
         DEBUG_LOG("\(Self.self) Init ✅ ")
+        self.viewModel = viewModel
         self.beforeSearchFactory = beforeSearchFactory
         self.afterSearchFactory = afterSearchFactory
-        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.add(asChildViewController: beforeVc)
     }

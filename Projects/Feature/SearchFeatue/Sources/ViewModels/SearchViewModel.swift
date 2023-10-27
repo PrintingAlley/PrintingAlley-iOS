@@ -11,12 +11,17 @@ import UtilityModule
 import RxRelay
 import RxSwift
 import BaseDomainInterface
+import SearchDomainInterface
 
 public class SearchViewModel: ViewModelType {
+    
+    var fetchPrintShopListUseCase: FetchPrintShopListUseCase!
+    
     let disposeBag = DisposeBag()
     
-    init() {
+    init(fetchPrintShopListUseCase: FetchPrintShopListUseCase) {
         DEBUG_LOG("\(Self.self) Init ✅ ")
+        self.fetchPrintShopListUseCase = fetchPrintShopListUseCase
     }
     
     deinit {
