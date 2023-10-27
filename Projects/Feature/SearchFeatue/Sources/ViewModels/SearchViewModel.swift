@@ -15,6 +15,14 @@ import BaseDomainInterface
 public class SearchViewModel: ViewModelType {
     let disposeBag = DisposeBag()
     
+    init() {
+        DEBUG_LOG("\(Self.self) Init ✅ ")
+    }
+    
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
+    }
+    
     public struct Input {
         let textString: BehaviorRelay<String> = BehaviorRelay(value: "")
     }
