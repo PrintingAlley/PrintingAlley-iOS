@@ -15,9 +15,11 @@ import SearchFeatueInterface
 import RxSwift
 import RxDataSources
 import BaseFeature
+import CategorySearchFeatureInterface
 
 final class HomeViewController: UIViewController {
     private var searchFactory: any SearchFactory
+    private var categorySearchFactory: any CategorySearchFactory
     private var viewModel: HomeViewModel!
     
     let disposeBag = DisposeBag()
@@ -66,8 +68,9 @@ final class HomeViewController: UIViewController {
     
     private let headerViewHeight: CGFloat = 280
     
-    init(viewModel: HomeViewModel, searchFactory: SearchFactory) {
+    init(viewModel: HomeViewModel, searchFactory: SearchFactory, categorySearchFactory: CategorySearchFactory) {
         self.searchFactory = searchFactory
+        self.categorySearchFactory = categorySearchFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -108,6 +111,7 @@ extension HomeViewController {
                 owner.contentsCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
+        
         
     }
 }
@@ -204,6 +208,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ContentsHeaderView.identifier, for: indexPath) as! ContentsHeaderView
             
             headerView.update(tagDataSource: output.tagDataSource.value)
+            headerView.delgate = self
             return headerView
         }
         return UICollectionReusableView()
@@ -229,5 +234,12 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentsCollectionViewCell.identifier, for: indexPath)
                 as? ContentsCollectionViewCell else { return UICollectionViewCell() }
         return cell
+    }
+}
+
+
+extension HomeViewController: ContentsHeaderViewDelegate {
+    func categoryTap(id: Int, title: String) {
+        self.navigationController?.pushViewController(categorySearchFactory.makeView(id: id, title: title), animated: true)
     }
 }

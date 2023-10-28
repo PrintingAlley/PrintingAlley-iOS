@@ -35,18 +35,19 @@ struct AuthRepositoryImpl: AuthRepository {
     func logout() -> Single<BaseEntity> {
     
        remoteAuthDataSource.logout()
-            .do(onSuccess: { _ in
-                localAuthDataSource.removeToken()
-            })
-            
+        .do(onSuccess: { _ in
+            localAuthDataSource.removeToken()
+        })
+        
     }
     
     func withdraw() -> Single<BaseEntity> {
 
         remoteAuthDataSource.withdraw()
-            .do(onSuccess: { _ in
-                localAuthDataSource.removeToken()
-            })
+        .do(onSuccess: { _ in
+            localAuthDataSource.removeToken()
+        })
+
     }
     
 }

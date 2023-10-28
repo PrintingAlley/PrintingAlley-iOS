@@ -10,6 +10,7 @@ import Foundation
 import SearchDomainInterface
 import BaseDomainInterface
 import RxSwift
+import BaseDomainInterface
 
 struct FetchPrintShopListUseCaseImpl: FetchPrintShopListUseCase {
     private let searchRepository: any SearchRepository

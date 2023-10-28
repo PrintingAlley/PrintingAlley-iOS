@@ -10,6 +10,7 @@ import Foundation
 import SearchDomainInterface
 import BaseDomainInterface
 import RxSwift
+import BaseDomainInterface
 
 struct SearchRepositoryImpl: SearchRepository {
     private let remoteSearchDatasource: any RemoteSearchDatasource
