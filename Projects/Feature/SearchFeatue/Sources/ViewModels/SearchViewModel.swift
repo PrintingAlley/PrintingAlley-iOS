@@ -33,11 +33,27 @@ public class SearchViewModel: ViewModelType {
     }
     
     public struct Output {
+        let dataSource: PublishSubject<[PrintShopEntity]> = .init()
     }
-
+    
     public func transform(input: Input) -> Output {
         let output = Output()
-
+        input.textString
+            .distinctUntilChanged()
+            .flatMapLatest { [unowned self] text in
+                return self.fetchPrintShopListUseCase
+                    .execute(searchText: text, tagIds: [])
+                    .asObservable()
+                    .catchError { error in
+                        let alertError = error.asAlleyError
+                        
+                        return .just([PrintShopEntity(id: 0, name: "", address: "", phone: "", email: "", homepage: "", representative: "", introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "", tags: [])])
+                    }
+            }
+            .bind(to: output.dataSource)
+            .disposed(by: disposeBag)
+        print("\(output.dataSource)")
+        
         return output
     }
 }
