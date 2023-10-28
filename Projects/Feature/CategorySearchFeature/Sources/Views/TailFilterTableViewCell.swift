@@ -29,9 +29,8 @@ class TailFilterTableViewCell: UITableViewCell {
     }
     
    
-    
-    var model:ChildrenTagEntity = ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: [])
-    
+
+    var items:[ChildrenTagEntity] = []
 
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -75,8 +74,7 @@ extension TailFilterTableViewCell {
     }
     
     func update(model: ChildrenTagEntity) {
-        self.model = model
-
+        self.items = model.children.filter({$0.children.isEmpty}) // 2,3층 상관 없이 최종 계층은 children이 비어있으
         
         collectionView.reloadData()
     }
@@ -94,7 +92,7 @@ extension TailFilterTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-        let tempLabel = AlleyLabel(model.children[indexPath.row].name, font: .body1).then {
+        let tempLabel = AlleyLabel(items[indexPath.row].name, font: .body1).then {
             $0.sizeToFit()
             
         }
@@ -126,7 +124,7 @@ extension TailFilterTableViewCell: UICollectionViewDataSource {
             
         }
 
-        cell.update(model: model.children[indexPath.row], type: .basic, willChangeUI: true)
+        cell.update(model: items[indexPath.row], type: .basic, willChangeUI: true)
     
         return cell
     }
@@ -135,7 +133,7 @@ extension TailFilterTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     
-            return model.children.count
+        return items.count
     }
     
     

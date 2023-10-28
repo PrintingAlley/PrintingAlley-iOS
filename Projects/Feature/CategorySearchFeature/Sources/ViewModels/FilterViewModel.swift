@@ -18,8 +18,9 @@ class FilterViewModel: ViewModelType {
     var id: Int!
     
     let disposeBag = DisposeBag()
-    
+    public var fillterIdSet:Set<Int> = .init()
     let dataSource:BehaviorRelay<[ChildrenTagEntity]> = .init(value: [])
+    
     
     var fetchTagUseCase: any FetchTagUseCase
     
@@ -51,6 +52,23 @@ class FilterViewModel: ViewModelType {
             .asObservable()
             .map{$0.children}
             .bind(to:self.dataSource)
+            .disposed(by: disposeBag)
+        
+        
+        NotificationCenter.default.rx.notification(.filterToggle)
+            .subscribe(onNext: { [weak self] (notification) in
+                
+                guard let self else {return}
+                guard let id = notification.object as? Int else { return }
+                
+                if self.fillterIdSet.contains(id) {
+                    self.fillterIdSet.remove(id)
+                } else {
+                    self.fillterIdSet.insert(id)
+                }
+                
+                DEBUG_LOG(self.fillterIdSet)
+            })
             .disposed(by: disposeBag)
         
         return output

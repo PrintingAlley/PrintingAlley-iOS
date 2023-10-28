@@ -18,6 +18,7 @@ class CategorySearchViewModel: ViewModelType {
 
     public var title: String!
     public var id: Int!
+   
     
     let disposeBag = DisposeBag()
     
@@ -53,6 +54,8 @@ class CategorySearchViewModel: ViewModelType {
             .asObservable()
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
+        
+        
             
         
         

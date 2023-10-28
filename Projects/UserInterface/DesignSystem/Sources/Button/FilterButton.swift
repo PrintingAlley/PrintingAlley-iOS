@@ -126,6 +126,5 @@ extension FilterButton {
         
         NotificationCenter.default.post(name: Notification.Name("filterToggle"), object: self.id)
         
-        print("탭 필터버튼")
     }
 }
