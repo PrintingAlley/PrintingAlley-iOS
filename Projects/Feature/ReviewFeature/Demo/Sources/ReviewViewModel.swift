@@ -16,12 +16,21 @@ class ReviewViewModel: ViewModelType {
     
     let disposeBag = DisposeBag()
     
+    
+    var testDS: TestDataSourceImpl
+    
+    init(testDS:  TestDataSourceImpl) {
+        self.testDS = testDS
+    }
+    
     struct Input {
         let dataSource: PublishSubject<Data> = .init()
+        let tapSend: PublishSubject<Void> = .init()
     }
     
     struct Output {
         let dataSource: PublishRelay<Data> = .init()
+        let result: PublishSubject<String> = .init()
     }
     
     
@@ -31,6 +40,20 @@ class ReviewViewModel: ViewModelType {
         
         input.dataSource
             .bind(to: output.dataSource)
+            .disposed(by: disposeBag)
+        
+        
+        input.tapSend
+            .withLatestFrom(output.dataSource)
+            .flatMap{[weak self]  dataSource -> Observable<TmpEntity> in
+                
+                guard let self else {return Observable.empty()}
+                
+                return self.testDS.upload(data: dataSource)
+                    .asObservable()
+            }
+            .map{$0.url}
+            .bind(to: output.result)
             .disposed(by: disposeBag)
         
         return output

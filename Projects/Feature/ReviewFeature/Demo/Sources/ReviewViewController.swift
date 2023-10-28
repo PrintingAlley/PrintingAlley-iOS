@@ -13,6 +13,7 @@ import UtilityModule
 import PhotosUI
 import RxCocoa
 import RxSwift
+import Kingfisher
 
 class ReviewViewController: UIViewController {
 
@@ -21,7 +22,15 @@ class ReviewViewController: UIViewController {
         $0.addTarget(self, action: #selector(tap), for: .touchUpInside)
     }
     
+    lazy var runButton: UIButton = UIButton().then {
+        $0.setTitle("GO", for: .normal)
+    }
+    
     lazy var imageView: UIImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+    }
+    
+    lazy var imageView2: UIImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
     }
     
@@ -43,7 +52,7 @@ class ReviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubviews(button,imageView)
+        self.view.addSubviews(button,imageView,runButton,imageView2)
         makeConstraints()
         bindViewModel()
         
@@ -79,12 +88,36 @@ class ReviewViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(100)
         }
+        
+        runButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.centerX.equalToSuperview()
+        }
+        
+        imageView2.snp.makeConstraints {
+            $0.width.height.equalTo(100)
+            $0.bottom.equalToSuperview().inset(50)
+            $0.centerX.equalToSuperview()
+        }
     }
     
     func bindViewModel() {
         let output = viewModel.transform(input: input)
         
         bindDataSource(output: output)
+        
+        runButton.rx.tap
+            .bind(to: input.tapSend)
+            .disposed(by: disposeBag)
+        
+        output.result
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,data) in
+                
+                owner.imageView2.kf.setImage(with: URL(string: data))
+                
+            })
+            .disposed(by: disposeBag)
         
     }
     
