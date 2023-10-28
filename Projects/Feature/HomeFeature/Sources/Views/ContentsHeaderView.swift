@@ -14,6 +14,11 @@ import DesignSystem
 import TagDomainInterface
 import BaseDomainInterface
 
+
+protocol ContentsHeaderViewDelegate: AnyObject {
+    func categoryTap(id: Int,title: String)
+}
+
 final class ContentsHeaderView: UICollectionReusableView {
     static let identifier = "ContentsHeaderView"
     
@@ -26,6 +31,7 @@ final class ContentsHeaderView: UICollectionReusableView {
     
     public lazy var categoryCollectionView = makeCollectionView(scrollDirection: .vertical).then {
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
+        
     }
     
     private let contentsTitle = AlleyLabel("인쇄가 어려운 당신에게", font: .subtitle1)
@@ -44,6 +50,8 @@ final class ContentsHeaderView: UICollectionReusableView {
         $0.image = DesignSystemAsset.Icon.rightArrow.image
         $0.contentMode = .scaleAspectFill
     }
+    
+    weak var delgate:ContentsHeaderViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -158,5 +166,12 @@ extension ContentsHeaderView: UICollectionViewDataSource {
         
         
         return cell
+    }
+}
+
+
+extension ContentsHeaderView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delgate?.categoryTap(id: dataSource[indexPath.row].id, title: dataSource[indexPath.row].name)
     }
 }

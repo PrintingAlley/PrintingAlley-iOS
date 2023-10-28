@@ -92,8 +92,8 @@ extension PrintingTableViewCell {
 }
 
 // MARK: - 데이터 바인딩 함수
-extension PrintingTableViewCell {
-    func bindData(model: PrintShopEntity) {
+public extension PrintingTableViewCell {
+     func bindData(model: PrintShopEntity) {
         // TODO: 이미지 바인딩
         self.name.text = model.name
         self.printingTag.text = model.tags.joined(separator: " ")

@@ -13,7 +13,8 @@ let project = Project.module(
             .feature(target: .HomeFeature, type: .interface),
             .feature(target: .SearchFeatue, type: .interface),
             .domain(target: .TagDomain,type: .interface),
-            .domain(target: .BaseDomain,type: .interface)
+            .domain(target: .BaseDomain,type: .interface),
+            .feature(target: .CategorySearchFeature, type: .interface)
         ]),
         .demo(module: .feature(.HomeFeature), dependencies: [
             .feature(target: .HomeFeature)
