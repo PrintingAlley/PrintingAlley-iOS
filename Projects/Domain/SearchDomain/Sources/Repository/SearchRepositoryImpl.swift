@@ -8,6 +8,7 @@
 
 import Foundation
 import SearchDomainInterface
+import BaseDomainInterface
 import RxSwift
 
 struct SearchRepositoryImpl: SearchRepository {
@@ -17,7 +18,7 @@ struct SearchRepositoryImpl: SearchRepository {
         self.remoteSearchDatasource = remoteSearchDatasource
     }
     
-    func fetchPrintShopList(searchText: String, tagIds: [Int]) -> Single<[PrintShopListEntity]> {
+    func fetchPrintShopList(searchText: String, tagIds: [Int]) -> Single<[PrintShopEntity]> {
         remoteSearchDatasource.fetchPrintShopList(searchText: searchText, tagIds: tagIds)
     }
 }

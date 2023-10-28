@@ -8,6 +8,7 @@
 
 import Foundation
 import SearchDomainInterface
+import BaseDomainInterface
 import RxSwift
 
 struct FetchPrintShopListUseCaseImpl: FetchPrintShopListUseCase {
@@ -17,7 +18,7 @@ struct FetchPrintShopListUseCaseImpl: FetchPrintShopListUseCase {
         self.searchRepository = searchRepository
     }
     
-    func execute(searchText: String, tagIds: [Int]) -> Single<[PrintShopListEntity]> {
+    func execute(searchText: String, tagIds: [Int]) -> Single<[PrintShopEntity]> {
         searchRepository.fetchPrintShopList(searchText: searchText, tagIds: tagIds)
     }
 }

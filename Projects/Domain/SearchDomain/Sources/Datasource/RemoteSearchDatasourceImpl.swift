@@ -8,11 +8,12 @@
 
 import Foundation
 import BaseDomain
+import BaseDomainInterface
 import SearchDomainInterface
 import RxSwift
 
 final class RemoteSearchDatasourceImpl: BaseRemoteDataSource<SearchAPI>, RemoteSearchDatasource {
-    func fetchPrintShopList(searchText: String, tagIds: [Int]) -> Single<[PrintShopListEntity]> {
+    func fetchPrintShopList(searchText: String, tagIds: [Int]) -> Single<[PrintShopEntity]> {
         request(.list(searchText: searchText, tagIds: tagIds))
             .map([PrintShopListResponseDto].self)
             .map({$0.map {$0.toDomain()}})

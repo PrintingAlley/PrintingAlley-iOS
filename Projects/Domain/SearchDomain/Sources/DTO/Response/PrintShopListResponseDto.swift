@@ -7,17 +7,18 @@
 //
 
 import Foundation
-import SearchDomainInterface
+import BaseDomainInterface
 
  struct PrintShopListResponseDto: Decodable {
-     let id: Int
-     let image: String?
-     let name: String
-     let tags: [String]
-     let introduction: String
-     let address: String
+     public let id: Int
+     public let name, address, phone, email: String
+     public let homepage: String
+     public let representative, introduction: String
+     public let logoImage, backgroundImage: String
+     public let latitude, longitude: String
+     public let tags: [String]
 
-     func toDomain() -> PrintShopListEntity {
-         PrintShopListEntity(id: self.id, image: self.image ?? "", name: self.name, tags: self.tags, introduction: self.introduction, address: self.address)
+     public func toDomain() -> PrintShopEntity {
+         PrintShopEntity(id: self.id, name: self.name, address: self.address, phone: self.phone, email: self.email, homepage: self.homepage, representative: self.representative, introduction: self.introduction, logoImage: self.logoImage, backgroundImage: self.backgroundImage, latitude: self.latitude, longitude: self.longitude, tags: self.tags)
      }
  }
