@@ -11,12 +11,15 @@ import DesignSystem
 
 class PageTitleCollectionViewCell: UICollectionViewCell {
     
+    static let identifer: String = "PageTitleCollectionViewCell"
+    
     lazy var label: AlleyLabel = AlleyLabel()
     lazy var selectedBar: UIView = UIView()
     
     
     override var isSelected: Bool {
         didSet {
+            label.font = isSelected ? .setFont(.body1) : .setFont(.subtitle1)
             label.textColor = isSelected ? .black : .red
             
             UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseOut, animations: {
@@ -51,13 +54,13 @@ extension PageTitleCollectionViewCell {
         }
         
         selectedBar.snp.makeConstraints {
-            $0.height.equalTo(1)
+            $0.height.equalTo(2)
             $0.bottom.horizontalEdges.equalToSuperview()
             
         }
     }
     
     func update(title: String) {
-        label.setTitle(title: title, textColor: .grey(.grey500), font: .body1)
+        label.setTitle(title: title, textColor: .grey(.grey500), font: .body1,alignment: .center)
     }
 }
