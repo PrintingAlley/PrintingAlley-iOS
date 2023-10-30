@@ -10,7 +10,8 @@ let project = Project.module(
         ]),
         .implements(module: .domain(.ProductDomain), dependencies: [
             .domain(target: .ProductDomain, type: .interface),
-            .domain(target: .BaseDomain)
+            .domain(target: .BaseDomain),
+            .domain(target: .ProductDomain, type: .interface)
         ])
     ]
 )

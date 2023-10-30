@@ -17,13 +17,13 @@ public struct ProductEntity {
     let images: [String]
     let category: CategoryEntity
     let printShop: PrintShopEntity
-    let tagss: [ChildrenTagEntity]
+    let tags: [ChildrenTagEntity]
     let reviews: [ReviewEntity]
     
     let statusCode: Int
     let message: String
     
-    public init(id: Int, name: String, priceInfo: String, introduction: String, description: String, mainImage: String, images: [String], category: CategoryEntity, printShop: PrintShopEntity, tagss: [ChildrenTagEntity], reviews: [ReviewEntity], statusCode: Int, message: String) {
+    public init(id: Int, name: String, priceInfo: String, introduction: String, description: String, mainImage: String, images: [String], category: CategoryEntity, printShop: PrintShopEntity, tags: [ChildrenTagEntity], reviews: [ReviewEntity], statusCode: Int, message: String) {
         self.id = id
         self.name = name
         self.priceInfo = priceInfo
@@ -33,7 +33,7 @@ public struct ProductEntity {
         self.images = images
         self.category = category
         self.printShop = printShop
-        self.tagss = tagss
+        self.tags = tags
         self.reviews = reviews
         self.statusCode = statusCode
         self.message = message
