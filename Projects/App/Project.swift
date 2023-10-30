@@ -35,7 +35,8 @@ let targets: [Target] = [
             .domain(target: .BookMarkDomain),
             .domain(target: .UserDomain),
             .domain(target: .SearchDomain),
-            .domain(target: .TagDomain)
+            .domain(target: .TagDomain),
+            .domain(target: .ProductDomain)
         ],
         settings: .settings(base: env.baseSetting)
     )
