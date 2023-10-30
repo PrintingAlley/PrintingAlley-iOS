@@ -1,5 +1,5 @@
 //
-//  ProductRepository.swift
+//  ProductDataSource.swift
 //  ProductDomainInterface
 //
 //  Created by yongbeomkwak on 10/30/23.
@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import BaseDomainInterface
 
-public protocol ProductRepository {
+public protocol ProductDataSource {
     func fetchProduct(id: Int) -> Single<ProductEntity>
     func fetchProductList() ->  Single<ProductListEntity>
     func createReview(id: Int) -> Single<BaseEntity>

@@ -9,6 +9,6 @@
 import Foundation
 import BaseDomainInterface
 
-protocol DeleteReviewUseCase {
+public protocol DeleteReviewUseCase {
     func execute(id: Int, reviewId: Int) -> BaseEntity
 }
