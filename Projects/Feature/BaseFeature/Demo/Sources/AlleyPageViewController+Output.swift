@@ -27,7 +27,6 @@ extension AlleyPageViewController {
                 
                 UIView.animate(withDuration: 0.3, delay: .zero, options: .curveEaseOut) {
                     
-
                     
                     self.view.layoutIfNeeded()
                 }

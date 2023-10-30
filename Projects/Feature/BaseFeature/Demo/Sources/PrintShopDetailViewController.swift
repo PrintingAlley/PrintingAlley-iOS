@@ -33,6 +33,31 @@ class PrintShopDetailViewController: UIViewController {
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
     }
     
+    lazy var headerView: UIView = UIView()
+    lazy var titleLabel: AlleyLabel = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .subtitle1)
+    lazy var subTitleLabel: AlleyLabel = AlleyLabel("인쇄", textColor: .grey(.grey500), font: .subtitle3)
+    lazy var callButton: UIButton = UIButton().then{
+        $0.setImage(DesignSystemAsset.Icon.callBlack.image, for: .normal)
+        
+    }
+    
+    lazy var containerView: UIView = UIView()
+    
+    lazy var pageViewController: AlleyPageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보","라뷰"])).then{
+
+        let vc1 = UIViewController()
+        
+        vc1.view.backgroundColor = .red
+        
+        let vc2 = UIViewController()
+        
+        vc2.view.backgroundColor = .green
+        
+        $0.setChildren([vc1,vc2])
+    }
+    
+
+    
     let tmp: [String] = ["tmpPrintShop","tmpPrintShop","tmpPrintShop"]
         
     init() {
@@ -67,8 +92,13 @@ class PrintShopDetailViewController: UIViewController {
 
 extension PrintShopDetailViewController {
     func addSubviews() {
-        self.view.addSubviews(collectionView,naviTitleView)
+        self.view.addSubviews(collectionView,naviTitleView,headerView,containerView)
         self.naviTitleView.addSubview(backButton)
+        self.headerView.addSubviews(titleLabel,subTitleLabel,callButton)
+        self.containerView.addSubviews(pageViewController.view)
+        
+        addChild(pageViewController)
+        pageViewController.didMove(toParent: self)
     }
     
     func makeConstraints() {
@@ -85,10 +115,47 @@ extension PrintShopDetailViewController {
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(naviTitleView)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(251)
         }
+        
+        headerView.snp.makeConstraints {
+            $0.top.equalTo(collectionView.snp.bottom)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(100)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.left.equalToSuperview().inset(24)
+    
+        }
+        
+        subTitleLabel.snp.makeConstraints {
+            $0.left.equalTo(titleLabel.snp.left)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(4)
+        }
+        
+        callButton.snp.makeConstraints {
+            $0.width.height.equalTo(24)
+            $0.top.equalTo(titleLabel.snp.top)
+            $0.right.equalToSuperview().inset(31)
+        }
+        
+        
+        containerView.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom)
+            $0.left.right.bottom.equalToSuperview()
+        }
+        
+        pageViewController.view.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        
+        
+        
+        
     }
 }
 

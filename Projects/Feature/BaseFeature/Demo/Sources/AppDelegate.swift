@@ -11,18 +11,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["라클","라클2"]))
+        let viewController = PrintShopDetailViewController()
         
-        let vc1 = UIViewController()
-        
-        vc1.view.backgroundColor = .red
-        
-        let vc2 = UIViewController()
-        
-        vc1.view.backgroundColor = .yellow
-        
-        viewController.setChildren([vc1, vc2])
-        
+
 
         
         window?.rootViewController = viewController

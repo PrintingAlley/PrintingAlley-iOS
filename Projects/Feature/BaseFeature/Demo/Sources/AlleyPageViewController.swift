@@ -11,6 +11,7 @@ import UtilityModule
 import SnapKit
 import Then
 import RxSwift
+import DesignSystem
 
 class AlleyPageViewController: UIViewController {
 
