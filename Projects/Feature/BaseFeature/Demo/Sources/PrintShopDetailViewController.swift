@@ -142,7 +142,7 @@ extension PrintShopDetailViewController {
         }
         
         callButton.snp.makeConstraints {
-            $0.width.equalTo(24)
+            $0.width.equalTo(30)
             $0.height.equalTo(48)
             $0.top.equalTo(titleLabel.snp.top)
             $0.right.equalToSuperview().inset(31)
