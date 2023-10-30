@@ -38,6 +38,10 @@ class PrintShopDetailViewController: UIViewController {
     lazy var subTitleLabel: AlleyLabel = AlleyLabel("인쇄", textColor: .grey(.grey500), font: .subtitle3)
     lazy var callButton: UIButton = UIButton().then{
         $0.setImage(DesignSystemAsset.Icon.callBlack.image, for: .normal)
+        $0.setTitle("전화", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = .setFont(.body2)
+        $0.alignTextBelow()
         
     }
     
@@ -75,9 +79,10 @@ class PrintShopDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCommonUI()
+       //aconfigureCommonUI()
         addSubviews()
         makeConstraints()
+        view.backgroundColor = .blue
 
     }
     
@@ -137,14 +142,15 @@ extension PrintShopDetailViewController {
         }
         
         callButton.snp.makeConstraints {
-            $0.width.height.equalTo(24)
+            $0.width.equalTo(24)
+            $0.height.equalTo(48)
             $0.top.equalTo(titleLabel.snp.top)
             $0.right.equalToSuperview().inset(31)
         }
         
         
         containerView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom)
+            $0.top.equalTo(headerView.snp.bottom).offset(10)
             $0.left.right.bottom.equalToSuperview()
         }
         

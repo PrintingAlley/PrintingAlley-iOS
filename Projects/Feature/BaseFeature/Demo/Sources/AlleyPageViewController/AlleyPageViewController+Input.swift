@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import UtilityModule
 
 extension AlleyPageViewController {
     
@@ -22,16 +23,17 @@ extension AlleyPageViewController {
             .itemSelected
             .map{$0.row}
             .withLatestFrom(input.selectedIndex){($0,$1)}
-            .do(onNext: { [weak self] (prev,curr) in
+            .do(onNext: { [weak self] (curr,prev) in
                 
                 guard let self else {return}
-                
+            
                 
                 self.pageViewController.setViewControllers([self.viewControllers[curr]], direction:  prev < curr ? .forward : .reverse, animated: true, completion: nil)
                 
                 
             })
-            .map{$0.1}
+            .map{$0.0}
+            .debug("WWW")
             .bind(to: input.selectedIndex)
             .disposed(by: disposeBag)
         
