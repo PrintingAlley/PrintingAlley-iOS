@@ -27,7 +27,7 @@ final class AlleyPageViewModel : ViewModelType {
     }
     
     struct Output {
-        let barConstraints: BehaviorRelay<CGFloat> = .init(value: .zero)
+        let barConstraints: PublishRelay<CGFloat> = .init()
      }
     
     
@@ -37,6 +37,7 @@ final class AlleyPageViewModel : ViewModelType {
         
         
         input.selectedIndex
+            .skip(1)
             .map({ [weak self]  index -> CGFloat in
                 
                 guard let self else {return .zero}

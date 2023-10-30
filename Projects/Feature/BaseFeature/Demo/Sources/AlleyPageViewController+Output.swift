@@ -16,17 +16,18 @@ extension AlleyPageViewController {
     func bindConstraints(output: AlleyPageViewModel.Output) {
         
         output.barConstraints
-            .asDriver()
-            .drive(onNext: { [weak self] newConstraint in
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] newConstraint in
                 
                 guard let self else {return}
                 
+                self.indicaatorBar.snp.updateConstraints {
+                    $0.left.equalToSuperview().offset(newConstraint)
+                }
                 
                 UIView.animate(withDuration: 0.3, delay: .zero, options: .curveEaseOut) {
                     
-                    self.indicaatorBar.snp.updateConstraints {
-                        $0.left.equalToSuperview().offset(newConstraint)
-                    }
+
                     
                     self.view.layoutIfNeeded()
                 }
