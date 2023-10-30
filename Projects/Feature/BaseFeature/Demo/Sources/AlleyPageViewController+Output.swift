@@ -22,7 +22,7 @@ extension AlleyPageViewController {
                 guard let self else {return}
                 
                 
-                UIView.animate(withDuration: 0.5 , delay: .zero, options: .curveEaseOut) {
+                UIView.animate(withDuration: 0.3, delay: .zero, options: .curveEaseOut) {
                     
                     self.indicaatorBar.snp.updateConstraints {
                         $0.left.equalToSuperview().offset(newConstraint)

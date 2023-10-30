@@ -15,7 +15,7 @@ import RxSwift
 class AlleyPageViewController: UIViewController {
 
     
-    private var viewControllers: [UIViewController] = []
+    public var viewControllers: [UIViewController] = []
 
     
     let disposeBag = DisposeBag()
@@ -45,7 +45,11 @@ class AlleyPageViewController: UIViewController {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
     }
     
-    lazy var containerView: UIView = UIView()
+    
+    lazy var pageViewController: UIPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil).then {
+        $0.dataSource = self
+        $0.delegate = self 
+    }
     
     init(viewModel: AlleyPageViewModel) {
         self.viewModel = viewModel
@@ -73,13 +77,14 @@ extension AlleyPageViewController {
     
     public func setChildren(_ viewControllers: [UIViewController]) {
         self.viewControllers = viewControllers
-        
-
-       
+        pageViewController.setViewControllers([self.viewControllers[0]], direction: .forward, animated: true)
+    
     }
     
     func addSubviews() {
-        self.view.addSubviews(collectionView,baseLine,containerView,indicaatorBar)
+        self.view.addSubviews(collectionView,baseLine,indicaatorBar,pageViewController.view)
+        addChild(pageViewController)
+        pageViewController.didMove(toParent: self)
     }
     
     func makeConstraints() {
@@ -96,20 +101,19 @@ extension AlleyPageViewController {
             $0.top.equalTo(collectionView.snp.bottom)
         }
         
-        
-        
-        containerView.snp.makeConstraints {
-            $0.left.right.bottom.equalToSuperview()
-            $0.top.equalTo(baseLine.snp.bottom)
-      
-        }
-        
         indicaatorBar.snp.makeConstraints {
             $0.bottom.equalTo(baseLine.snp.bottom)
             $0.height.equalTo(2)
             $0.width.equalTo(APP_WIDTH() / CGFloat(viewControllers.count ))
             $0.left.equalToSuperview()
             
+        }
+        
+        
+        pageViewController.view.snp.makeConstraints {
+            $0.top.equalTo(baseLine.snp.bottom)
+            $0.left.right.bottom.equalToSuperview()
+
         }
         
         
@@ -130,37 +134,6 @@ extension AlleyPageViewController {
 }
 
 
-extension AlleyPageViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width / CGFloat(viewModel.titles.count)
-        
-           return CGSize(width: width, height: 58)
-       }
-    
-
-}
 
 
-extension AlleyPageViewController: UICollectionViewDelegate {
 
-}
-
-extension AlleyPageViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.titles.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PageTitleCollectionViewCell.identifer, for: indexPath) as? PageTitleCollectionViewCell else  {
-            return UICollectionViewCell()
-        }
-        
-        cell.update(title: viewModel.titles[indexPath.row], isSelectedIndex: indexPath.row == input.selectedIndex.value)
-        return cell
-    }
-        
-    
-
-}
