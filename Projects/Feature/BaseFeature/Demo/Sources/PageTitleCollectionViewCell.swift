@@ -14,21 +14,7 @@ class PageTitleCollectionViewCell: UICollectionViewCell {
     static let identifer: String = "PageTitleCollectionViewCell"
     
     lazy var label: AlleyLabel = AlleyLabel()
-    lazy var selectedBar: UIView = UIView()
     
-    
-    override var isSelected: Bool {
-        didSet {
-            label.font = isSelected ? .setFont(.body1) : .setFont(.subtitle1)
-            label.textColor = isSelected ? .black : .red
-            
-            UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseOut, animations: {
-                            self.selectedBar.layoutIfNeeded()
-                            self.selectedBar.alpha = self.isSelected ? 1 : 0
-
-            }, completion: nil)
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,7 +30,7 @@ class PageTitleCollectionViewCell: UICollectionViewCell {
 
 extension PageTitleCollectionViewCell {
     func addSubviews() {
-        self.contentView.addSubviews(label,selectedBar)
+        self.contentView.addSubviews(label)
     }
     
     func makeConstraints() {
@@ -53,14 +39,14 @@ extension PageTitleCollectionViewCell {
             $0.horizontalEdges.equalToSuperview()
         }
         
-        selectedBar.snp.makeConstraints {
-            $0.height.equalTo(2)
-            $0.bottom.horizontalEdges.equalToSuperview()
-            
-        }
     }
     
-    func update(title: String) {
-        label.setTitle(title: title, textColor: .grey(.grey500), font: .body1,alignment: .center)
+    func update(title: String, isSelectedIndex: Bool) {
+        
+        
+        isSelectedIndex ?  label.setTitle(title: title, textColor: .sub(.black), font: .body1,alignment: .center)  :   label.setTitle(title: title, textColor: .grey(.grey500), font: .body1,alignment: .center)
+        
     }
+    
+
 }

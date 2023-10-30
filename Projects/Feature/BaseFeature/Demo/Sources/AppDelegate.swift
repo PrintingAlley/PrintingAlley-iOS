@@ -11,7 +11,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController: AlleyPageViewController = AlleyPageViewController()
+        let viewController: AlleyPageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보","리뷰"]))
         
         let vc1: UIViewController = UIViewController()
         vc1.view.backgroundColor = .black
@@ -19,7 +19,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let vc2: UIViewController = UIViewController()
         vc2.view.backgroundColor = .green
         
-        viewController.setTitle(["정보","리뷰"])
         viewController.setChildren([vc1,vc2])
         
         window?.rootViewController = viewController

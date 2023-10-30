@@ -10,17 +10,23 @@ import UIKit
 import UtilityModule
 import SnapKit
 import Then
+import RxSwift
 
 class AlleyPageViewController: UIViewController {
 
     
     private var viewControllers: [UIViewController] = []
-    private var titles:[String] = []
 
+    
+    let disposeBag = DisposeBag()
+    
+    var viewModel: AlleyPageViewModel!
+    
+    lazy var input: AlleyPageViewModel.Input = .init()
+    
+    
     lazy var layer: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
-        $0.minimumLineSpacing = .zero
-        $0.estimatedItemSize = .zero
     }
     
     lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layer).then {
@@ -29,13 +35,25 @@ class AlleyPageViewController: UIViewController {
         $0.delegate = self
         $0.dataSource = self
     }
+
+
+    lazy var indicaatorBar: UIView = UIView().then {
+        $0.backgroundColor = .blue
+    }
     
     lazy var baseLine: UIView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
     }
     
-    lazy var containerView: UIView = UIView().then {
-        $0.backgroundColor = .red
+    lazy var containerView: UIView = UIView()
+    
+    init(viewModel: AlleyPageViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     
@@ -44,6 +62,7 @@ class AlleyPageViewController: UIViewController {
         addSubviews()
         makeConstraints()
         configureCommonUI()
+        bindViewModel()
     }
     
 
@@ -51,19 +70,16 @@ class AlleyPageViewController: UIViewController {
 
 extension AlleyPageViewController {
     
-    public func setTitle(_ titles:[String]) {
-        self.titles = titles
-    }
     
     public func setChildren(_ viewControllers: [UIViewController]) {
         self.viewControllers = viewControllers
         
-        //view.layoutIfNeeded()
+
        
     }
     
     func addSubviews() {
-        self.view.addSubviews(collectionView,baseLine,containerView)
+        self.view.addSubviews(collectionView,baseLine,containerView,indicaatorBar)
     }
     
     func makeConstraints() {
@@ -71,6 +87,7 @@ extension AlleyPageViewController {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(58)
         }
         
         baseLine.snp.makeConstraints {
@@ -79,13 +96,36 @@ extension AlleyPageViewController {
             $0.top.equalTo(collectionView.snp.bottom)
         }
         
+        
+        
         containerView.snp.makeConstraints {
             $0.left.right.bottom.equalToSuperview()
             $0.top.equalTo(baseLine.snp.bottom)
-            //$0.height.equalTo(56)
+      
         }
         
+        indicaatorBar.snp.makeConstraints {
+            $0.bottom.equalTo(baseLine.snp.bottom)
+            $0.height.equalTo(2)
+            $0.width.equalTo(APP_WIDTH() / CGFloat(viewControllers.count ))
+            $0.left.equalToSuperview()
+            
+        }
+        
+        
+        
     }
+    
+    func bindViewModel() {
+        
+        let output = viewModel.transform(input: input)
+        
+        
+        bindCollectionEvent()
+        bindConstraints(output: output)
+    }
+    
+
     
 }
 
@@ -93,8 +133,9 @@ extension AlleyPageViewController {
 extension AlleyPageViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width / CGFloat(titles.count)
-           return CGSize(width: width, height: 56)
+        let width = collectionView.frame.width / CGFloat(viewModel.titles.count)
+        
+           return CGSize(width: width, height: 58)
        }
     
 
@@ -107,7 +148,7 @@ extension AlleyPageViewController: UICollectionViewDelegate {
 
 extension AlleyPageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return titles.count
+        return viewModel.titles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -116,8 +157,7 @@ extension AlleyPageViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.update(title: titles[indexPath.row])
-        cell.backgroundColor = .blue
+        cell.update(title: viewModel.titles[indexPath.row], isSelectedIndex: indexPath.row == input.selectedIndex.value)
         return cell
     }
         
