@@ -35,6 +35,10 @@ public final class PrintShopDomainComponent: Component<PrintShopDomainDependency
      public var fetchPrintShopListUseCase: any FetchPrintShopListUseCase {
          FetchPrintShopListUseCaseImpl(printShopRepository: printShopRepository)
      }
+    
+    public var fetchPrintShopReviewUseCase: any FetchPrintShopReviewUseCase {
+        FetchPrintShopReviewUseCaseImpl(printShopRepository: printShopRepository)
+    }
      
      public var printShopRepository: any PrintShopRepository {
          PrintShopRepositoryImpl(remotePrintShopDataSource: remotePrintShopDataSource)
@@ -43,4 +47,5 @@ public final class PrintShopDomainComponent: Component<PrintShopDomainDependency
      public var remotePrintShopDataSource: any RemotePrintShopDataSource {
          RemotePrintShopDataSourceImpl(jwtStore: dependency.jwtStoreFactory.jwtStore)
      }
+    
  }

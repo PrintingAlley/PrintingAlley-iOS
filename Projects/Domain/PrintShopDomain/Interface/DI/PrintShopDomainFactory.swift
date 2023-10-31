@@ -19,4 +19,6 @@ public protocol PrintShopDomainFactory {
     
     var deleteReviewUseCase: any DeleteReviewUseCase { get }
     
+    var fetchPrintShopReviewUseCase: any FetchPrintShopReviewUseCase { get }
+    
 }
