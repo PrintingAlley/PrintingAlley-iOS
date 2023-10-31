@@ -14,6 +14,7 @@ let project = Project.module(
             .feature(target: .NearByMeFeature),
             .feature(target: .BookMarkFeature),
             .feature(target: .CategorySearchFeature),
+            .feature(target: .ReviewFeature),
             .domain(target: .AuthDomain, type: .interface),
             .domain(target: .UserDomain, type: .interface),
         ])

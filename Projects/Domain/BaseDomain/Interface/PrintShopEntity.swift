@@ -17,9 +17,8 @@ public struct PrintShopEntity {
     public let representative, introduction: String
     public let logoImage, backgroundImage: String
     public let latitude, longitude: String
-    public let tags: [String]
     
-    public init(id: Int, name: String, address: String, phone: String, email: String, homepage: String, representative: String, introduction: String, logoImage: String, backgroundImage: String, latitude: String, longitude: String, tags: [String]) {
+    public init(id: Int, name: String, address: String, phone: String, email: String, homepage: String, representative: String, introduction: String, logoImage: String, backgroundImage: String, latitude: String, longitude: String) {
         self.id = id
         self.name = name
         self.address = address
@@ -32,6 +31,5 @@ public struct PrintShopEntity {
         self.backgroundImage = backgroundImage
         self.latitude = latitude
         self.longitude = longitude
-        self.tags = tags
     }
 }

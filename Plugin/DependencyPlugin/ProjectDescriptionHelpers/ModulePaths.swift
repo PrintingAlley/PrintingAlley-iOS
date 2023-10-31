@@ -24,6 +24,7 @@ extension ModulePaths: MicroTargetPathConvertable {
 
 public extension ModulePaths {
     enum Feature: String, MicroTargetPathConvertable {
+        case ReviewFeature
         case CategorySearchFeature
         case BookMarkFeature
         case SearchFeatue
@@ -39,6 +40,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Domain: String, MicroTargetPathConvertable {
+        case ProductDomain
         case SearchDomain
         case UserDomain
         case TagDomain
