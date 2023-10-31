@@ -16,4 +16,5 @@ public protocol ProductRepository {
     func createReview(id: Int,content: String, rating: Int, images: [String]) -> Single<BaseEntity>
     func editReview(id: Int, reviewId: Int, content: String, rating: Int, images: [String])-> Single<BaseEntity>
     func deleteReview(id: Int, reviewId: Int) -> Single<BaseEntity>
+    func fetchReviews(id: Int) -> Single<[ProductReviewEntity]>
 }

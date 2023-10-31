@@ -11,13 +11,20 @@ import BaseDomainInterface
 
 
 public struct ProductReviewEntity {
-    let productReviews:[ReviewEntity]
+    let id: Int
+    let content: String
+    let rating: Int
+    let images: [String]
     let user: UserInfoEntity
     let statusCode: Int
     let message: String
     
-    public init(productReviews: [ReviewEntity], user: UserInfoEntity, statusCode: Int, message: String) {
-        self.productReviews = productReviews
+    
+    public init(id: Int, content: String, rating: Int, images: [String], user: UserInfoEntity, statusCode: Int, message: String) {
+        self.id = id
+        self.content = content
+        self.rating = rating
+        self.images = images
         self.user = user
         self.statusCode = statusCode
         self.message = message

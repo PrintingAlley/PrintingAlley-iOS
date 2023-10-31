@@ -43,5 +43,10 @@ final class RemoteProductDataSourceImpl: BaseRemoteDataSource<ProductAPI>, Remot
             .map{$0.toDomain()}
     }
     
+    func fetchReviews(id: Int) -> Single<[ProductReviewEntity]> {
+        request(.fetchReview(id: id))
+            .map([ProductReviewResponseDTO].self)
+            .map{$0.map{$0.toDomain()}}
+    }
     
 }

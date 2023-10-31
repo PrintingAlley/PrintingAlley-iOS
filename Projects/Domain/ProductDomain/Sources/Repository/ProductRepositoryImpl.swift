@@ -41,6 +41,10 @@ public struct ProductRepositoryImpl: ProductRepository {
     public func deleteReview(id: Int, reviewId: Int) -> RxSwift.Single<BaseDomainInterface.BaseEntity> {
         remoteProductDataSource.deleteReview(id: id, reviewId: reviewId)
     }
+    
+    public func fetchReviews(id: Int) -> Single<[ProductReviewEntity]> {
+        remoteProductDataSource.fetchReviews(id: id)
+    }
  
     
 }

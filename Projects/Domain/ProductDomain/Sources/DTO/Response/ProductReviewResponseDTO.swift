@@ -12,13 +12,16 @@ import ProductDomainInterface
 
 struct ProductReviewResponseDTO: Decodable {
     
-    let productReviews:[ReviewResponseDTO]
+    let id: Int
+    let content: String
+    let rating: Int
+    let images: [String]
     let user: FetchUserInfoResponseDTO
     let statusCode: Int?
     let message: String?
     
     func toDomain() -> ProductReviewEntity  {
-        ProductReviewEntity(productReviews: productReviews.map{$0.toDomain()}, user: user.toDomain(), statusCode: statusCode ?? 0, message: message ?? "")
+        ProductReviewEntity(id: id, content: content, rating: rating, images: images, user: user.toDomain(), statusCode: statusCode ?? 0, message: message ?? "")
     }
         
 }
