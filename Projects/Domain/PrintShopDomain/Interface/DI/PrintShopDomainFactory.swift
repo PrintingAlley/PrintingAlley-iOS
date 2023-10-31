@@ -8,6 +8,6 @@
 
 import Foundation
 
-public protocol SearchDomainFactory {
+public protocol PrintShopDomainFactory {
     var fetchPrintShopListUseCase: any FetchPrintShopListUseCase { get }
 }

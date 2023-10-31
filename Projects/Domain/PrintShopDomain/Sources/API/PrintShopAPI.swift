@@ -12,11 +12,11 @@ import Network
 import Moya
 import JwtStoreInterface
 
-enum SearchAPI {
-    case list(searchText: String, tagIds: [Int])
+enum PrintShopAPI {
+    case list(page: Int, searchText: String)
 }
 
-extension SearchAPI: AlleyAPI {
+extension PrintShopAPI: AlleyAPI {
     var domain: AlleyDomain {
         .printShop
     }
@@ -55,8 +55,8 @@ extension SearchAPI: AlleyAPI {
         var task: Task {
             switch self {
               
-            case .list(let searchText, let tagIds):
-                return .requestParameters(parameters: ["searchText": searchText, "tagIds": tagIds], encoding: URLEncoding.queryString)
+            case .list(let page, let searchText):
+                return .requestParameters(parameters: ["page": page,"searchText": searchText], encoding: URLEncoding.queryString)
             }
         }
     

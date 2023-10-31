@@ -11,7 +11,7 @@ let project = Project.module(
         .implements(module: .feature(.SearchFeatue), dependencies: [
             .feature(target: .SearchFeatue, type: .interface),
             .feature(target: .BaseFeature),
-            .domain(target: .SearchDomain, type: .interface)
+            .domain(target: .PrintShopDomain, type: .interface)
         ]),
         .demo(module: .feature(.SearchFeatue), dependencies: [
             .feature(target: .SearchFeatue)

@@ -3,7 +3,7 @@ import FirebaseCore
 import KakaoSDKCommon
 import UtilityModule
 import NaverThirdPartyLogin
-import NMapsMap
+//import NMapsMap
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         KakaoSDK.initSDK(appKey: KAKAO_APP_KEY())
-        NMFAuthManager.shared().clientId = NAVER_MAP_CLIENT_ID()
+        //NMFAuthManager.shared().clientId = NAVER_MAP_CLIENT_ID()
         
         // configure NaverThirdPartyLoginConnection
         let naverInstance = NaverThirdPartyLoginConnection.getSharedInstance()

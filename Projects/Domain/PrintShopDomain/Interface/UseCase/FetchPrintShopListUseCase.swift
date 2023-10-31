@@ -11,5 +11,5 @@ import RxSwift
 import BaseDomainInterface
 
 public protocol FetchPrintShopListUseCase {
-    func execute(searchText: String, tagIds: [Int]) -> Single<[PrintShopEntity]>
+    func execute(page:Int, searchText: String) -> Single<[PrintShopEntity]>
 }

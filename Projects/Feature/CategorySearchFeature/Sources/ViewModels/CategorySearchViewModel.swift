@@ -12,7 +12,7 @@ import DesignSystem
 import RxSwift
 import RxRelay
 import BaseDomainInterface
-import SearchDomainInterface
+import PrintShopDomainInterface
 
 class CategorySearchViewModel: ViewModelType {
 
@@ -47,13 +47,13 @@ class CategorySearchViewModel: ViewModelType {
     public func transform(input: Input) -> Output {
     
         let output = Output()
-        
-        fetchPrintShopListUseCase
-            .execute(searchText: "", tagIds: [id])
-            .catchAndReturn([])
-            .asObservable()
-            .bind(to: output.dataSource)
-            .disposed(by: disposeBag)
+        //TODO: 나중에 Product로 바꾸기
+//        fetchPrintShopListUseCase
+//            .execute(searchText: "", tagIds: [id])
+//            .catchAndReturn([])
+//            .asObservable()
+//            .bind(to: output.dataSource)
+//            .disposed(by: disposeBag)
         
         
             

@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import SearchDomain
-import SearchDomainInterface
+import PrintShopDomain
+import PrintShopDomainInterface
 
 extension AppComponent {
-    var searchDomainFactory: any SearchDomainFactory {
-        SearchDomainComponent(parent: self)
+    var printShopDomainFactory: any PrintShopDomainFactory {
+        PrintShopDomainComponent(parent: self)
     }
 }

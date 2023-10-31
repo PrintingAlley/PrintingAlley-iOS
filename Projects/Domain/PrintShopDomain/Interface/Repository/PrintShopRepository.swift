@@ -10,6 +10,6 @@ import Foundation
 import RxSwift
 import BaseDomainInterface
 
-public protocol SearchRepository {
-    func fetchPrintShopList(searchText: String, tagIds: [Int]) -> Single<[PrintShopEntity]>
+public protocol PrintShopRepository {
+    func fetchPrintShopList(page:Int, searchText: String) -> Single<[PrintShopEntity]>
 }

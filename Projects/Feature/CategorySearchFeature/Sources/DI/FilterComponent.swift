@@ -8,7 +8,7 @@
 
 import Foundation
 import NeedleFoundation
-import SearchDomainInterface
+import PrintShopDomainInterface
 import CategorySearchFeatureInterface
 import TagDomainInterface
 import UIKit
