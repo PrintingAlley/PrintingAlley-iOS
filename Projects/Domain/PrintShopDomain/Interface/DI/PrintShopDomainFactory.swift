@@ -10,4 +10,13 @@ import Foundation
 
 public protocol PrintShopDomainFactory {
     var fetchPrintShopListUseCase: any FetchPrintShopListUseCase { get }
+    
+    var fetchPrintShopUseCase: any FetchPrintShopUseCase { get }
+    
+    var createReviewUseCase: any CreateReviewUseCase { get }
+    
+    var editReviewUseCase: any EditReviewUseCase { get }
+    
+    var deleteReviewUseCase: any DeleteReviewUseCase { get }
+    
 }

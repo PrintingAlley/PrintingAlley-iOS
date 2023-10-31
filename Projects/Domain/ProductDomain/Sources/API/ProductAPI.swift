@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import BaseDomain
 import Network
 import Moya
 import JwtStoreInterface
+import BaseDomain
 
 enum ProductAPI {
     case fetchProduct(id: Int)

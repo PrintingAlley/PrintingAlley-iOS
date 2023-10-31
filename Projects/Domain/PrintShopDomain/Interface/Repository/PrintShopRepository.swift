@@ -12,4 +12,13 @@ import BaseDomainInterface
 
 public protocol PrintShopRepository {
     func fetchPrintShopList(page:Int, searchText: String) -> Single<[PrintShopEntity]>
+    func fetchPrintShop(id: Int) -> Single<PrintShopEntity>
+    
+    func createReview(id:Int, content: String, rating: Int, images: [String]) -> Single<BaseEntity>
+    
+    func editReview(id:Int,reviewId: Int, content: String, rating: Int, images: [String]) -> Single<BaseEntity>
+    
+    func deleteReview(id:Int,reviewId: Int) -> Single<BaseEntity>
+    
+    
 }

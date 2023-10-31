@@ -16,6 +16,22 @@ public protocol PrintShopDomainDependency: Dependency {
 }
 
 public final class PrintShopDomainComponent: Component<PrintShopDomainDependency>, PrintShopDomainFactory {
+    public var fetchPrintShopUseCase: any FetchPrintShopUseCase {
+        FetchPrintShopUseCaseImpl(printShopRepository: printShopRepository)
+    }
+    
+    public var createReviewUseCase:  any CreateReviewUseCase {
+        CreateReviewUseCaseImpl(printShopRepository: printShopRepository)
+    }
+    
+    public var editReviewUseCase: any EditReviewUseCase {
+        EditReviewUseCaseImpl(printShopRepository: printShopRepository)
+    }
+    
+    public var deleteReviewUseCase: any DeleteReviewUseCase {
+        DeleteReviewUseCaseImpl(printShopRepository: printShopRepository)
+    }
+    
      public var fetchPrintShopListUseCase: any FetchPrintShopListUseCase {
          FetchPrintShopListUseCaseImpl(printShopRepository: printShopRepository)
      }
