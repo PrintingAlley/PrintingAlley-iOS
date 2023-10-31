@@ -10,14 +10,12 @@ import RxSwift
 import UIKit
 import UtilityModule
 
-extension SearchViewController {
-//    func bindTagDataSource(output: SearchViewModel.Output) {
-//
-//             output.searchDataSource
-//                 .debug("검색뷰")
-//                 .subscribe(onNext: {
-//                     DEBUG_LOG($0)
-//                 })
-//                 .disposed(by: disposeBag)
-//         }
+extension SearchViewController { // TODO: - 텍스트로 검색 결과 데이터 소스 받아오기
+    func bindDataSource(input: SearchViewModel.Input, output: SearchViewModel.Output) {
+        output.dataSource
+            .do(onNext: { datasource in
+                print("\(datasource)")
+            })
+//            .disposed(by: disposeBag)
+    }
 }

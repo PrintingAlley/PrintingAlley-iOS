@@ -10,8 +10,16 @@ import UIKit
 import DesignSystem
 import BaseDomainInterface
 import BaseFeature
+import RxSwift
+import UtilityModule
 
+// TODO: 데이터소스를 받아와 셀에 뿌려주기
 final class AfterSearchViewController: UIViewController {
+    
+    private let disposeBag = DisposeBag()
+    
+    private var viewModel: AfterSearchViewModel!
+    private let input = AfterSearchViewModel.Input()
     
     private lazy var filterCollectionview = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .horizontal, delegate: self, dataSource: self).then {
         $0.backgroundColor = .setColor(.sub(.white))
@@ -27,17 +35,33 @@ final class AfterSearchViewController: UIViewController {
         $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
     }
     
+    init(viewModel: AfterSearchViewModel) {
+        DEBUG_LOG("\(Self.self) Init ✅ ")
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .setColor(.sub(.white))
         addSubview()
         makeConstraints()
+//        bindViewModel()
     }
 }
 
 // MARK: - 네트워크 관련 함수들
 extension AfterSearchViewController {
-    
+//    func bindViewModel() {
+//    }
 }
 
 // MARK: - UI 관련 함수들

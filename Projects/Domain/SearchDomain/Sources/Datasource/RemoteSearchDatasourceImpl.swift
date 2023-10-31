@@ -8,6 +8,7 @@
 
 import Foundation
 import BaseDomain
+import BaseDomainInterface
 import SearchDomainInterface
 import RxSwift
 import BaseDomainInterface
