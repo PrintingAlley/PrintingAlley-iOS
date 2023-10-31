@@ -9,7 +9,7 @@
 import Foundation
 import BaseDomainInterface
 
-public struct FetchUserInfoResponseDTO: Decodable {
+public struct UserResponseDTO: Decodable {
     let id: Int
     let provider: String
     let name: String

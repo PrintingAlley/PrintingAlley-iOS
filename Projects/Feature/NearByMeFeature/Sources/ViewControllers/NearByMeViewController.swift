@@ -27,8 +27,8 @@ class NearByMeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        naverMapView = NMFNaverMapView(frame: view.frame)
-//        view.addSubview(naverMapView)
+        naverMapView = NMFNaverMapView(frame: view.frame)
+        view.addSubview(naverMapView)
         
         initMap()
     }

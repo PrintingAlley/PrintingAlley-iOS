@@ -19,7 +19,7 @@ struct FetchPrintShopReviewResponseDTO: Decodable {
     let logoImage, backgroundImage: String
     let latitude, longitude: Double
     let createdAt, updateAt: String
-    let user: FetchUserInfoResponseDTO
+    let user: UserResponseDTO
     
     
     func toDomain() -> PrintShopReviewEntity {

@@ -16,7 +16,7 @@ struct ProductReviewResponseDTO: Decodable {
     let content: String
     let rating: Int
     let images: [String]
-    let user: FetchUserInfoResponseDTO
+    let user: UserResponseDTO
     let statusCode: Int?
     let message: String?
     
