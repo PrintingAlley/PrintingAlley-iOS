@@ -47,7 +47,7 @@ public class SearchViewModel: ViewModelType {
                     .catchError { error in
                         let alertError = error.asAlleyError
                         
-                        return .just([PrintShopEntity(id: 0, name: "", address: "", phone: "", email: "", homepage: "", representative: "", introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "", tags: [])])
+                        return .just([PrintShopEntity(id: 0, name: "", address: "", phone: "", email: "", homepage: "", representative: "", introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "")])
                     }
             }
             .bind(to: output.dataSource)

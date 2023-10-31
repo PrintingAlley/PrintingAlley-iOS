@@ -83,7 +83,7 @@ extension FilterButton {
             
         case .filter:
             self.backgroundColor = .setColor(.mainBlue(.blue500))
-            self.setImage(DesignSystemAsset.Icon.back.image, for: .normal) // 이미지 변경
+            self.setImage(DesignSystemAsset.Icon.filter.image, for: .normal) // 이미지 변경
             self.setTitleColor(.setColor(.sub(.white)), for: .normal)
             
         case .selected:
@@ -101,6 +101,7 @@ extension FilterButton {
             self.setImage(DesignSystemAsset.Icon.xmark.image, for: .normal)
         }
         
+        self.imageView?.contentMode = .scaleAspectFit
         self.semanticContentAttribute = .forceRightToLeft
         self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         self.contentEdgeInsets = UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 10)

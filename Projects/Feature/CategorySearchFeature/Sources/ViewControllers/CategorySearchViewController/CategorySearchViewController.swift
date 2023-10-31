@@ -16,10 +16,8 @@ import SnapKit
 import Then
 import CategorySearchFeatureInterface
 
-
 class CategorySearchViewController: UIViewController {
 
-    
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
         
@@ -29,19 +27,9 @@ class CategorySearchViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel()
     
-    lazy var filterButton: UIButton = UIButton().then {
-        $0.setTitle("필터", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = .setFont(.body1)
-        
-        $0.setImage(DesignSystemAsset.Icon.filter.image, for: .normal)
-        $0.imageView?.contentMode = .scaleAspectFit
+    lazy var filterButton: UIButton = FilterButton(title: "필터", id: -1, type: .filter, willChangeUI: false).then {
         $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
         $0.semanticContentAttribute = .forceRightToLeft//<- 중요
-        $0.imageEdgeInsets = .init(top: 0, left: 4, bottom: 0, right: 0) //<- 중요
-        
-        $0.backgroundColor = DesignSystemAsset.MainBlue.blue500.color
-        $0.layer.cornerRadius = 16
         $0.clipsToBounds = true
     }
     
@@ -88,18 +76,12 @@ class CategorySearchViewController: UIViewController {
         super.viewDidAppear(animated)
         configureSwipeBack()
     }
-    
-
-
-    
 }
 
 extension CategorySearchViewController {
     func addSubviews() {
         self.view.addSubviews(naviTitleView,filterButton,tableView)
-        
         naviTitleView.addSubviews(backButton,naviTitleLabel)
-        
     }
     
     func makeConstraints() {
@@ -149,10 +131,8 @@ extension CategorySearchViewController {
             .tap
             .withUnretained(self)
             .subscribe(onNext: { (owner,_) in
-                
                 owner.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
-
     }
 }
