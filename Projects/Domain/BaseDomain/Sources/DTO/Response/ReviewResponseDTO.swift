@@ -18,7 +18,7 @@ public struct ReviewResponseDTO: Decodable {
     let message: String?
     
     
-    func toDomain() -> ReviewEntity {
+    public func toDomain() -> ReviewEntity {
         ReviewEntity(id: id, content: content, rating: rating, images: images, statusCode: statusCode ?? 0, message: message ?? "")
     }
     
