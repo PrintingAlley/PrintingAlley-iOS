@@ -24,10 +24,10 @@ final class RemoteBookMarkDataSourceImpl: BaseRemoteDataSource<BookMarkAPI>, Rem
     
 
     
-    func fetchMyBookMarks() -> RxSwift.Single<[BookMarkDomainInterface.MyBookMarkEntity]> {
+    func fetchMyBookMarks() -> RxSwift.Single<BookMarkGroupEntity> {
         request(.myBookMark)
-            .map([MyBookMarkResponseDTO].self)
-            .map({$0.map{$0.toDomain()}})
+            .map(BookMarkGroupResponseDTO.self)
+            .map{$0.toDomain()}
     }
     
     func addBookMark(printShopId: Int, bookmarkGroupId: Int) -> RxSwift.Single<BaseEntity> {

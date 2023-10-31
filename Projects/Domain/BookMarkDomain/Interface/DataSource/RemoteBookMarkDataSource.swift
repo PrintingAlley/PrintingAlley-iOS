@@ -12,7 +12,7 @@ import RxSwift
 import BaseDomainInterface
 
 public protocol RemoteBookMarkDataSource {
-    func fetchMyBookMarks() -> Single<[MyBookMarkEntity]> // 북마크 그룹 가져오기
+    func fetchMyBookMarks() -> Single<BookMarkGroupEntity> // 북마크 그룹 가져오기
     func addBookMark(printShopId: Int, bookmarkGroupId: Int) -> Single<BaseEntity> // 북마크 그룹에 추가하기
     func removeBookMark(id: Int) -> Single<BaseEntity> // 북마크 삭제
     func linkBookMark(bookMarkId: Int, groupId: Int) -> Single<BaseEntity> // 연결하기
