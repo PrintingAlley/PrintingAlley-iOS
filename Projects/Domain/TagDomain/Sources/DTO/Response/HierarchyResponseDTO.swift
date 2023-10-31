@@ -16,8 +16,7 @@ public struct HierarchyResponseDTO : Decodable { // Decodable no
     let message: String?
     
     public func toDomain() -> HierarchyEntity {
-        
-        print("HIRE \(self)")
+    
         
         return HierarchyEntity(statusCode: statusCode ?? 0, message: message ?? "",hierarchies: hierarchies.map{$0.toDomain()})
     }

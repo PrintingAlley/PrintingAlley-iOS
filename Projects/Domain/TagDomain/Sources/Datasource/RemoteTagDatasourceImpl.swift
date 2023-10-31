@@ -16,9 +16,9 @@ import BaseDomainInterface
 final class RemoteTagDatasourceImpl: BaseRemoteDataSource<TagAPI>, RemoteTagDatasource {
     
     
-    func fetchTag(id: Int) -> Single<ChildrenTagEntity> {
+    func fetchTag(id: Int) -> Single<TagEntity> {
         request(.tag(id: id))
-            .map(ChildrenTagResponseDTO.self)
+            .map(TagResponseDTO.self)
             .map{$0.toDomain()}
     }
     

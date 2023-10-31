@@ -23,7 +23,7 @@ struct TagRepositoryImpl: TagRepository {
     }
     
 
-    func fetchTag(id: Int) -> Single<ChildrenTagEntity> {
+    func fetchTag(id: Int) -> Single<TagEntity> {
         remoteTagDatasource.fetchTag(id: id)
     }
     

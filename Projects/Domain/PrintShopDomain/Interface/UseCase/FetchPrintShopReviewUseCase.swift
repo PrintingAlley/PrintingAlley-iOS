@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UserDomainInterface
 import BaseDomainInterface
 import RxSwift
 

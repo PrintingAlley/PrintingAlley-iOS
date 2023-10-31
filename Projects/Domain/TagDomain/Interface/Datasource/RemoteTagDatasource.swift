@@ -11,7 +11,7 @@ import RxSwift
 import BaseDomainInterface // status 와 메세지만 오는 경우를 위해
 
 public protocol RemoteTagDatasource {
-    func fetchTag(id: Int) -> Single<ChildrenTagEntity>
+    func fetchTag(id: Int) -> Single<TagEntity>
     func fetchHierarchy() -> Single<HierarchyEntity>
 }
 // repository 복붙
