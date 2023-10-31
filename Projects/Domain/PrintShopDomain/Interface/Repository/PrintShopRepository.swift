@@ -20,5 +20,5 @@ public protocol PrintShopRepository {
     
     func deleteReview(id:Int,reviewId: Int) -> Single<BaseEntity>
     
-    
+    func fetchPrintShopReview(id: Int) -> Single<PrintShopReviewEntity>
 }

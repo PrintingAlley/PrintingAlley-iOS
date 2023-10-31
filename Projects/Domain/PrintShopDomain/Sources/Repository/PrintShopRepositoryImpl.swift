@@ -44,4 +44,7 @@ struct PrintShopRepositoryImpl: PrintShopRepository {
         remotePrintShopDataSource.deleteReview(id: id, reviewId: reviewId)
     }
     
+    func fetchPrintShopReview(id: Int) -> Single<PrintShopReviewEntity> {
+        remotePrintShopDataSource.fetchPrintShopReview(id: id)
+    }
 }

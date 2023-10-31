@@ -45,4 +45,10 @@ final class RemotePrintShopDataSourceImpl: BaseRemoteDataSource<PrintShopAPI>, R
             .map{$0.toDomain()}
     }
     
+    func fetchPrintShopReview(id: Int) -> Single<PrintShopReviewEntity> {
+        request(.fetchReview(id: id))
+            .map(FetchPrintShopReviewResponseDTO.self)
+            .map{$0.toDomain()}
+    }
+    
 }
