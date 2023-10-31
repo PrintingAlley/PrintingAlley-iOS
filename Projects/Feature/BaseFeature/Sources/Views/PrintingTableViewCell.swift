@@ -96,7 +96,6 @@ public extension PrintingTableViewCell {
      func bindData(model: PrintShopEntity) {
         // TODO: 이미지 바인딩
         self.name.text = model.name
-        self.printingTag.text = model.tags.joined(separator: " ")
         self.descriptioin.text = model.introduction
         self.address.text = model.address
     }

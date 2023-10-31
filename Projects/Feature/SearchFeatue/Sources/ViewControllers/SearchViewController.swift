@@ -15,17 +15,22 @@ import RxCocoa
 import RxSwift
 import RxDataSources
 import BaseFeatureInterface
+import SearchFeatueInterface
 
 final class SearchViewController: UIViewController, ContainerViewType {
-    var contentView: UIView! = UIView()
-    
     private var viewModel: SearchViewModel!
     
     let disposeBag = DisposeBag()
-    private let input = SearchViewModel.Input()
+    let input = SearchViewModel.Input()
     
-    let beforeVc = BeforeSearchViewController(viewModel: BeforeSearchViewModel())
-    let afterVc = AfterSearchViewController()
+    var afterSearchFactory: AfterSearchFactory!
+    var beforeSearchFactory: BeforeSearchFactory!
+    
+    // 지울 필요 있는 변수 ..
+    lazy var beforeVc = beforeSearchFactory.makeView()
+    lazy var afterVc = afterSearchFactory.makeView(dataSource: [])
+    
+    var contentView: UIView! = UIView()
     
     private let navigationBar = UIView()
     
@@ -34,12 +39,19 @@ final class SearchViewController: UIViewController, ContainerViewType {
         $0.addTarget(self, action: #selector(touchBackbtn), for: .touchUpInside)
     }
     
-    private let searchBar = SearchBar()
+    let searchBar = SearchBar()
     
-    init(viewModel: SearchViewModel!) {
+    init(viewModel: SearchViewModel!, beforeSearchFactory: BeforeSearchFactory, afterSearchFactory: AfterSearchFactory) {
+        DEBUG_LOG("\(Self.self) Init ✅ ")
         self.viewModel = viewModel
+        self.beforeSearchFactory = beforeSearchFactory
+        self.afterSearchFactory = afterSearchFactory
         super.init(nibName: nil, bundle: nil)
         self.add(asChildViewController: beforeVc)
+    }
+    
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
     }
     
     required init?(coder: NSCoder) {
@@ -59,59 +71,22 @@ final class SearchViewController: UIViewController, ContainerViewType {
 // MARK: - 네트워크 관련 함수들
 extension SearchViewController {
     private func bindViewModel() {
+        let output = viewModel.transform(input: input)
         bindUIEvent(input: input)
-    }
-    
-    func bindUIEvent(input: SearchViewModel.Input) {
-        let editingDidEnd = searchBar.searchTextField.rx.controlEvent(.editingDidEnd)
-        let editingChanged = searchBar.searchTextField.rx.controlEvent(.editingChanged)
-        
-        searchBar.searchTextField.rx.text.orEmpty
-            .skip(1)
-            .distinctUntilChanged()
-            .bind(to: self.input.textString)
-            .disposed(by: disposeBag)
-        
-        editingChanged
-            .subscribe(onNext: { [weak self] _ in
-                guard let searchText = self?.searchBar.searchTextField.text else { return }
-                guard let self = self else { return }
-                
-                if searchText.isEmpty {
-                    self.changeToBeforeVC()
-                } else {
-                    print("\(searchText)")
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        editingDidEnd
-            .map { [weak self] in self?.searchBar.searchTextField.text ?? "" } // 텍스트 필드의 현재 텍스트 가져오기
-            .subscribe(onNext: { [weak self] searchText in
-                guard let self = self else { return }
-                
-                if searchText.isEmpty {
-                    print("비었다~")
-                    self.changeToBeforeVC()
-                } else {
-                    self.changeToAfterVC()
-                    print("안 비었다: \(searchText)")
-                }
-            })
-            .disposed(by: disposeBag)
+        bindDataSource(input: input, output: output)
     }
 }
 
 // MARK: - UI 관련 함수들
 extension SearchViewController {
-    private func changeToAfterVC() {
+    func changeToAfterVC() {
         UIView.animate(withDuration: 0.4) {
             self.remove(asChildViewController: self.beforeVc)
             self.add(asChildViewController: self.afterVc)
         }
     }
     
-    private func changeToBeforeVC() {
+    func changeToBeforeVC() {
         UIView.animate(withDuration: 0.4) {
             self.remove(asChildViewController: self.afterVc)
             self.add(asChildViewController: self.beforeVc)
