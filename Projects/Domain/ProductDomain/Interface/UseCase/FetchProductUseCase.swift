@@ -8,7 +8,8 @@
 
 import Foundation
 import BaseDomainInterface
+import RxSwift
 
 public protocol FetchProductUseCase {
-    func execute(id: Int) -> ProductEntity
+    func execute(id: Int) -> Single<ProductEntity>
 }

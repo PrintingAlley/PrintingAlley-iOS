@@ -43,6 +43,7 @@ public enum AlleyDomain: String {
     case tag
     case user
     case printShop
+    case product
 }
 
 extension AlleyDomain {

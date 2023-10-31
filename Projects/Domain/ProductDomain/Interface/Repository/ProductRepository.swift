@@ -12,8 +12,8 @@ import BaseDomainInterface
 
 public protocol ProductRepository {
     func fetchProduct(id: Int) -> Single<ProductEntity>
-    func fetchProductList() ->  Single<ProductListEntity>
+    func fetchProductList(page:Int, text: String, tegIds: [Int]) ->  Single<ProductListEntity>
     func createReview(id: Int) -> Single<BaseEntity>
-    func editReview(id: Int, reviewId: Int) -> Single<BaseEntity>
+    func editReview(id: Int, reviewId: Int, content: String, rating: Float, images: [String])-> Single<BaseEntity>
     func deleteReview(id: Int, reviewId: Int) -> Single<BaseEntity>
 }

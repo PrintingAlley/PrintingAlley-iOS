@@ -8,7 +8,8 @@
 
 import Foundation
 import BaseDomainInterface
+import RxSwift
 
 public protocol CreateReviewUseCase {
-    func execute(id: Int) -> BaseEntity
+    func execute(id: Int) -> Single<BaseEntity>
 }

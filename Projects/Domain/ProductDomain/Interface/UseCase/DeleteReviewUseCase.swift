@@ -8,7 +8,8 @@
 
 import Foundation
 import BaseDomainInterface
+import RxSwift
 
 public protocol DeleteReviewUseCase {
-    func execute(id: Int, reviewId: Int) -> BaseEntity
+    func execute(id: Int, reviewId: Int) -> Single<BaseEntity>
 }
