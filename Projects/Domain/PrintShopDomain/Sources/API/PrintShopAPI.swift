@@ -14,6 +14,7 @@ import JwtStoreInterface
 
 enum PrintShopAPI {
     case list(page: Int, searchText: String)
+    
 }
 
 extension PrintShopAPI: AlleyAPI {

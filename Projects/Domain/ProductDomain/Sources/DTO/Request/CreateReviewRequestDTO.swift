@@ -11,6 +11,6 @@ import Foundation
 
 struct ReviewRequestDTO: Encodable {
     let content: String
-    let rating: Float
+    let rating: Int
     let images: [String]
 }

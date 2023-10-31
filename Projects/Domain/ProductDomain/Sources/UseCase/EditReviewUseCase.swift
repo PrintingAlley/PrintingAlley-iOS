@@ -21,7 +21,7 @@ struct EditReviewUseCaseImpl: EditReviewUseCase {
         self.productRepository = productRepository
     }
     
-    func execute(id: Int, reviewId: Int, content: String, rating: Float, images: [String]) -> Single<BaseEntity> {
+    func execute(id: Int, reviewId: Int, content: String, rating: Int, images: [String]) -> Single<BaseEntity> {
         productRepository.editReview(id: id, reviewId: reviewId, content: content, rating: rating, images: images)
     }
     

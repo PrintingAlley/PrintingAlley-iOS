@@ -15,8 +15,8 @@ import JwtStoreInterface
 enum ProductAPI {
     case fetchProduct(id: Int)
     case fetchProductList(page:Int, text: String, tagIds: [Int])
-    case createReview(id: Int,content: String, rating: Float, images: [String])
-    case editReview(id: Int, reviewId: Int, content: String, rating: Float, images: [String])
+    case createReview(id: Int,content: String, rating: Int, images: [String])
+    case editReview(id: Int, reviewId: Int, content: String, rating: Int, images: [String])
     case deleteReview(id: Int, reviewId: Int)
 }
 
