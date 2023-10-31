@@ -11,5 +11,5 @@ import BaseDomainInterface
 import RxSwift
 
 public protocol CreateReviewUseCase {
-    func execute(id: Int) -> Single<BaseEntity>
+    func execute(id: Int,content: String, rating: Float, images: [String]) -> Single<BaseEntity>
 }

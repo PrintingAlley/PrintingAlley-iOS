@@ -61,6 +61,8 @@ extension AlleyDomain {
             return "user"
         case .printShop:
             return "print-shop"
+        case .product:
+            return "product"
         }
     }
     

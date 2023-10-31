@@ -20,8 +20,8 @@ struct CreateReviewUseCaseImpl: CreateReviewUseCase {
         self.productRepository = productRepository
     }
     
-    func execute(id: Int) -> Single<BaseEntity> {
-        productRepository.createReview(id: id)
+    func execute(id: Int,content: String, rating: Float, images: [String]) -> Single<BaseEntity> {
+        productRepository.createReview(id: id,content: content, rating: rating, images: images)
     }
     
     

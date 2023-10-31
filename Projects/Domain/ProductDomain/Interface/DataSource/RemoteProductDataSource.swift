@@ -10,10 +10,10 @@ import Foundation
 import RxSwift
 import BaseDomainInterface
 
-public protocol ProductDataSource {
+public protocol RemoteProductDataSource {
     func fetchProduct(id: Int) -> Single<ProductEntity>
-    func fetchProductList(page:Int, text: String, tegIds: [Int]) ->  Single<ProductListEntity>
-    func createReview(id: Int) -> Single<BaseEntity>
+    func fetchProductList(page:Int, text: String, tagIds: [Int]) ->  Single<ProductListEntity>
+    func createReview(id: Int,content: String, rating: Float, images: [String]) -> Single<BaseEntity>
     func editReview(id: Int, reviewId: Int, content: String, rating: Float, images: [String]) -> Single<BaseEntity>
     func deleteReview(id: Int, reviewId: Int) -> Single<BaseEntity>
 }

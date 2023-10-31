@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 public protocol FetchProductListUseCase {
-    func execute(page:Int, text: String, tegIds: [Int]) -> Single<ProductListEntity>
+    func execute(page:Int, text: String, tagIds: [Int]) -> Single<ProductListEntity>
 }

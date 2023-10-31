@@ -14,7 +14,7 @@ import JwtStoreInterface
 
 enum ProductAPI {
     case fetchProduct(id: Int)
-    case fetchProductList(page:Int, text: String, tegIds: [Int])
+    case fetchProductList(page:Int, text: String, tagIds: [Int])
     case createReview(id: Int,content: String, rating: Float, images: [String])
     case editReview(id: Int, reviewId: Int, content: String, rating: Float, images: [String])
     case deleteReview(id: Int, reviewId: Int)
@@ -90,9 +90,9 @@ extension ProductAPI: AlleyAPI {
             case .deleteReview(id: let id, reviewId: let reviewId):
                 return .requestPlain
                 
-            case .fetchProductList(page: let page, text: let text, tegIds: let tegIds):
+            case .fetchProductList(page: let page, text: let text, tagIds: let tagIds):
                 
-                return .requestParameters(parameters: ["page":page,"searchText":text,"tegIds":tegIds], encoding: URLEncoding.queryString)
+                return .requestParameters(parameters: ["page":page,"searchText":text,"tagIds":tagIds], encoding: URLEncoding.queryString)
             }
             
         }

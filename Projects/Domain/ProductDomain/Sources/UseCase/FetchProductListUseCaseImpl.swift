@@ -21,8 +21,8 @@ struct FetchProductListUseCaseImpl: FetchProductListUseCase {
     }
     
     
-    func execute(page: Int, text: String, tegIds: [Int]) -> Single<ProductListEntity> {
+    func execute(page: Int, text: String, tagIds: [Int]) -> Single<ProductListEntity> {
      
-        productRepository.fetchProductList(page: page, text: text, tegIds: tegIds)
+        productRepository.fetchProductList(page: page, text: text, tagIds: tagIds)
     }
 }
