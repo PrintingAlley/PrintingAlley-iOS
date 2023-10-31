@@ -1,5 +1,5 @@
 //
-//  BookMarkListEntity.swift
+//  BookMarkGroupEntity.swift
 //  BookMarkDomainInterface
 //
 //  Created by yongbeomkwak on 10/31/23.
@@ -7,15 +7,22 @@
 //
 
 import Foundation
+import BaseDomainInterface
 
 public struct BookMarkGroupEntity {
-   public let bookmarkGroups: [MyBookMarkEntity]
-   public let statusCode: Int
-   public let message: String
+    public let id: Int
+    public let name: String
+    public let bookmarks: [BookMarkEntity]
+    public let statusCode: Int
+    public let message: String
     
-    public init(bookmarkGroups: [MyBookMarkEntity], statusCode: Int, message: String) {
-        self.bookmarkGroups = bookmarkGroups
+    public init(id: Int, name: String, bookmarks: [BookMarkEntity], statusCode: Int, message: String) {
+        self.id = id
+        self.name = name
+        self.bookmarks = bookmarks
         self.statusCode = statusCode
         self.message = message
     }
+    
+
 }

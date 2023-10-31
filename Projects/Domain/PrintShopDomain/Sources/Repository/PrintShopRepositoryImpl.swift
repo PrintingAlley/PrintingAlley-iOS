@@ -21,7 +21,7 @@ struct PrintShopRepositoryImpl: PrintShopRepository {
         self.remotePrintShopDataSource = remotePrintShopDataSource
     }
     
-    func fetchPrintShopList(page: Int, searchText: String) -> Single<[PrintShopEntity]> {
+    func fetchPrintShopList(page: Int, searchText: String) -> Single<PrintShopListEntity> {
         remotePrintShopDataSource.fetchPrintShopList(page: page, searchText: searchText)
     }
     

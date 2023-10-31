@@ -7,14 +7,17 @@
 //
 
 import Foundation
+import BaseDomainInterface
 
 public struct BookMarkEntity {
     public let id: Int
-    public let printShop: SimplePrintShopInfoEntity
+    public let product: ProductEntity
+    public let tags: [ChildrenTagEntity]
     
-    public init(id: Int, printShop: SimplePrintShopInfoEntity) {
+    public init(id: Int, product: ProductEntity, tags: [ChildrenTagEntity]) {
         self.id = id
-        self.printShop = printShop
+        self.product = product
+        self.tags = tags
     }
 
 }

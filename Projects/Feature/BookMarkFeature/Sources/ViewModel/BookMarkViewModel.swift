@@ -108,7 +108,7 @@ extension BookMarkViewModel {
     func bindFetchDataSource(input: Input, output: Output) {
         
         input.fetchDataSource
-            .flatMap{ [weak self] _ -> Observable<BookMarkGroupEntity> in
+            .flatMap{ [weak self] _ -> Observable<BookMarkGroupsEntity> in
             
                 guard let self else {return Observable.empty()}
                 
@@ -118,8 +118,8 @@ extension BookMarkViewModel {
                         
                         output.showToast.onNext(BaseEntity(statusCode: 0, message: alleryError.errorDescription))
                         
-                            return Single<BookMarkGroupEntity>.create { single in
-                                single(.success(BookMarkGroupEntity(bookmarkGroups: [], statusCode: 0, message: alleryError.errorDescription)))
+                            return Single<BookMarkGroupsEntity>.create { single in
+                                single(.success(BookMarkGroupsEntity(bookmarkGroups: [], statusCode: 0, message: alleryError.errorDescription)))
                                 return Disposables.create()
                             }
 

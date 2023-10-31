@@ -11,7 +11,7 @@ import RxSwift
 import BaseDomainInterface
 
 public protocol PrintShopRepository {
-    func fetchPrintShopList(page:Int, searchText: String) -> Single<[PrintShopEntity]>
+    func fetchPrintShopList(page:Int, searchText: String) -> Single<PrintShopListEntity>
     func fetchPrintShop(id: Int) -> Single<PrintShopEntity>
     
     func createReview(id:Int, content: String, rating: Int, images: [String]) -> Single<BaseEntity>

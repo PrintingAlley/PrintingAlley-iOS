@@ -39,10 +39,10 @@ final class RemotePrintShopDataSourceImpl: BaseRemoteDataSource<PrintShopAPI>, R
             .map{$0.toDomain()}
     }
     
-    func fetchPrintShopList(page: Int, searchText: String) -> Single<[PrintShopEntity]> {
+    func fetchPrintShopList(page: Int, searchText: String) -> Single<PrintShopListEntity> {
         request(.list(page: page, searchText: searchText))
-            .map([PrintShopResponseDTO].self)
-            .map{$0.map{$0.toDomain()}}
+            .map(FetchPrintShopListResponseDTO.self)
+            .map{$0.toDomain()}
     }
     
 }

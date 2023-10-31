@@ -11,7 +11,7 @@ import RxSwift
 import BaseDomainInterface
 
 public protocol RemotePrintShopDataSource {
-    func fetchPrintShopList(page:Int, searchText: String) -> Single<[PrintShopEntity]>
+    func fetchPrintShopList(page:Int, searchText: String) -> Single<PrintShopListEntity>
     
     func fetchPrintShop(id: Int) -> Single<PrintShopEntity>
     

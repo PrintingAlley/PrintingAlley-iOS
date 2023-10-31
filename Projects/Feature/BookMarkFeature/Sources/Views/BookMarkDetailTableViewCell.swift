@@ -118,9 +118,7 @@ extension BookMarkDetailTableViewCell {
     public func update(model: BookMarkEntity, isLast: Bool) {
         self.model = model
 
-        titleLabel.setTitle(title: model.printShop.name, textColor: .sub(.black), font: .subtitle1)
-        subtitleLabel.setTitle(title: model.printShop.address, textColor: .sub(.black), font: .body2)
-        tagLabel.setTitle(title: model.printShop.tags.map{$0.name}.joined(separator: " · "), textColor: .mainBlue(.blue500), font: .caption1)
+        titleLabel.setTitle(title: model.product.name, textColor: .sub(.black), font: .subtitle1)
         
         
         titleLabel.lineBreakMode = .byTruncatingTail
