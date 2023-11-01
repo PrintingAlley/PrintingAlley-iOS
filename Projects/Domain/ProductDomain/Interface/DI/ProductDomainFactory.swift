@@ -14,4 +14,5 @@ public protocol ProductDomainFactory {
     var createReviewUseCase: any CreateReviewUseCase { get }
     var editReviewUseCase: any EditReviewUseCase { get }
     var deleteReviewUseCase: any DeleteReviewUseCase { get }
+    var fetchProductReviewUseCase: any FetchProductReviewUseCase { get }
 }

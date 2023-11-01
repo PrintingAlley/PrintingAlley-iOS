@@ -11,14 +11,14 @@ import Foundation
 
 public struct ProductEntity {
     
-    let id: Int
-    let name, priceInfo, introduction, description: String
-    let mainImage: String
-    let images: [String]
-    let category: CategoryEntity
-    let printShop: PrintShopEntity
-    let tags: [ChildrenTagEntity]
-    let reviews: [ReviewEntity]
+    public let id: Int
+    public let name, priceInfo, introduction, description: String
+    public let mainImage: String
+    public let images: [String]
+    public let category: CategoryEntity
+    public let printShop: PrintShopEntity
+    public let tags: [ChildrenTagEntity]
+    public let reviews: [ReviewEntity]
     
     let statusCode: Int
     let message: String

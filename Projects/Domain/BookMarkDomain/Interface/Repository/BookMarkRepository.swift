@@ -12,13 +12,13 @@ import BaseDomainInterface
 
 
 public protocol BookMarkRepository {
-    func fetchMyBookMarks() -> Single<[MyBookMarkEntity]>
+    func fetchMyBookMarks() -> Single<BookMarkGroupsEntity>
     func addBookMark(printShopId: Int, bookmarkGroupId: Int) -> Single<BaseEntity>
     func removeBookMark(id: Int) -> Single<BaseEntity>
     func linkBookMark(bookMarkId: Int, groupId: Int) -> Single<BaseEntity>
     func generateBookMark(name: String) -> Single<BaseEntity>
     func removeBookMarkGroup(ids: [Int]) -> Single<BaseEntity>
-    func fetchBookMarkDetail(id: Int) -> Single<BookMarkDetailEntity>
+    func fetchBookMarkDetail(id: Int) -> Single<BookMarkGroupEntity>
     func renameBookMarkGroup(id:Int, name: String) -> Single<BaseEntity>
     
 }
