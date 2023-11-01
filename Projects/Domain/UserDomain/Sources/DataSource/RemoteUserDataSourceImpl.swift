@@ -16,7 +16,7 @@ import BaseDomainInterface
 final class RemoteUserDataSourceImpl: BaseRemoteDataSource<UserAPI>, RemoteUserDataSource {
     func fetchUserInfo() -> Single<UserInfoEntity> {
         request(.fetchUserInfo)
-            .map(FetchUserResponseDTO=-.self)
+            .map(FetchUserResponseDTO.self)
             .map{$0.toDomain()}
     }
     

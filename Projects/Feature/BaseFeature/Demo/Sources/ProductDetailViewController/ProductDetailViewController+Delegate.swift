@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import UtilityModule
 
 extension ProductDetailViewController: UITableViewDelegate {
     
@@ -21,7 +22,14 @@ extension ProductDetailViewController: UITableViewDelegate {
         }
         
         headerview.update()
+        headerview.delegate = self 
         
         return headerview
+    }
+}
+
+extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
+    func save(id: Int, isBookmarked: Bool) {
+        DEBUG_LOG("SAVE")
     }
 }

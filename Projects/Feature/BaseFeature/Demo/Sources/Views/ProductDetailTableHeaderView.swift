@@ -12,6 +12,10 @@ import UtilityModule
 import SnapKit
 import Then
 
+public protocol ProductDetailTableHeaderViewDelegate: AnyObject {
+    func save(id: Int, isBookmarked: Bool)
+}
+
 
 class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
 
@@ -50,7 +54,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
         $0.backgroundColor = DesignSystemAsset.MainBlue.blue500.color
         $0.layer.cornerRadius = 18
         $0.clipsToBounds = true
-        
+        $0.addTarget(self, action: #selector(save), for: .touchUpInside)
     }
     
     lazy var emptyView: UIView = UIView().then {
@@ -58,11 +62,15 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     }
     
     
+    public weak var delegate: ProductDetailTableHeaderViewDelegate?
+    
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
         addSubviews()
         makeConstraints()
+        
     
     }
     
@@ -114,10 +122,16 @@ extension ProductDetailTableHeaderView {
         }
     }
     
+    @objc func save() {
+        delegate?.save(id: 0, isBookmarked: false)
+    }
+    
     func update() {
         titleLabel.setTitle(title: "아아라라라", textColor: .sub(.black), font: .header3)
         subtitleLabel.setTitle(title: "명함", textColor: .grey(.grey100), font: .subtitle3)
     }
+    
+
 }
 
 
