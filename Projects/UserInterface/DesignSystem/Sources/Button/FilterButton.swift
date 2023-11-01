@@ -17,7 +17,10 @@ public enum FilterButtonType {
     case selectedWithX
 }
 
-
+public struct Tag: Hashable {
+    let name: String
+    let id: Int
+}
 
 public final class FilterButton: UIButton {
     
@@ -125,7 +128,6 @@ extension FilterButton {
             configureUI(type)
         }
         
-        NotificationCenter.default.post(name: Notification.Name("filterToggle"), object: self.id)
-        
+        NotificationCenter.default.post(name: Notification.Name("filterToggle"), object: Tag(name: self.title, id: self.id))
     }
 }

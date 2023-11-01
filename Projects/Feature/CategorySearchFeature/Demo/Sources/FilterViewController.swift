@@ -17,8 +17,6 @@ import RxSwift
 
 class FilterViewController: UIViewController {
 
-   
-    
     lazy var titleLabel: AlleyLabel = AlleyLabel("필터",textColor: .sub(.black),font: .subtitle1)
     lazy var closeButton: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.downArrow.image, for: .normal)
@@ -63,14 +61,14 @@ class FilterViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    var completion: (([Int]) -> Void)?
-    var idSet:Set<Int> = .init()
+    var completion: (([Tag]) -> Void)?
+    var idSet:Set<Tag> = .init()
     private var panGestureRecognizer: UIPanGestureRecognizer!
     
     var dummy:[ChildrenTagEntity] = []
     
     
-    init(completion: (([Int]) -> Void)? = nil) {
+    init(completion: (([Tag]) -> Void)? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.completion = completion
         
@@ -98,12 +96,12 @@ class FilterViewController: UIViewController {
             .subscribe(onNext: { [weak self] (notification) in
                 
                 guard let self else {return}
-                guard let id = notification.object as? Int else { return }
+                guard let tag = notification.object as? Tag else { return }
                 
-                if idSet.contains(id) {
-                    idSet.remove(id)
+                if idSet.contains(tag) {
+                    idSet.remove(tag)
                 } else {
-                    idSet.insert(id)
+                    idSet.insert(tag)
                 }
                 
                 DEBUG_LOG(idSet)
@@ -120,7 +118,7 @@ class FilterViewController: UIViewController {
     
     @objc func tapFind() {
         self.dismiss(animated: true)
-        self.completion?(Array<Int>(idSet))
+        self.completion?(Array<Tag>(idSet))
     }
     
     @objc func tapClose() {
@@ -241,8 +239,7 @@ extension FilterViewController {
             ChildrenTagEntity(id: 6, name: "대량인쇄", image: "", parentID: 12, children: []),
         ]),
         ChildrenTagEntity(id: 7, name: "후가공", image: "", parentID: 12, children: [
-            
-            
+             
             ChildrenTagEntity(id: 8, name: "코딩", image: "", parentID: 8, children: [
                 
                 ChildrenTagEntity(id: 9, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
@@ -267,7 +264,6 @@ extension FilterViewController {
         
         ChildrenTagEntity(id: 20, name: "후가공", image: "", parentID: 12, children: [
             
-            
             ChildrenTagEntity(id: 21, name: "코딩", image: "", parentID: 8, children: [
                 
                 ChildrenTagEntity(id: 22, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
@@ -281,8 +277,7 @@ extension FilterViewController {
         ]),
         
         ChildrenTagEntity(id: 27, name: "후가공", image: "", parentID: 12, children: [
-            
-            
+
             ChildrenTagEntity(id: 28, name: "코딩", image: "", parentID: 8, children: [
                 
                 ChildrenTagEntity(id: 29, name: "무광/ 유광 코팅", image: "", parentID: 12, children: []),
@@ -300,7 +295,6 @@ extension FilterViewController {
     
 }
 
-
 extension FilterViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -309,8 +303,7 @@ extension FilterViewController: UITableViewDelegate {
         let row = indexPath.row
         
         let numberOfItem = dummy[section].children[row].children.isEmpty ? dummy[section].children.count : dummy[section].children[row].children.count
-        
-        
+
         let tempLabel = AlleyLabel("않입값히", font: .body1).then {
             $0.sizeToFit()
         }
@@ -328,20 +321,15 @@ extension FilterViewController: UITableViewDelegate {
         let offset1: CGFloat = 16.0
         let offset2: CGFloat = 8.0
 
-        
         if dummy[section].children[row].children.isEmpty {
             
             // (row 수 * 셀크기 ) + (row-1 셀간격) + 하단에서 보정값
             return CGFloat(numberOfrow) * h1 + (CGFloat(numberOfrow-1)*offset2) + offset1
-        }
-        
-        else  {
+        } else  {
              
             // 셀 상단부터 제목까지 거리(offset1) + 제목 크기(h2) + (행 * 필터크기) + ( 행-1 * 간격) +  하단에서 보정값
             return offset2 + h2 + offset2 + (CGFloat(numberOfrow) * h1 ) + (CGFloat(numberOfrow-1) * offset2) + offset1
         }
-        
-
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -351,8 +339,6 @@ extension FilterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         section == .zero ? UITableView.automaticDimension : .zero
     }
-    
-
 }
 
 extension FilterViewController: UITableViewDataSource {
@@ -361,20 +347,13 @@ extension FilterViewController: UITableViewDataSource {
         dummy.count
     }
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-
         //  2층 구조면 1개 , 아니면 children 개수 만큼 row
         return dummy[section].children.first?.children.isEmpty ?? true ? 1 : dummy[section].children.count
-        
     }
-    
-
-
-    
+ 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         if section == .zero {
             return nil
         }
@@ -389,7 +368,6 @@ extension FilterViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        
         if section != .zero {
             return nil
         }
@@ -397,9 +375,6 @@ extension FilterViewController: UITableViewDataSource {
         guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: TopCellSectionFooterView.identifer) as? TopCellSectionFooterView else {
             return UIView()
         }
-        
-        
-        
         return footer
         
     }
@@ -409,7 +384,6 @@ extension FilterViewController: UITableViewDataSource {
         let section = indexPath.section
         let row = indexPath.row
              
-        
         if dummy[section].children[row].children.isEmpty {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TailFilterTableViewCell.identifier, for: indexPath) as? TailFilterTableViewCell else {
                 return UITableViewCell()
@@ -418,9 +392,7 @@ extension FilterViewController: UITableViewDataSource {
             cell.update(model: dummy[section])
             cell.selectionStyle = .none 
             return cell
-        }
-        
-        else {
+        } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SecondFilterTableViewCell.identifier, for: indexPath) as? SecondFilterTableViewCell else {
                 
                 return UITableViewCell()
@@ -429,13 +401,6 @@ extension FilterViewController: UITableViewDataSource {
             cell.update(model: dummy[section].children[row])
             cell.selectionStyle = .none
             return cell
-            
         }
-        
-        
     }
-    
-    
 }
-
-
