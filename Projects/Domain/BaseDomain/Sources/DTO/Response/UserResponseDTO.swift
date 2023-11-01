@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import UserDomainInterface
+import BaseDomainInterface
 
-struct FetchUserInfoResponseDTO: Decodable {
+public struct UserResponseDTO: Decodable {
     let id: Int
     let provider: String
     let name: String
@@ -20,7 +20,7 @@ struct FetchUserInfoResponseDTO: Decodable {
     let message: String?
     
     
-    func toDomain() -> UserInfoEntity {
+    public func toDomain() -> UserInfoEntity {
         UserInfoEntity(id: self.id, provider: self.provider, name: self.name, profileImage: self.profileImage ?? "", email: self.email ?? "" ,statusCode: statusCode ?? 0, message: message ?? "")
     }
 }

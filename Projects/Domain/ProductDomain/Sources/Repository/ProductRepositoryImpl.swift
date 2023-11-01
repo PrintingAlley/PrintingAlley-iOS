@@ -29,17 +29,21 @@ public struct ProductRepositoryImpl: ProductRepository {
         remoteProductDataSource.fetchProductList(page: page, text: text, tagIds: tagIds)
     }
     
-    public func createReview(id: Int,content: String, rating: Float, images: [String]) -> RxSwift.Single<BaseDomainInterface.BaseEntity> {
+    public func createReview(id: Int,content: String, rating: Int, images: [String]) -> RxSwift.Single<BaseDomainInterface.BaseEntity> {
         remoteProductDataSource.createReview(id: id,content: content, rating: rating, images: images)
     }
     
-    public func editReview(id: Int, reviewId: Int, content: String, rating: Float, images: [String]) -> RxSwift.Single<BaseDomainInterface.BaseEntity> {
+    public func editReview(id: Int, reviewId: Int, content: String, rating: Int, images: [String]) -> RxSwift.Single<BaseDomainInterface.BaseEntity> {
         
         remoteProductDataSource.editReview(id: id, reviewId: reviewId, content: content, rating: rating, images: images)
     }
     
     public func deleteReview(id: Int, reviewId: Int) -> RxSwift.Single<BaseDomainInterface.BaseEntity> {
         remoteProductDataSource.deleteReview(id: id, reviewId: reviewId)
+    }
+    
+    public func fetchReviews(id: Int) -> Single<[ProductReviewEntity]> {
+        remoteProductDataSource.fetchReviews(id: id)
     }
  
     

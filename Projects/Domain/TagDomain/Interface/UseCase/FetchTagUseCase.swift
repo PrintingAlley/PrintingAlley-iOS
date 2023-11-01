@@ -11,5 +11,5 @@ import RxSwift
 import BaseDomainInterface
 
 public protocol FetchTagUseCase {
-    func execute(id: Int) -> Single<ChildrenTagEntity>
+    func execute(id: Int) -> Single<TagEntity>
 }

@@ -22,7 +22,7 @@ struct FetchTagUseCaseImpl: FetchTagUseCase {
     }
     
 
-    func execute(id: Int) -> Single<ChildrenTagEntity> {
+    func execute(id: Int) -> Single<TagEntity> {
         tagRepository.fetchTag(id: id)
     }
     

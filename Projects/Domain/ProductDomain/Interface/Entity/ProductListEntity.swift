@@ -13,7 +13,6 @@ public struct ProductListEntity {
     
     let statusCode: Int
     let message: String
-    
     let products: [ProductEntity]
     
     

@@ -25,13 +25,13 @@ final class RemoteProductDataSourceImpl: BaseRemoteDataSource<ProductAPI>, Remot
             .map{$0.toDomain()}
     }
     
-    func createReview(id: Int,content: String, rating: Float, images: [String]) -> Single<BaseEntity> {
+    func createReview(id: Int,content: String, rating: Int, images: [String]) -> Single<BaseEntity> {
         request(.createReview(id: id, content: content, rating: rating, images: images))
             .map(BaseResponseDTO.self)
             .map{$0.toDomain()}
     }
     
-    func editReview(id: Int, reviewId: Int, content: String, rating: Float, images: [String]) -> Single<BaseEntity> {
+    func editReview(id: Int, reviewId: Int, content: String, rating: Int, images: [String]) -> Single<BaseEntity> {
         request(.editReview(id: id, reviewId: reviewId, content: content, rating: rating, images: images))
             .map(BaseResponseDTO.self)
             .map{$0.toDomain()}
@@ -43,5 +43,10 @@ final class RemoteProductDataSourceImpl: BaseRemoteDataSource<ProductAPI>, Remot
             .map{$0.toDomain()}
     }
     
+    func fetchReviews(id: Int) -> Single<[ProductReviewEntity]> {
+        request(.fetchReview(id: id))
+            .map([ProductReviewResponseDTO].self)
+            .map{$0.map{$0.toDomain()}}
+    }
     
 }

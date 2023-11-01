@@ -7,17 +7,18 @@
 //
 
 import Foundation
-import BaseDomain
 import Network
 import Moya
 import JwtStoreInterface
+import BaseDomain
 
 enum ProductAPI {
     case fetchProduct(id: Int)
     case fetchProductList(page:Int, text: String, tagIds: [Int])
-    case createReview(id: Int,content: String, rating: Float, images: [String])
-    case editReview(id: Int, reviewId: Int, content: String, rating: Float, images: [String])
+    case createReview(id: Int,content: String, rating: Int, images: [String])
+    case editReview(id: Int, reviewId: Int, content: String, rating: Int, images: [String])
     case deleteReview(id: Int, reviewId: Int)
+    case fetchReview(id: Int)
 }
 
 extension ProductAPI: AlleyAPI {
@@ -42,6 +43,8 @@ extension ProductAPI: AlleyAPI {
         case .deleteReview(id: let id, reviewId: let reviewId):
             return "/\(id)/review/\(reviewId)"
         
+        case .fetchReview(id: let id):
+            return "/\(id)/review"
         }
 
     }
@@ -64,7 +67,7 @@ extension ProductAPI: AlleyAPI {
         switch self {
          
         
-        case .fetchProduct, .fetchProductList:
+        case .fetchProduct, .fetchProductList,.fetchReview:
             return .get
     
         case .createReview:
@@ -80,7 +83,7 @@ extension ProductAPI: AlleyAPI {
             
             switch self {
                 
-            case .fetchProduct:
+            case .fetchProduct,.fetchReview:
                 return .requestPlain
           
             case .createReview(id: let id, content: let content, rating: let rating, images: let images):
@@ -102,7 +105,7 @@ extension ProductAPI: AlleyAPI {
         switch self {
             
     
-        case .fetchProductList,.fetchProduct:
+        case .fetchProductList,.fetchProduct,.fetchReview:
             return .none
         case .createReview(id: let id, content: let content, rating: let rating, images: let images):
             return .accessToken

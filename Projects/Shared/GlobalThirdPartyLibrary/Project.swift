@@ -23,7 +23,8 @@ let project = Project.module(
             .SPM.RxDataSource,
             .SPM.RxKeyBoard,
             .SPM.FloatingPanel,
-            .SPM.SwiftEntryKit
+            .SPM.SwiftEntryKit,
+            .SPM.NaverMap
         ])
     ]
 )

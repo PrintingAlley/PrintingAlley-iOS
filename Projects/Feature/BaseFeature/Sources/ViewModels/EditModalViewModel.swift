@@ -25,7 +25,6 @@ public class EditModalViewModel: ViewModelType {
     var renameUserUseCase: any RenameUserUseCase
     
     var id: Int = -1
-    //TODO: 프로필 이름 변경 유즈 케이스
     
     init(id:Int = -1, type: EditType!, generateBookMarkUseCase: GenerateBookMarkUseCase,renameBookMarkGroupUseCase: RenameBookMarkGroupUseCase, renameUserUseCase: RenameUserUseCase) {
         self.id = id

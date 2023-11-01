@@ -7,13 +7,13 @@
 //
 
 import UIKit
-//import NMapsMap
+import NMapsMap
 import CoreLocation
 import UtilityModule
 
 class NearByMeViewController: UIViewController {
 
-//    var naverMapView:NMFNaverMapView!
+   var naverMapView:NMFNaverMapView!
     let locationManager = CLLocationManager() /// 앱에서 위치 관련 이벤트 전달을 시작하고 중지할 때 사용하는 객체
     
     required init?(coder: NSCoder) {
@@ -27,8 +27,8 @@ class NearByMeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        naverMapView = NMFNaverMapView(frame: view.frame)
-//        view.addSubview(naverMapView)
+        naverMapView = NMFNaverMapView(frame: view.frame)
+        view.addSubview(naverMapView)
         
         initMap()
     }
@@ -41,17 +41,17 @@ class NearByMeViewController: UIViewController {
 extension NearByMeViewController {
     func initMap() {
         locationManager.delegate = self
-//        naverMapView.mapView.mapType = .basic // 맵 타입
-//        naverMapView.mapView.setLayerGroup("NMF_LAYER_GROUP_BUILDING", isEnabled: true) // 레이어 그룹
-//        naverMapView.mapView.isIndoorMapEnabled = true
-//        naverMapView.mapView.buildingHeight = 0.5 // 지도의 건물 높이
-//        naverMapView.mapView.logoInteractionEnabled = false // 네이버 로코 탭 비 활성화
-//        naverMapView.showCompass = false // 나침반 제거
-//        naverMapView.showScaleBar = true // 축적 바 제거
-//        naverMapView.showZoomControls = true // 줌 버튼
-//        naverMapView.showIndoorLevelPicker = false // 실내지도 층 피커
-//        naverMapView.showLocationButton = true // 위치 추적 버튼
-//        naverMapView.mapView.positionMode = .normal // 위치 추적 모든 normal (위치 추적이 활성화되고, 현위치 오버레이가 사용자의 위치를 따라 움직입니다. 그러나 지도는 움직이지 않습니다.)
+        naverMapView.mapView.mapType = .basic // 맵 타입
+        naverMapView.mapView.setLayerGroup("NMF_LAYER_GROUP_BUILDING", isEnabled: true) // 레이어 그룹
+        naverMapView.mapView.isIndoorMapEnabled = true
+        naverMapView.mapView.buildingHeight = 0.5 // 지도의 건물 높이
+        naverMapView.mapView.logoInteractionEnabled = false // 네이버 로코 탭 비 활성화
+        naverMapView.showCompass = false // 나침반 제거
+        naverMapView.showScaleBar = true // 축적 바 제거
+        naverMapView.showZoomControls = true // 줌 버튼
+        naverMapView.showIndoorLevelPicker = false // 실내지도 층 피커
+        naverMapView.showLocationButton = true // 위치 추적 버튼
+        naverMapView.mapView.positionMode = .normal // 위치 추적 모든 normal (위치 추적이 활성화되고, 현위치 오버레이가 사용자의 위치를 따라 움직입니다. 그러나 지도는 움직이지 않습니다.)
         
     }
     

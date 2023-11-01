@@ -12,13 +12,13 @@ import BaseDomainInterface
 public struct ReviewResponseDTO: Decodable {
     let id: Int
     let content: String
-    let rating: Double
+    let rating: Int
     let images: [String]
     let statusCode: Int?
     let message: String?
     
     
-    func toDomain() -> ReviewEntity {
+    public func toDomain() -> ReviewEntity {
         ReviewEntity(id: id, content: content, rating: rating, images: images, statusCode: statusCode ?? 0, message: message ?? "")
     }
     

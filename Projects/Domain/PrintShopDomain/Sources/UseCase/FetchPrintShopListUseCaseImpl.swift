@@ -19,7 +19,7 @@ struct FetchPrintShopListUseCaseImpl: FetchPrintShopListUseCase {
         self.printShopRepository = printShopRepository
     }
     
-    func execute(page:Int, searchText: String) -> Single<[PrintShopEntity]> {
+    func execute(page:Int, searchText: String) -> Single<PrintShopListEntity> {
         printShopRepository.fetchPrintShopList(page: page,searchText: searchText)
     }
 }

@@ -48,9 +48,9 @@ class FilterViewModel: ViewModelType {
         
         fetchTagUseCase
             .execute(id: id)
-            .catchAndReturn(ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: []))
+            .catchAndReturn(TagEntity(tag: ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: []), statusCode: 0, message: ""))
             .asObservable()
-            .map{$0.children}
+            .map{$0.tag.children}
             .bind(to:self.dataSource)
             .disposed(by: disposeBag)
         
