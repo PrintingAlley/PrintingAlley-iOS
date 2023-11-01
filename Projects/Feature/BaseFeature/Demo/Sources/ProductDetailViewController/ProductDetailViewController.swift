@@ -11,6 +11,8 @@ import SnapKit
 import Then
 import UtilityModule
 import DesignSystem
+import BaseFeatureInterface
+
 
 class ProductDetailViewController: UIViewController {
 
@@ -19,7 +21,9 @@ class ProductDetailViewController: UIViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.register(ProductDetailTableHeaderView.self, forHeaderFooterViewReuseIdentifier: ProductDetailTableHeaderView.identifer)
-        $0.bounces = true
+        $0.register(ProductDetailTableViewCell.self, forCellReuseIdentifier: ProductDetailTableViewCell.identifer)
+        $0.bounces = false
+        $0.separatorStyle = .none
     }
     
     lazy var backButton: UIButton = UIButton().then {
@@ -27,6 +31,8 @@ class ProductDetailViewController: UIViewController {
         $0.addTarget(self, action: #selector(moveBack), for: .touchUpInside)
     }
     
+    var viewModel: ProductDetailViewModel!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,9 +46,11 @@ class ProductDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         configureSwipeBack()
     }
+
     
-    init() {
+    init(viewModel: ProductDetailViewModel) {
         super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
     }
     
     deinit {
