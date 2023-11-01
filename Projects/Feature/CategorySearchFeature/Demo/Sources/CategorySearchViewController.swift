@@ -14,7 +14,7 @@ import RxSwift
 import RxDataSources
 import SnapKit
 import Then
-
+import BaseDomainInterface
 
 class CategorySearchViewController: UIViewController {
     
@@ -22,9 +22,17 @@ class CategorySearchViewController: UIViewController {
         Dummy(image: DesignSystemAsset.Logo.tmpCard1.image, title: "Dongseongro Blues Pub Branding"),
         Dummy(image: DesignSystemAsset.Logo.tmpCard2.image, title: "PAGE GALLERIES"),
         Dummy(image: DesignSystemAsset.Logo.tmpCard3.image, title: "Graphics thisisgrey likes"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard4.image, title: "Dongseongro Blues Pub Branding\nBranding Branding\nBranding\nBranding\nBranding"),
+        Dummy(image: DesignSystemAsset.Logo.tmpCard4.image, title: "안녕"),
         Dummy(image: DesignSystemAsset.Logo.tmpCard5.image, title: "SPACELOGIC"),
         Dummy(image: DesignSystemAsset.Logo.tmpCard6.image, title: "Dongseongro Blues Pub \nBranding")
+    ]
+    
+    var filterDummy: [ChildrenTagEntity] = [
+        ChildrenTagEntity(id: 2, name: "소량인쇄", image: "", parentID: 12, children: []),
+        ChildrenTagEntity(id: 3, name: "대량인쇄", image: "", parentID: 12, children: []),
+        ChildrenTagEntity(id: 4, name: "대량인쇄", image: "", parentID: 12, children: []),
+        ChildrenTagEntity(id: 5, name: "대량인쇄", image: "", parentID: 12, children: []),
+        ChildrenTagEntity(id: 6, name: "대량인쇄", image: "", parentID: 12, children: []),
     ]
 
     lazy var naviTitleView: UIView = UIView()
@@ -42,6 +50,11 @@ class CategorySearchViewController: UIViewController {
         $0.clipsToBounds = true
     }
     
+    lazy var filterCollectionView = makeCollectionView(layout: UICollectionViewFlowLayout(), scrollDirection: .horizontal, delegate: self, dataSource: self).then {
+        $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
+        $0.tag = 0
+    }
+    
     lazy var tableView: UITableView = UITableView().then {
         $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
         $0.separatorStyle = .none
@@ -51,12 +64,12 @@ class CategorySearchViewController: UIViewController {
         $0.delegate = self // 이 딜리게이트 받아줘야함
     }
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-        $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) // 셀의 Inset을 제외한 값으로
+    lazy var gridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.dataSource = self
         $0.showsHorizontalScrollIndicator = false
         $0.showsVerticalScrollIndicator = false
         $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
+        $0.tag = 1
     }
     
     lazy var headerView: CategoryEmptyHeaderView = CategoryEmptyHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: APP_HEIGHT()/2)).then {
@@ -99,7 +112,7 @@ class CategorySearchViewController: UIViewController {
 extension CategorySearchViewController {
     func addSubviews() {
 //        self.view.addSubviews(naviTitleView, filterButton, tableView)
-        view.addSubviews(naviTitleView, filterButton, collectionView)
+        view.addSubviews(naviTitleView, filterCollectionView, filterButton, gridCollectionView)
         naviTitleView.addSubviews(backButton, naviTitleLabel)
     }
     
@@ -122,10 +135,17 @@ extension CategorySearchViewController {
         }
         
         filterButton.snp.makeConstraints {
+            $0.top.equalTo(naviTitleView.snp.bottom).offset(16)
+            $0.trailing.equalToSuperview().inset(27)
             $0.width.equalTo(67)
             $0.height.equalTo(32)
+        }
+        
+        filterCollectionView.snp.makeConstraints {
+            $0.height.equalTo(32)
             $0.top.equalTo(naviTitleView.snp.bottom).offset(16)
-            $0.right.equalToSuperview().inset(27)
+            $0.leading.equalToSuperview().inset(24)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(112)
         }
         
 //        tableView.snp.makeConstraints {
@@ -133,7 +153,7 @@ extension CategorySearchViewController {
 //            $0.left.right.bottom.equalToSuperview()
 //        }
 
-        collectionView.snp.makeConstraints {
+        gridCollectionView.snp.makeConstraints {
             $0.top.equalTo(filterButton.snp.bottom).offset(16)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }

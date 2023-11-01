@@ -22,6 +22,7 @@ extension CategorySearchViewController {
                 
                 var filterVc = FilterViewController { result in
                     DEBUG_LOG(result)
+                    
                 }
                 
                 filterVc.modalPresentationStyle = .overFullScreen
