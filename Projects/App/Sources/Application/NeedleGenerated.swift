@@ -325,6 +325,19 @@ private class EditModalDependencye914ce2425a804be0d58Provider: EditModalDependen
 private func factory05e011369db72b170e1ef47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return EditModalDependencye914ce2425a804be0d58Provider(appComponent: parent1(component) as! AppComponent)
 }
+private class ProductDetailDependency1e6e934c90b49cbc48b5Provider: ProductDetailDependency {
+    var bookMarkBottomSheetFactory: any BookMarkBottomSheetFactory {
+        return appComponent.bookMarkBottomSheetFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->ProductDetailComponent
+private func factorydd8ac0cf9df6ffed7cb6f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ProductDetailDependency1e6e934c90b49cbc48b5Provider(appComponent: parent1(component) as! AppComponent)
+}
 private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
@@ -520,6 +533,11 @@ extension EditModalComponent: Registration {
         keyPathToName[\EditModalDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
     }
 }
+extension ProductDetailComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\ProductDetailDependency.bookMarkBottomSheetFactory] = "bookMarkBottomSheetFactory-any BookMarkBottomSheetFactory"
+    }
+}
 extension BookMarkDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
@@ -585,6 +603,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->BookMarkDetailComponent", factoryc8e52bb402c24cd9a5e2f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->ProductDetailComponent", factorydd8ac0cf9df6ffed7cb6f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ProductDomainComponent", factory5ac7597a79163de1a05ff47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->TagDomainComponent", factory6a92323f94d86d563660f47b58f8f304c97af4d5)

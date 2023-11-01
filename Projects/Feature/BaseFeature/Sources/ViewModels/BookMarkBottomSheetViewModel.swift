@@ -13,12 +13,20 @@ import UtilityModule
 
 public class BookMarkBottomSheetViewModel: ViewModelType {
      
+    
+    var id: Int!
+    
+
     public struct Input {
        
     }
     
     public struct Output {
         var dataSource: BehaviorRelay<[TmpModel]> = .init(value: TmpModel.makeDummy())
+    }
+    
+    init(id: Int) {
+        self.id = id
     }
     
     
