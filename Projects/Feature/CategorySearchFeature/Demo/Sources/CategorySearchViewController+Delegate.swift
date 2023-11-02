@@ -27,6 +27,7 @@ extension CategorySearchViewController: UICollectionViewDelegateFlowLayout {
                 $0.sizeToFit()
             }
             return CGSize(width: tempLabel.frame.width + 20 + 28, height: tempLabel.frame.height + 8)
+        
         default:
             return CGSize(width: 70, height: 70)
         }
@@ -34,6 +35,12 @@ extension CategorySearchViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         12
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        filterTags.remove(at: indexPath.row)
+        DEBUG_LOG(filterTags)
+        collectionView.reloadData()
     }
 }
 

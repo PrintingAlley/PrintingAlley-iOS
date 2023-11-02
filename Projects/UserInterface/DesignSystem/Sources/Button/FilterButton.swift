@@ -40,7 +40,11 @@ public final class FilterButton: UIButton {
     
     public var id: Int!
     
-    public var willChangeUI: Bool = false
+    public var willChangeUI: Bool = false {
+        didSet {
+            self.isUserInteractionEnabled = willChangeUI
+        }
+    }
     
     public init(title: String,id: Int, type: FilterButtonType, willChangeUI: Bool) {
         self.type = type
