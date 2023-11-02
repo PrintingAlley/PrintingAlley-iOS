@@ -19,6 +19,7 @@ public struct ProductResponseDTO: Decodable {
     let printShop: PrintShopResponseDTO?
     let tags: [ChildrenTagResponseDTO]?
     let reviews: [ReviewResponseDTO]?
+    let isBookmarked: Bool?
     let statusCode: Int?
     let message: String?
     
@@ -27,7 +28,7 @@ public struct ProductResponseDTO: Decodable {
                       category: category?.toDomain() ?? CategoryEntity.makeErrorEntity(),
                       printShop: printShop?.toDomain() ?? PrintShopEntity.makeErrorEntity(),
                       tags: tags?.map{$0.toDomain()} ?? [],
-                      reviews: reviews?.map{$0.toDomain()} ?? [],
+                      reviews: reviews?.map{$0.toDomain()} ?? [], isBookmarked: isBookmarked ?? false,
                       statusCode: statusCode ?? 0, message: message ?? "")
     }
 }
