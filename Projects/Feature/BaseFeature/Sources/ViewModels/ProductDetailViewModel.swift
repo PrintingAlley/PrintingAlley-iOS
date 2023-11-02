@@ -76,7 +76,7 @@ final class ProductDetailViewModel: ViewModelType {
                 self.isSaved = dataSource.isBookmarked
                 
                 output.headerInfo.accept(ProductHeaderInfo(id: dataSource.id, title: dataSource.name, subtitle: dataSource.category.name , images: dataSource.images))
-                output.dataInfo.accept(ProductDataInfo(dataSoruce: [dataSource.printShop.name, dataSource.size, dataSource.paper, dataSource.tags.map{$0.name}.joined(separator: ", "), dataSource.afterProcess]))
+                output.dataInfo.accept(ProductDataInfo(dataSoruce: [dataSource.printShop.name,dataSource.designer,dataSource.size, dataSource.paper, dataSource.tags.map{$0.name}.joined(separator: ", "), dataSource.afterProcess]))
             })
             .disposed(by: disposeBag)
             

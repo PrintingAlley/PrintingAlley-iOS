@@ -95,15 +95,17 @@ extension ProductDetailTableViewCell {
         switch index {
         case 0:
             titleLabel.setMultipleAttributeText(text1: "제작 인쇄사    ", text2: model, color1: .black, color2: .black, font1: .subtitle3, font2: .body2)
-            
+        
         case 1:
-            titleLabel.setMultipleAttributeText(text1: "제품 크기    ", text2: model, color1: .black, color2: .black, font1: .subtitle3, font2: .body2)
+            titleLabel.setMultipleAttributeText(text1: "디자인    ", text2: model, color1: .black, color2: .black, font1: .subtitle3, font2: .body2)
         case 2:
+            titleLabel.setMultipleAttributeText(text1: "제품 크기    ", text2: model, color1: .black, color2: .black, font1: .subtitle3, font2: .body2)
+        case 3:
             titleLabel.setMultipleAttributeText(text1: "종이    ", text2: model, color1: .black, color2: .black, font1: .subtitle3, font2: .body2)
             
-        case 3:
-            titleLabel.setMultipleAttributeText(text1: "인쇄 방식   ", text2: model, color1: .black, color2: .black, font1: .subtitle3, font2: .body2)
         case 4:
+            titleLabel.setMultipleAttributeText(text1: "인쇄 방식   ", text2: model, color1: .black, color2: .black, font1: .subtitle3, font2: .body2)
+        case 5:
             titleLabel.setMultipleAttributeText(text1: "후가공    ", text2: model, color1: .black, color2: .black, font1: .subtitle3, font2: .body2)
             
         default:
