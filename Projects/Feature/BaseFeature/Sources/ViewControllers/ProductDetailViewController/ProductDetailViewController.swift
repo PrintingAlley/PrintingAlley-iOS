@@ -33,9 +33,12 @@ class ProductDetailViewController: UIViewController {
     }
     
     var viewModel: ProductDetailViewModel!
+    var input: ProductDetailViewModel.Input = .init()
     var bookMarkBottomSheetFactory: any BookMarkBottomSheetFactory
     
     var fpc: FloatingPanelController!
+    
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +94,13 @@ extension ProductDetailViewController {
     
     @objc func moveBack() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func bindViewModel() {
+        let output = viewModel.transform(input: input)
+     
+        bindToast(output: output)
+        
     }
 }
 

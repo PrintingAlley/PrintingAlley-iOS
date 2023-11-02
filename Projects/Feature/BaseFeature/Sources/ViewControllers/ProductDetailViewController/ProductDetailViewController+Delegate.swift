@@ -34,7 +34,8 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
         
         
         if PreferenceManager.user == nil { // 로그인 안되어있음
-            //TODO: Toast
+            
+            input.askToast.onNext("로그인이 필요한 서비스입니다.")
             
             return
         }
@@ -85,7 +86,7 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
         }
         
         else {
-            // 삭제
+            input.askToast.onNext("성공적으로 삭제했습니다.")
         }
     }
 }
