@@ -17,8 +17,9 @@ public struct PrintShopEntity {
     public let representative, introduction: String
     public let logoImage, backgroundImage: String
     public let latitude, longitude: String
+    public let products: [ProductEntity]
     
-    public init(id: Int, name: String, address: String, phone: String, email: String, homepage: String, representative: String, introduction: String, logoImage: String, backgroundImage: String, latitude: String, longitude: String) {
+    public init(id: Int, name: String, address: String, phone: String, email: String, homepage: String, representative: String, introduction: String, logoImage: String, backgroundImage: String, latitude: String, longitude: String, products: [ProductEntity]) {
         self.id = id
         self.name = name
         self.address = address
@@ -31,9 +32,10 @@ public struct PrintShopEntity {
         self.backgroundImage = backgroundImage
         self.latitude = latitude
         self.longitude = longitude
+        self.products = products
     }
     
     public static func makeErrorEntity() -> PrintShopEntity {
-        PrintShopEntity(id: 0, name: "", address: "", phone: "", email: "", homepage: "", representative: "", introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "")
+        PrintShopEntity(id: 0, name: "", address: "", phone: "", email: "", homepage: "", representative: "", introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "",products: [])
     }
 }

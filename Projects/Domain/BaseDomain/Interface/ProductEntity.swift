@@ -12,7 +12,7 @@ import Foundation
 public struct ProductEntity {
     
     public let id: Int
-    public let name, priceInfo, introduction, description: String
+    public let name, size, paper, afterProcess,introduction, description: String
     public let mainImage: String
     public let images: [String]
     public let category: CategoryEntity
@@ -23,10 +23,12 @@ public struct ProductEntity {
     public let statusCode: Int
     public let message: String
     
-    public init(id: Int, name: String, priceInfo: String, introduction: String, description: String, mainImage: String, images: [String], category: CategoryEntity, printShop: PrintShopEntity, tags: [ChildrenTagEntity], reviews: [ReviewEntity], statusCode: Int, message: String) {
+    public init(id: Int, name: String, size: String, paper: String, afterProcess: String, introduction: String, description: String, mainImage: String, images: [String], category: CategoryEntity, printShop: PrintShopEntity, tags: [ChildrenTagEntity], reviews: [ReviewEntity], statusCode: Int, message: String) {
         self.id = id
         self.name = name
-        self.priceInfo = priceInfo
+        self.size = size
+        self.paper = paper
+        self.afterProcess = afterProcess
         self.introduction = introduction
         self.description = description
         self.mainImage = mainImage
@@ -40,7 +42,7 @@ public struct ProductEntity {
     }
     
     public static func makeErrorEntity(message: String) -> Self {
-        ProductEntity(id: 0, name: "", priceInfo: "", introduction: "", description: "", mainImage: "", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [ChildrenTagEntity.makeErrorEntity()], reviews: [ReviewEntity.makeErrorEnitity(message: "")] , statusCode: 400, message: message)
+        ProductEntity(id: 0, name: "", size: "" ,  paper: "", afterProcess: "" , introduction: "", description: "", mainImage: "", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [ChildrenTagEntity.makeErrorEntity()], reviews: [ReviewEntity.makeErrorEnitity(message: "")] , statusCode: 400, message: message)
     }
     
 }
