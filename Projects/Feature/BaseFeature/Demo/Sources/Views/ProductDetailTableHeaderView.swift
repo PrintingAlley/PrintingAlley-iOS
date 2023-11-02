@@ -48,13 +48,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     }
     
     lazy var saveButton: UIButton = UIButton().then {
-        $0.setTitle("저장", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = .setFont(.body1)
-        $0.backgroundColor = DesignSystemAsset.MainBlue.blue500.color
-        $0.layer.cornerRadius = 18
-        $0.clipsToBounds = true
-        $0.addTarget(self, action: #selector(save), for: .touchUpInside)
+        $0.setImage(DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
     }
     
     lazy var emptyView: UIView = UIView().then {
@@ -83,8 +77,8 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
 
 extension ProductDetailTableHeaderView {
     func addSubviews() {
-        self.addSubviews(collectionView, infoView, emptyView)
-        self.infoView.addSubviews(titleLabel, subtitleLabel, saveButton)
+        self.addSubviews(collectionView, infoView,saveButton, emptyView)
+        self.infoView.addSubviews(titleLabel, subtitleLabel)
     }
     
     func makeConstraints() {
@@ -95,24 +89,28 @@ extension ProductDetailTableHeaderView {
         
         infoView.snp.makeConstraints {
             $0.top.equalTo(collectionView.snp.bottom)
-            $0.left.right.equalToSuperview()
+            $0.left.equalToSuperview().inset(21)
+            $0.right.equalToSuperview().inset(64)
+            
         }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
-            $0.left.right.equalToSuperview().inset(25)
+            $0.left.right.equalToSuperview()
         }
         
         subtitleLabel.snp.makeConstraints {
             $0.left.right.equalTo(titleLabel)
             $0.top.equalTo(titleLabel.snp.bottom)
+            $0.bottom.equalToSuperview().inset(22)
         }
         
         saveButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(92)
-            $0.height.equalTo(36)
-            $0.bottom.equalToSuperview().inset(24)
+            $0.width.equalTo(32)
+            $0.height.equalTo(32)
+            $0.right.equalToSuperview().inset(22)
+            $0.top.equalTo(titleLabel.snp.top)
+
         }
         
         emptyView.snp.makeConstraints {
