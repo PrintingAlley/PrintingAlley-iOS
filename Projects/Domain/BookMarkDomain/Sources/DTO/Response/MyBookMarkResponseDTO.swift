@@ -14,9 +14,10 @@ struct MyBookMarkResponseDTO: Decodable {
     let id: Int
     let name: String
     let bookmarkCount: Int
+    let recentImage: String?
     
     func toDomain() -> MyBookMarkEntity {
-        MyBookMarkEntity(id: self.id, name: self.name, count: bookmarkCount)
+       MyBookMarkEntity(id: id, name: name, count: bookmarkCount, recentImage: recentImage ?? "")
         
     }
     

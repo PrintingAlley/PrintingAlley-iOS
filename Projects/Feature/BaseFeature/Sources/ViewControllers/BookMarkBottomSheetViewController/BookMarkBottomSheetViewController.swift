@@ -30,7 +30,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
         
     }
     
-    lazy var titleLabel: AlleyLabel = AlleyLabel("저장 목록",textColor: .sub(.black), font: .header3, alignment: .center)
+    lazy var titleLabel: AlleyLabel = AlleyLabel("저장 목록", textColor: .sub(.black), font: .header3, alignment: .center)
     
     lazy var baseLine: UIView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
@@ -120,33 +120,16 @@ extension BookMarkBottomSheetViewController {
     func bindViewModel() {
         
         let input: BookMarkBottomSheetViewModel.Input = BookMarkBottomSheetViewModel.Input()
-        bindUiEvent(input: input)
-        
         let output = viewModel.transform(input: input)
+        
+        bindUiEvent(input: input)
         bindDataSource(output: output)
+        bindFetchData(input: input)
+        input.fetchData.onNext(())
         
     }
     
-    func bindDataSource(output: BookMarkBottomSheetViewModel.Output) {
-        
-        output.dataSource
-            .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell  in
-                
-                let indexPath: IndexPath = IndexPath(row: index, section: 0)
-                
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: BookMarkListTableViewCell.identifier, for: indexPath) as? BookMarkListTableViewCell else {
-                    return UITableViewCell()
-                }
-                
-                cell.update(model: model)
-                cell.selectionStyle = .none
-                
-                return cell
-                
-            }
-            .disposed(by: disposeBag)
-        
-    }
+
     
     func bindUiEvent(input: BookMarkBottomSheetViewModel.Input) {
         
@@ -169,8 +152,13 @@ extension BookMarkBottomSheetViewController {
 
 extension BookMarkBottomSheetViewController: ListHeaderViewDelegate {
     public func generateNewList() {
-        //TODO: 나중에 ..
-        // let vc = editModalFactory.makeView(id: -1, title: <#T##String#>, type: .newBookMark)
+        
+        let vc = editModalFactory.makeView(id: -1, title: "저장 목록 만들기", type: .newBookMark)
+        
+        vc.modalPresentationStyle = .overFullScreen
+        
+        self.present(vc, animated: false)
+        
     }
     
 }

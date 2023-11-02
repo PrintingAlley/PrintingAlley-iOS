@@ -8,8 +8,12 @@
 
 import UIKit
 import DesignSystem
+import BookMarkDomainInterface
+import Kingfisher
 
 
+//TODO: 성공 및 실패에 따른 dismiss 보내기
+//TODO: ProductDetail 쪽에 북마크 delete 유즈케이스 적용
 
 class BookMarkListTableViewCell: UITableViewCell {
 
@@ -61,21 +65,21 @@ extension BookMarkListTableViewCell {
         }
         
         frontImageView.snp.makeConstraints {
-            $0.width.height.equalTo(32)
-            $0.top.bottom.equalToSuperview().inset(22)
-            $0.left.equalToSuperview().inset(24)
+            $0.width.height.equalTo(48)
+            $0.top.bottom.equalToSuperview().inset(10)
+            $0.left.equalToSuperview().inset(16)
         }
         
-        
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(16)
-            $0.left.equalTo(frontImageView.snp.right).offset(16)
+            $0.top.equalToSuperview().inset(13)
+            $0.left.equalTo(frontImageView.snp.right).offset(12)
+            $0.right.equalToSuperview().inset(52)
         }
         
         subtitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(4)
-            $0.left.equalTo(titleLabel.snp.left)
-            $0.bottom.equalToSuperview().inset(16)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(2)
+            $0.left.right.equalTo(titleLabel)
+            $0.bottom.equalToSuperview().inset(13)
         }
         
         rightArrowImageView.snp.makeConstraints {
@@ -90,29 +94,14 @@ extension BookMarkListTableViewCell {
         
     }
     
-    public func update(model: TmpModel) {
+    public func update(model: MyBookMarkEntity) {
         
         titleLabel.setTitle(title: model.name, textColor: .grey(.grey1000), font: .body1)
-        subtitleLabel.setTitle(title: "장소 \(model.contents.count)개", textColor: .grey(.grey500), font: .caption1)
-        
+        subtitleLabel.setTitle(title: "장소 \(model.count)개", textColor: .grey(.grey500), font: .caption1)
+        frontImageView.kf.setImage(with: URL(string: model.recentImage))
+            
     }
     
 
 }
 
-public struct TmpModel {
-    let name: String
-    let contents: [TmpContentModel]
-    var isSelected: Bool = false
-    
-    static func makeDummy() -> [Self] {
-        [TmpModel(name: "즐겨찾기 1", contents: [TmpContentModel(name: "정다운 인쇄소 1", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80"), TmpContentModel(name: "정다운 인쇄소 2", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80")]),
-          TmpModel(name: "즐겨찾기 1", contents: [TmpContentModel(name: "정다운 인쇄소 1", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80"), TmpContentModel(name: "정다운 인쇄소 2", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80"), TmpContentModel(name: "정다운 인쇄소 2", options: ["인쇄","후가공"], adress: "경북 포항시 남구 지곡로 80")])]
-    }
-}
-
-struct TmpContentModel {
-    let name: String
-    let options: [String]
-    let adress: String
-}
