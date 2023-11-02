@@ -59,6 +59,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     public weak var delegate: ProductDetailTableHeaderViewDelegate?
     
     var isSaved: Bool = false
+    var model: ProductHeaderInfo = ProductHeaderInfo(id: 0, title: "", subtitle: "", images: [])
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -122,13 +123,18 @@ extension ProductDetailTableHeaderView {
     }
     
     @objc func save() {
-        delegate?.save(id: 0, isBookmarked: self.isSaved)
+        delegate?.save(id: model.id, isBookmarked: self.isSaved)
     }
     
     func update(model: ProductHeaderInfo, isSaved: Bool) { //TODO: 헤더쪽 이미지 및 save 분기 처리 
+        self.model = model
         self.isSaved = isSaved
-        titleLabel.setTitle(title: "아아라라라", textColor: .sub(.black), font: .header3)
-        subtitleLabel.setTitle(title: "명함", textColor: .grey(.grey100), font: .subtitle3)
+        titleLabel.setTitle(title: model.title, textColor: .sub(.black), font: .header3)
+        subtitleLabel.setTitle(title: model.subtitle, textColor: .grey(.grey100), font: .subtitle3)
+        
+        saveButton.setImage(isSaved ? DesignSystemAsset.Icon.emptyBookMark.image : DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
+        
+        collectionView.reloadData()
     }
     
 
@@ -137,7 +143,7 @@ extension ProductDetailTableHeaderView {
 
 extension ProductDetailTableHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        3
+        model.images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -146,7 +152,7 @@ extension ProductDetailTableHeaderView: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.update(image: dummyImages[indexPath.row])
+        cell.update(image: model.images[indexPath.row])
         return cell
     }
     

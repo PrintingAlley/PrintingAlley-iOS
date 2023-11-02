@@ -82,7 +82,9 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
                 self.fpc.move(to: .half, animated: false)
             }
             
-            fpc.show()
+            fpc.show(completion: {
+                
+            })
             
             
         }
