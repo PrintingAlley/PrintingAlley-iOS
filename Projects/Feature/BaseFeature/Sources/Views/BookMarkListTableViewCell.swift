@@ -12,8 +12,6 @@ import BookMarkDomainInterface
 import Kingfisher
 
 
-//TODO: 성공 및 실패에 따른 dismiss 보내기
-//TODO: ProductDetail 쪽에 북마크 delete 유즈케이스 적용
 
 class BookMarkListTableViewCell: UITableViewCell {
 

@@ -12,6 +12,7 @@ import BaseDomainInterface
 import RxSwift
 import RxRelay
 import ProductDomainInterface
+import BookMarkDomainInterface
 
 public struct ProductHeaderInfo {
     let id: Int
@@ -29,11 +30,13 @@ final class ProductDetailViewModel: ViewModelType {
     var id: Int!
     let disposeBag = DisposeBag()
     var fetchProductUseCase: any FetchProductUseCase
+    var removeBookMarkUseCase: any RemoveBookMarkUseCase
     var isSaved: Bool = false
     
-    init(id: Int,fetchProductUseCase : FetchProductUseCase) {
+    init(id: Int,fetchProductUseCase : FetchProductUseCase, removeBookMarkUseCase: RemoveBookMarkUseCase) {
         self.id = id
         self.fetchProductUseCase = fetchProductUseCase
+        self.removeBookMarkUseCase = removeBookMarkUseCase
     }
     
     struct Input {
