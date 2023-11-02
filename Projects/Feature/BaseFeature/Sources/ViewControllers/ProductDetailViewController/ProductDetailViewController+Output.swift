@@ -16,9 +16,9 @@ extension ProductDetailViewController {
         
         output.showToast
             .withUnretained(self)
-            .subscribe(onNext: { (owner, text) in
+            .subscribe(onNext: { (owner, toast) in
                 
-                owner.view.showToast(text: text)
+                owner.view.showToast(text: toast.message)
             })
             .disposed(by: disposeBag)
         

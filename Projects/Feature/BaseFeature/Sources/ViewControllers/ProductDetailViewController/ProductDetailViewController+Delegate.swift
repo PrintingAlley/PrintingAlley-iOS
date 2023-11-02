@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import UtilityModule
 import FloatingPanel
+import BaseDomainInterface
+
 
 extension ProductDetailViewController: UITableViewDelegate {
     
@@ -35,7 +37,7 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
         
         if PreferenceManager.user == nil { // 로그인 안되어있음
             
-            input.askToast.onNext("로그인이 필요한 서비스입니다.")
+            input.askToast.onNext(BaseEntity(statusCode: 0, message: "로그인이 필요한 서비스입니다."))
             
             return
         }
@@ -86,7 +88,7 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
         }
         
         else {
-            input.askToast.onNext("성공적으로 삭제했습니다.")
+            input.askToast.onNext(BaseEntity(statusCode: 0, message: "성공적으로 삭제했습니다."))
         }
     }
 }

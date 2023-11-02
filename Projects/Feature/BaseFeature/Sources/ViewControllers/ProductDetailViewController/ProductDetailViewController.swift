@@ -13,7 +13,7 @@ import UtilityModule
 import DesignSystem
 import BaseFeatureInterface
 import FloatingPanel
-
+import RxSwift
 
 class ProductDetailViewController: UIViewController {
 

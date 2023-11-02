@@ -11,13 +11,18 @@ import UtilityModule
 import BaseDomainInterface
 import RxSwift
 import RxRelay
+import ProductDomainInterface
 
 final class ProductDetailViewModel: ViewModelType {
     
     var id: Int!
     let disposeBag = DisposeBag()
-    init(id: Int) {
+    
+    var fetchProductUseCase: any FetchProductUseCase
+    
+    init(id: Int,fetchProductUseCase : FetchProductUseCase) {
         self.id = id
+        self.fetchProductUseCase = fetchProductUseCase
     }
     
     struct Input {

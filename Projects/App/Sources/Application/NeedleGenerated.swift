@@ -329,6 +329,9 @@ private class ProductDetailDependency1e6e934c90b49cbc48b5Provider: ProductDetail
     var bookMarkBottomSheetFactory: any BookMarkBottomSheetFactory {
         return appComponent.bookMarkBottomSheetFactory
     }
+    var productDomainFactory: any ProductDomainFactory {
+        return appComponent.productDomainFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -536,6 +539,7 @@ extension EditModalComponent: Registration {
 extension ProductDetailComponent: Registration {
     public func registerItems() {
         keyPathToName[\ProductDetailDependency.bookMarkBottomSheetFactory] = "bookMarkBottomSheetFactory-any BookMarkBottomSheetFactory"
+        keyPathToName[\ProductDetailDependency.productDomainFactory] = "productDomainFactory-any ProductDomainFactory"
     }
 }
 extension BookMarkDomainComponent: Registration {
