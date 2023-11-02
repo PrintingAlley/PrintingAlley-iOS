@@ -12,7 +12,7 @@ import BaseDomainInterface
 public struct ProductResponseDTO: Decodable {
 
     let id: Int
-    let name, size, paper, afterProcess, introduction, description: String
+    let name, size, paper, afterProcess, introduction, description,designer: String
     let mainImage: String
     let images: [String]
     let category: CategoryResponseDTO?
@@ -24,7 +24,7 @@ public struct ProductResponseDTO: Decodable {
     let message: String?
     
     public func toDomain() -> ProductEntity {
-        ProductEntity(id: id, name: name, size: "" ,  paper: "", afterProcess: "" , introduction: introduction, description: description, mainImage: mainImage, images: images,
+        ProductEntity(id: id, name: name, size: "" ,  paper: "", afterProcess: "", designer: "" , introduction: introduction, description: description, mainImage: mainImage, images: images,
                       category: category?.toDomain() ?? CategoryEntity.makeErrorEntity(),
                       printShop: printShop?.toDomain() ?? PrintShopEntity.makeErrorEntity(),
                       tags: tags?.map{$0.toDomain()} ?? [],
