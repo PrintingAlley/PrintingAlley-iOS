@@ -17,6 +17,7 @@ public struct ProductHeaderInfo {
     let id: Int
     let title: String
     let subtitle: String
+    let images: [String]
 }
 
 struct ProductDataInfo {
@@ -42,7 +43,7 @@ final class ProductDetailViewModel: ViewModelType {
     
     struct Output {
         let showToast: PublishSubject<BaseEntity> = .init()
-        let headerInfo: BehaviorRelay<ProductHeaderInfo> = .init(value:  ProductHeaderInfo(id: 0, title: "", subtitle: ""))
+        let headerInfo: BehaviorRelay<ProductHeaderInfo> = .init(value:  ProductHeaderInfo(id: 0, title: "", subtitle: "", images: []))
         let dataInfo: BehaviorRelay<ProductDataInfo> = .init(value: ProductDataInfo(dataSoruce: []))
     }
     
@@ -68,10 +69,14 @@ final class ProductDetailViewModel: ViewModelType {
                     input.askToast.onNext(BaseEntity(statusCode: 0, message: "알 수 없는 에러가 발생했습니다."))
                 }
             })
-            .subscribe(onNext: { dataSource in
+            .subscribe(onNext: { [weak self] dataSource in
                 
-                output.headerInfo.accept(ProductHeaderInfo(id: dataSource.id, title: "템프", subtitle: "템프2"))
-                output.dataInfo.accept(ProductDataInfo(dataSoruce: ["1","2","3","4","5"]))
+                guard let self else {return}
+                
+                self.isSaved = dataSource.isBookmarked
+                
+                output.headerInfo.accept(ProductHeaderInfo(id: dataSource.id, title: dataSource.name, subtitle: dataSource.category.name , images: dataSource.images))
+                output.dataInfo.accept(ProductDataInfo(dataSoruce: [dataSource.printShop.name, dataSource.size, dataSource.paper, dataSource.tags.map{$0.name}.joined(separator: ", "), dataSource.afterProcess]))
             })
             .disposed(by: disposeBag)
             

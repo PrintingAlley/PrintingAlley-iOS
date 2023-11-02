@@ -11,8 +11,8 @@ import Foundation
 
 public struct CategoryEntity {
     let id: Int
-    let name: String
-    let image: String
+    public let name: String
+    public let image: String
     let statusCode: Int
     let message: String
     
