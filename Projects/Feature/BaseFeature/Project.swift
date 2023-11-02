@@ -11,7 +11,8 @@ let project = Project.module(
             .feature(target: .BaseFeature,type:.interface),
             .feature(target: .BookMarkFeature, type: .interface),
             .domain(target: .BookMarkDomain, type: .interface),
-            .domain(target: .UserDomain, type: .interface)
+            .domain(target: .UserDomain, type: .interface),
+            .domain(target: .ProductDomain, type: .interface)
         ]),
         .tests(module: .feature(.BaseFeature), dependencies: [
             .feature(target: .BaseFeature)
