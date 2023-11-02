@@ -10,6 +10,7 @@ import UtilityModule
 import UIKit
 import BaseFeature
 import DesignSystem
+import BaseDomainInterface
 
 extension CategorySearchViewController: CategoryEmptyHeaderViewDelegate {
     func press() {
@@ -22,7 +23,7 @@ extension CategorySearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView.tag {
         case 0:
-            let tempLabel = AlleyLabel(filterDummy[indexPath.row].name, font: .body1).then {
+            let tempLabel = AlleyLabel(filterTags[indexPath.row].name, font: .body1).then {
                 $0.sizeToFit()
             }
             return CGSize(width: tempLabel.frame.width + 20 + 28, height: tempLabel.frame.height + 8)
@@ -40,7 +41,7 @@ extension CategorySearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView.tag {
         case 0:
-            return filterDummy.count
+            return filterTags.count
 
         case 1:
             return dummy.count
@@ -56,7 +57,8 @@ extension CategorySearchViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath) as? FilterButtonCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.update(model: filterDummy[indexPath.row], type: .selectedWithX, willChangeUI: false)
+            let tmpChildrenTagEntity = ChildrenTagEntity(id: filterTags[indexPath.row].id, name: filterTags[indexPath.row].name, image: "", parentID: 0, children: [])
+            cell.update(model: tmpChildrenTagEntity, type: .selectedWithX, willChangeUI: false)
             return cell
 
         case 1:

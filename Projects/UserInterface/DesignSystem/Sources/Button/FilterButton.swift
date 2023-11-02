@@ -18,8 +18,8 @@ public enum FilterButtonType {
 }
 
 public struct Tag: Hashable {
-    let name: String
-    let id: Int
+    public let name: String
+    public let id: Int
 }
 
 public final class FilterButton: UIButton {

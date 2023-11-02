@@ -34,6 +34,8 @@ class CategorySearchViewController: UIViewController {
         ChildrenTagEntity(id: 5, name: "대량인쇄", image: "", parentID: 12, children: []),
         ChildrenTagEntity(id: 6, name: "대량인쇄", image: "", parentID: 12, children: []),
     ]
+    
+    lazy var filterTags: [Tag] = []
 
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
@@ -109,6 +111,7 @@ class CategorySearchViewController: UIViewController {
     }
 }
 
+// MARK: - UI 관련 함수
 extension CategorySearchViewController {
     func addSubviews() {
 //        self.view.addSubviews(naviTitleView, filterButton, tableView)

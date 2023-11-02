@@ -22,7 +22,8 @@ extension CategorySearchViewController {
                 
                 var filterVc = FilterViewController { result in
                     DEBUG_LOG(result)
-                    
+                    self.filterTags = result
+                    self.filterCollectionView.reloadData()
                 }
                 
                 filterVc.modalPresentationStyle = .overFullScreen
