@@ -26,4 +26,8 @@ public struct ReviewEntity{
         self.message = message
     }
     
+    public static func makeErrorEnitity(message: String) -> Self {
+        ReviewEntity(id: 0, content: "", rating: 0, images: [], statusCode: 0, message: message)
+    }
+    
 }

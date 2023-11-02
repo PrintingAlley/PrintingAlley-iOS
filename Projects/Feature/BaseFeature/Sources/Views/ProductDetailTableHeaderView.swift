@@ -64,6 +64,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     
     public weak var delegate: ProductDetailTableHeaderViewDelegate?
     
+    var isSaved: Bool = false
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -123,10 +124,11 @@ extension ProductDetailTableHeaderView {
     }
     
     @objc func save() {
-        delegate?.save(id: 0, isBookmarked: false)
+        delegate?.save(id: 0, isBookmarked: self.isSaved)
     }
     
-    func update() {
+    func update(model: ProductHeaderInfo, isSaved: Bool) {
+        self.isSaved = isSaved
         titleLabel.setTitle(title: "아아라라라", textColor: .sub(.black), font: .header3)
         subtitleLabel.setTitle(title: "명함", textColor: .grey(.grey100), font: .subtitle3)
     }

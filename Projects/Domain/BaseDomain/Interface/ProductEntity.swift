@@ -20,8 +20,8 @@ public struct ProductEntity {
     public let tags: [ChildrenTagEntity]
     public let reviews: [ReviewEntity]
     
-    let statusCode: Int
-    let message: String
+    public let statusCode: Int
+    public let message: String
     
     public init(id: Int, name: String, priceInfo: String, introduction: String, description: String, mainImage: String, images: [String], category: CategoryEntity, printShop: PrintShopEntity, tags: [ChildrenTagEntity], reviews: [ReviewEntity], statusCode: Int, message: String) {
         self.id = id
@@ -37,6 +37,10 @@ public struct ProductEntity {
         self.reviews = reviews
         self.statusCode = statusCode
         self.message = message
+    }
+    
+    public static func makeErrorEntity(message: String) -> Self {
+        ProductEntity(id: 0, name: "", priceInfo: "", introduction: "", description: "", mainImage: "", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [ChildrenTagEntity.makeErrorEntity()], reviews: [ReviewEntity.makeErrorEnitity(message: "")] , statusCode: 400, message: message)
     }
     
 }

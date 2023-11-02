@@ -24,4 +24,8 @@ public struct CategoryEntity {
         self.message = message
     }
     
+    public static func makeErrorEntity() -> Self {
+        CategoryEntity(id: 0, name: "", image: "", statusCode: 0, message: "")
+    }
+    
 }

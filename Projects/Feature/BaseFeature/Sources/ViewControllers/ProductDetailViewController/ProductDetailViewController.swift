@@ -34,6 +34,7 @@ class ProductDetailViewController: UIViewController {
     
     var viewModel: ProductDetailViewModel!
     var input: ProductDetailViewModel.Input = .init()
+    lazy var output = viewModel.transform(input: input)
     var bookMarkBottomSheetFactory: any BookMarkBottomSheetFactory
     
     var fpc: FloatingPanelController!
@@ -97,9 +98,12 @@ extension ProductDetailViewController {
     }
     
     func bindViewModel() {
-        let output = viewModel.transform(input: input)
+
      
         bindToast(output: output)
+        bindDataSource(output: output)
+        bindFetchData()
+        
         
     }
 }

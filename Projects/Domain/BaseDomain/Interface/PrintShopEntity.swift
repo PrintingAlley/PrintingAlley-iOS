@@ -32,4 +32,8 @@ public struct PrintShopEntity {
         self.latitude = latitude
         self.longitude = longitude
     }
+    
+    public static func makeErrorEntity() -> PrintShopEntity {
+        PrintShopEntity(id: 0, name: "", address: "", phone: "", email: "", homepage: "", representative: "", introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "")
+    }
 }

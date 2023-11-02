@@ -24,8 +24,8 @@ extension ProductDetailViewController: UITableViewDelegate {
             return nil
         }
         
-        headerview.update()
-        headerview.delegate = self 
+        headerview.update(model: output.headerInfo.value, isSaved: viewModel.isSaved)
+        headerview.delegate = self
         
         return headerview
     }
