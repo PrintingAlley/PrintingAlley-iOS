@@ -22,6 +22,7 @@ extension ProductDetailViewController: UITableViewDataSource {
         
         cell.update(model: "1241414141241241241241241412412412412", index: indexPath.row)
         cell.selectionStyle = .none
+        cell.delegate = self
         return cell
     }
     

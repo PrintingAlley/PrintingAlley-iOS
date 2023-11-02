@@ -10,6 +10,11 @@ import UIKit
 import DesignSystem
 import UtilityModule
 
+
+public protocol ProductDetailTableViewCellDelegate: AnyObject {
+    func copy(text: String)
+}
+
 class ProductDetailTableViewCell: UITableViewCell {
 
     
@@ -29,12 +34,16 @@ class ProductDetailTableViewCell: UITableViewCell {
         $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
         $0.semanticContentAttribute = .forceLeftToRight // 이미지 왼쪽에 배치
         $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 4) //<- 중요
+        $0.addTarget(self, action: #selector(copyText), for: .touchUpInside)
     }
     
     lazy var baseLine: UIView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
     }
     
+    weak var delegate: ProductDetailTableViewCellDelegate?
+    
+    var model:String!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -81,6 +90,8 @@ extension ProductDetailTableViewCell {
     
     public func update(model: String,index: Int) {
         
+        self.model = model
+        
         switch index {
         case 0:
             titleLabel.setMultipleAttributeText(text1: "제작 인쇄사    ", text2: model, color1: .black, color2: .black, font1: .subtitle3, font2: .body2)
@@ -103,5 +114,9 @@ extension ProductDetailTableViewCell {
         button.isHidden = index != 0
         baseLine.isHidden = index == 4
         
+    }
+    
+    @objc func copyText() {
+        delegate?.copy(text: model)
     }
 }
