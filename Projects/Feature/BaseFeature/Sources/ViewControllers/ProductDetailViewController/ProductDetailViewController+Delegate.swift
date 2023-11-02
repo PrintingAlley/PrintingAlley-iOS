@@ -92,7 +92,9 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
         }
         
         else {
-            input.askToast.onNext(BaseEntity(statusCode: 0, message: "성공적으로 삭제했습니다."))
+            
+            input.removeItem.onNext(id)
+            
         }
     }
 }
@@ -110,7 +112,7 @@ extension ProductDetailViewController: ProductDetailTableViewCellDelegate {
 
 extension ProductDetailViewController: BookMarkBottomSheetViewControllerDelegate {
     func success() { // 세이브 성공 했으니 저장상태 업데이트
-        viewModel.isSaved != viewModel.isSaved
+        viewModel.isSaved = true
         tableView.reloadData()
     }
     

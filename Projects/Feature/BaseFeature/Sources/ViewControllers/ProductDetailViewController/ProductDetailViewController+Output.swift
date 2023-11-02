@@ -20,6 +20,10 @@ extension ProductDetailViewController {
             .withUnretained(self)
             .subscribe(onNext: { (owner, toast) in
                 
+                if toast.statusCode == 200 { // 삭제 성공 .. 따로 만들기 귀찮아서
+                    owner.tableView.reloadData()
+                }
+                
                 owner.view.showToast(text: toast.message)
             })
             .disposed(by: disposeBag)

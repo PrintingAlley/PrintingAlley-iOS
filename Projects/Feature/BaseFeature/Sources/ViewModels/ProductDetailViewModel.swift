@@ -42,6 +42,7 @@ final class ProductDetailViewModel: ViewModelType {
     struct Input {
         let askToast: PublishSubject<BaseEntity> = .init()
         let fetchData: PublishSubject<Void> = .init()
+        let removeItem: PublishSubject<Int> = .init()
     }
     
     struct Output {
@@ -81,6 +82,22 @@ final class ProductDetailViewModel: ViewModelType {
                 output.headerInfo.accept(ProductHeaderInfo(id: dataSource.id, title: dataSource.name, subtitle: dataSource.category.name , images: dataSource.images))
                 output.dataInfo.accept(ProductDataInfo(dataSoruce: [dataSource.printShop.name,dataSource.designer,dataSource.size, dataSource.paper, dataSource.tags.map{$0.name}.joined(separator: ", "), dataSource.afterProcess]))
             })
+            .disposed(by: disposeBag)
+        
+        
+        
+        input.removeItem
+            .withUnretained(self)
+            .flatMap({ (owner,id) -> Observable<BaseEntity> in
+                
+                owner.removeBookMarkUseCase
+                    .execute(id: id)
+                    .catchAndReturn(BaseEntity(statusCode: 400, message: "알 수 없는 에러가 발생했습니다."))
+                    .map{ $0.statusCode != 400 ? BaseEntity(statusCode: 200, message: "성공적으로 삭제했습니다.") : $0 }
+                    .asObservable()
+            
+            })
+            .bind(to: output.showToast)
             .disposed(by: disposeBag)
             
         
