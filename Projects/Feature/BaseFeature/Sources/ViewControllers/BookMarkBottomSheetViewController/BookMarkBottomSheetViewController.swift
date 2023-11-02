@@ -15,6 +15,10 @@ import RxSwift
 import UtilityModule
 import BaseFeatureInterface
 
+public protocol BookMarkBottomSheetViewControllerDelegate: AnyObject {
+    func success()
+}
+
 public class BookMarkBottomSheetViewController: UIViewController {
     
     var viewModel: BookMarkBottomSheetViewModel!
@@ -46,6 +50,8 @@ public class BookMarkBottomSheetViewController: UIViewController {
         $0.separatorStyle = .none
         
     }
+    
+    public weak var delegate: BookMarkBottomSheetViewControllerDelegate?
     
     
     
@@ -125,6 +131,7 @@ extension BookMarkBottomSheetViewController {
         bindUiEvent(input: input)
         bindDataSource(output: output)
         bindFetchData(input: input)
+        bindtapItem(input: input)
         input.fetchData.onNext(())
         
     }

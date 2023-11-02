@@ -11,6 +11,7 @@ import RxSwift
 import RxRelay
 import UtilityModule
 import BookMarkDomainInterface
+import BaseDomainInterface
 
 public class BookMarkBottomSheetViewModel: ViewModelType {
      
@@ -20,18 +21,22 @@ public class BookMarkBottomSheetViewModel: ViewModelType {
     let disposeBag = DisposeBag()
     
     var fetchMyBookMarksUseCase: any FetchMyBookMarksUseCase
+    var addBookMarkUseCase : any AddBookMarkUseCase
 
     public struct Input {
         let fetchData: PublishSubject<Void> = .init()
+        let selectedItem: PublishSubject<Int> = .init()
     }
     
     public struct Output {
         var dataSource: BehaviorRelay<BookMarkGroupsEntity> = .init(value: BookMarkGroupsEntity.makeErrorEntity())
+        let result: PublishSubject<BaseEntity> = .init()
     }
     
-    init(id: Int, fetchMyBookMarksUseCase: FetchMyBookMarksUseCase) {
+    init(id: Int, fetchMyBookMarksUseCase: FetchMyBookMarksUseCase, addBookMarkUseCase: AddBookMarkUseCase) {
         self.id = id
         self.fetchMyBookMarksUseCase = fetchMyBookMarksUseCase
+        self.addBookMarkUseCase = addBookMarkUseCase
     }
     
     
@@ -53,6 +58,19 @@ public class BookMarkBottomSheetViewModel: ViewModelType {
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
         
+        
+        input.selectedItem
+            .withUnretained(self)
+            .flatMap({(owner,groupId) -> Observable<BaseEntity> in
+                
+                return owner.addBookMarkUseCase
+                    .execute(productId: owner.id, bookmarkGroupId: groupId)
+                    .catchAndReturn(BaseEntity(statusCode: 400, message: ""))
+                    .asObservable()
+                
+            })
+            .bind(to: output.result)
+            .disposed(by: disposeBag)
     
         
         return output

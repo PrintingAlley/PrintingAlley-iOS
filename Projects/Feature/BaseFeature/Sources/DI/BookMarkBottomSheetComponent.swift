@@ -22,7 +22,7 @@ public final class BookMarkBottomSheetComponent: Component<BookMarkBottomSheetDe
     
     
     public func makeView(id: Int) -> UIViewController {
-        BookMarkBottomSheetViewController(editModalFactory: dependency.editModalFactory, viewModel: BookMarkBottomSheetViewModel(id:id))
+        BookMarkBottomSheetViewController(editModalFactory: dependency.editModalFactory, viewModel: BookMarkBottomSheetViewModel(id:id, fetchMyBookMarksUseCase: dependency.bookMarkDomainFactory.fetchMyBookMarksUseCase, addBookMarkUseCase: dependency.bookMarkDomainFactory.addBookMarkUseCase))
     }
     
 }

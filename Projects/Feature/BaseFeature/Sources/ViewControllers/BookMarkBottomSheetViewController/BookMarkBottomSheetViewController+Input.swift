@@ -16,10 +16,22 @@ extension BookMarkBottomSheetViewController {
         
         NotificationCenter.default.rx
             .notification(.refreshBookMarkGroup)
+            .map{_ in ()}
             .bind(to: input.fetchData)
             .disposed(by: disposeBag)
         
         
     }
+    
+    func bindtapItem(input: BookMarkBottomSheetViewModel.Input) {
+        
+        tableView.rx
+            .itemSelected
+            .map{$0.row}
+            .bind(to: input.selectedItem)
+            .disposed(by: disposeBag)
+    }
+    
+    
     
 }

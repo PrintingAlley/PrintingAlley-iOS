@@ -44,7 +44,11 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
         
         if !isBookmarked { // 로그인 되어 있는데 북마크에 없음
             // 추가
-            let vc = bookMarkBottomSheetFactory.makeView(id: id)
+            guard let vc = bookMarkBottomSheetFactory.makeView(id: id) as? BookMarkBottomSheetViewController else {
+                return
+            }
+            
+            vc.delegate = self
             
             fpc = FloatingPanelController()
             
@@ -82,9 +86,7 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
                 self.fpc.move(to: .half, animated: false)
             }
             
-            fpc.show(completion: {
-                
-            })
+            fpc.show()
             
             
         }
@@ -101,6 +103,15 @@ extension ProductDetailViewController: ProductDetailTableViewCellDelegate {
         COPY(text: text)
         
         input.askToast.onNext(BaseEntity(statusCode: 0, message: "클립보드에 복사되었습니다\n인쇄사 찾기에서 바로 검색해보세요"))
+    }
+    
+}
+
+
+extension ProductDetailViewController: BookMarkBottomSheetViewControllerDelegate {
+    func success() { // 세이브 성공 했으니 저장상태 업데이트
+        viewModel.isSaved != viewModel.isSaved
+        tableView.reloadData()
     }
     
 }

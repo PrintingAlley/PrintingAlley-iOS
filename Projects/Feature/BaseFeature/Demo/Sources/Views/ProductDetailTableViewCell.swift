@@ -60,7 +60,7 @@ extension ProductDetailTableViewCell {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.left.equalToSuperview().inset(24)
-            $0.width.lessThanOrEqualTo(APP_WIDTH() - (24+53+8+24)) //TODO: 왼쪽 24 , 복사버튼 width , offset + right(24)
+            $0.width.lessThanOrEqualTo(APP_WIDTH() - (24+53+8+24)) // 왼쪽 24 , 복사버튼 width , offset + right(24)
         }
     
         button.snp.makeConstraints {
