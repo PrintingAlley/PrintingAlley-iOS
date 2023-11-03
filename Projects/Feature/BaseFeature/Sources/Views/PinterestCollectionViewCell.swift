@@ -8,6 +8,7 @@
 
 import UIKit
 import DesignSystem
+import UtilityModule
 
 public final class PinterestCollectionViewCell: UICollectionViewCell {
     
@@ -24,8 +25,15 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
         $0.lineBreakMode = .byTruncatingTail
     }
     
+    public lazy var bookmarkButton = UIButton().then { // 필요할 때 isHidden 시키기
+        $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.bookMark.image, for: .highlighted)
+        $0.addTarget(self, action: #selector(touchUpBookmark), for: .touchUpInside)
+    }
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .brown
         addSubviews()
         makeConstrains()
     }
@@ -35,10 +43,11 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     }
 }
 
+// MARK: - UI 관련 함수
 extension PinterestCollectionViewCell {
     
     private func addSubviews() {
-        contentView.addSubviews(imageView, title)
+        contentView.addSubviews(imageView, title, bookmarkButton)
     }
     
     private func makeConstrains() {
@@ -49,7 +58,13 @@ extension PinterestCollectionViewCell {
         }
         title.snp.makeConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(4)
-            $0.leading.trailing.equalTo(imageView)
+            $0.leading.equalTo(imageView)
+            $0.width.equalTo(144)
+        }
+        bookmarkButton.snp.makeConstraints {
+            $0.top.equalTo(title)
+            $0.trailing.equalTo(imageView)
+            $0.width.height.equalTo(24)
         }
     }
     
@@ -65,8 +80,22 @@ extension PinterestCollectionViewCell {
         
         title.snp.updateConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(4)
-            $0.leading.trailing.equalTo(imageView)
+            $0.leading.equalTo(imageView)
         }
+        
+        bookmarkButton.snp.updateConstraints {
+            $0.top.equalTo(title)
+            $0.trailing.equalTo(imageView)
+        }
+    }
+}
+
+// MARK: - objc 함수
+extension PinterestCollectionViewCell {
+    @objc
+    private func touchUpBookmark() {
+        bookmarkButton.isHighlighted.toggle()
+        DEBUG_LOG("북마크 버튼 누름")
     }
 }
 
