@@ -46,7 +46,6 @@ extension BookMarkViewController {
                 }
                 
                 cell.update(model: model)
-                cell.backgroundColor = .red
                 
                 
                 return cell

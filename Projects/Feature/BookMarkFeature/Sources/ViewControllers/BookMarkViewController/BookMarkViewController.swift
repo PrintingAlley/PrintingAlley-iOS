@@ -69,7 +69,7 @@ class BookMarkViewController: UIViewController {
         $0.scrollDirection = .vertical
         $0.minimumLineSpacing = 16
         $0.minimumInteritemSpacing = 16
-        $0.sectionInset = UIEdgeInsets(top: 0, left: 16.0, bottom: 0, right: 16.0)
+        $0.sectionInset = UIEdgeInsets(top: 24, left: 16.0, bottom: 0, right: 16.0)
         
         
         $0.itemSize = .init(width: GRID_WIDHT() , height: GRID_HEIGHT())
@@ -79,6 +79,8 @@ class BookMarkViewController: UIViewController {
     lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.refreshControl = refreshControl
         $0.register(BookMarkCollectionViewCell.self, forCellWithReuseIdentifier: BookMarkCollectionViewCell.identifer)
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
         
     }
     

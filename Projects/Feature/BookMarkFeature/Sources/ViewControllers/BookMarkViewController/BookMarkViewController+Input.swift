@@ -61,7 +61,7 @@ extension BookMarkViewController {
             
             self.editOrDoneButton.setTitle(isEdit ? "완료" : "편집", for: .normal)
             self.editOrDoneButton.titleLabel?.font = .setFont(.body1)
-            self.editOrDoneButton.setTitleColor(isEdit ? DesignSystemAsset.MainBlue.blue500.color : .black, for: .normal)
+                self.editOrDoneButton.setTitleColor(isEdit ? DesignSystemAsset.MainBlue.blue500.color : DesignSystemAsset.MainBlue.blue500.color, for: .normal)
             
         })
         .disposed(by: disposeBag)

@@ -54,7 +54,7 @@ extension BookMarkCollectionViewCell {
     }
     
     public func update(model: MyBookMarkEntity) { // 변경 필요 (테스트용 함수임)
-        self.imageView.kf.setImage(with: URL(string: model.recentImage))
+        self.imageView.kf.setImage(with: URL(string: model.recentImage),placeholder: DesignSystemAsset.PlaceHolder.largePH.image)
         
         title.setMultipleAttributeText(text1: model.name, text2: " · \(model.count)개", color1: .black, color2: DesignSystemAsset.Grey.grey400.color, font1: .subtitle3, font2: .subtitle3)
         
