@@ -31,7 +31,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public lazy var bookmarkButton = UIButton().then { // 필요할 때 isHidden 시키기
         $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
-        $0.setImage(DesignSystemAsset.Icon.bookMark.image, for: .highlighted)
+        $0.setImage(DesignSystemAsset.Icon.bookMark.image, for: .selected)
         $0.addTarget(self, action: #selector(touchUpBookmark), for: .touchUpInside)
     }
     
@@ -106,7 +106,7 @@ extension PinterestCollectionViewCell {
 extension PinterestCollectionViewCell {
     @objc
     private func touchUpBookmark() {
-        bookmarkButton.isHighlighted.toggle()
+        bookmarkButton.isSelected.toggle()
         DEBUG_LOG("북마크 버튼 누름")
     }
     
