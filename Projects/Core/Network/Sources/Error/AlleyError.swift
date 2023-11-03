@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum AlleyError: Error {
+public enum AlleyError: Error, Equatable {
     case unknown
     case badRequest
     case tokenExpired
@@ -54,7 +54,7 @@ public enum AlleyError: Error {
 
 }
 
-extension AlleyError {
+extension AlleyError: LocalizedError {
     public var errorDescription: String {
         switch self {
         case .unknown:
@@ -82,6 +82,8 @@ extension AlleyError {
 
 public extension Error {
     var asAlleyError: AlleyError {
+    
+        
         self as? AlleyError ?? .unknown
     }
 }

@@ -13,7 +13,7 @@ public final class BookMarkCollectionViewCell: UICollectionViewCell {
     public var imageView = UIImageView().then {
         $0.setRound([.allCorners], radius: 8)
         $0.image = DesignSystemAsset.Logo.tmpCard1.image
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
     }
     
     public var title = AlleyLabel().then {
@@ -56,16 +56,9 @@ extension BookMarkCollectionViewCell {
     public func update(model: MyBookMarkEntity) { // 변경 필요 (테스트용 함수임)
         self.imageView.kf.setImage(with: URL(string: model.recentImage))
         
-        title.setMultipleAttributeText(text1: model.name, text2: " · \(model.count)", color1: .black, color2: DesignSystemAsset.Grey.grey400.color, font1: .subtitle3, font2: .subtitle3)
+        title.setMultipleAttributeText(text1: model.name, text2: " · \(model.count)개", color1: .black, color2: DesignSystemAsset.Grey.grey400.color, font1: .subtitle3, font2: .subtitle3)
         
         
-        title.snp.updateConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(8)
-            $0.leading.equalTo(imageView)
-            $0.bottom.right.equalToSuperview()
-            
-        }
-
     }
 }
 
