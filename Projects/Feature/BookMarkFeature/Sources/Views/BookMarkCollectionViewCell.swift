@@ -42,16 +42,13 @@ extension BookMarkCollectionViewCell {
     private func makeConstrains() {
         imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
-            $0.width.equalTo(171)
-            $0.height.equalTo(self.imageView.image?.size.height ?? 0.0)
+            $0.width.height.equalTo(GRID_WIDHT())
         }
-        
-
         
         title.snp.makeConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(4)
             $0.leading.equalTo(imageView)
-            $0.width.equalTo(144)
+            $0.right.equalToSuperview()
         }
 
     }
@@ -61,10 +58,6 @@ extension BookMarkCollectionViewCell {
         
         title.setMultipleAttributeText(text1: model.name, text2: " · \(model.count)", color1: .black, color2: DesignSystemAsset.Grey.grey400.color, font1: .subtitle3, font2: .subtitle3)
         
-        imageView.snp.updateConstraints {
-            $0.top.leading.equalToSuperview()
-            $0.width.height.equalTo(171)
-        }
         
         title.snp.updateConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(8)

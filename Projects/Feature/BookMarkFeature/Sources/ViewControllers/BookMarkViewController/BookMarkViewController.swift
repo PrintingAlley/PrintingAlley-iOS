@@ -65,13 +65,14 @@ class BookMarkViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel("저장목록", textColor: .sub(.black), font: .header3, alignment: .center)
     
-    lazy var emptyHeaderView: EmptyTableHeaderView = EmptyTableHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80), text: "아직 저장목록이 없어요.")
-    
     lazy var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
         $0.minimumLineSpacing = 16
         $0.minimumInteritemSpacing = 16
         $0.sectionInset = UIEdgeInsets(top: 0, left: 16.0, bottom: 0, right: 16.0)
+        
+        
+        $0.itemSize = .init(width: GRID_WIDHT() , height: GRID_HEIGHT())
         
     }
     

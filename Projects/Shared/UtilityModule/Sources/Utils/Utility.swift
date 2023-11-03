@@ -95,3 +95,12 @@ public func LOGOUT() {
 public func COPY(text: String) {
     UIPasteboard.general.string = text //클립보드 복사
 }
+
+
+public func GRID_WIDHT() -> CGFloat {
+    return (APP_WIDTH() - (16*3)) / 2
+}
+
+public func GRID_HEIGHT() -> CGFloat {
+    return (APP_WIDTH() * 171.0) / 199.0
+}
