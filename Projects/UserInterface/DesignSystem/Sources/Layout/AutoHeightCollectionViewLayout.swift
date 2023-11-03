@@ -52,10 +52,10 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
             
             // 동적 높이 계산
             let photoHeight = delegate?.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath) ?? 220
-            let height = cellInsets.top + cellInsets.bottom + photoHeight + 30
+            let height = cellInsets.top + cellInsets.bottom + photoHeight + 60 // 60은 터치 영역을 위한 셀 공간
             
             // item의 frame
-            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth + cellInsets.left + cellInsets.right, height: height + 30)
+            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth + cellInsets.left + cellInsets.right, height: height)
             
             let insetFrame = frame.insetBy(dx: cellInsets.left + cellInsets.right, dy: cellInsets.top + cellInsets.bottom)
             

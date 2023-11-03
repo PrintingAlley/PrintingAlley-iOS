@@ -38,9 +38,11 @@ extension CategorySearchViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        filterTags.remove(at: indexPath.row)
-        DEBUG_LOG(filterTags)
-        collectionView.reloadData()
+        if collectionView.tag == 0 {
+            filterTags.remove(at: indexPath.row)
+            DEBUG_LOG(filterTags)
+            collectionView.reloadData()
+        }
     }
 }
 

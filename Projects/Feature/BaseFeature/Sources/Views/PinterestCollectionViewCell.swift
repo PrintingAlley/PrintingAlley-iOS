@@ -14,6 +14,10 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public static let identifer = "PinterestCollectionViewCell"
     
+    private var imageButton = UIButton().then {
+        $0.addTarget(self, action: #selector(touchUpImage), for: .touchUpInside)
+    }
+    
     public var imageView = UIImageView().then {
         $0.setRound([.allCorners], radius: 8)
         $0.image = DesignSystemAsset.Logo.tmpCard1.image
@@ -33,7 +37,6 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .brown
         addSubviews()
         makeConstrains()
     }
@@ -47,7 +50,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
 extension PinterestCollectionViewCell {
     
     private func addSubviews() {
-        contentView.addSubviews(imageView, title, bookmarkButton)
+        contentView.addSubviews(imageView, imageButton, title, bookmarkButton)
     }
     
     private func makeConstrains() {
@@ -56,6 +59,11 @@ extension PinterestCollectionViewCell {
             $0.width.equalTo(171)
             $0.height.equalTo(self.imageView.image?.size.height ?? 0.0)
         }
+        
+        imageButton.snp.makeConstraints {
+            $0.edges.equalTo(imageView)
+        }
+        
         title.snp.makeConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(4)
             $0.leading.equalTo(imageView)
@@ -78,6 +86,10 @@ extension PinterestCollectionViewCell {
             $0.height.equalTo(model.image.size.height)
         }
         
+        imageButton.snp.updateConstraints {
+            $0.edges.equalTo(imageView)
+        }
+        
         title.snp.updateConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(4)
             $0.leading.equalTo(imageView)
@@ -96,6 +108,11 @@ extension PinterestCollectionViewCell {
     private func touchUpBookmark() {
         bookmarkButton.isHighlighted.toggle()
         DEBUG_LOG("북마크 버튼 누름")
+    }
+    
+    @objc
+    private func touchUpImage() {
+        DEBUG_LOG("이미지 누름")
     }
 }
 
