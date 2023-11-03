@@ -20,6 +20,9 @@ class BookMarkListTableViewCell: UITableViewCell {
     lazy var frontImageView: UIImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = DesignSystemAsset.Icon.blackBookMark.image
+        $0.contentMode = .scaleAspectFill
+        $0.layer.cornerRadius = 4
+        $0.clipsToBounds = true
     }
     
     lazy var titleLabel: AlleyLabel = AlleyLabel()
