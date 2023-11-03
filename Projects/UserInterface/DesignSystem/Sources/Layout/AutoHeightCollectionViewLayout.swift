@@ -12,7 +12,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
     public weak var delegate: AutoHeightLayoutDelegate?
     
     private let numberOfColumns = 2
-    private let cellInsets = UIEdgeInsets(top: 0, left: 8, bottom: 16, right: 8)
+    private let cellInsets = UIEdgeInsets(top: 0, left: 8, bottom: 24, right: 8)
     
     private var cache: [UICollectionViewLayoutAttributes] = [] // 아이템 정보 저장할 캐시
     
@@ -55,7 +55,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
             let height = cellInsets.top + cellInsets.bottom + photoHeight + 30
             
             // item의 frame
-            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
+            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth + cellInsets.left + cellInsets.right, height: height + 30)
             
             let insetFrame = frame.insetBy(dx: cellInsets.left + cellInsets.right, dy: cellInsets.top + cellInsets.bottom)
             
