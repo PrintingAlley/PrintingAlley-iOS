@@ -10,6 +10,7 @@ import Foundation
 import DesignSystem
 import RxSwift
 import UIKit
+import RxCocoa
 
 extension BookMarkViewController {
     
@@ -26,33 +27,27 @@ extension BookMarkViewController {
                     self.refreshControl.endRefreshing()
                 }
                 
-                self.tableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
             })
-            .bind(to: tableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
+            .bind(to: collectionView.rx.items) { collectionView,index,model -> UICollectionViewCell in
                 
-                guard let self else { return UITableViewCell() }
+                let indexPath = IndexPath(row: index, section: 0)
                 
-                let indexPath: IndexPath = IndexPath(row: index, section: 0)
-                
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: BookMarkTableViewCell.identifier, for: indexPath) as? BookMarkTableViewCell  else {
-                    return UITableViewCell()
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookMarkCollectionViewCell.identifer, for: indexPath) as? BookMarkCollectionViewCell  else {
+                    return UICollectionViewCell()
                 }
                 
-                cell.deleagte = self
-                cell.selectionStyle = .none
-                cell.update(model: model,isEditing: input.isEdit.value , isLast: output.dataSource.value.count-1 == index )
+                cell.update(model: model)
+                
+                
                 
                 return cell
-            }
-        
-            .disposed(by: disposeBag)
-        
-        tableView.rx.itemSelected
-            .subscribe(onNext: {
                 
-                print($0)
-            })
+                
+                
+            }
             .disposed(by: disposeBag)
+        
+
         
     }
     
@@ -119,7 +114,7 @@ extension BookMarkViewController {
     
     /// 셀 선택
     func bindItemSelected(output: BookMarkViewModel.Output) {
-        tableView.rx.itemSelected
+        collectionView.rx.itemSelected
             .withLatestFrom(output.dataSource){($0, $1)}
             .subscribe(onNext: { [weak self] (indexPath, dataSource) in
                 

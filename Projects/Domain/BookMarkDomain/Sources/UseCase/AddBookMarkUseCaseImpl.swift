@@ -21,8 +21,8 @@ struct AddBookMarkUseCaseImpl: AddBookMarkUseCase {
         self.bookMarkRepository = bookMarkRepository
     }
     
-    func execute(printShopId: Int, bookmarkGroupId: Int) -> Single<BaseEntity> {
-        bookMarkRepository.addBookMark(printShopId: printShopId, bookmarkGroupId: bookmarkGroupId)
+    func execute(productId: Int, bookmarkGroupId: Int) -> Single<BaseEntity> {
+        bookMarkRepository.addBookMark(productId: productId, bookmarkGroupId: bookmarkGroupId)
     }
     
 

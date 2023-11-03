@@ -15,7 +15,7 @@ import JwtStoreInterface
 
 enum BookMarkAPI {
     case myBookMark
-    case addBookMark(printShopId: Int, groupId: Int)
+    case addBookMark(productId: Int, groupId: Int)
     case removeBookMark(id: Int)
     case linkBookMark(bookMarkId: Int, groupId: Int)
     case generateBookMark(name: String)
@@ -102,8 +102,8 @@ extension BookMarkAPI: AlleyAPI {
                 
             case .myBookMark:
                 return .requestPlain
-            case .addBookMark(printShopId: let printShopId, groupId: let groupId):
-                return .requestJSONEncodable(AddBookMarkRequestDTO(printShopId: printShopId , groupId: groupId))
+            case .addBookMark(productId: let productId, groupId: let groupId):
+                return .requestJSONEncodable(AddBookMarkRequestDTO(productId: productId , groupId: groupId))
                 
             case .removeBookMark:
                 return .requestPlain
