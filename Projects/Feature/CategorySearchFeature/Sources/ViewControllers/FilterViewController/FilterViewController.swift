@@ -16,19 +16,18 @@ import UtilityModule
 import RxSwift
 
 public protocol FilterViewControllerDelegate: AnyObject {
-    func receive(result: [Int])
+    func receive(result: [Tag])
 }
 
 
 class FilterViewController: UIViewController {
 
-    lazy var titleLabel: AlleyLabel = AlleyLabel("필터",textColor: .sub(.black),font: .subtitle1)
+    lazy var titleLabel: AlleyLabel = AlleyLabel("필터", textColor: .sub(.black), font: .subtitle1)
     lazy var closeButton: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.downArrow.image, for: .normal)
         $0.addTarget(self, action: #selector(tapClose), for: .touchUpInside)
     }
-    
-    
+     
     lazy var tableView: UITableView = UITableView(frame: .zero, style: .grouped).then {
         $0.register(TailFilterTableViewCell.self, forCellReuseIdentifier: TailFilterTableViewCell.identifier)
         $0.register(SecondFilterTableViewCell.self, forCellReuseIdentifier: SecondFilterTableViewCell.identifier)
@@ -72,14 +71,11 @@ class FilterViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
-   
     private var panGestureRecognizer: UIPanGestureRecognizer!
-    
-    
+
     init(viewModel: FilterViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-        
     }
     
     deinit {
@@ -97,20 +93,14 @@ class FilterViewController: UIViewController {
         configureCommonUI()
         bindViewModel()
         bindGesture()
-        
-    
-        
     }
-    
-    
-
 }
 
 extension FilterViewController {
     
     func addSubviews() {
-        self.view.addSubviews(titleLabel, closeButton, tableView, buttonContainerView,baseLine)
-        self.buttonContainerView.addSubviews(resetButton,findButton)
+        self.view.addSubviews(titleLabel, closeButton, tableView, buttonContainerView, baseLine)
+        self.buttonContainerView.addSubviews(resetButton, findButton)
     }
     
     func makeConstraints() {
@@ -166,8 +156,6 @@ extension FilterViewController {
         self.view.addGestureRecognizer(panGestureRecognizer)
     }
     
-  
-    
     func bindViewModel() {
         let input = FilterViewModel.Input()
         let output = viewModel.transform(input: input)
@@ -180,13 +168,4 @@ extension FilterViewController {
         .disposed(by: disposeBag)
         
     }
-    
-    
 }
-
-
-
-
-
-
-

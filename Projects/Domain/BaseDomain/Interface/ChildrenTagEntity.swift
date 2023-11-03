@@ -1,6 +1,6 @@
 //
 //  ChildrenTagEntity.swift
-//  BaseDomain
+//  BaseDomainInterface
 //
 //  Created by yongbeomkwak on 10/24/23.
 //  Copyright © 2023 com. All rights reserved.
