@@ -63,95 +63,95 @@ public class EditModalViewModel: ViewModelType {
 
 ///input
 extension EditModalViewModel {
-//    func bindTapConfirm(input: Input, output: Output) {
-//        input.tapConfirm
-//            .withLatestFrom(input.text){($0,$1)}
-//            .flatMap({ [weak self] (_,text) -> Observable<BaseEntity> in
-//                
-//                guard let self else { return Observable.empty()}
-//            
-//                    
-//                switch self.type {
-//                
-//                case .newBookMark:
-//                    return self.generateBookMarkUseCase.execute(name: text)
-//                        .catch({ error in
-//                            
-//                            let alleryError = error.asAlleyError
-//                            
-//                            if alleryError == .tokenExpired {
-//                                return Single<BaseEntity>.create { single in
-//                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
-//                                    return Disposables.create()
-//                                }
-//                            }
-//                            
-//                            return Single<BaseEntity>.create { single in
-//                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
-//                                return Disposables.create()
-//                            }
-//                        })
-//                        .asObservable()
-//                    
-//                case .reNameBookMark:
-//                    return self.renameBookMarkGroupUseCase.execute(id: self.id, name: text)
-//                        .catch({ error in
-//                            
-//                            let alleryError = error.asAlleyError
-//                            
-//                            if alleryError == .tokenExpired {
-//                                return Single<BaseEntity>.create { single in
-//                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
-//                                    return Disposables.create()
-//                                }
-//                            }
-//                            
-//                            
-//                            return Single<BaseEntity>.create { single in
-//                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
-//
-//                                return Disposables.create()
-//                            }
-//                        })
-//                        .asObservable()
-//                    
-//                case .reNameprofileName:
-//                    return self.renameUserUseCase.execute(name: text)
-//                        .catch({ error in
-//                            
-//                            let alleryError = error.asAlleyError
-//                            
-//                            if alleryError == .tokenExpired {
-//                                return Single<BaseEntity>.create { single in
-//                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
-//                                    return Disposables.create()
-//                                }
-//                            }
-//                            
-//                            return Single<BaseEntity>.create { single in
-//                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
-//                                return Disposables.create()
-//                            }
-//                        })
-//                        .asObservable()
-//                    
-//                    
-//                    
-//                default:
-//                    return Single<BaseEntity>.create { single in
-//                        single(.success(BaseEntity(statusCode: 401, message: "")))
-//                        return Disposables.create()
-//                    }
-//                    .asObservable()
-//                    
-//                }
-//
-//
-//            })
-//            .bind(to: output.showToast)
-//            .disposed(by: disposeBag)
-//    
-//    }
+    func bindTapConfirm(input: Input, output: Output) {
+        input.tapConfirm
+            .withLatestFrom(input.text){($0,$1)}
+            .flatMap({ [weak self] (_,text) -> Observable<BaseEntity> in
+                
+                guard let self else { return Observable.empty()}
+            
+                    
+                switch self.type {
+                
+                case .newBookMark:
+                    return self.generateBookMarkUseCase.execute(name: text)
+                        .catch({ error in
+                            
+                            let alleryError = error.asAlleyError
+                            
+                            if alleryError == .tokenExpired {
+                                return Single<BaseEntity>.create { single in
+                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                    return Disposables.create()
+                                }
+                            }
+                            
+                            return Single<BaseEntity>.create { single in
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                return Disposables.create()
+                            }
+                        })
+                        .asObservable()
+                    
+                case .reNameBookMark:
+                    return self.renameBookMarkGroupUseCase.execute(id: self.id, name: text)
+                        .catch({ error in
+                            
+                            let alleryError = error.asAlleyError
+                            
+                            if alleryError == .tokenExpired {
+                                return Single<BaseEntity>.create { single in
+                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                    return Disposables.create()
+                                }
+                            }
+                            
+                            
+                            return Single<BaseEntity>.create { single in
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+
+                                return Disposables.create()
+                            }
+                        })
+                        .asObservable()
+                    
+                case .reNameprofileName:
+                    return self.renameUserUseCase.execute(name: text)
+                        .catch({ error in
+                            
+                            let alleryError = error.asAlleyError
+                            
+                            if alleryError == .tokenExpired {
+                                return Single<BaseEntity>.create { single in
+                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                    return Disposables.create()
+                                }
+                            }
+                            
+                            return Single<BaseEntity>.create { single in
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                return Disposables.create()
+                            }
+                        })
+                        .asObservable()
+                    
+                    
+                    
+                default:
+                    return Single<BaseEntity>.create { single in
+                        single(.success(BaseEntity(statusCode: 401, message: "")))
+                        return Disposables.create()
+                    }
+                    .asObservable()
+                    
+                }
+
+
+            })
+            .bind(to: output.showToast)
+            .disposed(by: disposeBag)
+    
+    }
     
 
 }

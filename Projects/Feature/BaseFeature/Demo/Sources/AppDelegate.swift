@@ -11,7 +11,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = PrintShopDetailViewController()
+        let viewController = ProductDetailViewController(viewModel: ProductDetailViewModel(id: 0))
         
 
 

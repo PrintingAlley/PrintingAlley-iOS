@@ -155,7 +155,7 @@ extension BookMarkDetailViewController {
                 cell.deleagte = self
                 cell.selectionStyle = .none
                 cell.update(model: model, isLast: output.dataSource.value.count-1 == index)
-                
+            
                 return cell
             }
         

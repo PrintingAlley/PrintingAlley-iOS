@@ -147,7 +147,6 @@ extension EditModalViewController {
     
     func bindTextField(input: EditModalViewModel.Input) {
         
-        // TextField 델리게이트로 .. 
         textField
             .rx
             .text
@@ -209,7 +208,8 @@ extension EditModalViewController {
                 
                 else if result.statusCode == 401 {
                     self.view.showToast(text: result.message)
-                    // TODO: 토큰 exired 경우 LOGOUT
+                    LOGOUT()
+            
                 }
                 
                 else {

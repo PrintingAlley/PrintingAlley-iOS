@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol BookMarkBottomSheetFactory {
-    func makeView() -> UIViewController
+    func makeView(id: Int) -> UIViewController
 }
 
 

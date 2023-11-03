@@ -91,3 +91,7 @@ public func OS_NAME() -> String {
 public func LOGOUT() {
     PreferenceManager.user = nil 
 }
+
+public func COPY(text: String) {
+    UIPasteboard.general.string = text //클립보드 복사
+}

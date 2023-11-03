@@ -36,7 +36,7 @@ extension AuthAPI: AlleyAPI {
         case .logout:
             return "/logout"
         case .withdraw:
-            return "/withdrawl"
+            return "/withdrawal"
         }
     }
     
