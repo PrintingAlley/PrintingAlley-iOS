@@ -102,5 +102,8 @@ public func GRID_WIDHT() -> CGFloat {
 }
 
 public func GRID_HEIGHT() -> CGFloat {
-    return (APP_WIDTH() * 171.0) / 199.0
+
+    
+    
+    return  (GRID_WIDHT() * 199.0) / 171.0
 }
