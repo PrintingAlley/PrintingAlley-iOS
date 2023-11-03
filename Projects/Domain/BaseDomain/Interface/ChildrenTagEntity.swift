@@ -23,6 +23,10 @@ public struct ChildrenTagEntity {
         self.parentID = parentID
         self.children = children
     }
+    
+    public static func makeErrorEntity() -> Self  {
+        ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: [])
+    }
 
     public static func makeDummy() -> [Self] {[
         ChildrenTagEntity(id: 0, name: "소량인쇄", image: "", parentID: 0, children: []),

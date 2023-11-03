@@ -18,4 +18,9 @@ public struct BookMarkGroupsEntity {
         self.statusCode = statusCode
         self.message = message
     }
+    
+    public static func makeErrorEntity() -> Self {
+        BookMarkGroupsEntity(bookmarkGroups: [], statusCode: 0, message: "")
+    }
+    
 }

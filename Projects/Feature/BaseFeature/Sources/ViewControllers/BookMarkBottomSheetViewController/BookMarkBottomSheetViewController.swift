@@ -15,6 +15,10 @@ import RxSwift
 import UtilityModule
 import BaseFeatureInterface
 
+public protocol BookMarkBottomSheetViewControllerDelegate: AnyObject {
+    func success()
+}
+
 public class BookMarkBottomSheetViewController: UIViewController {
     
     var viewModel: BookMarkBottomSheetViewModel!
@@ -30,7 +34,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
         
     }
     
-    lazy var titleLabel: AlleyLabel = AlleyLabel("저장 목록",textColor: .sub(.black), font: .header3, alignment: .center)
+    lazy var titleLabel: AlleyLabel = AlleyLabel("저장 목록", textColor: .sub(.black), font: .header3, alignment: .center)
     
     lazy var baseLine: UIView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
@@ -47,6 +51,8 @@ public class BookMarkBottomSheetViewController: UIViewController {
         
     }
     
+    public weak var delegate: BookMarkBottomSheetViewControllerDelegate?
+    
     
     
     init(editModalFactory: EditModalFactory, viewModel: BookMarkBottomSheetViewModel!) {        
@@ -55,6 +61,10 @@ public class BookMarkBottomSheetViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
+    }
+    
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
     }
     
     required init?(coder: NSCoder) {
@@ -116,33 +126,17 @@ extension BookMarkBottomSheetViewController {
     func bindViewModel() {
         
         let input: BookMarkBottomSheetViewModel.Input = BookMarkBottomSheetViewModel.Input()
-        bindUiEvent(input: input)
-        
         let output = viewModel.transform(input: input)
+        
+        bindUiEvent(input: input)
         bindDataSource(output: output)
+        bindFetchData(input: input)
+        bindtapItem(input: input)
+        input.fetchData.onNext(())
         
     }
     
-    func bindDataSource(output: BookMarkBottomSheetViewModel.Output) {
-        
-        output.dataSource
-            .bind(to: tableView.rx.items) { (tableView, index, model) -> UITableViewCell  in
-                
-                let indexPath: IndexPath = IndexPath(row: index, section: 0)
-                
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: BookMarkListTableViewCell.identifier, for: indexPath) as? BookMarkListTableViewCell else {
-                    return UITableViewCell()
-                }
-                
-                cell.update(model: model)
-                cell.selectionStyle = .none
-                
-                return cell
-                
-            }
-            .disposed(by: disposeBag)
-        
-    }
+
     
     func bindUiEvent(input: BookMarkBottomSheetViewModel.Input) {
         
@@ -165,8 +159,13 @@ extension BookMarkBottomSheetViewController {
 
 extension BookMarkBottomSheetViewController: ListHeaderViewDelegate {
     public func generateNewList() {
-        //TODO: 나중에 ..
-        // let vc = editModalFactory.makeView(id: -1, title: <#T##String#>, type: .newBookMark)
+        
+        let vc = editModalFactory.makeView(id: -1, title: "저장 목록 만들기", type: .newBookMark)
+        
+        vc.modalPresentationStyle = .overFullScreen
+        
+        self.present(vc, animated: false)
+        
     }
     
 }
