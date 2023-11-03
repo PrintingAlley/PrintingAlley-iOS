@@ -147,6 +147,7 @@ extension BookMarkViewModel {
                         let alleryError = error.asAlleyError
                         
                         if alleryError == .tokenExpired {
+                            
                             return Single<BaseEntity>.create { single in
                                 single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
                                 return Disposables.create()

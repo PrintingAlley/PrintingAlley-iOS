@@ -11,6 +11,7 @@ import DesignSystem
 import RxSwift
 import UIKit
 import RxCocoa
+import UtilityModule
 
 extension BookMarkViewController {
     
@@ -25,6 +26,14 @@ extension BookMarkViewController {
                 
                 if self.refreshControl.isRefreshing {
                     self.refreshControl.endRefreshing()
+                }
+                
+                if dataSource.isEmpty {
+                    collectionView.setEmptyMessage("아직 저장목록이 없습니다.")
+                }
+                
+                else {
+                    collectionView.restore() // 엠티뷰 제거
                 }
                 
             })
