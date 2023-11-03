@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import UtilityModule
+import DesignSystem
 
 
 extension FilterViewController {
@@ -19,7 +20,7 @@ extension FilterViewController {
     
     @objc func tapFind() {
         self.dismiss(animated: true)
-        self.deleagte?.receive(result: Array<Int>(viewModel.fillterIdSet))
+        self.deleagte?.receive(result: Array<Tag>(viewModel.fillterIdSet))
     }
     
     @objc func tapClose() {

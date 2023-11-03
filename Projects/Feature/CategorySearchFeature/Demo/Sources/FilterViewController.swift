@@ -62,11 +62,10 @@ class FilterViewController: UIViewController {
     let disposeBag = DisposeBag()
     
     var completion: (([Tag]) -> Void)?
-    var idSet:Set<Tag> = .init()
+    var idSet: Set<Tag> = .init()
     private var panGestureRecognizer: UIPanGestureRecognizer!
     
-    var dummy:[ChildrenTagEntity] = []
-    
+    var dummy: [ChildrenTagEntity] = []
     
     init(completion: (([Tag]) -> Void)? = nil) {
         super.init(nibName: nil, bundle: nil)
