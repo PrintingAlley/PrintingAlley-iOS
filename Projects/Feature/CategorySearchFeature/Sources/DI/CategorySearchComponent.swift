@@ -8,21 +8,20 @@
 
 import Foundation
 import NeedleFoundation
-import PrintShopDomainInterface
 import CategorySearchFeatureInterface
+import ProductDomainInterface
 import TagDomainInterface
 import UIKit
 
 public protocol CategorySearchDependency: Dependency {
-    
-    var printShopDomainFactory: any PrintShopDomainFactory { get }
+    var productDomainFactory: any ProductDomainFactory { get }
     var filterFactory: any FilterFactory { get }
     
 }
 
 public final class CategorySearchComponent: Component<CategorySearchDependency>, CategorySearchFactory {
     public func makeView(id: Int, title: String) -> UIViewController {
-        CategorySearchViewController(filterFactory: dependency.filterFactory, viewModel: CategorySearchViewModel(title: title, id: id,fetchPrintShopListUseCase: dependency.printShopDomainFactory.fetchPrintShopListUseCase))
+        CategorySearchViewController(filterFactory: dependency.filterFactory, viewModel: CategorySearchViewModel(title: title, id: id, fetchProductListUseCase: dependency.productDomainFactory.fetchProductListUseCase))
     }
     
 }

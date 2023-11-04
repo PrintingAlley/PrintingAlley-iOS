@@ -13,53 +13,52 @@ import RxSwift
 import RxRelay
 import BaseDomainInterface
 import PrintShopDomainInterface
+import ProductDomainInterface
 
 class CategorySearchViewModel: ViewModelType {
 
     public var title: String!
     public var id: Int!
    
-    
     let disposeBag = DisposeBag()
     
-    var fetchPrintShopListUseCase :  any FetchPrintShopListUseCase
+    var fetchProductListUseCase: any FetchProductListUseCase
     
-    
-    init(title: String, id: Int, fetchPrintShopListUseCase : FetchPrintShopListUseCase) {
+    init(title: String, id: Int, fetchProductListUseCase: FetchProductListUseCase) {
         self.title = title
         self.id = id
-        self.fetchPrintShopListUseCase = fetchPrintShopListUseCase
+        self.fetchProductListUseCase = fetchProductListUseCase
     }
-    
     
     deinit {
         DEBUG_LOG("\(Self.self) Deinit ❌")
     }
     
     public struct Input {
-        
+        let fetchData: PublishSubject<Void> = .init()
     }
+
     public struct Output {
-        let dataSource: BehaviorRelay<[PrintShopEntity]> = .init(value: [])
+        let dataSource: BehaviorRelay<ProductListEntity> = .init(value: ProductListEntity(statusCode: 0, message: "", products: []))
+        let runIndicator: BehaviorRelay<Void> = .init(value: ())
+        let tags: BehaviorRelay<[Tag]> = .init(value: [])
     }
-    
-    
+     
     public func transform(input: Input) -> Output {
     
         let output = Output()
-        //TODO: 나중에 Product로 바꾸기
-//        fetchPrintShopListUseCase
-//            .execute(searchText: "", tagIds: [id])
-//            .catchAndReturn([])
-//            .asObservable()
-//            .bind(to: output.dataSource)
-//            .disposed(by: disposeBag)
         
-        
-            
-        
-        
-        
+        input.fetchData
+            .withLatestFrom(output.tags)
+            .map { $0.map { $0.id } }
+            .flatMap { [weak self] tags -> Observable<ProductListEntity> in
+                guard let self else { return Observable.empty() }
+                return self.fetchProductListUseCase
+                    .execute(page: 1, text: "", tagIds: tags + [self.id]) // TODO: catch
+                    .asObservable()
+            }
+            .bind(to: output.dataSource)
+            .disposed(by: disposeBag)
         return output
     }
     

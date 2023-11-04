@@ -16,6 +16,9 @@ import UtilityModule
 extension CategorySearchViewController: CategoryEmptyHeaderViewDelegate {
     func press() {
         DEBUG_LOG("초기화")
+        output.tags.accept([])
+        input.fetchData.onNext(())
+        filterCollectionView.reloadData()
     }
 
 }
@@ -23,8 +26,9 @@ extension CategorySearchViewController: CategoryEmptyHeaderViewDelegate {
 extension CategorySearchViewController: FilterViewControllerDelegate {
     func receive(result: [Tag]) {
         DEBUG_LOG("RESULT: \(result)")
-        self.filterTags = result
-        self.filterCollectionView.reloadData()
+        output.tags.accept(result)
+        input.fetchData.onNext(())
+        filterCollectionView.reloadData()
     }
 }
 
@@ -32,7 +36,7 @@ extension CategorySearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView.tag {
         case 0:
-            let tempLabel = AlleyLabel(filterTags[indexPath.row].name, font: .body1).then {
+            let tempLabel = AlleyLabel(output.tags.value[indexPath.row].name, font: .body1).then {
                 $0.sizeToFit()
             }
             return CGSize(width: tempLabel.frame.width + 20 + 28, height: tempLabel.frame.height + 8)
@@ -47,10 +51,13 @@ extension CategorySearchViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var tags = output.tags.value
+        
         if collectionView.tag == 0 {
-            filterTags.remove(at: indexPath.row)
-            DEBUG_LOG(filterTags)
-            collectionView.reloadData()
+            tags.remove(at: indexPath.row)
+            output.tags.accept(tags)
+            input.fetchData.onNext(())
+            filterCollectionView.reloadData()
         }
     }
 }
@@ -59,10 +66,7 @@ extension CategorySearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView.tag {
         case 0:
-            return filterTags.count
-
-        case 1:
-            return dummy.count
+            return output.tags.value.count
 
         default:
             return 0
@@ -75,15 +79,10 @@ extension CategorySearchViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterButtonCollectionViewCell.identifier, for: indexPath) as? FilterButtonCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            let tmpChildrenTagEntity = ChildrenTagEntity(id: filterTags[indexPath.row].id, name: filterTags[indexPath.row].name, image: "", parentID: 0, children: [])
+            
+            let tags = output.tags.value
+            let tmpChildrenTagEntity = ChildrenTagEntity(id: tags[indexPath.row].id, name: tags[indexPath.row].name, image: "", parentID: 0, children: [])
             cell.update(model: tmpChildrenTagEntity, type: .selectedWithX, willChangeUI: false)
-            return cell
-
-        case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PinterestCollectionViewCell.identifer, for: indexPath) as? PinterestCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            cell.update(model: dummy[indexPath.row])
             return cell
 
         default:

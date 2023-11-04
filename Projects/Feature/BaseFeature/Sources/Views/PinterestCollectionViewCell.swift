@@ -9,6 +9,8 @@
 import UIKit
 import DesignSystem
 import UtilityModule
+import BaseDomainInterface
+import Kingfisher
 
 public final class PinterestCollectionViewCell: UICollectionViewCell {
     
@@ -20,7 +22,6 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public var imageView = UIImageView().then {
         $0.setRound([.allCorners], radius: 8)
-        $0.image = DesignSystemAsset.Logo.tmpCard1.image
         $0.contentMode = .scaleAspectFit
     }
     
@@ -30,7 +31,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     }
     
     public lazy var bookmarkButton = UIButton().then { // 필요할 때 isHidden 시키기
-        $0.setImage(DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
         $0.setImage(DesignSystemAsset.Icon.emptyBookMark.image, for: .selected)
         $0.addTarget(self, action: #selector(touchUpBookmark), for: .touchUpInside)
     }
@@ -57,7 +58,7 @@ extension PinterestCollectionViewCell {
         imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
             $0.width.equalTo(171)
-            $0.height.equalTo(self.imageView.image?.size.height ?? 0.0)
+            $0.height.equalTo(171)
         }
         
         imageButton.snp.makeConstraints {
@@ -76,14 +77,14 @@ extension PinterestCollectionViewCell {
         }
     }
     
-    public func update(model: Dummy) { // 변경 필요 (테스트용 함수임)
-        self.imageView.image = model.image
-        self.title.text = model.title
+    public func update(model: ProductEntity) { // 변경 필요 (테스트용 함수임)
+        self.imageView.kf.setImage(with: URL(string: model.mainImage))
+        self.title.text = model.name
         
         imageView.snp.updateConstraints {
             $0.top.leading.equalToSuperview()
             $0.width.equalTo(171)
-            $0.height.equalTo(model.image.size.height)
+            $0.height.equalTo(171)
         }
         
         imageButton.snp.updateConstraints {
