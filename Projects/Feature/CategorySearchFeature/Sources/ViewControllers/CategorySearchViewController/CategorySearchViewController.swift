@@ -28,6 +28,12 @@ class CategorySearchViewController: UIViewController {
         Dummy(image: DesignSystemAsset.Logo.tmpCard6.image, title: "Dongseongro Blues Pub \nBranding")
     ]
     
+    lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then{
+        $0.color = DesignSystemAsset.MainBlue.blue500.color
+        $0.hidesWhenStopped = true
+        
+    }
+    
     lazy var filterTags: [Tag] = []
 
     lazy var naviTitleView: UIView = UIView()
@@ -60,7 +66,7 @@ class CategorySearchViewController: UIViewController {
     }
     
     lazy var gridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-        $0.dataSource = self
+//        $0.dataSource = self
         $0.showsHorizontalScrollIndicator = false
         $0.showsVerticalScrollIndicator = false
         $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
@@ -109,7 +115,7 @@ class CategorySearchViewController: UIViewController {
 
 extension CategorySearchViewController {
     func addSubviews() {
-        view.addSubviews(naviTitleView, filterCollectionView, filterButton, gridCollectionView)
+        view.addSubviews(naviTitleView, filterCollectionView, filterButton, gridCollectionView, indicator)
         naviTitleView.addSubviews(backButton, naviTitleLabel)
     }
     
@@ -154,6 +160,10 @@ extension CategorySearchViewController {
 //            $0.top.equalTo(filterButton.snp.bottom).offset(16)
 //            $0.left.right.bottom.equalToSuperview()
 //        }
+        
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
     
     func bindViewModel() {
@@ -162,7 +172,7 @@ extension CategorySearchViewController {
         
         bindBackEvent()
         bindDataSource(output: output)
-        
+        bindIndicator(output: output)
         bindFilterButton()
     }
     

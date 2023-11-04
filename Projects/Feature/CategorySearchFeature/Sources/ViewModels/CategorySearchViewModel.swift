@@ -13,24 +13,28 @@ import RxSwift
 import RxRelay
 import BaseDomainInterface
 import PrintShopDomainInterface
+import ProductDomainInterface
 
 class CategorySearchViewModel: ViewModelType {
 
     public var title: String!
     public var id: Int!
-   
     
+    public var ids: [Int] = []
+   
     let disposeBag = DisposeBag()
     
-    var fetchPrintShopListUseCase :  any FetchPrintShopListUseCase
+    var fetchPrintShopListUseCase: any FetchPrintShopListUseCase
     
+    var fetchProductListUseCase: any FetchProductListUseCase
     
-    init(title: String, id: Int, fetchPrintShopListUseCase : FetchPrintShopListUseCase) {
+    init(title: String, id: Int, fetchPrintShopListUseCase: FetchPrintShopListUseCase, fetchProductListUseCase: FetchProductListUseCase) {
         self.title = title
         self.id = id
         self.fetchPrintShopListUseCase = fetchPrintShopListUseCase
+        self.fetchProductListUseCase = fetchProductListUseCase
+        ids.append(id)
     }
-    
     
     deinit {
         DEBUG_LOG("\(Self.self) Deinit ❌")
@@ -40,26 +44,20 @@ class CategorySearchViewModel: ViewModelType {
         
     }
     public struct Output {
-        let dataSource: BehaviorRelay<[PrintShopEntity]> = .init(value: [])
+        let dataSource: BehaviorRelay<ProductListEntity> = .init(value: ProductListEntity(statusCode: 0, message: "", products: []))
+        let runIndicator: BehaviorRelay<Void> = .init(value: ())
     }
-    
-    
+     
     public func transform(input: Input) -> Output {
     
         let output = Output()
-        //TODO: 나중에 Product로 바꾸기
-//        fetchPrintShopListUseCase
-//            .execute(searchText: "", tagIds: [id])
-//            .catchAndReturn([])
-//            .asObservable()
-//            .bind(to: output.dataSource)
-//            .disposed(by: disposeBag)
         
-        
-            
-        
-        
-        
+        fetchProductListUseCase // infinite scroll 구현
+            .execute(page: 1, text: "", tagIds: ids)
+            .catchAndReturn(.makeErrorEntity())
+            .asObservable()
+            .bind(to: output.dataSource)
+            .disposed(by: disposeBag)
         return output
     }
     

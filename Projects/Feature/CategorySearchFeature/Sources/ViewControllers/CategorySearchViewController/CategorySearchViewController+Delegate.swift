@@ -25,6 +25,8 @@ extension CategorySearchViewController: FilterViewControllerDelegate {
         DEBUG_LOG("RESULT: \(result)")
         self.filterTags = result
         self.filterCollectionView.reloadData()
+        result.map { viewModel.ids.append($0.id) }
+        DEBUG_LOG(viewModel.ids)
     }
 }
 
@@ -49,6 +51,8 @@ extension CategorySearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.tag == 0 {
             filterTags.remove(at: indexPath.row)
+            viewModel.ids.remove(at: indexPath.row + 1)
+            DEBUG_LOG(viewModel.ids)
             DEBUG_LOG(filterTags)
             collectionView.reloadData()
         }
@@ -60,9 +64,9 @@ extension CategorySearchViewController: UICollectionViewDataSource {
         switch collectionView.tag {
         case 0:
             return filterTags.count
-
-        case 1:
-            return dummy.count
+//
+//        case 1:
+//            return dummy.count
 
         default:
             return 0
@@ -79,12 +83,12 @@ extension CategorySearchViewController: UICollectionViewDataSource {
             cell.update(model: tmpChildrenTagEntity, type: .selectedWithX, willChangeUI: false)
             return cell
 
-        case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PinterestCollectionViewCell.identifer, for: indexPath) as? PinterestCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            cell.update(model: dummy[indexPath.row])
-            return cell
+//        case 1:
+//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PinterestCollectionViewCell.identifer, for: indexPath) as? PinterestCollectionViewCell else {
+//                return UICollectionViewCell()
+//            }
+//            cell.update(model: dummy[indexPath.row])
+//            return cell
 
         default:
             return UICollectionViewCell()
