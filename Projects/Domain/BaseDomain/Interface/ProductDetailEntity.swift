@@ -8,20 +8,23 @@
 
 import Foundation
 
+// TODO: bookMark id 
 
 public struct ProductDetailEntity  {
     public let product: ProductEntity
     public let statusCode: Int
     public let message: String
+    public let bookmarkId: Int
     
     
-    public init(product: ProductEntity, statusCode: Int, message: String) {
+    public init(product: ProductEntity, statusCode: Int, message: String, bookmarkId: Int) {
         self.product = product
         self.statusCode = statusCode
         self.message = message
+        self.bookmarkId = bookmarkId
     }
     
     public static func makeErrorEntity() -> Self {
-        ProductDetailEntity(product: ProductEntity.makeErrorEntity(message: ""), statusCode: 400, message: "")
+        ProductDetailEntity(product: ProductEntity.makeErrorEntity(message: ""), statusCode: 400, message: "",bookmarkId: 0)
     }
 }

@@ -34,6 +34,7 @@ public class BookMarkBottomSheetViewModel: ViewModelType {
     public struct Output {
         var dataSource: BehaviorRelay<BookMarkGroupsEntity> = .init(value: BookMarkGroupsEntity.makeErrorEntity())
         let result: PublishSubject<BaseEntity> = .init()
+        let addResult: PublishSubject<AddBookMarkEntity> = .init()
     }
     
     init(id: Int, fetchMyBookMarksUseCase: FetchMyBookMarksUseCase, addBookMarkUseCase: AddBookMarkUseCase) {
@@ -58,25 +59,57 @@ public class BookMarkBottomSheetViewModel: ViewModelType {
                 
                 return self.fetchMyBookMarksUseCase
                     .execute()
-                    .catchAndReturn(BookMarkGroupsEntity.makeErrorEntity())
+                    .catch({ error in
+                        
+                        let alleyError = error.asAlleyError
+                        
+                        if alleyError == .tokenExpired {
+                             return Single.create { single in
+                                
+                                 single(.success(BookMarkGroupsEntity(bookmarkGroups: [], statusCode: 401, message: alleyError.errorDescription ?? "")))
+                                 return Disposables.create()
+                            }
+                        }
+                        
+                        return Single.create { single in
+                           
+                            single(.success(BookMarkGroupsEntity(bookmarkGroups: [], statusCode: 400, message: alleyError.errorDescription ?? "")))
+                            return Disposables.create()
+                       }
+                        
+                    })
                     .asObservable()
             
             }
+            .do(onNext: {
+                
+                if $0.statusCode == 400 || $0.statusCode == 401 {
+                    output.result.onNext((BaseEntity(statusCode: $0.statusCode, message: $0.message)))
+                }
+                
+                else {
+                    output.result.onNext((BaseEntity(statusCode: $0.statusCode, message: $0.message)))
+                }
+                
+            })
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
         
         
         input.selectedItem
-            .withUnretained(self)
-            .flatMap({(owner,groupId) -> Observable<BaseEntity> in
+            .withLatestFrom(output.dataSource){($0,$1)}
+            .flatMap({ [weak self] (index,dataSource) -> Observable<AddBookMarkEntity> in
                 
-                return owner.addBookMarkUseCase
-                    .execute(productId: owner.id, bookmarkGroupId: groupId)
-                    .catchAndReturn(BaseEntity(statusCode: 400, message: ""))
+                guard let self else {return Observable.empty()}
+                
+                
+                return self.addBookMarkUseCase
+                    .execute(productId: self.id, bookmarkGroupId: dataSource.bookmarkGroups[index].id)
+                    .catchAndReturn(AddBookMarkEntity(statusCode: 400, message: "", dataId: 0))
                     .asObservable()
                 
             })
-            .bind(to: output.result)
+            .bind(to: output.addResult)
             .disposed(by: disposeBag)
     
         

@@ -97,7 +97,7 @@ extension ProductDetailTableHeaderView {
             
         }
         
-        titleLabel.snp.makeConstraints {
+        titleLabel.snp.makeConstraints { //Width 지정 후 짤림 처리
             $0.top.equalToSuperview().inset(24)
             $0.left.equalToSuperview().inset(21)
             $0.right.equalToSuperview().inset(64)
@@ -134,7 +134,7 @@ extension ProductDetailTableHeaderView {
         titleLabel.setTitle(title: model.title, textColor: .sub(.black), font: .header3)
         subtitleLabel.setTitle(title: model.subtitle, textColor: .grey(.grey100), font: .subtitle3)
         
-        saveButton.setImage(isSaved ? DesignSystemAsset.Icon.emptyBookMark.image : DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
+        saveButton.setImage(isSaved ? DesignSystemAsset.Icon.blueBookMark.image : DesignSystemAsset.Icon.emptyBookMark.image, for: .normal)
         
         collectionView.reloadData()
     }

@@ -24,7 +24,7 @@ public struct ProductResponseDTO: Decodable {
     let message: String?
     
     public func toDomain() -> ProductEntity {
-        ProductEntity(id: id, name: name, size: "" ,  paper: "", afterProcess: "", designer: "" , introduction: introduction, description: description, mainImage: mainImage, images: images,
+        ProductEntity(id: id, name: name, size: size,  paper: paper, afterProcess: afterProcess, designer: designer , introduction: introduction, description: description, mainImage: mainImage, images: images,
                       category: category?.toDomain() ?? CategoryEntity.makeErrorEntity(),
                       printShop: printShop?.toDomain() ?? PrintShopEntity.makeErrorEntity(),
                       tags: tags?.map{$0.toDomain()} ?? [],

@@ -32,6 +32,7 @@ final class ProductDetailViewModel: ViewModelType {
     var fetchProductUseCase: any FetchProductUseCase
     var removeBookMarkUseCase: any RemoveBookMarkUseCase
     var isSaved: Bool = false
+    var bookMarkId:Int = 0
     
     init(id: Int,fetchProductUseCase : FetchProductUseCase, removeBookMarkUseCase: RemoveBookMarkUseCase) {
         self.id = id
@@ -91,8 +92,11 @@ final class ProductDetailViewModel: ViewModelType {
                 
                 self.isSaved = dataSource.isBookmarked
                 
+                DEBUG_LOG("QWER: \(dataSource)")
+                
+                
                 output.headerInfo.accept(ProductHeaderInfo(id: dataSource.id, title: dataSource.name, subtitle: dataSource.category.name , images: dataSource.images))
-                output.dataInfo.accept(ProductDataInfo(dataSoruce: [dataSource.printShop.name,dataSource.designer,dataSource.size, dataSource.paper, dataSource.tags.map{$0.name}.joined(separator: ", "), dataSource.afterProcess]))
+                output.dataInfo.accept(ProductDataInfo(dataSoruce: [dataSource.printShop.name, dataSource.designer,dataSource.size, dataSource.paper, dataSource.tags.map{$0.name}.joined(separator: ", "), dataSource.afterProcess]))
             })
             .disposed(by: disposeBag)
         

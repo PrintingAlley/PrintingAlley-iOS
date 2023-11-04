@@ -46,16 +46,40 @@ extension BookMarkBottomSheetViewController {
                     owner.dismiss(animated: false)
                 }
                 
-                else {
-                    owner.dismiss(animated: false) {
-                        owner.delegate?.success()
-                    }
+                else if result.statusCode == 401 {
+                    owner.view.showToast(text: result.message)
+                    owner.dismiss(animated: false)
                 }
+                
                 
             })
             .disposed(by: disposeBag)
         
     }
+    
+    func addResult(output: BookMarkBottomSheetViewModel.Output) {
+        
+        output.addResult
+            .withUnretained(self)
+            .subscribe(onNext: { (owner,result) in
+                
+                if result.statusCode != 400 && result.statusCode != 401 {
+                    owner.dismiss(animated: false) {
+                        owner.delegate?.success(id: result.dataId)
+                    }
+                    
+                }
+                
+                else {
+                    owner.view.showToast(text: "알 수 없는 에러가 발생 했습니다.")
+                }
+                
+                
+            })
+            .disposed(by: disposeBag)
+        
+    }
+    
     
     
 }

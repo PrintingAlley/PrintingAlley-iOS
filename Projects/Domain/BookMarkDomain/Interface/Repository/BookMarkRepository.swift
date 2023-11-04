@@ -13,7 +13,7 @@ import BaseDomainInterface
 
 public protocol BookMarkRepository {
     func fetchMyBookMarks() -> Single<BookMarkGroupsEntity>
-    func addBookMark(productId: Int, bookmarkGroupId: Int) -> Single<BaseEntity>
+    func addBookMark(productId: Int, bookmarkGroupId: Int) -> Single<AddBookMarkEntity>
     func removeBookMark(id: Int) -> Single<BaseEntity>
     func linkBookMark(bookMarkId: Int, groupId: Int) -> Single<BaseEntity>
     func generateBookMark(name: String) -> Single<BaseEntity>
