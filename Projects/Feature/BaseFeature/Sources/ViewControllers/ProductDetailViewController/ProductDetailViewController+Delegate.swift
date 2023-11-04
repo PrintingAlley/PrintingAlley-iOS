@@ -93,7 +93,7 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
         
         else {
             
-            input.removeItem.onNext(id)
+            input.removeItem.onNext(())
             
         }
     }

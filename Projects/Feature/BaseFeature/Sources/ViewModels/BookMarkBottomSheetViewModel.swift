@@ -102,7 +102,7 @@ public class BookMarkBottomSheetViewModel: ViewModelType {
                 
                 guard let self else {return Observable.empty()}
                 
-                
+        
                 return self.addBookMarkUseCase
                     .execute(productId: self.id, bookmarkGroupId: dataSource.bookmarkGroups[index].id)
                     .catchAndReturn(AddBookMarkEntity(statusCode: 400, message: "", dataId: 0))

@@ -105,8 +105,10 @@ extension ProductAPI: AlleyAPI {
         switch self {
             
     
-        case .fetchProductList,.fetchProduct,.fetchReview:
+        case .fetchProductList,.fetchReview:
             return .none
+        case .fetchProduct:
+            return .accessToken
         case .createReview(id: let id, content: let content, rating: let rating, images: let images):
             return .accessToken
         case .editReview(id: let id, reviewId: let reviewId, content: let content, rating: let rating, images: let images):

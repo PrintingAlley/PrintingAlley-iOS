@@ -52,7 +52,7 @@ public class EditModalViewModel: ViewModelType {
         
         let output = Output()
         
-        //bindTapConfirm(input: input, output: output)
+        bindTapConfirm(input: input, output: output)
 
        
         

@@ -47,7 +47,7 @@ final class ProductDetailViewModel: ViewModelType {
     struct Input {
         let askToast: PublishSubject<BaseEntity> = .init()
         let fetchData: PublishSubject<Void> = .init()
-        let removeItem: PublishSubject<Int> = .init()
+        let removeItem: PublishSubject<Void> = .init()
     }
     
     struct Output {
@@ -80,9 +80,15 @@ final class ProductDetailViewModel: ViewModelType {
                     })
                     .asObservable()
             })
-            .do(onNext: {
-                if $0.statusCode == 400 {
+            .do(onNext: { [weak self] dataSource in
+                
+                guard let self else { return }
+                
+                if dataSource.statusCode == 400 {
                     input.askToast.onNext(BaseEntity(statusCode: 0, message: "알 수 없는 에러가 발생했습니다."))
+                }
+                else {
+                    self.bookMarkId = dataSource.bookmarkId
                 }
             })
             .map({$0.product})
@@ -91,8 +97,6 @@ final class ProductDetailViewModel: ViewModelType {
                 guard let self else {return}
                 
                 self.isSaved = dataSource.isBookmarked
-                
-                DEBUG_LOG("QWER: \(dataSource)")
                 
                 
                 output.headerInfo.accept(ProductHeaderInfo(id: dataSource.id, title: dataSource.name, subtitle: dataSource.category.name , images: dataSource.images))
@@ -104,14 +108,22 @@ final class ProductDetailViewModel: ViewModelType {
         
         input.removeItem
             .withUnretained(self)
-            .flatMap({ (owner,id) -> Observable<BaseEntity> in
+            .flatMap({ (owner,_) -> Observable<BaseEntity> in
                 
-                owner.removeBookMarkUseCase
-                    .execute(id: id)
-                    .catchAndReturn(BaseEntity(statusCode: 400, message: "알 수 없는 에러가 발생했습니다."))
+                return owner.removeBookMarkUseCase
+                    .execute(id: owner.bookMarkId)
+                    .catchAndReturn(BaseEntity(statusCode: 400, message: "페이지를 나갔다 들어와주세요."))
                     .map{ $0.statusCode != 400 ? BaseEntity(statusCode: 200, message: "성공적으로 삭제했습니다.") : $0 }
                     .asObservable()
             
+            })
+            .do(onNext: { [weak self] in
+                
+                guard let self else {return}
+                
+                if $0.statusCode == 200 {
+                    self.isSaved = false
+                }
             })
             .bind(to: output.showToast)
             .disposed(by: disposeBag)

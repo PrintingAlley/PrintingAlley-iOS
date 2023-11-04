@@ -96,7 +96,7 @@ extension BookMarkListTableViewCell {
         
         titleLabel.setTitle(title: model.name, textColor: .grey(.grey1000), font: .body1)
         subtitleLabel.setTitle(title: "작품 \(model.count)개", textColor: .grey(.grey500), font: .caption1)
-        frontImageView.kf.setImage(with: URL(string: model.recentImage))
+        frontImageView.kf.setImage(with: URL(string: model.recentImage),placeholder: DesignSystemAsset.PlaceHolder.smallPH.image)
             
     }
     

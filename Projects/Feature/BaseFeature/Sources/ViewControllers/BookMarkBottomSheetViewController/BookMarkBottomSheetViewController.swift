@@ -133,6 +133,7 @@ extension BookMarkBottomSheetViewController {
         bindFetchData(input: input)
         bindtapItem(input: input)
         bindResult(output: output)
+        addResult(output: output)
         input.fetchData.onNext(())
         
     }
