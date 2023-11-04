@@ -14,7 +14,7 @@ public struct ChildrenTagResponseDTO: Decodable {
     let name: String
     let image: String?
     let parentID: Int?
-    let children: [ChildrenTagResponseDTO]
+    let children: [ChildrenTagResponseDTO]?
 
     enum CodingKeys: String, CodingKey {
         case id, name, image
@@ -24,6 +24,6 @@ public struct ChildrenTagResponseDTO: Decodable {
     
     public func toDomain() -> ChildrenTagEntity {
     
-        return ChildrenTagEntity(id: id, name: name, image: image ?? "", parentID: parentID ?? 0,children:children.map{$0.toDomain()})
+        return ChildrenTagEntity(id: id, name: name, image: image ?? "", parentID: parentID ?? 0,children: children?.map({$0.toDomain()}) ?? [])
     }
 }

@@ -91,7 +91,7 @@ extension ProductDetailTableViewCell {
     public func update(model: String,index: Int) {
         
         self.model = model
-        
+        DEBUG_LOG("CELL \(model)")
         switch index {
         case 0:
             titleLabel.setMultipleAttributeText(text1: "제작 인쇄사    ", text2: model, color1: .black, color2: .black, font1: .subtitle3, font2: .body2)

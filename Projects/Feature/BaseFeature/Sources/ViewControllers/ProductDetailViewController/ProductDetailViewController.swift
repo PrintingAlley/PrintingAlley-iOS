@@ -19,11 +19,11 @@ class ProductDetailViewController: UIViewController {
 
 
     lazy var tableView: UITableView = UITableView().then {
-        $0.delegate = self
         $0.register(ProductDetailTableHeaderView.self, forHeaderFooterViewReuseIdentifier: ProductDetailTableHeaderView.identifer)
         $0.register(ProductDetailTableViewCell.self, forCellReuseIdentifier: ProductDetailTableViewCell.identifer)
         $0.bounces = false
         $0.separatorStyle = .none
+        $0.showsVerticalScrollIndicator = false
     }
     
     lazy var backButton: UIButton = UIButton().then {
@@ -45,6 +45,7 @@ class ProductDetailViewController: UIViewController {
         addSubviews()
         makeConstraints()
         configureCommonUI()
+        bindViewModel()
 
     }
     

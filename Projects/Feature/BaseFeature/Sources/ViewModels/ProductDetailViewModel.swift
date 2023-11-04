@@ -63,13 +63,20 @@ final class ProductDetailViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         input.fetchData
-            .flatMap({ [weak self] _ -> Observable<ProductEntity> in
+            .flatMap({ [weak self] _ -> Observable<ProductDetailEntity> in
                 
                 guard let  self else {return Observable.empty()}
                 
                 return self.fetchProductUseCase
                     .execute(id: id)
-                    .catchAndReturn(ProductEntity.makeErrorEntity(message: ""))
+                    .catch({ error in
+                        DEBUG_LOG(error)
+                        
+                        return Single<ProductDetailEntity>.create { single in
+                            single(.success(ProductDetailEntity.makeErrorEntity()))
+                            return Disposables.create()
+                        }
+                    })
                     .asObservable()
             })
             .do(onNext: {
@@ -77,6 +84,7 @@ final class ProductDetailViewModel: ViewModelType {
                     input.askToast.onNext(BaseEntity(statusCode: 0, message: "알 수 없는 에러가 발생했습니다."))
                 }
             })
+            .map({$0.product})
             .subscribe(onNext: { [weak self] dataSource in
                 
                 guard let self else {return}

@@ -13,9 +13,9 @@ import RxSwift
 import BaseDomainInterface
 
 final class RemoteProductDataSourceImpl: BaseRemoteDataSource<ProductAPI>, RemoteProductDataSource {
-    func fetchProduct(id: Int) -> Single<ProductEntity> {
+    func fetchProduct(id: Int) -> Single<ProductDetailEntity> {
         request(.fetchProduct(id: id))
-            .map(ProductResponseDTO.self)
+            .map(ProductDetailResponseDTO.self)
             .map{$0.toDomain()}
     }
     

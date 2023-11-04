@@ -12,7 +12,7 @@ import BaseDomainInterface
 public struct ProductResponseDTO: Decodable {
 
     let id: Int
-    let name, size, paper, afterProcess, introduction, description,designer: String
+    let name, size, paper, afterProcess,designer, introduction, description: String
     let mainImage: String
     let images: [String]
     let category: CategoryResponseDTO?

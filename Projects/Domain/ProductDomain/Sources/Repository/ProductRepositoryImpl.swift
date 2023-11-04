@@ -20,7 +20,7 @@ public struct ProductRepositoryImpl: ProductRepository {
         self.remoteProductDataSource = remoteProductDataSource
     }
     
-    public func fetchProduct(id: Int) -> RxSwift.Single<BaseDomainInterface.ProductEntity> {
+    public func fetchProduct(id: Int) -> RxSwift.Single<BaseDomainInterface.ProductDetailEntity> {
         remoteProductDataSource.fetchProduct(id: id)
     }
     

@@ -239,6 +239,9 @@ private class CategorySearchDependencybc5b867b843f81f14b34Provider: CategorySear
     var filterFactory: any FilterFactory {
         return appComponent.filterFactory
     }
+    var productDetailFactory: any ProductDetailFactory {
+        return appComponent.productDetailFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -508,6 +511,7 @@ extension CategorySearchComponent: Registration {
     public func registerItems() {
         keyPathToName[\CategorySearchDependency.productDomainFactory] = "productDomainFactory-any ProductDomainFactory"
         keyPathToName[\CategorySearchDependency.filterFactory] = "filterFactory-any FilterFactory"
+        keyPathToName[\CategorySearchDependency.productDetailFactory] = "productDetailFactory-any ProductDetailFactory"
     }
 }
 extension FilterComponent: Registration {
