@@ -29,7 +29,7 @@ extension BookMarkViewController {
                 }
                 
                 if dataSource.isEmpty {
-                    collectionView.setEmptyMessage("아직 저장목록이 없습니다.")
+                    collectionView.setEmptyMessage("저장된 작품이 없어요.")
                 }
                 
                 else {

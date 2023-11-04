@@ -76,7 +76,7 @@ extension BookMarkViewController {
             .withUnretained(self)
             .subscribe(onNext: { (owner,_) in
                 
-                let vc = AlertViewController(title: "저장목록을 삭제하시겠어요?", content: "목록을 삭제하면 저장된 장소도\n함께 사라져요.", type: .delete,  completion: {
+                let vc = AlertViewController(title: "저장목록을 삭제하시겠어요?", content: "목록을 삭제하면 저장된 작품도\n함께 사라져요.", type: .delete,  completion: {
                     input.runDelete.onNext(())
                 })
                 vc.modalPresentationStyle = .overFullScreen
