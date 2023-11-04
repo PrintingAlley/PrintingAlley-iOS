@@ -196,18 +196,3 @@ extension BookMarkViewController {
   
 
 }
-
-
-extension BookMarkViewController: BookMarkTableViewCellDelegate {
-    func tapChecked(id: Int?) {
-        
-        guard let id = id as? Int else {
-            return
-        }
-        
-        input.tapItem.onNext(id)
-       
-        
-    }
-    
-}

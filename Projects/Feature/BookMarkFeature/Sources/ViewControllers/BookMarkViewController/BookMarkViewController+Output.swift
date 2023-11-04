@@ -29,11 +29,11 @@ extension BookMarkViewController {
                 }
                 
                 if dataSource.isEmpty {
-                    collectionView.setEmptyMessage("저장된 작품이 없어요.")
+                    self.collectionView.setEmptyMessage("저장된 작품이 없어요.")
                 }
                 
                 else {
-                    collectionView.restore() // 엠티뷰 제거
+                    self.collectionView.restore() // 엠티뷰 제거
                 }
                 
             })
