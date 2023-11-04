@@ -22,7 +22,6 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public var imageView = UIImageView().then {
         $0.setRound([.allCorners], radius: 8)
-        $0.image = DesignSystemAsset.Logo.tmpCard1.image
         $0.contentMode = .scaleAspectFit
     }
     
@@ -59,7 +58,7 @@ extension PinterestCollectionViewCell {
         imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
             $0.width.equalTo(171)
-            $0.height.equalTo(self.imageView.image?.size.height ?? 0.0)
+            $0.height.equalTo(171)
         }
         
         imageButton.snp.makeConstraints {
@@ -85,7 +84,7 @@ extension PinterestCollectionViewCell {
         imageView.snp.updateConstraints {
             $0.top.leading.equalToSuperview()
             $0.width.equalTo(171)
-            $0.height.equalTo(self.imageView.image?.size.height ?? 0)
+            $0.height.equalTo(171)
         }
         
         imageButton.snp.updateConstraints {

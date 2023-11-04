@@ -233,8 +233,8 @@ private func factory53f303ca6b0d301565d8e3b0c44298fc1c149afb(_ component: Needle
     return NearByMeDependencyfb289c9eb0cc94c83621Provider()
 }
 private class CategorySearchDependencybc5b867b843f81f14b34Provider: CategorySearchDependency {
-    var printShopDomainFactory: any PrintShopDomainFactory {
-        return appComponent.printShopDomainFactory
+    var productDomainFactory: any ProductDomainFactory {
+        return appComponent.productDomainFactory
     }
     var filterFactory: any FilterFactory {
         return appComponent.filterFactory
@@ -331,6 +331,9 @@ private class ProductDetailDependency1e6e934c90b49cbc48b5Provider: ProductDetail
     }
     var productDomainFactory: any ProductDomainFactory {
         return appComponent.productDomainFactory
+    }
+    var bookMarkDomainFactory: any BookMarkDomainFactory {
+        return appComponent.bookMarkDomainFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -503,7 +506,7 @@ extension NearByMeComponent: Registration {
 }
 extension CategorySearchComponent: Registration {
     public func registerItems() {
-        keyPathToName[\CategorySearchDependency.printShopDomainFactory] = "printShopDomainFactory-any PrintShopDomainFactory"
+        keyPathToName[\CategorySearchDependency.productDomainFactory] = "productDomainFactory-any ProductDomainFactory"
         keyPathToName[\CategorySearchDependency.filterFactory] = "filterFactory-any FilterFactory"
     }
 }
@@ -540,6 +543,7 @@ extension ProductDetailComponent: Registration {
     public func registerItems() {
         keyPathToName[\ProductDetailDependency.bookMarkBottomSheetFactory] = "bookMarkBottomSheetFactory-any BookMarkBottomSheetFactory"
         keyPathToName[\ProductDetailDependency.productDomainFactory] = "productDomainFactory-any ProductDomainFactory"
+        keyPathToName[\ProductDetailDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
     }
 }
 extension BookMarkDomainComponent: Registration {

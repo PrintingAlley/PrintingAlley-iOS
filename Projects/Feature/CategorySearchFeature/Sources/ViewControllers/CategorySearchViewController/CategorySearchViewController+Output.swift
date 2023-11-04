@@ -13,7 +13,6 @@ import UIKit
 import BaseFeature
 import BaseDomainInterface
 
-
 extension CategorySearchViewController {
     
     func bindDataSource(output: CategorySearchViewModel.Output) {
@@ -30,8 +29,6 @@ extension CategorySearchViewController {
                 let indexPath: IndexPath = IndexPath(row: index, section: 0)
                 
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PinterestCollectionViewCell.identifer, for: indexPath) as? PinterestCollectionViewCell else { return UICollectionViewCell() }
-                
-                //                                        cell.delegate = self
                 cell.update(model: model)
                 return cell
             }
