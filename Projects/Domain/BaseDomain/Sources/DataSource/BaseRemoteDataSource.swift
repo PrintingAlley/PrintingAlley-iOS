@@ -50,13 +50,6 @@ private extension BaseRemoteDataSource {
             .timeout(.seconds(10), scheduler: MainScheduler.asyncInstance)
             .catch { error in
                 
-                
-                print("KKK \(type(of: error))")
-                
-                print("KKK \(error)")
-                
-                print("KKK \(error as? MoyaError)")
-                
                 if error.localizedDescription.contains("401") { // 임시 토큰 만료 확인용 코드
                     return Single.error(api.errorMap[401] ?? error)
                 }

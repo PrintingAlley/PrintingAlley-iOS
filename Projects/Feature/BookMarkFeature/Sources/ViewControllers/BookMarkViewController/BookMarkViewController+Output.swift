@@ -37,7 +37,7 @@ extension BookMarkViewController {
                 }
                 
             })
-            .bind(to: collectionView.rx.items) { collectionView,index,model -> UICollectionViewCell in
+            .bind(to: collectionView.rx.items) { [weak self] collectionView,index,model -> UICollectionViewCell in
                 
                 let indexPath = IndexPath(row: index, section: 0)
                 
@@ -45,8 +45,8 @@ extension BookMarkViewController {
                     return UICollectionViewCell()
                 }
                 
-                cell.update(model: model)
-                
+                cell.update(model: model, isEditing: input.isEdit.value)
+                cell.delegate = self
                 
                 return cell
                 
@@ -122,7 +122,12 @@ extension BookMarkViewController {
     
     /// 셀 선택
     func bindItemSelected(output: BookMarkViewModel.Output) {
+        
+        
         collectionView.rx.itemSelected
+            .withLatestFrom(input.isEdit){($0,$1)}
+            .filter({$0.1 != true}) // 편집중이 아니면
+            .map{$0.0}
             .withLatestFrom(output.dataSource){($0, $1)}
             .subscribe(onNext: { [weak self] (indexPath, dataSource) in
                 

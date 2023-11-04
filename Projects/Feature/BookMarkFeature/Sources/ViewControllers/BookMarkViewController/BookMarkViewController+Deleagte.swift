@@ -9,4 +9,9 @@
 import Foundation
 import UIKit
 
+extension BookMarkViewController: BookMarkCollectionViewCellDelegate {
+    func tapBookMark(id: Int) {
+        input.tapItem.onNext(id)
+    }
 
+}

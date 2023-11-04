@@ -69,7 +69,7 @@ class BookMarkViewController: UIViewController {
         $0.scrollDirection = .vertical
         $0.minimumLineSpacing = 16
         $0.minimumInteritemSpacing = 16
-        $0.sectionInset = UIEdgeInsets(top: 24, left: 16.0, bottom: 0, right: 16.0)
+        $0.sectionInset = UIEdgeInsets(top: 24, left: 16.0, bottom: 20, right: 16.0)
         
         
         $0.itemSize = .init(width: GRID_WIDHT() , height: GRID_HEIGHT())
