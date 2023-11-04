@@ -57,7 +57,7 @@ public final class BookMarkDetailViewModel: ViewModelType {
                             let alleryError = error.asAlleyError
                             DEBUG_LOG(alleryError.asAFError?.responseCode)
                                 return Single<BookMarkGroupEntity>.create { single in
-                                    single(.success(BookMarkGroupEntity(id: 0, name: "", bookmarks: [], statusCode: 0, message: alleryError.errorDescription)))
+                                    single(.success(BookMarkGroupEntity(id: 0, name: "", bookmarks: [], statusCode: 0, message: alleryError.errorDescription!)))
                                     return Disposables.create()
                                 }
 
@@ -79,7 +79,7 @@ public final class BookMarkDetailViewModel: ViewModelType {
                         let alleryError = error.asAlleyError
                         DEBUG_LOG(alleryError.asAFError?.responseCode)
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription!)))
                                 return Disposables.create()
                             }
 

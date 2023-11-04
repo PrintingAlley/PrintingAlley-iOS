@@ -118,18 +118,18 @@ extension BookMarkViewModel {
                         DEBUG_LOG("ERR: \(error)")
                         if alleryError == .tokenExpired {
                             
-                            output.showToast.onNext(BaseEntity(statusCode: 0, message: alleryError.errorDescription))
+                            output.showToast.onNext(BaseEntity(statusCode: 0, message: alleryError.errorDescription!))
                         }
                         
                         else {
-                            output.showToast.onNext(BaseEntity(statusCode: 0, message: alleryError.errorDescription))
+                            output.showToast.onNext(BaseEntity(statusCode: 0, message: alleryError.errorDescription!))
                         }
                         
                     
                        
                         
                             return Single<BookMarkGroupsEntity>.create { single in
-                                single(.success(BookMarkGroupsEntity(bookmarkGroups: [], statusCode: 0, message: alleryError.errorDescription)))
+                                single(.success(BookMarkGroupsEntity(bookmarkGroups: [], statusCode: 0, message: alleryError.errorDescription!)))
                                 return Disposables.create()
                             }
 
@@ -159,13 +159,13 @@ extension BookMarkViewModel {
                         if alleryError == .tokenExpired {
                             
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription!)))
                                 return Disposables.create()
                             }
                         }
                         
                         return Single<BaseEntity>.create { single in
-                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription!)))
                             return Disposables.create()
                         }
                     })

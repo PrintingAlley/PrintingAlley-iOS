@@ -55,7 +55,7 @@ public enum AlleyError: Error, Equatable {
 }
 
 extension AlleyError: LocalizedError {
-    public var errorDescription: String {
+    public var errorDescription: String? {
         switch self {
         case .unknown:
             return "알 수 없는 오류가 발생하였습니다."

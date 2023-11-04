@@ -47,7 +47,6 @@ public struct JwtPlugin: PluginType {
             if let new = try? res.map(TokenDTO.self) {
                 saveToken(token: new)
             }
-            
         default:
             break
         }

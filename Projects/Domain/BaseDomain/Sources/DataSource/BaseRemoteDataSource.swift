@@ -12,7 +12,6 @@ import JwtStoreInterface
 import Moya
 import RxMoya
 import RxSwift
-import Alamofire
 
 open class BaseRemoteDataSource<API: AlleyAPI> {
     private let jwtStore: any JwtStore
@@ -51,7 +50,16 @@ private extension BaseRemoteDataSource {
             .timeout(.seconds(10), scheduler: MainScheduler.asyncInstance)
             .catch { error in
                 
-                print("kkk: \((error as NSError).code)")
+                
+                print("KKK \(type(of: error))")
+                
+                print("KKK \(error)")
+                
+                print("KKK \(error as? MoyaError)")
+                
+                if error.localizedDescription.contains("401") { // 임시 토큰 만료 확인용 코드
+                    return Single.error(api.errorMap[401] ?? error)
+                }
                 
                 guard let errorCode = (error as? MoyaError)?.response?.statusCode else {
                     print("KKK: \((error as? MoyaError)) ")

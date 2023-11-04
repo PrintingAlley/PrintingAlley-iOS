@@ -94,7 +94,7 @@ final class MyPageContentViewModel : ViewModelType {
                         DEBUG_LOG(err.localizedDescription)
                         
                         return Single<BaseEntity>.create { single in
-                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription!)))
                             return Disposables.create()
                 
                         }
@@ -116,7 +116,7 @@ final class MyPageContentViewModel : ViewModelType {
                         DEBUG_LOG(err.localizedDescription)
                         
                         return Single<BaseEntity>.create { single in
-                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription!)))
                             return Disposables.create()
                 
                         }

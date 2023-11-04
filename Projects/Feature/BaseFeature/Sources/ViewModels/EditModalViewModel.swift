@@ -81,13 +81,13 @@ extension EditModalViewModel {
                             
                             if alleryError == .tokenExpired {
                                 return Single<BaseEntity>.create { single in
-                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription!)))
                                     return Disposables.create()
                                 }
                             }
                             
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription!)))
                                 return Disposables.create()
                             }
                         })
@@ -101,14 +101,14 @@ extension EditModalViewModel {
                             
                             if alleryError == .tokenExpired {
                                 return Single<BaseEntity>.create { single in
-                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription!)))
                                     return Disposables.create()
                                 }
                             }
                             
                             
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription!)))
 
                                 return Disposables.create()
                             }
@@ -123,13 +123,13 @@ extension EditModalViewModel {
                             
                             if alleryError == .tokenExpired {
                                 return Single<BaseEntity>.create { single in
-                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                    single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription!)))
                                     return Disposables.create()
                                 }
                             }
                             
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription!)))
                                 return Disposables.create()
                             }
                         })
