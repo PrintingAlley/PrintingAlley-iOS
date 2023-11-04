@@ -10,7 +10,7 @@ import UIKit
 import DesignSystem
 import BookMarkDomainInterface
 import Kingfisher
-
+import UtilityModule
 
 
 class BookMarkListTableViewCell: UITableViewCell {
@@ -18,11 +18,8 @@ class BookMarkListTableViewCell: UITableViewCell {
     static let identifier: String = "BookMarkListTableViewCell"
     
     lazy var frontImageView: UIImageView = UIImageView().then {
+        $0.setRound([.allCorners], radius: 4)
         $0.contentMode = .scaleAspectFit
-        $0.image = DesignSystemAsset.Icon.blackBookMark.image
-        $0.contentMode = .scaleAspectFill
-        $0.layer.cornerRadius = 4
-        $0.clipsToBounds = true
     }
     
     lazy var titleLabel: AlleyLabel = AlleyLabel()

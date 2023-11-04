@@ -23,6 +23,9 @@ public class BookMarkBottomSheetViewModel: ViewModelType {
     var fetchMyBookMarksUseCase: any FetchMyBookMarksUseCase
     var addBookMarkUseCase : any AddBookMarkUseCase
 
+    
+    
+    
     public struct Input {
         let fetchData: PublishSubject<Void> = .init()
         let selectedItem: PublishSubject<Int> = .init()
@@ -37,6 +40,10 @@ public class BookMarkBottomSheetViewModel: ViewModelType {
         self.id = id
         self.fetchMyBookMarksUseCase = fetchMyBookMarksUseCase
         self.addBookMarkUseCase = addBookMarkUseCase
+    }
+    
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
     }
     
     

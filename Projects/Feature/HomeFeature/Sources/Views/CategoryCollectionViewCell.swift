@@ -18,7 +18,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     static let identifier = "CategoryCollectionViewCell"
     
     private let image = UIImageView().then {
-        $0.image = DesignSystemAsset.Icon.bookMark.image
+        $0.image = DesignSystemAsset.Icon.blueBookMark.image
         $0.contentMode = .scaleAspectFit
     }
     

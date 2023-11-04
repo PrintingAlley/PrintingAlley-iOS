@@ -39,6 +39,10 @@ final class ProductDetailViewModel: ViewModelType {
         self.removeBookMarkUseCase = removeBookMarkUseCase
     }
     
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
+    }
+    
     struct Input {
         let askToast: PublishSubject<BaseEntity> = .init()
         let fetchData: PublishSubject<Void> = .init()

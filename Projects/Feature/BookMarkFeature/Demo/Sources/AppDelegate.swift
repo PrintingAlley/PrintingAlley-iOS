@@ -9,7 +9,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = BookMarkDetailViewController(viewModel: BookMarkDetailViewModel())
+        let viewController = UIViewController()
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 

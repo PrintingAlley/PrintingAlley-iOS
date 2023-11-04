@@ -30,8 +30,8 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     }
     
     public lazy var bookmarkButton = UIButton().then { // 필요할 때 isHidden 시키기
-        $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
-        $0.setImage(DesignSystemAsset.Icon.bookMark.image, for: .selected)
+        $0.setImage(DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.emptyBookMark.image, for: .selected)
         $0.addTarget(self, action: #selector(touchUpBookmark), for: .touchUpInside)
     }
     
