@@ -10,7 +10,7 @@ import Foundation
 import BookMarkDomainInterface
 
 struct AddBookMarkRequestDTO : Encodable {
-    let prodcutId: Int
+    let productId: Int
     let groupId: Int
     
 }

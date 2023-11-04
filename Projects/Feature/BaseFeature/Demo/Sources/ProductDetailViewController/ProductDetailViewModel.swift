@@ -18,6 +18,10 @@ final class ProductDetailViewModel: ViewModelType {
         self.id = id
     }
     
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
+    }
+    
     struct Input {
         
     }

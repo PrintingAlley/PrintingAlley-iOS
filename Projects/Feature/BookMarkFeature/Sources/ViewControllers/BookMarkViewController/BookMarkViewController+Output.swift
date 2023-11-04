@@ -10,6 +10,8 @@ import Foundation
 import DesignSystem
 import RxSwift
 import UIKit
+import RxCocoa
+import UtilityModule
 
 extension BookMarkViewController {
     
@@ -26,33 +28,34 @@ extension BookMarkViewController {
                     self.refreshControl.endRefreshing()
                 }
                 
-                self.tableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
-            })
-            .bind(to: tableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
-                
-                guard let self else { return UITableViewCell() }
-                
-                let indexPath: IndexPath = IndexPath(row: index, section: 0)
-                
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: BookMarkTableViewCell.identifier, for: indexPath) as? BookMarkTableViewCell  else {
-                    return UITableViewCell()
+                if dataSource.isEmpty {
+                    self.collectionView.setEmptyMessage("저장된 작품이 없어요.")
                 }
                 
-                cell.deleagte = self
-                cell.selectionStyle = .none
-                cell.update(model: model,isEditing: input.isEdit.value , isLast: output.dataSource.value.count-1 == index )
+                else {
+                    self.collectionView.restore() // 엠티뷰 제거
+                }
+                
+            })
+            .bind(to: collectionView.rx.items) { [weak self] collectionView,index,model -> UICollectionViewCell in
+                
+                let indexPath = IndexPath(row: index, section: 0)
+                
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookMarkCollectionViewCell.identifer, for: indexPath) as? BookMarkCollectionViewCell  else {
+                    return UICollectionViewCell()
+                }
+                
+                cell.update(model: model, isEditing: input.isEdit.value)
+                cell.delegate = self
                 
                 return cell
-            }
-        
-            .disposed(by: disposeBag)
-        
-        tableView.rx.itemSelected
-            .subscribe(onNext: {
                 
-                print($0)
-            })
+                
+                
+            }
             .disposed(by: disposeBag)
+        
+
         
     }
     
@@ -119,7 +122,12 @@ extension BookMarkViewController {
     
     /// 셀 선택
     func bindItemSelected(output: BookMarkViewModel.Output) {
-        tableView.rx.itemSelected
+        
+        
+        collectionView.rx.itemSelected
+            .withLatestFrom(input.isEdit){($0,$1)}
+            .filter({$0.1 != true}) // 편집중이 아니면
+            .map{$0.0}
             .withLatestFrom(output.dataSource){($0, $1)}
             .subscribe(onNext: { [weak self] (indexPath, dataSource) in
                 

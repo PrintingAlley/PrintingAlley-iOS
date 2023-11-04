@@ -61,7 +61,7 @@ extension BookMarkViewController {
             
             self.editOrDoneButton.setTitle(isEdit ? "완료" : "편집", for: .normal)
             self.editOrDoneButton.titleLabel?.font = .setFont(.body1)
-            self.editOrDoneButton.setTitleColor(isEdit ? DesignSystemAsset.MainBlue.blue500.color : .black, for: .normal)
+                self.editOrDoneButton.setTitleColor(isEdit ? DesignSystemAsset.MainBlue.blue500.color : DesignSystemAsset.MainBlue.blue500.color, for: .normal)
             
         })
         .disposed(by: disposeBag)
@@ -76,7 +76,7 @@ extension BookMarkViewController {
             .withUnretained(self)
             .subscribe(onNext: { (owner,_) in
                 
-                let vc = AlertViewController(title: "저장목록을 삭제하시겠어요?", content: "목록을 삭제하면 저장된 장소도\n함께 사라져요.", type: .delete,  completion: {
+                let vc = AlertViewController(title: "저장목록을 삭제하시겠어요?", content: "목록을 삭제하면 저장된 작품도\n함께 사라져요.", type: .delete,  completion: {
                     input.runDelete.onNext(())
                 })
                 vc.modalPresentationStyle = .overFullScreen

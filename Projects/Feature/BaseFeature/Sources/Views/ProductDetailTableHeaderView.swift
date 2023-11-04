@@ -126,7 +126,7 @@ extension ProductDetailTableHeaderView {
         delegate?.save(id: model.id, isBookmarked: self.isSaved)
     }
     
-    func update(model: ProductHeaderInfo, isSaved: Bool) { //TODO: 헤더쪽 이미지 및 save 분기 처리 
+    func update(model: ProductHeaderInfo, isSaved: Bool) { 
         self.model = model
         self.isSaved = isSaved
         titleLabel.setTitle(title: model.title, textColor: .sub(.black), font: .header3)
