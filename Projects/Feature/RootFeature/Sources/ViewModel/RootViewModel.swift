@@ -33,9 +33,8 @@ final class RootViewModel: ViewModelType {
     
     public struct Output {
         let endLottie: PublishSubject<Void> = .init()
-        let moveMain: PublishSubject<Void> = .init()
         let appCheckReesult: PublishSubject<Result<VersionCheckEntity,Error>> = .init()
-        let userInfoResult: PublishSubject<Result<String, Error>> = PublishSubject()
+        let userInfoResult: PublishSubject<VerifyEntity> = PublishSubject()
     }
     
     
@@ -71,12 +70,31 @@ final class RootViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
         
-
-// 2.  앱체크
-//        input.fetchAppCheck
-//            .flatMap{
-//                
-//            }
+        
+        
+        input.fetchUserCheck
+            .withLatestFrom(PreferenceManager.$user)
+            .filter({ userInfo in
+               
+                if userInfo == nil { // 현재 유저 정보가 없으면 , 그냥 통과 이므로 밑에 까지 내려갈 필요 없음
+                    output.userInfoResult.onNext(VerifyEntity(isValid: true, statusCode: 200, message: ""))
+                    return false
+                }
+                
+                return true // 유저 정보 있으니 밑에 내려가서 검사 받아야함
+               
+            })
+            .flatMap({ [weak self] _   -> Observable<VerifyEntity> in
+                
+                guard let self else { return Observable.empty()}
+                
+                return self.verifyUserUseCase
+                    .execute()
+                    .catchAndReturn(VerifyEntity(isValid: false, statusCode: 401, message: "인증이 만료되었습니다.\n다시 로그인해 주세요."))
+                    .asObservable()
+            })
+            .bind(to: output.userInfoResult)
+            .disposed(by: disposeBag)
         
         return output
     }

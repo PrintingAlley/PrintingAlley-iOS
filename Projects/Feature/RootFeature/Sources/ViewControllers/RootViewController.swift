@@ -71,7 +71,9 @@ extension RootViewController {
          */
         
         bindStartLottieAndAppCheck(input: input)
-        bindMoveMain(output: output)
+        bindVersionCheck(input: input, output: output)
+        bindUserResult(output: output)
+        
         
     }
     
@@ -80,13 +82,6 @@ extension RootViewController {
         input.fetchVersionCheck.onNext(())
     }
     
-    func bindEndLottie(output: RootViewModel.Output) {
-        output.endLottie
-            .withUnretained(self)
-            .subscribe(onNext: { (owner,_) in 
-            
-        })
-    }
     
     func bindVersionCheck(input: RootViewModel.Input, output: RootViewModel.Output) {
         
@@ -130,6 +125,10 @@ extension RootViewController {
                         
                     }
                     
+                    alertVc.modalPresentationStyle = .overFullScreen
+                    
+                    owner.present(alertVc, animated: false)
+                    
                     
                 
                 case let .failure(error):
@@ -148,13 +147,32 @@ extension RootViewController {
         
     }
     
-    func bindMoveMain(output: RootViewModel.Output) {
-        output.moveMain
+    func bindUserResult(output: RootViewModel.Output) {
+        
+        Observable.zip(output.userInfoResult,output.endLottie)
+            .map{$0.0}
             .withUnretained(self)
-            .subscribe(onNext: { (owner,_) in
-                owner.navigationController?.pushViewController(owner.mainTabFactory.makeView(), animated: false)
+            .subscribe(onNext: { (owner, result) in
+                
+                let vc = AlertViewController(title: "인증 만료", content: result.message, type: .logout) {
+                    LOGOUT()
+                    owner.navigationController?.pushViewController(owner.mainTabFactory.makeView(), animated: false)
+                }
+                
+                vc.modalPresentationStyle = .overFullScreen
+                
+                switch result.isValid {
+                    
+                case true:
+                    owner.navigationController?.pushViewController(owner.mainTabFactory.makeView(), animated: false)
+                case false:
+                    owner.present(vc, animated: false)
+    
+                }
+                
             })
-            .disposed(by: disposeBag)
+        
+        
     }
 }
 
