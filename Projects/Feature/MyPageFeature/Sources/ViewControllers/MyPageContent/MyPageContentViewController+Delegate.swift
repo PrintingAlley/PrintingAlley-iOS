@@ -53,6 +53,9 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
         case .bookMark:
             
             let vc = bookMarkFactory.makeView()
+            
+            vc.hidesBottomBarWhenPushed = true //탭바 숨김
+            
             self.navigationController?.pushViewController(vc, animated: true)
             
         case .review:
