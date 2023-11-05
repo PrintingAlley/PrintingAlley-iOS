@@ -18,6 +18,7 @@ enum AuthAPI {
     case verify
     case logout
     case withdraw
+    case versionCheck(version: String)
 }
 
 extension AuthAPI: AlleyAPI {
@@ -37,6 +38,8 @@ extension AuthAPI: AlleyAPI {
             return "/logout"
         case .withdraw:
             return "/withdrawal"
+        case .versionCheck(version: let version):
+            return "v\(version)"
         }
     }
     
@@ -66,6 +69,8 @@ extension AuthAPI: AlleyAPI {
             
         case .withdraw:
             return .delete
+        case .versionCheck:
+            return .get
         }
     
     }
@@ -81,13 +86,15 @@ extension AuthAPI: AlleyAPI {
         
         case .logout,.withdraw:
             return .requestPlain
+        case .versionCheck:
+            return .requestPlain
         }
     }
     
     
     var jwtStoreProperties: JwtStoreProperties {
         switch self {
-        case .login:
+        case .login,.versionCheck:
             return .none
         case .verify, .logout, .withdraw:
             return .accessToken

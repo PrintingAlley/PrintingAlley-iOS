@@ -45,7 +45,6 @@ public class RootViewController: UIViewController {
         configureCommonUI()
         bidViewModel()
         
-        DEBUG_LOG("APPVER \(APP_VERSION())")
     }
 
 }
