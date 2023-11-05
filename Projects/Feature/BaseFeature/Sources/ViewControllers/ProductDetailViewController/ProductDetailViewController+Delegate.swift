@@ -93,7 +93,7 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
         
         else {
             
-            input.removeItem.onNext(id)
+            input.removeItem.onNext(())
             
         }
     }
@@ -111,8 +111,9 @@ extension ProductDetailViewController: ProductDetailTableViewCellDelegate {
 
 
 extension ProductDetailViewController: BookMarkBottomSheetViewControllerDelegate {
-    func success() { // 세이브 성공 했으니 저장상태 업데이트
+    func success(id: Int) { // 세이브 성공 했으니 저장상태 업데이트
         viewModel.isSaved = true
+        viewModel.bookMarkId = id // 저장 후 삭제할 때 사용할 북마크 id
         tableView.reloadData()
     }
     

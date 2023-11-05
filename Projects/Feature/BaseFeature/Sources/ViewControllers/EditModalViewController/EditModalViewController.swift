@@ -206,12 +206,6 @@ extension EditModalViewController {
                     self.view.showToast(text: result.message)
                 }
                 
-                else if result.statusCode == 401 {
-                    self.view.showToast(text: result.message)
-                    LOGOUT()
-            
-                }
-                
                 else {
                     
                     switch viewModel.type {

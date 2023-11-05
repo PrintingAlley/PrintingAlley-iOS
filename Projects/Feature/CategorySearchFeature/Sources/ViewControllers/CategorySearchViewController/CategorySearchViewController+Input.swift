@@ -34,4 +34,27 @@ extension CategorySearchViewController {
         
     }
     
+    func bindItemSelected() {
+        
+    
+        gridCollectionView
+            .rx
+            .itemSelected
+            .map{$0.row}
+            .withLatestFrom(output.dataSource){($0,$1)}
+            .subscribe(onNext: { [weak self] (index,dataSource) in
+                
+                guard let self else { return }
+                
+                let vc = self.productDetailFactory.makeView(id: dataSource.products[index].id)
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+            
+                
+            })
+            .disposed(by: disposeBag)
+    
+        
+    }
+    
 }

@@ -37,15 +37,19 @@ extension ProductDetailViewController {
         
         output.dataInfo
             .map{$0.dataSoruce}
-            .bind(to: tableView.rx.items){ (tableView, indexPath ,model) -> UITableViewCell in
+            .bind(to: tableView.rx.items){ [weak self]  (tableView, indexPath ,model) -> UITableViewCell in
+                
+                
+                guard let self else { return UITableViewCell()}
                 
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductDetailTableViewCell.identifer, for: IndexPath(row: indexPath, section: 0)) as? ProductDetailTableViewCell else {
                     return UITableViewCell()
                 }
                 
                 cell.update(model: model, index: indexPath)
-                
-                return cell 
+                cell.selectionStyle = .none
+                cell.delegate = self
+                return cell
             }
         
     }

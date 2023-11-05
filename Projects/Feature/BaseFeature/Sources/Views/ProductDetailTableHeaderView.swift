@@ -21,7 +21,6 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
 
     static let identifer: String = "ProductDetailTableHeaderView"
     
-    private let dummyImages: [String] = ["https://ibb.co/T0Gy2p3","https://ibb.co/T0Gy2p3","https://ibb.co/T0Gy2p3"]
     
     lazy var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -38,7 +37,9 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     }
     
     
-    lazy var infoView: UIView = UIView()
+    lazy var infoView: UIView = UIView().then {
+        $0.backgroundColor = .white
+    }
     
     lazy var titleLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 1
@@ -63,7 +64,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        
+        self.backgroundColor = .white
         addSubviews()
         makeConstraints()
         
@@ -79,8 +80,8 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
 
 extension ProductDetailTableHeaderView {
     func addSubviews() {
-        self.addSubviews(collectionView, infoView, saveButton, emptyView)
-        self.infoView.addSubviews(titleLabel, subtitleLabel)
+        self.addSubviews(collectionView, infoView, emptyView)
+        self.infoView.addSubviews(titleLabel, subtitleLabel, saveButton)
     }
     
     func makeConstraints() {
@@ -91,14 +92,15 @@ extension ProductDetailTableHeaderView {
         
         infoView.snp.makeConstraints {
             $0.top.equalTo(collectionView.snp.bottom)
-            $0.left.equalToSuperview().inset(21)
-            $0.right.equalToSuperview().inset(64)
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview()
             
         }
         
-        titleLabel.snp.makeConstraints {
+        titleLabel.snp.makeConstraints { //Width 지정 후 짤림 처리
             $0.top.equalToSuperview().inset(24)
-            $0.left.right.equalToSuperview()
+            $0.left.equalToSuperview().inset(21)
+            $0.right.equalToSuperview().inset(64)
         }
         
         subtitleLabel.snp.makeConstraints {
@@ -132,7 +134,10 @@ extension ProductDetailTableHeaderView {
         titleLabel.setTitle(title: model.title, textColor: .sub(.black), font: .header3)
         subtitleLabel.setTitle(title: model.subtitle, textColor: .grey(.grey100), font: .subtitle3)
         
-        saveButton.setImage(isSaved ? DesignSystemAsset.Icon.emptyBookMark.image : DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
+        titleLabel.lineBreakMode = .byTruncatingTail
+        subtitleLabel.lineBreakMode = .byTruncatingTail
+        
+        saveButton.setImage(isSaved ? DesignSystemAsset.Icon.blueBookMark.image : DesignSystemAsset.Icon.emptyBookMark.image, for: .normal)
         
         collectionView.reloadData()
     }

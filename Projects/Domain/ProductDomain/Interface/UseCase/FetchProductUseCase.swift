@@ -11,5 +11,5 @@ import BaseDomainInterface
 import RxSwift
 
 public protocol FetchProductUseCase {
-    func execute(id: Int) -> Single<ProductEntity>
+    func execute(id: Int) -> Single<ProductDetailEntity>
 }

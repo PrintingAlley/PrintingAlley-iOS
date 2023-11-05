@@ -139,14 +139,16 @@ extension AlertViewController {
     
     func makeConstraints() {
         
+        let width = UIScreen.main.bounds.size.width
+        
         alertView.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(58)
+            $0.width.equalTo( width - ((width * (116.0))/390.0))
             $0.center.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
-            $0.left.right.equalToSuperview().inset(40)
+            $0.left.right.equalToSuperview().inset(30)
             
         }
         
@@ -177,7 +179,6 @@ extension AlertViewController {
             $0.bottom.equalToSuperview()
         }
         
-
     }
     
     @objc func cancelAction() {

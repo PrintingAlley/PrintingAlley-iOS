@@ -11,5 +11,5 @@ import RxSwift
 import BaseDomainInterface
 
 public protocol AddBookMarkUseCase {
-    func execute(productId: Int, bookmarkGroupId: Int) -> Single<BaseEntity>
+    func execute(productId: Int, bookmarkGroupId: Int) -> Single<AddBookMarkEntity>
 }

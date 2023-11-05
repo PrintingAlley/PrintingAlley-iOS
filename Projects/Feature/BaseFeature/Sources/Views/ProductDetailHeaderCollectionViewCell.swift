@@ -18,7 +18,7 @@ class ProductDetailHeaderCollectionViewCell: UICollectionViewCell {
     static let identifer: String = "ProductDetailHeaderCollectionViewCell"
     
     lazy var imageView: UIImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
     }
     
     
@@ -40,6 +40,6 @@ class ProductDetailHeaderCollectionViewCell: UICollectionViewCell {
 
 extension ProductDetailHeaderCollectionViewCell {
     public func update(image: String) {
-        imageView.image = DesignSystemAsset.Logo.productDummy.image
+        imageView.kf.setImage(with: URL(string: image),placeholder: DesignSystemAsset.PlaceHolder.largePH.image)
     }
 }

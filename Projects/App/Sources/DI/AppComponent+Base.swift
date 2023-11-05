@@ -19,7 +19,7 @@ extension AppComponent {
         BookMarkBottomSheetComponent(parent: self)
     }
     
-    var productDetailComponent: any ProductDetailFactory {
+    var productDetailFactory: any ProductDetailFactory {
         ProductDetailComponent(parent: self)
     }
 }

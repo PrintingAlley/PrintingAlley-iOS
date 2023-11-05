@@ -16,17 +16,9 @@ import SnapKit
 import Then
 import CategorySearchFeatureInterface
 import BaseDomainInterface
+import BaseFeatureInterface
 
 class CategorySearchViewController: UIViewController {
-    
-    var dummy: [Dummy] = [ // CollectionView용 더미 이미지 리스트
-        Dummy(image: DesignSystemAsset.Logo.tmpCard1.image, title: "Dongseongro Blues Pub Branding"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard2.image, title: "PAGE GALLERIES"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard3.image, title: "Graphics thisisgrey likes"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard4.image, title: "안녕"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard5.image, title: "SPACELOGIC"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard6.image, title: "Dongseongro Blues Pub \nBranding")
-    ]
     
     
     lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then{
@@ -82,11 +74,14 @@ class CategorySearchViewController: UIViewController {
     lazy var output = viewModel.transform(input: input)
     
     var filterFactory: any FilterFactory
+    
+    var productDetailFactory: any ProductDetailFactory
 
     let disposeBag = DisposeBag()
     
-    init(filterFactory: FilterFactory, viewModel: CategorySearchViewModel) {
+    init(filterFactory: FilterFactory, productDetailFactory: ProductDetailFactory , viewModel: CategorySearchViewModel) {
         self.filterFactory = filterFactory
+        self.productDetailFactory = productDetailFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -169,6 +164,7 @@ extension CategorySearchViewController {
         bindDataSource(output: output)
         bindIndicator(output: output)
         bindFilterButton()
+        bindItemSelected()
         input.fetchData.onNext(())
     }
     

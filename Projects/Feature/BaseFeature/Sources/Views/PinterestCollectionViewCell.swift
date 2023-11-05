@@ -16,9 +16,6 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public static let identifer = "PinterestCollectionViewCell"
     
-    private var imageButton = UIButton().then {
-        $0.addTarget(self, action: #selector(touchUpImage), for: .touchUpInside)
-    }
     
     public var imageView = UIImageView().then {
         $0.setRound([.allCorners], radius: 8)
@@ -31,7 +28,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     }
     
     public lazy var bookmarkButton = UIButton().then { // 필요할 때 isHidden 시키기
-        $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
         $0.setImage(DesignSystemAsset.Icon.emptyBookMark.image, for: .selected)
         $0.addTarget(self, action: #selector(touchUpBookmark), for: .touchUpInside)
     }
@@ -51,7 +48,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
 extension PinterestCollectionViewCell {
     
     private func addSubviews() {
-        contentView.addSubviews(imageView, imageButton, title, bookmarkButton)
+        contentView.addSubviews(imageView,title, bookmarkButton)
     }
     
     private func makeConstrains() {
@@ -59,10 +56,6 @@ extension PinterestCollectionViewCell {
             $0.top.leading.equalToSuperview()
             $0.width.equalTo(171)
             $0.height.equalTo(171)
-        }
-        
-        imageButton.snp.makeConstraints {
-            $0.edges.equalTo(imageView)
         }
         
         title.snp.makeConstraints {
@@ -87,9 +80,6 @@ extension PinterestCollectionViewCell {
             $0.height.equalTo(171)
         }
         
-        imageButton.snp.updateConstraints {
-            $0.edges.equalTo(imageView)
-        }
         
         title.snp.updateConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(4)
@@ -111,10 +101,6 @@ extension PinterestCollectionViewCell {
         DEBUG_LOG("북마크 버튼 누름")
     }
     
-    @objc
-    private func touchUpImage() {
-        DEBUG_LOG("이미지 누름")
-    }
 }
 
 public struct Dummy {

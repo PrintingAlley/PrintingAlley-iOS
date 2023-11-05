@@ -16,7 +16,7 @@ import UtilityModule
 import BaseFeatureInterface
 
 public protocol BookMarkBottomSheetViewControllerDelegate: AnyObject {
-    func success()
+    func success(id: Int)
 }
 
 public class BookMarkBottomSheetViewController: UIViewController {
@@ -132,6 +132,8 @@ extension BookMarkBottomSheetViewController {
         bindDataSource(output: output)
         bindFetchData(input: input)
         bindtapItem(input: input)
+        bindResult(output: output)
+        addResult(output: output)
         input.fetchData.onNext(())
         
     }
