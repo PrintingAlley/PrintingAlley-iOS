@@ -9,7 +9,7 @@
 import Foundation
 
 public struct VersionCheckEntity {
-    let code: Int // 0 : 통과 , 1: 업데이트 권고 , 2: 강제 업데이트
+    public let code: Int // 0 : 통과 , 1: 업데이트 권고 , 2: 강제 업데이트
     let statusCode: Int
     let message: String
     
