@@ -8,7 +8,6 @@
 
 import Foundation
 
-// TODO: bookMark id 
 
 public struct ProductDetailEntity  {
     public let product: ProductEntity

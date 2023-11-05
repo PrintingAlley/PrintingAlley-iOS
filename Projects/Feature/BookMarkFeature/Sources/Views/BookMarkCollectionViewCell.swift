@@ -4,8 +4,6 @@ import UtilityModule
 import BookMarkDomainInterface
 import Kingfisher
 
-//TODO: cell 선택 체크 및 해제
-//TODO: white 오파시티 뷰 
 
 protocol BookMarkCollectionViewCellDelegate: AnyObject {
     func tapBookMark(id: Int)
