@@ -44,6 +44,8 @@ public class RootViewController: UIViewController {
         makeConstraints()
         configureCommonUI()
         bidViewModel()
+        
+        DEBUG_LOG("APPVER \(APP_VERSION())")
     }
 
 }
