@@ -40,6 +40,6 @@ class ProductDetailHeaderCollectionViewCell: UICollectionViewCell {
 
 extension ProductDetailHeaderCollectionViewCell {
     public func update(image: String) {
-        imageView.kf.setImage(with: URL(string: image))
+        imageView.kf.setImage(with: URL(string: image),placeholder: DesignSystemAsset.PlaceHolder.largePH.image)
     }
 }

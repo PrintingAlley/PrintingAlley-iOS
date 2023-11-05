@@ -134,6 +134,9 @@ extension ProductDetailTableHeaderView {
         titleLabel.setTitle(title: model.title, textColor: .sub(.black), font: .header3)
         subtitleLabel.setTitle(title: model.subtitle, textColor: .grey(.grey100), font: .subtitle3)
         
+        titleLabel.lineBreakMode = .byTruncatingTail
+        subtitleLabel.lineBreakMode = .byTruncatingTail
+        
         saveButton.setImage(isSaved ? DesignSystemAsset.Icon.blueBookMark.image : DesignSystemAsset.Icon.emptyBookMark.image, for: .normal)
         
         collectionView.reloadData()
