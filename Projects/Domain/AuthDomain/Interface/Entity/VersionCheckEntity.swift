@@ -10,8 +10,8 @@ import Foundation
 
 public struct VersionCheckEntity {
     public let code: Int // 0 : 통과 , 1: 업데이트 권고 , 2: 강제 업데이트
-    let statusCode: Int
-    let message: String
+    public let statusCode: Int
+    public let message: String
     
     
     public init(code: Int, statusCode: Int, message: String) {

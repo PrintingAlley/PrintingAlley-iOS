@@ -108,14 +108,25 @@ extension RootViewController {
                         return
                     
                     case 1: // 업데이트 권유
-                        alertVc = AlertViewController(title: "인쇄골목 업데이트 알림", content: "최신 버전으로 업데이트 후 이용하시기 바랍니다.\n감사합니다.",cancelCompletion: {
+                        alertVc = AlertViewController(title: "인쇄골목 업데이트 알림", content: "최신 버전으로 업데이트 후 이용하시기 바랍니다.\n감사합니다.", type: .offerUpdate,completion: {
+                            owner.goAppStore()
+                        } ,cancelCompletion: {
                             input.fetchUserCheck.onNext(())
-                        },completion: {
-                            <#code#>
                         })
+                        
+                    case 2:
+                        alertVc = AlertViewController(title: "인쇄골목 업데이트 알림", content: "최신 버전으로 업데이트 후 이용하시기 바랍니다.\n감사합니다.", type: .forceUpdate,completion: {
+                            owner.goAppStore()
+                        })
+                        
                     
                     
                     default:
+                        
+                        alertVc = AlertViewController(title: "네트워크 오프라인 알림", content: entity.message, type: .exit,completion: {
+                            exit(0)
+                        })
+                        
                         
                     }
                     

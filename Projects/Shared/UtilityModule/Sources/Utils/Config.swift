@@ -80,3 +80,7 @@ public func NAVER_MAP_CLIENT_ID() -> String {
     CONFIG()["NAVER_MAP_CLIENT_ID"] as? String ?? ""
     
 }
+
+public func APP_ID() -> String {
+    CONFIG()["APP_ID"] as? String ?? ""
+}
