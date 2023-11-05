@@ -170,7 +170,7 @@ extension AlertViewController {
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
-            $0.left.right.equalToSuperview().inset(30)
+            $0.left.right.equalToSuperview().inset(25)
             
         }
         

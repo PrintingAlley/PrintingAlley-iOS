@@ -103,14 +103,14 @@ extension RootViewController {
                         return
                     
                     case 1: // 업데이트 권유
-                        alertVc = AlertViewController(title: "인쇄골목 업데이트 알림", content: "최신 버전으로 업데이트 후 이용하시기 바랍니다.\n감사합니다.", type: .offerUpdate,completion: {
+                        alertVc = AlertViewController(title: "인쇄골목 업데이트 알림", content: "최신 버전으로 업데이트 후 이용하시기 바랍니다.감사합니다.", type: .offerUpdate,completion: {
                             owner.goAppStore()
                         } ,cancelCompletion: {
                             input.fetchUserCheck.onNext(())
                         })
                         
                     case 2:
-                        alertVc = AlertViewController(title: "인쇄골목 업데이트 알림", content: "최신 버전으로 업데이트 후 이용하시기 바랍니다.\n감사합니다.", type: .forceUpdate,completion: {
+                        alertVc = AlertViewController(title: "인쇄골목 업데이트 알림", content: "최신 버전으로 업데이트 후 이용하시기 바랍니다.감사합니다.", type: .forceUpdate,completion: {
                             owner.goAppStore()
                         })
                         
@@ -149,15 +149,15 @@ extension RootViewController {
     
     func bindUserResult(output: RootViewModel.Output) {
         
-        Observable.zip(output.userInfoResult,output.endLottie)
+        Observable.zip(output.userInfoResult, output.endLottie)
             .map{$0.0}
             .withUnretained(self)
             .subscribe(onNext: { (owner, result) in
                 
-                let vc = AlertViewController(title: "인증 만료", content: result.message, type: .logout) {
+                let vc = AlertViewController(title: "인증 만료", content: result.message, type: .logout,completion: {
                     LOGOUT()
                     owner.navigationController?.pushViewController(owner.mainTabFactory.makeView(), animated: false)
-                }
+                })
                 
                 vc.modalPresentationStyle = .overFullScreen
                 

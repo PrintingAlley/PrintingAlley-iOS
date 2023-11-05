@@ -39,7 +39,7 @@ extension AuthAPI: AlleyAPI {
         case .withdraw:
             return "/withdrawal"
         case .versionCheck(version: let version):
-            return "v\(version)"
+            return "/api-version/v\(version)"
         }
     }
     
