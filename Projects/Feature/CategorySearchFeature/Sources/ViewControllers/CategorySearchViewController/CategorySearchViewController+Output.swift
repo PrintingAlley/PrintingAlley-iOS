@@ -30,6 +30,7 @@ extension CategorySearchViewController {
                 
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PinterestCollectionViewCell.identifer, for: indexPath) as? PinterestCollectionViewCell else { return UICollectionViewCell() }
                 cell.update(model: model)
+                cell.bookmarkButton.isHidden = true
                 return cell
             }
             .disposed(by: disposeBag)
