@@ -16,7 +16,7 @@ public final class PrintingTableViewCell: UITableViewCell {
     public static let identifier = "PrintingTableViewCell"
     
     private let image = UIImageView().then {
-        $0.image = DesignSystemAsset.Icon.blueBookMark.image
+        $0.image = DesignSystemAsset.Icon.bluebookMark.image
         $0.contentMode = .scaleAspectFit
         $0.backgroundColor = .lightGray
         $0.setRound([.allCorners], radius: 9)

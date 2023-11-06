@@ -16,7 +16,6 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public static let identifer = "PinterestCollectionViewCell"
     
-    
     public var imageView = UIImageView().then {
         $0.setRound([.allCorners], radius: 8)
         $0.contentMode = .scaleAspectFit
@@ -28,7 +27,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     }
     
     public lazy var bookmarkButton = UIButton().then { // 필요할 때 isHidden 시키기
-        $0.setImage(DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
         $0.setImage(DesignSystemAsset.Icon.emptyBookMark.image, for: .selected)
         $0.addTarget(self, action: #selector(touchUpBookmark), for: .touchUpInside)
     }
@@ -48,7 +47,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
 extension PinterestCollectionViewCell {
     
     private func addSubviews() {
-        contentView.addSubviews(imageView,title, bookmarkButton)
+        contentView.addSubviews(imageView, title, bookmarkButton)
     }
     
     private func makeConstrains() {
@@ -79,7 +78,6 @@ extension PinterestCollectionViewCell {
             $0.width.equalTo(171)
             $0.height.equalTo(171)
         }
-        
         
         title.snp.updateConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(4)
