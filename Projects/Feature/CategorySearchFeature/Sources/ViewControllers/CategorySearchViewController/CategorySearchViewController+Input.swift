@@ -48,8 +48,10 @@ extension CategorySearchViewController {
                 
                 let vc = self.productDetailFactory.makeView(id: dataSource.products[index].id)
                 
+                vc.hidesBottomBarWhenPushed = true // 탭바 내림
+                
                 self.navigationController?.pushViewController(vc, animated: true)
-            
+                
                 
             })
             .disposed(by: disposeBag)

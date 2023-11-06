@@ -12,6 +12,7 @@ import SnapKit
 import Then
 import MainTabFeatureInterface
 import RxSwift
+import DesignSystem
 
 public class RootViewController: UIViewController {
 
@@ -44,6 +45,7 @@ public class RootViewController: UIViewController {
         makeConstraints()
         configureCommonUI()
         bidViewModel()
+        
     }
 
 }
@@ -69,29 +71,117 @@ extension RootViewController {
          */
         
         bindStartLottieAndAppCheck(input: input)
-        bindMoveMain(output: output)
+        bindVersionCheck(input: input, output: output)
+        bindUserResult(output: output)
+        
         
     }
     
     func bindStartLottieAndAppCheck(input: RootViewModel.Input) {
         input.startLottie.onNext(())
-        input.fetchAppCheck.onNext(())
+        input.fetchVersionCheck.onNext(())
     }
     
-    func bindEndLottie(output: RootViewModel.Output) {
-        output.endLottie
-            .withUnretained(self)
-            .subscribe(onNext: { (owner,_) in 
-            
-        })
-    }
     
-    func bindMoveMain(output: RootViewModel.Output) {
-        output.moveMain
+    func bindVersionCheck(input: RootViewModel.Input, output: RootViewModel.Output) {
+        
+        output.appCheckReesult
             .withUnretained(self)
-            .subscribe(onNext: { (owner,_) in
-                owner.navigationController?.pushViewController(owner.mainTabFactory.makeView(), animated: false)
+            .subscribe(onNext: { (owner, result) in
+                
+                switch result {
+                    
+                case let .success(entity):
+                    
+                    var alertVc: AlertViewController
+                    
+                    
+                    switch entity.code {
+                        
+                    case 0: //성공
+                        input.fetchUserCheck.onNext(())
+                        return
+                    
+                    case 1: // 업데이트 권유
+                        alertVc = AlertViewController(title: "인쇄골목 업데이트 알림", content: "최신 버전으로 업데이트 후 이용하시기 바랍니다.감사합니다.", type: .offerUpdate,completion: {
+                            owner.goAppStore()
+                        } ,cancelCompletion: {
+                            input.fetchUserCheck.onNext(())
+                        })
+                        
+                    case 2:
+                        alertVc = AlertViewController(title: "인쇄골목 업데이트 알림", content: "최신 버전으로 업데이트 후 이용하시기 바랍니다.감사합니다.", type: .forceUpdate,completion: {
+                            owner.goAppStore()
+                        })
+                        
+                    
+                    
+                    default:
+                        
+                        alertVc = AlertViewController(title: "네트워크 오프라인 알림", content: entity.message, type: .exit,completion: {
+                            exit(0)
+                        })
+                        
+                        
+                    }
+                    
+                    alertVc.modalPresentationStyle = .overFullScreen
+                    
+                    owner.present(alertVc, animated: false)
+                    
+                    
+                
+                case let .failure(error):
+                    let vc = AlertViewController(title: "오류 발생",content: error.asAlleyError.localizedDescription, type: .exit) {
+                        exit(0)
+                    }
+                    
+                    vc.modalPresentationStyle = .overFullScreen
+                    
+                    owner.present(vc, animated: false)
+                    
+                }
+                
             })
             .disposed(by: disposeBag)
+        
+    }
+    
+    func bindUserResult(output: RootViewModel.Output) {
+        
+        Observable.zip(output.userInfoResult, output.endLottie)
+            .map{$0.0}
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, result) in
+                
+                let vc = AlertViewController(title: "인증 만료", content: result.message, type: .logout,completion: {
+                    LOGOUT()
+                    owner.navigationController?.pushViewController(owner.mainTabFactory.makeView(), animated: false)
+                })
+                
+                vc.modalPresentationStyle = .overFullScreen
+                
+                switch result.isValid {
+                    
+                case true:
+                    owner.navigationController?.pushViewController(owner.mainTabFactory.makeView(), animated: false)
+                case false:
+                    owner.present(vc, animated: false)
+    
+                }
+                
+            })
+        
+        
+    }
+}
+
+
+extension RootViewController {
+    func goAppStore() {
+        let appID: String = APP_ID()
+        guard let storeURL = URL(string: "https://itunes.apple.com/kr/app/id/\(appID)"),
+            UIApplication.shared.canOpenURL(storeURL) else { return }
+        UIApplication.shared.open(storeURL)
     }
 }

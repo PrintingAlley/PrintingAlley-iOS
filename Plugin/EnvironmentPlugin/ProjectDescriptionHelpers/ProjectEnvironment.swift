@@ -17,4 +17,6 @@ public let env = ProjectEnvironment(
     baseSetting: SettingsDictionary()
         .debugInformationFormat(DebugInformationFormat.dwarfWithDsym)
         .otherLinkerFlags(["-ObjC"])
+        .marketingVersion("1.0.0")
+        .currentProjectVersion("1")
 )
