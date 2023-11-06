@@ -54,7 +54,8 @@ class CategorySearchViewModel: ViewModelType {
             .flatMap { [weak self] tags -> Observable<ProductListEntity> in
                 guard let self else { return Observable.empty() }
                 return self.fetchProductListUseCase
-                    .execute(page: 1, text: "", tagIds: tags + [self.id]) // TODO: catch
+                    .execute(page: 1, text: "", tagIds: tags + [self.id])
+                    .catchAndReturn(.makeErrorEntity())
                     .asObservable()
             }
             .bind(to: output.dataSource)
