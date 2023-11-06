@@ -20,7 +20,13 @@ extension CategorySearchViewController {
             .do(onNext: { [weak self] dataSource in
                 guard let self else { return }
                 self.indicator.stopAnimating()
-                // TODO: 검색결과없음 추가
+                if dataSource.products.isEmpty {
+                    self.gridCollectionView.setEmptyMessage("설정한 필터에 맞는 검색 결과가 없어요.") // TODO: 두 줄 다른 폰트로 변경 필요
+                }
+                else {
+                    self.gridCollectionView.restore() // 엠티뷰 제거
+                }
+                
             })
             .map { $0.products }
             .bind(to: gridCollectionView.rx.items) { [weak self] (collectionView, index, model) -> UICollectionViewCell in
