@@ -7,3 +7,16 @@
 //
 
 import Foundation
+
+public struct ContentGroupEntity {
+    let contents: [ContentEntity]
+    let statusCode: Int
+    let message: String
+    
+    public init(contents: [ContentEntity], statusCode: Int, message: String) {
+        self.contents = contents
+        self.statusCode = statusCode
+        self.message = message
+    }
+    
+}

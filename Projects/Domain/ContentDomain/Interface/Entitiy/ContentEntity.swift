@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+public struct ContentEntity {
+    let id: Int
+    let title,thumbnail: String
+    
+    public init(id: Int, title: String, thumbnail: String) {
+        self.id = id
+        self.title = title
+        self.thumbnail = thumbnail
+    }
+    
+    static func makeErrorEntity() -> Self {
+        ContentEntity(id: 0, title: "", thumbnail: "")
+    }
+}
