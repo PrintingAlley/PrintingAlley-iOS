@@ -40,6 +40,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Domain: String, MicroTargetPathConvertable {
+        case ContentDomain
         case ProductDomain
         case PrintShopDomain
         case UserDomain
