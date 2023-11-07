@@ -14,7 +14,7 @@ public protocol ContentDomainDependency: Dependency {
     var jwtStoreFactory: any JwtStoreFactory { get }
 }
 
-public final class ContentDomainComponent: Component<ContentDomainDependency>, ContentFactory {
+public final class ContentDomainComponent: Component<ContentDomainDependency>, ContentDomainFactory {
     public var fetchContentsUseCase: any FetchContentsUseCase {
         FetchContentsUseCaseImpl(contentRepository: contentRepository)
     }

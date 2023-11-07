@@ -11,6 +11,7 @@ import BookMarkFeature
 import BookMarkFeatureInterface
 import CategorySearchFeature
 import CategorySearchFeatureInterface
+import ContentDomain
 import ContentDomainInterface
 import Foundation
 import HomeFeature
@@ -361,6 +362,19 @@ private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDoma
 private func factory9b3fac1bd377f0830537f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BookMarkDomainDependency2ef018453822a996a9abProvider(appComponent: parent1(component) as! AppComponent)
 }
+private class ContentDomainDependencye01728553bb650fbed25Provider: ContentDomainDependency {
+    var jwtStoreFactory: any JwtStoreFactory {
+        return appComponent.jwtStoreFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->ContentDomainComponent
+private func factory5918d17a9811afd8dadef47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ContentDomainDependencye01728553bb650fbed25Provider(appComponent: parent1(component) as! AppComponent)
+}
 private class ProductDomainDependency46ea2c6b79a1a6907fb1Provider: ProductDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
@@ -556,6 +570,11 @@ extension BookMarkDomainComponent: Registration {
         keyPathToName[\BookMarkDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
+extension ContentDomainComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\ContentDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+    }
+}
 extension ProductDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\ProductDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
@@ -618,6 +637,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ProductDetailComponent", factorydd8ac0cf9df6ffed7cb6f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->ContentDomainComponent", factory5918d17a9811afd8dadef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ProductDomainComponent", factory5ac7597a79163de1a05ff47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->TagDomainComponent", factory6a92323f94d86d563660f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->PrintShopDomainComponent", factoryc5a02ffad7cab4fbb37af47b58f8f304c97af4d5)
