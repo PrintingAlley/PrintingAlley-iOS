@@ -20,15 +20,7 @@ class WebViewController: UIViewController {
         /** 자동으로 javaScript를 통해 새 창 열기 설정 */
     }
     
-    lazy var  contentController: WKUserContentController = WKUserContentController().then{
-        $0.add(self, name: "bridge")
-        
-        /*
-         WKUserContentController는 웹 뷰와 javaScript 간의 상호작용을 관리하는 클래스이다. 즉, 웹 뷰와 javaScript 사이의 중간 다리인 셈.
-
-         javaScript에서 앱으로 메시지를 전달할 때는 add() 함수를 사용해 메시지의 이름을 설정한다.
-         */
-    }
+    lazy var contentController: WKUserContentController = WKUserContentController()
     
     lazy var  configuration = WKWebViewConfiguration().then{
         /** preference, contentController 설정 */
@@ -108,7 +100,9 @@ extension WebViewController {
         webView.load(request) // 이동
         
         webView.alpha = 0
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: { [weak self]  in
+            
+            guard let self else  { return }
             self.webView.alpha = 1
         }) { _ in
             
@@ -124,7 +118,6 @@ extension WebViewController: WKUIDelegate {
 extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         
-        DEBUG_LOG("HELLO: WKUIDelegate")
         
         decisionHandler(.allow)
     }

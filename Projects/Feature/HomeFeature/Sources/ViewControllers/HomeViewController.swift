@@ -157,7 +157,7 @@ extension HomeViewController {
             $0.edges.equalToSuperview()
         }
 
-        contentsCollectionView.snp.makeConstraints { // TODO: 웨스트 , contentsCount 말고 데이터 결과 카운트로 어떻게 ??
+        contentsCollectionView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(24)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(calculateHeight(count: contentsCount, dividingBy: 2, cellHeight: 201, lineSpacing: 24, insets: contentsInsets) + headerViewHeight) // 유동적으로

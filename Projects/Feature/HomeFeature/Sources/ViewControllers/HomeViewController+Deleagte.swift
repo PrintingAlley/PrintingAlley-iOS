@@ -47,6 +47,19 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension HomeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let item = output.contentDataSource.value[indexPath.row]
+        
+        let vc = webviewFactory.makeView(title: item.title, url: "https://web.printingstreets.com/content-webview/\(item.id)")
+        
+        vc.hidesBottomBarWhenPushed = true 
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
 
 extension HomeViewController: ContentsHeaderViewDelegate {
     func categoryTap(id: Int, title: String) {

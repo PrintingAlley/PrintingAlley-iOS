@@ -18,7 +18,6 @@ final class ContentsCollectionViewCell: UICollectionViewCell {
     
     private let image = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.backgroundColor = .red
     }
     
     private let label = AlleyLabel()

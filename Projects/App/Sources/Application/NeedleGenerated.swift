@@ -217,6 +217,9 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var contentDomainFactory: any ContentDomainFactory {
         return appComponent.contentDomainFactory
     }
+    var webViewFactory: any WebViewFactory {
+        return appComponent.webViewFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -519,6 +522,7 @@ extension HomeComponent: Registration {
         keyPathToName[\HomeDependency.tagDomainFactory] = "tagDomainFactory-any TagDomainFactory"
         keyPathToName[\HomeDependency.categorySearchFactory] = "categorySearchFactory-any CategorySearchFactory"
         keyPathToName[\HomeDependency.contentDomainFactory] = "contentDomainFactory-any ContentDomainFactory"
+        keyPathToName[\HomeDependency.webViewFactory] = "webViewFactory-any WebViewFactory"
     }
 }
 extension NearByMeComponent: Registration {
@@ -560,6 +564,11 @@ extension EditModalComponent: Registration {
     public func registerItems() {
         keyPathToName[\EditModalDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
         keyPathToName[\EditModalDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
+    }
+}
+extension WebViewComponent: Registration {
+    public func registerItems() {
+
     }
 }
 extension ProductDetailComponent: Registration {
@@ -639,6 +648,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->BookMarkDetailComponent", factoryc8e52bb402c24cd9a5e2f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->WebViewComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->ProductDetailComponent", factorydd8ac0cf9df6ffed7cb6f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ContentDomainComponent", factory5918d17a9811afd8dadef47b58f8f304c97af4d5)

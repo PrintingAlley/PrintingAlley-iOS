@@ -12,6 +12,7 @@ import Then
 import UIKit
 import WebKit
 import UtilityModule
+import DesignSystem
 
 class WebViewController: UIViewController {
     
@@ -20,17 +21,9 @@ class WebViewController: UIViewController {
         /** 자동으로 javaScript를 통해 새 창 열기 설정 */
     }
     
-    lazy var  contentController: WKUserContentController = WKUserContentController().then{
-        $0.add(self, name: "bridge")
-        
-        /*
-         WKUserContentController는 웹 뷰와 javaScript 간의 상호작용을 관리하는 클래스이다. 즉, 웹 뷰와 javaScript 사이의 중간 다리인 셈.
-
-         javaScript에서 앱으로 메시지를 전달할 때는 add() 함수를 사용해 메시지의 이름을 설정한다.
-         */
-    }
+    lazy var  contentController: WKUserContentController = WKUserContentController()
     
-    lazy var  configuration = WKWebViewConfiguration().then{
+    lazy var configuration = WKWebViewConfiguration().then{
         /** preference, contentController 설정 */
         $0.preferences = preferences
         $0.userContentController = contentController
@@ -41,10 +34,24 @@ class WebViewController: UIViewController {
     }
     
     
-    lazy var backgroundView: UIView = UIView()
-    lazy var webView: WKWebView! = WKWebView(frame: view.bounds, configuration: configuration)
+    lazy var backgroundView: UIView = UIView().then {
+        $0.backgroundColor = .white
+    }
     
-    var naviTitle:String!
+    lazy var naviTitleView: UIView = UIView()
+    
+    lazy var titleLabel: AlleyLabel = AlleyLabel()
+    
+    lazy var backButton: UIButton = UIButton().then {
+        
+        $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
+        $0.imageView?.contentMode = .scaleAspectFill
+        $0.addTarget(self, action: #selector(back), for: .touchUpInside)
+    }
+
+    lazy var webView: WKWebView! = WKWebView(frame: .zero, configuration: configuration)
+    
+    var naviTitle: String!
     var url: String!
     
     init(naviTitle: String!, url: String!) {
@@ -67,8 +74,9 @@ class WebViewController: UIViewController {
         addSubviews()
         makeConstraints()
        
-        self.navigationItem.title = naviTitle
+        titleLabel.setTitle(title: naviTitle, textColor: .sub(.black), font: .body1, alignment: .center)
         setWebViewURLRequest()
+        configureCommonUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,15 +88,37 @@ class WebViewController: UIViewController {
 
 extension WebViewController {
     func addSubviews() {
-        self.view.addSubview(backgroundView)
+        self.view.addSubviews(naviTitleView,backgroundView)
+        
+        naviTitleView.addSubviews(titleLabel,backButton)
+        
         backgroundView.addSubview(webView)
     }
     
     func makeConstraints() {
         
         backgroundView.snp.makeConstraints {
+            $0.top.equalTo(naviTitleView.snp.bottom)
+            $0.left.right.bottom.equalToSuperview()
+        }
+    
+        
+        naviTitleView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(12)
+            $0.height.equalTo(32)
+            $0.left.right.equalToSuperview()
+        }
+        
+        backButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.left.equalToSuperview().inset(16)
+            $0.width.height.equalTo(24)
+        }
+        
+        titleLabel.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+
         
         webView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -96,7 +126,7 @@ extension WebViewController {
         
     }
     
-    func setWebViewURLRequest(){
+    func setWebViewURLRequest() {
         
         var componets = URLComponents(string: self.url)!
         
@@ -115,6 +145,10 @@ extension WebViewController {
         }
         
     }
+    
+    @objc func back() {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension WebViewController: WKUIDelegate {
@@ -124,7 +158,6 @@ extension WebViewController: WKUIDelegate {
 extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         
-        DEBUG_LOG("HELLO: WKUIDelegate")
         
         decisionHandler(.allow)
     }
@@ -137,8 +170,7 @@ extension WebViewController: WKScriptMessageHandler {
         
         DEBUG_LOG(message.name)
     }
-    
-    
+
 }
 
 
