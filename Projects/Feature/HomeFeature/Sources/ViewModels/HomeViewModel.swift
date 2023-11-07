@@ -12,17 +12,20 @@ import TagDomainInterface
 import RxRelay
 import RxSwift
 import BaseDomainInterface
+import ContentDomainInterface
 
 final class HomeViewModel: ViewModelType {
     
     var fetchTagUseCase: any FetchTagUseCase
     var fetchHierarchyUseCase: any FetchHierarchyUseCase
+    var fetchContentsUseCase: any FetchContentsUseCase
     
     let disposeBag = DisposeBag()
     
-    init(fetchTagUseCase: FetchTagUseCase, fetchHierarchyUseCase: FetchHierarchyUseCase) {
+    init(fetchTagUseCase: FetchTagUseCase, fetchHierarchyUseCase: FetchHierarchyUseCase,fetchContentsUseCase : FetchContentsUseCase) {
         self.fetchTagUseCase = fetchTagUseCase
         self.fetchHierarchyUseCase = fetchHierarchyUseCase
+        self.fetchContentsUseCase = fetchContentsUseCase
     }
     
     public struct Input {

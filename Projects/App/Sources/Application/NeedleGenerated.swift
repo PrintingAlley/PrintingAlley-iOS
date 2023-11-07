@@ -214,6 +214,9 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var categorySearchFactory: any CategorySearchFactory {
         return appComponent.categorySearchFactory
     }
+    var contentDomainFactory: any ContentDomainFactory {
+        return appComponent.contentDomainFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -515,6 +518,7 @@ extension HomeComponent: Registration {
         keyPathToName[\HomeDependency.searchFactory] = "searchFactory-any SearchFactory"
         keyPathToName[\HomeDependency.tagDomainFactory] = "tagDomainFactory-any TagDomainFactory"
         keyPathToName[\HomeDependency.categorySearchFactory] = "categorySearchFactory-any CategorySearchFactory"
+        keyPathToName[\HomeDependency.contentDomainFactory] = "contentDomainFactory-any ContentDomainFactory"
     }
 }
 extension NearByMeComponent: Registration {
