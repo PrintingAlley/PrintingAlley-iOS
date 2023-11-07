@@ -113,7 +113,7 @@ extension ProductDetailTableViewCell {
         
 
         button.isHidden = index != 0
-        baseLine.isHidden = index == 4
+        baseLine.isHidden = index == 5
         
     }
     
