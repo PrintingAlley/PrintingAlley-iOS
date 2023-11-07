@@ -118,7 +118,7 @@ extension RootViewController {
                     
                     default:
                         
-                        alertVc = AlertViewController(title: "네트워크 오프라인 알림", content: entity.message, type: .exit,completion: {
+                        alertVc = AlertViewController(title: "네트워크 알림", content: entity.message, type: .exit,completion: {
                             exit(0)
                         })
                         

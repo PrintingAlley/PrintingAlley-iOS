@@ -55,8 +55,10 @@ final class RootViewModel: ViewModelType {
                     .execute(version: APP_VERSION())
                     .catch { error in
                         
+                        
+                        
                         return Single<VersionCheckEntity>.create { single in
-                            single(.success(VersionCheckEntity(code: -1, statusCode: 400, message: "인터넷 연결이 오프라인입니다.\n네트워크 상태를 확인해주세요.")))
+                            single(.success(VersionCheckEntity(code: -1, statusCode: 400, message: "서버 또는 네트워크 연결에 문제가 발생했습니다.\n잠시 후 다시 시도해주세요.")))
                             
                             return Disposables.create()
                         }
