@@ -14,6 +14,7 @@ import SearchFeatueInterface
 import TagDomainInterface
 import CategorySearchFeatureInterface
 import ContentDomainInterface
+import BaseFeatureInterface
 
 public protocol HomeDependency: Dependency {
     var homeFactory: any HomeFactory { get }
@@ -21,11 +22,12 @@ public protocol HomeDependency: Dependency {
     var tagDomainFactory: any TagDomainFactory { get }
     var categorySearchFactory: any CategorySearchFactory { get }
     var contentDomainFactory: any ContentDomainFactory { get }
+    var webViewFactory: any WebViewFactory { get }
     
 }
 
 public final class HomeComponent: Component<HomeDependency>, HomeFactory {
     public func makeView() -> UIViewController {
-        HomeViewController(viewModel: HomeViewModel(fetchHierarchyUseCase: dependency.tagDomainFactory.fetchHierarchyUseCase, fetchContentsUseCase: dependency.contentDomainFactory.fetchContentsUseCase), searchFactory: dependency.searchFactory, categorySearchFactory: dependency.categorySearchFactory)
+        HomeViewController(viewModel: HomeViewModel(fetchHierarchyUseCase: dependency.tagDomainFactory.fetchHierarchyUseCase, fetchContentsUseCase: dependency.contentDomainFactory.fetchContentsUseCase), searchFactory: dependency.searchFactory, categorySearchFactory: dependency.categorySearchFactory, webviewFacotry: dependency.webViewFactory)
     }
 }
