@@ -51,7 +51,6 @@ class PrintShopDetailViewController: UIViewController {
 
         let vc1 = UIViewController()
         
-        vc1.view.backgroundColor = .red
         
         let vc2 = UIViewController()
         

@@ -55,9 +55,6 @@ public final class BookMarkDomainComponent: Component<BookMarkDomainDependency>,
     }
     
 
-
-    
-    
     public var bookMarkRepository: any BookMarkRepository {
         BookMarkRepositoryImpl(
             remoteBookMarkDataSource: remoteBookMarkDataSource

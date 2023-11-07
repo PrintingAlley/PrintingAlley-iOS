@@ -88,8 +88,6 @@
 	<false/>
 	<key>Prod</key>
 	<dict>
-		<key>APP_ID</key>
-		<string>$(APP_ID)</string>
 		<key>GOOGLE_CLIENT_ID</key>
 		<string>$(GOOGLE_CLIENT_ID)</string>
 		<key>KAKAO_APP_KEY</key>
@@ -102,6 +100,8 @@
 		<string>$(BASE_URL)</string>
 		<key>NAVER_MAP_CLIENT_ID</key>
 		<string>$(NAVER_MAP_CLIENT_ID)</string>
+		<key>APP_ID</key>
+		<string>$(APP_ID)</string>
 	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
