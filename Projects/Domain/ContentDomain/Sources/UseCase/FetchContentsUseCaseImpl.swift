@@ -8,6 +8,7 @@
 
 import Foundation
 import ContentDomainInterface
+import RxSwift
 
 struct FetchContentsUseCaseImpl: FetchContentsUseCase {
     
@@ -18,7 +19,7 @@ struct FetchContentsUseCaseImpl: FetchContentsUseCase {
         self.contentRepository = contentRepository
     }
     
-    func execute() -> ContentGroupEntity {
+    func execute() -> Single<ContentGroupEntity>{
         contentRepository.fetchContents()
     }
     

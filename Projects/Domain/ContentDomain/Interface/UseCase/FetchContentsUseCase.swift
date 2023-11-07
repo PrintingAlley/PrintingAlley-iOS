@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import RxSwift
 
 public protocol FetchContentsUseCase {
-    func execute() -> ContentGroupEntity
+    func execute() -> Single<ContentGroupEntity>
 }

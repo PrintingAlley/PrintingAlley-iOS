@@ -8,6 +8,7 @@
 
 import Foundation
 import ContentDomainInterface
+import RxSwift
 
 struct ContentRepositoryImpl: ContentRepository {
 
@@ -20,8 +21,9 @@ struct ContentRepositoryImpl: ContentRepository {
     
     
     
-    func fetchContents() -> ContentDomainInterface.ContentGroupEntity {
+    func fetchContents() -> Single<ContentGroupEntity> {
         remoteContentDataSource.fetchContents()
     }
     
+
 }

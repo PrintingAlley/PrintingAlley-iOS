@@ -11,6 +11,7 @@ import BookMarkFeature
 import BookMarkFeatureInterface
 import CategorySearchFeature
 import CategorySearchFeatureInterface
+import ContentDomainInterface
 import Foundation
 import HomeFeature
 import HomeFeatureInterface

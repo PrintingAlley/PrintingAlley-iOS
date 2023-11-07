@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import RxSwift
 
 public protocol RemoteContentDataSource {
-    func fetchContents() -> ContentGroupEntity
+    func fetchContents() -> Single<ContentGroupEntity>
 }
