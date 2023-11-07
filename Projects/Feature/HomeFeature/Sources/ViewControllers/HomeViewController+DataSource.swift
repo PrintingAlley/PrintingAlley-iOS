@@ -12,12 +12,15 @@ import UIKit
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 아이템 개수
-        return contentsCount
+        return output.contentDataSource.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell { // data bind
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentsCollectionViewCell.identifier, for: indexPath)
                 as? ContentsCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.update(model: output.contentDataSource.value[indexPath.row])
+        
         return cell
     }
 }

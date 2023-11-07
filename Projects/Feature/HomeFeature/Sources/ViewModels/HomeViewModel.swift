@@ -51,6 +51,7 @@ final class HomeViewModel: ViewModelType {
             .subscribe(onNext: { (tagsResult,contentResult) in
                 
                 output.tagDataSource.accept(tagsResult.hierarchies)
+                DEBUG_LOG(contentResult)
                 output.contentDataSource.accept(contentResult.contents)
                 
             })
