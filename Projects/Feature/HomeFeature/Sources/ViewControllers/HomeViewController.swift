@@ -19,8 +19,8 @@ import CategorySearchFeatureInterface
 
 final class HomeViewController: UIViewController {
     private var searchFactory: any SearchFactory
-    private var categorySearchFactory: any CategorySearchFactory
-    private var viewModel: HomeViewModel!
+    public var categorySearchFactory: any CategorySearchFactory
+    public var viewModel: HomeViewModel!
     
     let disposeBag = DisposeBag()
     var output: HomeViewModel.Output!
@@ -54,19 +54,19 @@ final class HomeViewController: UIViewController {
         $0.backgroundColor = .none
     }
 
-    private lazy var contentsCollectionView = makeCollectionView(layout: UICollectionViewFlowLayout(), scrollDirection: .vertical, delegate: self, dataSource: self).then {
+    public lazy var contentsCollectionView = makeCollectionView(layout: UICollectionViewFlowLayout(), scrollDirection: .vertical, delegate: self, dataSource: self).then {
         $0.setRound([.topLeft, .topRight], radius: 12)
         $0.backgroundColor = .setColor(.sub(.white))
         $0.register(ContentsCollectionViewCell.self, forCellWithReuseIdentifier: ContentsCollectionViewCell.identifier)
         $0.register(ContentsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ContentsHeaderView.identifier)
     }
     
-    private let contentsInsets = UIEdgeInsets(top: 16, left: 24, bottom: 20, right: 24)
-    private let contentsCellSpacing: CGFloat = 16
+    public let contentsInsets = UIEdgeInsets(top: 16, left: 24, bottom: 20, right: 24)
+    public let contentsCellSpacing: CGFloat = 16
     
-    private let contentsCount = 4 // 더미
+    public let contentsCount = 4 // 더미
     
-    private let headerViewHeight: CGFloat = 280
+    public let headerViewHeight: CGFloat = 280
     
     init(viewModel: HomeViewModel, searchFactory: SearchFactory, categorySearchFactory: CategorySearchFactory) {
         self.searchFactory = searchFactory
@@ -94,26 +94,10 @@ extension HomeViewController {
         
         output = viewModel.transform(input: input)
         
-        bindTagDataSource(output: output)
-        bindViewDidLoad(input: input)
-    }
-    
-    func bindViewDidLoad(input: HomeViewModel.Input){
-        input.viewDidLoad.onNext(())
-    }
-    
-    func bindTagDataSource(output: HomeViewModel.Output) {
-        
-        output.tagDataSource
-            .withUnretained(self)
-            .subscribe(onNext: { (owner,dataSoruce) in
-                DEBUG_LOG(dataSoruce)
-                owner.contentsCollectionView.reloadData()
-            })
-            .disposed(by: disposeBag)
-        
+        bindDataSource(output: output)
         
     }
+
 }
 
 // MARK: - Objc 함수
@@ -187,59 +171,5 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // 셀 크기
-        return CGSize(width: (APP_WIDTH() - contentsInsets.left - contentsInsets.right - contentsCellSpacing) / 2, height: 201)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        // 줄 간격
-        return 24
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        // 옆 간격
-        return contentsCellSpacing
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ContentsHeaderView.identifier, for: indexPath) as! ContentsHeaderView
-            
-            headerView.update(tagDataSource: output.tagDataSource.value)
-            headerView.delgate = self
-            return headerView
-        }
-        return UICollectionReusableView()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        // 헤더 뷰의 크기 반환
-        return CGSize(width: APP_WIDTH(), height: headerViewHeight)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        contentsInsets
-    }
-}
-
-extension HomeViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // 아이템 개수
-        return contentsCount
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell { // data bind
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentsCollectionViewCell.identifier, for: indexPath)
-                as? ContentsCollectionViewCell else { return UICollectionViewCell() }
-        return cell
-    }
-}
 
 
-extension HomeViewController: ContentsHeaderViewDelegate {
-    func categoryTap(id: Int, title: String) {
-        self.navigationController?.pushViewController(categorySearchFactory.makeView(id: id, title: title), animated: true)
-    }
-}

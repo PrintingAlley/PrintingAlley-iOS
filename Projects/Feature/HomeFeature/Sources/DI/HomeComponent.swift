@@ -26,6 +26,6 @@ public protocol HomeDependency: Dependency {
 
 public final class HomeComponent: Component<HomeDependency>, HomeFactory {
     public func makeView() -> UIViewController {
-        HomeViewController(viewModel: HomeViewModel(fetchTagUseCase: dependency.tagDomainFactory.fetchTagUseCase, fetchHierarchyUseCase: dependency.tagDomainFactory.fetchHierarchyUseCase, fetchContentsUseCase: dependency.contentDomainFactory.fetchContentsUseCase), searchFactory: dependency.searchFactory, categorySearchFactory: dependency.categorySearchFactory)
+        HomeViewController(viewModel: HomeViewModel(fetchHierarchyUseCase: dependency.tagDomainFactory.fetchHierarchyUseCase, fetchContentsUseCase: dependency.contentDomainFactory.fetchContentsUseCase), searchFactory: dependency.searchFactory, categorySearchFactory: dependency.categorySearchFactory)
     }
 }

@@ -152,7 +152,6 @@ extension ContentsHeaderView: UICollectionViewDelegateFlowLayout {
 extension ContentsHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 아이템 개수
-        print("Count: \(dataSource.count)")
         return dataSource.count
     }
     

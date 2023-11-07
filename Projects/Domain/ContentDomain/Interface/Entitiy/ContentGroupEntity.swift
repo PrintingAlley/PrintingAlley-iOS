@@ -9,9 +9,9 @@
 import Foundation
 
 public struct ContentGroupEntity {
-    let contents: [ContentEntity]
-    let statusCode: Int
-    let message: String
+   public let contents: [ContentEntity]
+   public  let statusCode: Int
+   public  let message: String
     
     public init(contents: [ContentEntity], statusCode: Int, message: String) {
         self.contents = contents
