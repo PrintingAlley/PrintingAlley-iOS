@@ -11,11 +11,11 @@ import SnapKit
 import Then
 import DesignSystem
 
-public protocol ListHeaderViewDelegate: AnyObject {
+public protocol NewListHeaderViewDelegate: AnyObject {
     func generateNewList()
 }
 
-public class ListHeaderView: UIView {
+public class NewListHeaderView: UIView {
     
     lazy var button: UIButton = UIButton().then {
         $0.addTarget(self, action: #selector(generateNewList), for: .touchUpInside)
@@ -28,7 +28,7 @@ public class ListHeaderView: UIView {
     
     lazy var label: AlleyLabel = AlleyLabel("새로운 목록 만들기", textColor: .grey(.grey1000) ,font: .body1 ,alignment: .left)
     
-    weak var delegate: ListHeaderViewDelegate?
+    weak var delegate: NewListHeaderViewDelegate?
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,7 +45,7 @@ public class ListHeaderView: UIView {
 
 }
 
-extension ListHeaderView {
+extension NewListHeaderView {
  
     func makeConstraints() {
         

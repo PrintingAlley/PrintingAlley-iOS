@@ -48,7 +48,7 @@ extension MyPageCollectionViewCell {
         
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(4)
-            $0.width.height.equalTo(30)
+            $0.width.height.equalTo(28)
             $0.centerX.equalToSuperview()
             
         }

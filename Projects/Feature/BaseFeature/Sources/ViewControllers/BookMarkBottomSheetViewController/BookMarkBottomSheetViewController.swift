@@ -40,7 +40,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
     }
     
-    lazy var headerView: ListHeaderView = ListHeaderView(frame: CGRect(x: .zero, y: .zero, width: .max, height: 80)).then {
+    lazy var headerView: NewListHeaderView = NewListHeaderView(frame: CGRect(x: .zero, y: .zero, width: .max, height: 80)).then {
         $0.delegate = self
     }
     
@@ -159,7 +159,7 @@ extension BookMarkBottomSheetViewController {
     }
 }
 
-extension BookMarkBottomSheetViewController: ListHeaderViewDelegate {
+extension BookMarkBottomSheetViewController: NewListHeaderViewDelegate {
     public func generateNewList() {
         
         let vc = editModalFactory.makeView(id: -1, title: "저장 목록 만들기", type: .newBookMark)
