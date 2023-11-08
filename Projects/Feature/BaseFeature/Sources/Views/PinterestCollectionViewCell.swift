@@ -60,7 +60,7 @@ extension PinterestCollectionViewCell {
         }
         
         title.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(4)
+            $0.top.equalTo(imageView.snp.bottom)
             $0.leading.equalTo(imageView)
             $0.width.equalTo(144)
         }
@@ -71,39 +71,28 @@ extension PinterestCollectionViewCell {
         }
     }
     
-    public func update(model: ProductEntity) { // 변경 필요 (받아온 height 값으로)
-        let downloadTask = ImageDownloader.default.downloadImage(with: URL(string: model.mainImage)!, progressBlock: { receivedSize, totalSize in
-        }) { result in
-            switch result {
-            case .success(let value):
-                let image = value.image
-                self.imageView.image = image
-                self.imageHeight = 171 * image.size.height / image.size.width
-                DEBUG_LOG(self.imageHeight)
-                
-                self.imageView.snp.updateConstraints {
-                    $0.top.leading.equalToSuperview()
-                    $0.width.equalTo(171)
-                    $0.height.equalTo(self.imageHeight)
-                }
-                
-                self.title.snp.updateConstraints {
-                    $0.top.equalTo(self.imageView.snp.bottom).offset(4)
-                    $0.leading.equalTo(self.imageView)
-                }
-                
-                self.bookmarkButton.snp.updateConstraints {
-                    $0.top.equalTo(self.title)
-                    $0.trailing.equalTo(self.imageView)
-                }
-                
-//                completion()  // - completion: @escaping () -> Void
-
-            case .failure(let err):
-                DEBUG_LOG(err)
-            }
-            self.title.text = model.name
+    public func update(model: ProductEntity) {
+        self.imageView.kf.setImage(with: URL(string: model.mainImage))
+        self.title.text = model.name
+        
+        self.imageHeight = CGFloat(171 * model.height / model.width)
+        
+        self.imageView.snp.updateConstraints {
+            $0.top.leading.equalToSuperview()
+            $0.width.equalTo(171)
+            $0.height.equalTo(self.imageHeight)
         }
+        
+        self.title.snp.updateConstraints {
+            $0.top.equalTo(self.imageView.snp.bottom).offset(4)
+            $0.leading.equalTo(self.imageView)
+        }
+        
+        self.bookmarkButton.snp.updateConstraints {
+            $0.top.equalTo(self.title)
+            $0.trailing.equalTo(self.imageView)
+        }
+        
     }
 }
 

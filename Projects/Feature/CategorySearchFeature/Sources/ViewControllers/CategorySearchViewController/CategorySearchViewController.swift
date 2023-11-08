@@ -20,7 +20,6 @@ import BaseFeatureInterface
 
 class CategorySearchViewController: UIViewController {
     
-    
     lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then{
         $0.color = DesignSystemAsset.MainBlue.blue500.color
         $0.hidesWhenStopped = true

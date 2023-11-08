@@ -12,7 +12,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
     public weak var delegate: AutoHeightLayoutDelegate?
     
     private let numberOfColumns = 2
-    private let cellInsets = UIEdgeInsets(top: 0, left: 8, bottom: 24, right: 8)
+    private let cellInsets = UIEdgeInsets(top: 0, left: 8, bottom: 4, right: 8)
     
     private var cache: [UICollectionViewLayoutAttributes] = [] // 아이템 정보 저장할 캐시
     
@@ -52,7 +52,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
             
             // 동적 높이 계산
             let photoHeight = delegate?.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath) ?? 200
-            let height = cellInsets.top + cellInsets.bottom + photoHeight + 60 // 60은 터치 영역을 위한 셀 공간
+            let height = cellInsets.top + cellInsets.bottom + photoHeight + 40 // 50은 터치 영역을 위한 셀 공간
             
             // item의 frame
             let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth + cellInsets.left + cellInsets.right, height: height)

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UtilityModule
 
 public struct ProductEntity {
     
@@ -20,8 +19,12 @@ public struct ProductEntity {
     public let tags: [ChildrenTagEntity]
     public let reviews: [ReviewEntity]
     public let isBookmarked: Bool
-    public let width: Int
-    public let height: Int
+    public var width: Int {
+        return findIntFromString(string: mainImage, pattern: "width=(\\d+)")
+    }
+    public var height: Int {
+        return findIntFromString(string: mainImage, pattern: "&height=(\\d+)")
+    }
     public let statusCode: Int
     public let message: String
 
@@ -41,13 +44,30 @@ public struct ProductEntity {
         self.tags = tags
         self.reviews = reviews
         self.isBookmarked = isBookmarked
-        self.height = mainImage.findIntFromString(pattern: "&height=(\\d+)")
-        self.width = mainImage.findIntFromString(pattern: "width=(\\d+)")
         self.statusCode = statusCode
         self.message = message
     }
     
     public static func makeErrorEntity(message: String) -> Self {
         ProductEntity(id: 0, name: "", size: "" ,  paper: "", afterProcess: "", designer: "" , introduction: "", description: "", mainImage: "", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [ChildrenTagEntity.makeErrorEntity()], reviews: [ReviewEntity.makeErrorEnitity(message: "")], isBookmarked:  false  , statusCode: 400, message: message)
+    }
+    
+    public func findIntFromString(string: String, pattern: String) -> Int {
+        var result = 0
+        
+        do {
+        let regex = try NSRegularExpression(pattern: pattern)
+            
+            if let match = regex.firstMatch(in: string, range: NSRange(string.startIndex..., in: string)) {
+                let range = Range(match.range(at: 1), in: string)
+                
+                if let resultStr = range.flatMap({ String(string[$0]) }), let resultInt = Int(resultStr) {
+                    result = resultInt
+                }
+            }
+        } catch {
+            print("정규표현식 에러")
+        }
+        return result
     }
 }

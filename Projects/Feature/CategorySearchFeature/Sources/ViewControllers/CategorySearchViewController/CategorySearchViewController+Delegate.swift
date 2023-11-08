@@ -93,7 +93,8 @@ extension CategorySearchViewController: UICollectionViewDataSource {
 
 extension CategorySearchViewController: AutoHeightLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 171 // 이미지 height return 
-        // 이미지 받아오기 전에 실행됨 .. 실행됨 ... 실행됨 .... 실행됨 .....
+        let product = output.dataSource.value.products[indexPath.row]
+        
+        return CGFloat(product.height * 171 / product.width)
     }
 }
