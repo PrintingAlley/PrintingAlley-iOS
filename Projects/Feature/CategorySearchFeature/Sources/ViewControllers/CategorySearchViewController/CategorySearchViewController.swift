@@ -25,6 +25,8 @@ class CategorySearchViewController: UIViewController {
         $0.hidesWhenStopped = true
         
     }
+    
+    lazy var emptyHeaderView = CategoryEmptyHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: APP_HEIGHT()))
 
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {

@@ -22,10 +22,10 @@ extension CategorySearchViewController {
                 guard let self else { return }
                 self.indicator.stopAnimating()
                 if dataSource.products.isEmpty {
-                    self.gridCollectionView.setEmptyMessage("설정한 필터에 맞는 검색 결과가 없어요.") // TODO: 두 줄 다른 폰트로 변경 필요
+                    gridCollectionView.backgroundView = emptyHeaderView
                 }
                 else {
-                    self.gridCollectionView.restore() // 엠티뷰 제거
+                    self.gridCollectionView.restore()
                 }
                 
             })

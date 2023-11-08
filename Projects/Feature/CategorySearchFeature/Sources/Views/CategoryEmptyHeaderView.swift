@@ -15,12 +15,13 @@ public protocol CategoryEmptyHeaderViewDelegate: AnyObject {
     func press()
 }
 
-
 class CategoryEmptyHeaderView: UIView {
-
-    lazy var titleLabel: AlleyLabel = AlleyLabel("설정한 필터에 맞는 검색 결과가 없어요.",textColor: .sub(.black),font: .subtitle2,alignment: .center)
     
-    lazy var subtitleLabel: AlleyLabel = AlleyLabel("설정한 필터에 맞는 검색 결과가 없어요.",textColor: .grey(.grey300),font: .subtitle3,alignment: .center)
+    public let identifier = "CategoryEmptyHeaderView"
+
+    lazy var titleLabel: AlleyLabel = AlleyLabel("설정한 필터에 맞는 검색 결과가 없어요.", textColor: .sub(.black), font: .subtitle2, alignment: .center)
+    
+    lazy var subtitleLabel: AlleyLabel = AlleyLabel("설정한 필터에 맞는 검색 결과가 없어요.", textColor: .grey(.grey300), font: .subtitle3, alignment: .center)
     
     lazy var button: UIButton = UIButton().then {
         $0.setTitle("필터 초기화", for: .normal)
@@ -33,22 +34,18 @@ class CategoryEmptyHeaderView: UIView {
         
         $0.addTarget(self, action: #selector(press), for: .touchUpInside)
         
-        
     }
     
-    public weak var delegate:CategoryEmptyHeaderViewDelegate?
-    
+    public weak var delegate: CategoryEmptyHeaderViewDelegate?
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
-        
-          self.addSubviews(titleLabel,subtitleLabel,button)
-        
+        self.addSubviews(titleLabel, subtitleLabel, button)
         
         titleLabel.snp.makeConstraints {
             $0.left.right.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().inset(222)
         }
         
         subtitleLabel.snp.makeConstraints {
@@ -64,8 +61,7 @@ class CategoryEmptyHeaderView: UIView {
             
             $0.top.equalTo(subtitleLabel.snp.bottom).offset(16)
         }
-        
-              
+                 
     }
     
     required init?(coder: NSCoder) {
