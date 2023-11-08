@@ -52,7 +52,7 @@ extension HomeViewController: UICollectionViewDelegate {
         
         let item = output.contentDataSource.value[indexPath.row]
         
-        let vc = webviewFactory.makeView(title: item.title, url:item.webViewUrl)
+        let vc = webviewFactory.makeView(title: "인쇄가 어려운 당신에게", url:item.webViewUrl)
         
         vc.hidesBottomBarWhenPushed = true 
         
