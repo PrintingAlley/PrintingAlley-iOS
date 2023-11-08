@@ -66,7 +66,7 @@ extension BookMarkListTableViewCell {
         frontImageView.snp.makeConstraints {
             $0.width.height.equalTo(48)
             $0.top.bottom.equalToSuperview().inset(10)
-            $0.left.equalToSuperview().inset(16)
+            $0.left.equalToSuperview().inset(24)
         }
         
         titleLabel.snp.makeConstraints {

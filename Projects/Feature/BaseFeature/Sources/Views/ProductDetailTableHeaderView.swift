@@ -97,15 +97,15 @@ extension ProductDetailTableHeaderView {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(21)
+            $0.top.equalToSuperview().inset(18)
             $0.left.equalToSuperview().inset(21)
             $0.right.equalToSuperview().inset(64)
         }
         
         subtitleLabel.snp.makeConstraints {
             $0.left.right.equalTo(titleLabel)
-            $0.top.equalTo(titleLabel.snp.bottom)
-            
+            $0.top.equalTo(titleLabel.snp.bottom).offset(6)
+            $0.bottom.equalToSuperview().inset(21)
         }
         
         saveButton.snp.makeConstraints {
@@ -132,6 +132,13 @@ extension ProductDetailTableHeaderView {
         self.isSaved = isSaved
         titleLabel.setTitle(title: model.title, textColor: .sub(.black), font: .header3)
         subtitleLabel.setTitle(title: model.subtitle, textColor: .grey(.grey400), font: .subtitle3)
+        
+        subtitleLabel.snp.updateConstraints {
+            $0.left.right.equalTo(titleLabel)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(6)
+            $0.bottom.equalToSuperview().inset(21)
+        }
+        
         
         subtitleLabel.lineBreakMode = .byTruncatingTail
         

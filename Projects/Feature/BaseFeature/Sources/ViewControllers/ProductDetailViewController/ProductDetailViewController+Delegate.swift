@@ -15,17 +15,20 @@ import DesignSystem
 
 extension ProductDetailViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        
-        let space = APP_WIDTH() - 85 + 5
-        
-        let tempLabel = AlleyLabel(output.headerInfo.value.title,textColor: .sub(.black), font: .header3).then {
-            $0.sizeToFit()
-        }
-        
-        return space > tempLabel.frame.width ? 492 : 510
-    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        
+//        
+//        let space = APP_WIDTH() - 85-5
+//        
+//        let tempLabel = AlleyLabel(output.headerInfo.value.title,textColor: .sub(.black), font: .header3).then {
+//            $0.sizeToFit()
+//            $0.lineBreakMode = .byWordWrapping
+//        }
+//        
+//        DEBUG_LOG("SPC: \(space) \(tempLabel.frame.width)")
+//        
+//        return space > tempLabel.frame.width ? 492 : 510
+//    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let headerview = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProductDetailTableHeaderView.identifer) as? ProductDetailTableHeaderView  else {
