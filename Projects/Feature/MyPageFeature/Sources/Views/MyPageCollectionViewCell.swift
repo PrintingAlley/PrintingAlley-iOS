@@ -70,7 +70,7 @@ extension MyPageCollectionViewCell {
             imageView.image = DesignSystemAsset.Icon.bell.image
             
         case .bookMark:
-            imageView.image = DesignSystemAsset.Icon.blueBookMark.image
+            imageView.image = DesignSystemAsset.Icon.blackEmptyBookMark.image
             
         case .review:
             imageView.image = DesignSystemAsset.Icon.textBubble.image

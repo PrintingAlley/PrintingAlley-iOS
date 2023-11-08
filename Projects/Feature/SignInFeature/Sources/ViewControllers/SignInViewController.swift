@@ -82,7 +82,7 @@ extension SignInViewController {
             
             $0.left.right.equalToSuperview().inset(20)
             $0.top.equalTo(stackView.snp.bottom).offset(18)
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(52)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(70)
             
         }
         
