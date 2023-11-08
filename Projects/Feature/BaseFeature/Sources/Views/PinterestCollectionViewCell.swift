@@ -71,7 +71,7 @@ extension PinterestCollectionViewCell {
         }
     }
     
-    public func update(model: ProductEntity, completion: @escaping () -> Void) { // 변경 필요 (테스트용 함수임)
+    public func update(model: ProductEntity) { // 변경 필요 (받아온 height 값으로)
         let downloadTask = ImageDownloader.default.downloadImage(with: URL(string: model.mainImage)!, progressBlock: { receivedSize, totalSize in
         }) { result in
             switch result {
@@ -97,7 +97,7 @@ extension PinterestCollectionViewCell {
                     $0.trailing.equalTo(self.imageView)
                 }
                 
-                completion()  // - completion: @escaping () -> Void
+//                completion()  // - completion: @escaping () -> Void
 
             case .failure(let err):
                 DEBUG_LOG(err)

@@ -13,7 +13,6 @@ import UIKit
 import BaseFeature
 import BaseDomainInterface
 import DesignSystem
-import UtilityModule
 
 extension CategorySearchViewController {
     
@@ -38,22 +37,8 @@ extension CategorySearchViewController {
                 
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PinterestCollectionViewCell.identifer, for: indexPath) as? PinterestCollectionViewCell else { return UICollectionViewCell() }
                 cell.bookmarkButton.isHidden = true
-                
                 cell.update(model: model)
-                { [weak self] in
-                    guard let self else { return }
-                    
-//                    self.layout = AutoHeightCollectionViewLayout()
 
-//                    self.layout.photoHeight = cell.imageHeight
-//                    gridCollectionView.setCollectionViewLayout(self.layout, animated: false)
-//                    gridCollectionView.collectionViewLayout.invalidateLayout()
-                    self.layout.changeHeight()
-                    gridCollectionView.collectionViewLayout.invalidateLayout()
-
-                    DEBUG_LOG(cell.frame)
-
-                }
                 return cell
             }
             .disposed(by: disposeBag)
@@ -69,14 +54,5 @@ extension CategorySearchViewController {
                 self.indicator.startAnimating()
             })
             .disposed(by: disposeBag)
-    }
-}
-
-extension CategorySearchViewController: AutoHeightLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? PinterestCollectionViewCell else { return 0 }
-
-        return cell.imageHeight
-        // 이미지 받아오기 전에 실행됨 .. 실행됨 ... 실행됨 .... 실행됨 .....
     }
 }

@@ -57,10 +57,9 @@ class CategorySearchViewController: UIViewController {
         $0.separatorStyle = .none
     } // 지워야함
     
-    public lazy var layout = AutoHeightCollectionViewLayout()
-//        .then {
-//        $0.delegate = self // 이 딜리게이트 받아줘야함
-//    }
+    public lazy var layout = AutoHeightCollectionViewLayout().then {
+        $0.delegate = self // 이 딜리게이트 받아줘야함
+    }
     
     lazy var gridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.showsHorizontalScrollIndicator = false
