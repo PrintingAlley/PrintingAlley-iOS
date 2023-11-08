@@ -29,7 +29,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
     lazy var naviTitleView: UIView = UIView()
     
     lazy var closeButton: UIButton = UIButton().then {
-        $0.setImage(DesignSystemAsset.Icon.xmark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.close.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
         
     }

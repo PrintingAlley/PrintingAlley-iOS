@@ -42,7 +42,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     }
     
     lazy var titleLabel: AlleyLabel = AlleyLabel().then {
-        $0.numberOfLines = 1
+        $0.numberOfLines = 0
     }
     lazy var subtitleLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 1
@@ -92,13 +92,12 @@ extension ProductDetailTableHeaderView {
         
         infoView.snp.makeConstraints {
             $0.top.equalTo(collectionView.snp.bottom)
-            $0.left.equalToSuperview()
-            $0.right.equalToSuperview()
-            
+            $0.left.right.equalToSuperview()
+
         }
         
-        titleLabel.snp.makeConstraints { //Width 지정 후 짤림 처리
-            $0.top.equalToSuperview().inset(24)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(21)
             $0.left.equalToSuperview().inset(21)
             $0.right.equalToSuperview().inset(64)
         }
@@ -106,7 +105,7 @@ extension ProductDetailTableHeaderView {
         subtitleLabel.snp.makeConstraints {
             $0.left.right.equalTo(titleLabel)
             $0.top.equalTo(titleLabel.snp.bottom)
-            $0.bottom.equalToSuperview().inset(22)
+            
         }
         
         saveButton.snp.makeConstraints {
@@ -134,7 +133,6 @@ extension ProductDetailTableHeaderView {
         titleLabel.setTitle(title: model.title, textColor: .sub(.black), font: .header3)
         subtitleLabel.setTitle(title: model.subtitle, textColor: .grey(.grey400), font: .subtitle3)
         
-        titleLabel.lineBreakMode = .byTruncatingTail
         subtitleLabel.lineBreakMode = .byTruncatingTail
         
         saveButton.setImage(isSaved ? DesignSystemAsset.Icon.blueBookMark.image : DesignSystemAsset.Icon.emptyBookMark.image, for: .normal)

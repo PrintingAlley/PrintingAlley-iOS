@@ -11,12 +11,20 @@ import UIKit
 import UtilityModule
 import FloatingPanel
 import BaseDomainInterface
-
+import DesignSystem
 
 extension ProductDetailViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 492
+        
+        
+        let space = APP_WIDTH() - 85 + 5
+        
+        let tempLabel = AlleyLabel(output.headerInfo.value.title,textColor: .sub(.black), font: .header3).then {
+            $0.sizeToFit()
+        }
+        
+        return space > tempLabel.frame.width ? 492 : 510
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
