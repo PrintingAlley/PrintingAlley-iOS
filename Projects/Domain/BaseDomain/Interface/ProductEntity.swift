@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UtilityModule
 
 public struct ProductEntity {
     
@@ -19,6 +20,8 @@ public struct ProductEntity {
     public let tags: [ChildrenTagEntity]
     public let reviews: [ReviewEntity]
     public let isBookmarked: Bool
+    public let width: Int
+    public let height: Int
     public let statusCode: Int
     public let message: String
 
@@ -38,6 +41,8 @@ public struct ProductEntity {
         self.tags = tags
         self.reviews = reviews
         self.isBookmarked = isBookmarked
+        self.height = mainImage.findIntFromString(pattern: "&height=(\\d+)")
+        self.width = mainImage.findIntFromString(pattern: "width=(\\d+)")
         self.statusCode = statusCode
         self.message = message
     }
