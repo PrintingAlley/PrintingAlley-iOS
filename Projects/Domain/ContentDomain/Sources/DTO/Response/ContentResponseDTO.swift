@@ -13,9 +13,10 @@ struct ContentResponseDTO: Decodable {
     let id: Int
     let title: String
     let thumbnail: String
+    let webViewUrl: String
     
     
     func toDomain() -> ContentEntity {
-        ContentEntity(id: id, title: title, thumbnail: thumbnail)
+        ContentEntity(id: id, title: title, thumbnail: thumbnail, webViewUrl: webViewUrl)
     }
 }

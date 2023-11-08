@@ -23,6 +23,8 @@ public class SignInViewController: UIViewController {
     
     let versionLabel: AlleyLabel = AlleyLabel("버전정보 \(APP_VERSION())", textColor: .grey(.grey600), font: .caption1, alignment: .center)
     
+    lazy var logoTitle: AlleyLabel = AlleyLabel("인쇄로 가는\n지름길,\n인쇄골목",textColor: .sub(.black),font: .header1,alignment: .center)
+    
     let stackView: UIStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 8
@@ -63,12 +65,18 @@ extension SignInViewController {
     
     func addSubviews() {
         
-        self.view.addSubviews(versionLabel, stackView)
+        self.view.addSubviews(versionLabel, stackView,logoTitle)
         self.stackView.addArrangedSubview(kakaoButton, naverButton, appleButton, googleButton)
         
     }
     
     func makeConstraints() {
+        
+        logoTitle.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(97)
+            $0.left.right.equalToSuperview()
+            
+        }
         
         versionLabel.snp.makeConstraints {
             

@@ -10,15 +10,16 @@ import Foundation
 
 public struct ContentEntity {
     public let id: Int
-    public let title,thumbnail: String
+    public let title,thumbnail, webViewUrl: String
     
-    public init(id: Int, title: String, thumbnail: String) {
+    public init(id: Int, title: String, thumbnail: String, webViewUrl: String) {
         self.id = id
         self.title = title
         self.thumbnail = thumbnail
+        self.webViewUrl = webViewUrl
     }
     
     static func makeErrorEntity() -> Self {
-        ContentEntity(id: 0, title: "", thumbnail: "")
+        ContentEntity(id: 0, title: "", thumbnail: "", webViewUrl: "")
     }
 }
