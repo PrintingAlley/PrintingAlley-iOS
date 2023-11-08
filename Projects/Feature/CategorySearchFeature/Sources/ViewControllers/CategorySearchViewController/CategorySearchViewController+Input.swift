@@ -36,7 +36,6 @@ extension CategorySearchViewController {
     
     func bindItemSelected() {
         
-    
         gridCollectionView
             .rx
             .itemSelected

@@ -26,7 +26,10 @@ class CategorySearchViewController: UIViewController {
         
     }
     
-    lazy var emptyHeaderView = CategoryEmptyHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: APP_HEIGHT()))
+    lazy var emptyHeaderView = CategoryEmptyHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: APP_HEIGHT())).then {
+        $0.isUserInteractionEnabled = true
+        $0.delegate = self
+    }
 
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {

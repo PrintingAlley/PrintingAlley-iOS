@@ -72,5 +72,4 @@ class CategoryEmptyHeaderView: UIView {
     @objc func press() {
         delegate?.press()
     }
-
 }
