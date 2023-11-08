@@ -21,6 +21,8 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
         $0.contentMode = .scaleAspectFit
     }
     
+    public var imageHeight: CGFloat = 171
+    
     public var title = AlleyLabel("Print Alley", textColor: .sub(.black), font: .caption1).then {
         $0.numberOfLines = 1
         $0.lineBreakMode = .byTruncatingTail
@@ -69,24 +71,38 @@ extension PinterestCollectionViewCell {
         }
     }
     
-    public func update(model: ProductEntity) { // 변경 필요 (테스트용 함수임)
-        self.imageView.kf.setImage(with: URL(string: model.mainImage))
-        self.title.text = model.name
-        
-        imageView.snp.updateConstraints {
-            $0.top.leading.equalToSuperview()
-            $0.width.equalTo(171)
-            $0.height.equalTo(171)
-        }
-        
-        title.snp.updateConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(4)
-            $0.leading.equalTo(imageView)
-        }
-        
-        bookmarkButton.snp.updateConstraints {
-            $0.top.equalTo(title)
-            $0.trailing.equalTo(imageView)
+    public func update(model: ProductEntity, completion: @escaping () -> Void) { // 변경 필요 (테스트용 함수임)
+        let downloadTask = ImageDownloader.default.downloadImage(with: URL(string: model.mainImage)!, progressBlock: { receivedSize, totalSize in
+        }) { result in
+            switch result {
+            case .success(let value):
+                let image = value.image
+                self.imageView.image = image
+                self.imageHeight = 171 * image.size.height / image.size.width
+                DEBUG_LOG(self.imageHeight)
+                
+                self.imageView.snp.updateConstraints {
+                    $0.top.leading.equalToSuperview()
+                    $0.width.equalTo(171)
+                    $0.height.equalTo(self.imageHeight)
+                }
+                
+                self.title.snp.updateConstraints {
+                    $0.top.equalTo(self.imageView.snp.bottom).offset(4)
+                    $0.leading.equalTo(self.imageView)
+                }
+                
+                self.bookmarkButton.snp.updateConstraints {
+                    $0.top.equalTo(self.title)
+                    $0.trailing.equalTo(self.imageView)
+                }
+                
+                completion()  // - completion: @escaping () -> Void
+
+            case .failure(let err):
+                DEBUG_LOG(err)
+            }
+            self.title.text = model.name
         }
     }
 }
@@ -99,14 +115,4 @@ extension PinterestCollectionViewCell {
         DEBUG_LOG("북마크 버튼 누름")
     }
     
-}
-
-public struct Dummy {
-    public let image: UIImage
-    public let title: String
-    
-    public init(image: UIImage, title: String) {
-        self.image = image
-        self.title = title
-    }
 }

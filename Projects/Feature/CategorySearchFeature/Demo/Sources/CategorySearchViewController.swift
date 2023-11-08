@@ -18,14 +18,6 @@ import BaseDomainInterface
 
 class CategorySearchViewController: UIViewController {
     
-    var dummy: [Dummy] = [ // CollectionView용 더미 이미지 리스트
-        Dummy(image: DesignSystemAsset.Logo.tmpCard1.image, title: "Dongseongro Blues Pub Branding"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard2.image, title: "PAGE GALLERIES"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard3.image, title: "Graphics thisisgrey likes"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard4.image, title: "안녕"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard5.image, title: "SPACELOGIC"),
-        Dummy(image: DesignSystemAsset.Logo.tmpCard6.image, title: "Dongseongro Blues Pub \nBranding")
-    ]
     
     var filterDummy: [ChildrenTagEntity] = [
         ChildrenTagEntity(id: 2, name: "소량인쇄", image: "", parentID: 12, children: []),
@@ -62,9 +54,10 @@ class CategorySearchViewController: UIViewController {
         $0.separatorStyle = .none
     }
     
-    lazy var layout = AutoHeightCollectionViewLayout().then {
-        $0.delegate = self // 이 딜리게이트 받아줘야함
-    }
+    lazy var layout = AutoHeightCollectionViewLayout()
+//        .then {
+//        $0.delegate = self // 이 딜리게이트 받아줘야함
+//    }
     
     lazy var gridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.dataSource = self

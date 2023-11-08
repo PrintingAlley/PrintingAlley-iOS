@@ -36,6 +36,10 @@ class CategorySearchViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel()
     
+    private let opacityView = UIView().then {
+        $0.backgroundColor = .setColor(.sub(.white)).withAlphaComponent(0.3)
+    }
+
     lazy var filterButton: UIButton = FilterButton(title: "필터", id: -1, type: .filter, willChangeUI: false).then {
         $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
         $0.semanticContentAttribute = .forceRightToLeft//<- 중요
@@ -44,6 +48,7 @@ class CategorySearchViewController: UIViewController {
     
     lazy var filterCollectionView = makeCollectionView(layout: UICollectionViewFlowLayout(), scrollDirection: .horizontal, delegate: self, dataSource: self).then {
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
+        $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         $0.tag = 0
     }
     
@@ -52,9 +57,10 @@ class CategorySearchViewController: UIViewController {
         $0.separatorStyle = .none
     } // 지워야함
     
-    lazy var layout = AutoHeightCollectionViewLayout().then {
-        $0.delegate = self // 이 딜리게이트 받아줘야함
-    }
+    public lazy var layout = AutoHeightCollectionViewLayout()
+//        .then {
+//        $0.delegate = self // 이 딜리게이트 받아줘야함
+//    }
     
     lazy var gridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.showsHorizontalScrollIndicator = false
@@ -67,7 +73,6 @@ class CategorySearchViewController: UIViewController {
         $0.delegate = self
     }
     
-
     var viewModel: CategorySearchViewModel!
     
     let input = CategorySearchViewModel.Input()
@@ -79,7 +84,7 @@ class CategorySearchViewController: UIViewController {
 
     let disposeBag = DisposeBag()
     
-    init(filterFactory: FilterFactory, productDetailFactory: ProductDetailFactory , viewModel: CategorySearchViewModel) {
+    init(filterFactory: FilterFactory, productDetailFactory: ProductDetailFactory, viewModel: CategorySearchViewModel) {
         self.filterFactory = filterFactory
         self.productDetailFactory = productDetailFactory
         self.viewModel = viewModel
@@ -102,6 +107,13 @@ class CategorySearchViewController: UIViewController {
         self.naviTitleLabel.setTitle(title: viewModel.title, textColor: .sub(.black), font: .subtitle1, alignment: .center)
         configureCommonUI()
         bindViewModel()
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = opacityView.frame
+        gradient.colors = [UIColor.blue.cgColor, UIColor.purple.cgColor]
+        gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
+        opacityView.layer.insertSublayer(gradient, at: 0)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,7 +124,7 @@ class CategorySearchViewController: UIViewController {
 
 extension CategorySearchViewController {
     func addSubviews() {
-        view.addSubviews(naviTitleView, filterCollectionView, filterButton, gridCollectionView, indicator)
+        view.addSubviews(naviTitleView, filterCollectionView, opacityView, filterButton, gridCollectionView, indicator)
         naviTitleView.addSubviews(backButton, naviTitleLabel)
     }
     
@@ -145,7 +157,13 @@ extension CategorySearchViewController {
             $0.height.equalTo(32)
             $0.top.equalTo(naviTitleView.snp.bottom).offset(16)
             $0.leading.equalToSuperview().inset(24)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(112)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(112 - filterCollectionView.contentInset.right)
+        }
+        
+        opacityView.snp.makeConstraints {
+            $0.top.height.equalTo(filterButton)
+            $0.trailing.equalTo(filterCollectionView)
+            $0.width.equalTo(filterCollectionView.contentInset.right)
         }
         
         gridCollectionView.snp.makeConstraints {

@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public struct ProductEntity {
     
     public let id: Int
@@ -46,5 +45,4 @@ public struct ProductEntity {
     public static func makeErrorEntity(message: String) -> Self {
         ProductEntity(id: 0, name: "", size: "" ,  paper: "", afterProcess: "", designer: "" , introduction: "", description: "", mainImage: "", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [ChildrenTagEntity.makeErrorEntity()], reviews: [ReviewEntity.makeErrorEnitity(message: "")], isBookmarked:  false  , statusCode: 400, message: message)
     }
-    
 }

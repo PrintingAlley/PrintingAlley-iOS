@@ -11,6 +11,8 @@ import UIKit
 public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
     public weak var delegate: AutoHeightLayoutDelegate?
     
+    public var photoHeight: CGFloat = 200
+    
     private let numberOfColumns = 2
     private let cellInsets = UIEdgeInsets(top: 0, left: 8, bottom: 24, right: 8)
     
@@ -32,7 +34,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
     }
     
     public override func prepare() {
-        guard cache.isEmpty, let collectionView = collectionView else {
+        guard let collectionView = collectionView else {
             return
         }
         
@@ -51,7 +53,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
             let indexPath = IndexPath(item: item, section: 0)
             
             // 동적 높이 계산
-            let photoHeight = delegate?.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath) ?? 220
+            photoHeight = delegate?.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath) ?? 200
             let height = cellInsets.top + cellInsets.bottom + photoHeight + 60 // 60은 터치 영역을 위한 셀 공간
             
             // item의 frame
@@ -94,5 +96,17 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func changeHeight() {
+        guard let collectionView = collectionView else {
+            return
+        }
+        
+        for item in 0..<collectionView.numberOfItems(inSection: 0) { // 전체 item 개수를 돌면서, 캐시에 아이템 정보 저장
+            let indexPath = IndexPath(item: item, section: 0)
+            photoHeight = delegate?.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath) ?? 200
+            self.prepare()
+        }
     }
 }

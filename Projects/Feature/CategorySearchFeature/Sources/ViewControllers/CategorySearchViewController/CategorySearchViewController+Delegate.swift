@@ -91,9 +91,13 @@ extension CategorySearchViewController: UICollectionViewDataSource {
     }
 }
 
-extension CategorySearchViewController: AutoHeightLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 170
-        // 이미지 height 넘겨주면 됨
-    }
-}
+//extension CategorySearchViewController: AutoHeightLayoutDelegate {
+//    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+//        guard let cell = collectionView.cellForItem(at: indexPath) as? PinterestCollectionViewCell else { return 0 }
+//        if cell.imageView.image != nil {
+//            return cell.imageHeight
+//        }
+//        return 171
+//        // 이미지 받아오기 전에 실행됨 .. 실행됨 ... 실행됨 .... 실행됨 .....
+//    }
+//}
