@@ -11,11 +11,11 @@ import SnapKit
 import Then
 import DesignSystem
 
-public protocol ListHeaderViewDelegate: AnyObject {
+public protocol NewListHeaderViewDelegate: AnyObject {
     func generateNewList()
 }
 
-public class ListHeaderView: UIView {
+public class NewListHeaderView: UIView {
     
     lazy var button: UIButton = UIButton().then {
         $0.addTarget(self, action: #selector(generateNewList), for: .touchUpInside)
@@ -23,17 +23,18 @@ public class ListHeaderView: UIView {
     
     lazy var imageView: UIImageView = UIImageView().then{
         $0.image = DesignSystemAsset.Icon.roundAdd.image  
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
     }
     
     lazy var label: AlleyLabel = AlleyLabel("새로운 목록 만들기", textColor: .grey(.grey1000) ,font: .body1 ,alignment: .left)
     
-    weak var delegate: ListHeaderViewDelegate?
+    weak var delegate: NewListHeaderViewDelegate?
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubviews(button, imageView, label)
         makeConstraints()
+        
     }
     
 
@@ -45,7 +46,7 @@ public class ListHeaderView: UIView {
 
 }
 
-extension ListHeaderView {
+extension NewListHeaderView {
  
     func makeConstraints() {
         
@@ -54,13 +55,15 @@ extension ListHeaderView {
         }
         
         imageView.snp.makeConstraints {
-            $0.width.height.equalTo(32)
-            $0.left.top.bottom.equalToSuperview().inset(24)
+            $0.width.height.equalTo(30)
+            $0.centerY.equalToSuperview()
+            $0.left.equalToSuperview().inset(33)
+           
         }
         
         label.snp.makeConstraints {
-            $0.left.equalTo(imageView.snp.right).offset(16)
-            $0.centerY.equalTo(imageView)
+            $0.left.equalTo(imageView.snp.right).offset(21)
+            $0.centerY.equalTo(imageView).offset(-2)
         }
         
     }

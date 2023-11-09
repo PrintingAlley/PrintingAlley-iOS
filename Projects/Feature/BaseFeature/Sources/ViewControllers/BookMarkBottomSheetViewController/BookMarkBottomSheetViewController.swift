@@ -29,19 +29,17 @@ public class BookMarkBottomSheetViewController: UIViewController {
     lazy var naviTitleView: UIView = UIView()
     
     lazy var closeButton: UIButton = UIButton().then {
-        $0.setImage(DesignSystemAsset.Icon.xmark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.close.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
         
     }
     
     lazy var titleLabel: AlleyLabel = AlleyLabel("저장 목록", textColor: .sub(.black), font: .header3, alignment: .center)
     
-    lazy var baseLine: UIView = UIView().then {
-        $0.backgroundColor = .black.withAlphaComponent(0.1)
-    }
     
-    lazy var headerView: ListHeaderView = ListHeaderView(frame: CGRect(x: .zero, y: .zero, width: .max, height: 80)).then {
+    lazy var headerView: NewListHeaderView = NewListHeaderView(frame: CGRect(x: .zero, y: .zero, width: .max, height: 64)).then {
         $0.delegate = self
+     
     }
     
     lazy var tableView: UITableView = UITableView().then {
@@ -89,7 +87,7 @@ public class BookMarkBottomSheetViewController: UIViewController {
 extension BookMarkBottomSheetViewController {
     
     func addSubviews() {
-        self.view.addSubviews(naviTitleView, baseLine, tableView)
+        self.view.addSubviews(naviTitleView, tableView)
         
         self.naviTitleView.addSubviews(closeButton, titleLabel)
     }
@@ -108,17 +106,13 @@ extension BookMarkBottomSheetViewController {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $00.centerY.equalTo(closeButton.snp.centerY).offset(-2)
         }
         
-        baseLine.snp.makeConstraints {
-            $0.left.right.equalToSuperview()
-            $0.top.equalTo(naviTitleView.snp.bottom).offset(18)
-            $0.height.equalTo(1)
-        }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(baseLine.snp.bottom)
+            $0.top.equalTo(naviTitleView.snp.bottom).offset(18)
             $0.left.right.bottom.equalToSuperview()
         }
     }
@@ -159,7 +153,7 @@ extension BookMarkBottomSheetViewController {
     }
 }
 
-extension BookMarkBottomSheetViewController: ListHeaderViewDelegate {
+extension BookMarkBottomSheetViewController: NewListHeaderViewDelegate {
     public func generateNewList() {
         
         let vc = editModalFactory.makeView(id: -1, title: "저장 목록 만들기", type: .newBookMark)

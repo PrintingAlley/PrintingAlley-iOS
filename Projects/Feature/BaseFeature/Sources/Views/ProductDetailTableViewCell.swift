@@ -21,7 +21,8 @@ class ProductDetailTableViewCell: UITableViewCell {
     static let identifer: String = "ProductDetailTableViewCell"
     
     lazy var titleLabel: AlleyLabel = AlleyLabel().then {
-        $0.numberOfLines = 1
+        $0.numberOfLines = 0
+        $0.lineBreakMode = .byWordWrapping
     }
 
     lazy var button: UIButton = UIButton().then {
@@ -111,6 +112,16 @@ extension ProductDetailTableViewCell {
             return
         }
         
+        if index != 0 {
+            titleLabel.snp.makeConstraints {
+                $0.top.equalToSuperview().inset(12)
+                $0.left.equalToSuperview().inset(24)
+                $0.width.equalTo(baseLine.snp.width)
+            }
+        }
+
+        
+        titleLabel.setLineSpacing(lineSpacing: 6)
 
         button.isHidden = index != 0
         baseLine.isHidden = index == 5
