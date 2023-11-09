@@ -23,7 +23,7 @@ public class NewListHeaderView: UIView {
     
     lazy var imageView: UIImageView = UIImageView().then{
         $0.image = DesignSystemAsset.Icon.roundAdd.image  
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
     }
     
     lazy var label: AlleyLabel = AlleyLabel("새로운 목록 만들기", textColor: .grey(.grey1000) ,font: .body1 ,alignment: .left)
@@ -54,13 +54,15 @@ extension NewListHeaderView {
         }
         
         imageView.snp.makeConstraints {
-            $0.width.height.equalTo(32)
-            $0.left.top.bottom.equalToSuperview().inset(24)
+            $0.width.height.equalTo(30)
+            $0.top.equalToSuperview().inset(24)
+            $0.left.equalToSuperview().inset(33)
+            $0.bottom.equalToSuperview()
         }
         
         label.snp.makeConstraints {
             $0.left.equalTo(imageView.snp.right).offset(16)
-            $0.centerY.equalTo(imageView)
+            $0.centerY.equalTo(imageView).offset(-2)
         }
         
     }
