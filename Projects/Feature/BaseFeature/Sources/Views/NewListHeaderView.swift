@@ -34,6 +34,7 @@ public class NewListHeaderView: UIView {
         super.init(frame: frame)
         self.addSubviews(button, imageView, label)
         makeConstraints()
+        
     }
     
 
@@ -55,13 +56,13 @@ extension NewListHeaderView {
         
         imageView.snp.makeConstraints {
             $0.width.height.equalTo(30)
-            $0.top.equalToSuperview().inset(24)
+            $0.centerY.equalToSuperview()
             $0.left.equalToSuperview().inset(33)
-            $0.bottom.equalToSuperview()
+           
         }
         
         label.snp.makeConstraints {
-            $0.left.equalTo(imageView.snp.right).offset(16)
+            $0.left.equalTo(imageView.snp.right).offset(21)
             $0.centerY.equalTo(imageView).offset(-2)
         }
         

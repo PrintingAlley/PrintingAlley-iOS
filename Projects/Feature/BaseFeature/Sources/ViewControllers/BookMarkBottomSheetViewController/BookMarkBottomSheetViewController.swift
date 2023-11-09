@@ -37,8 +37,9 @@ public class BookMarkBottomSheetViewController: UIViewController {
     lazy var titleLabel: AlleyLabel = AlleyLabel("저장 목록", textColor: .sub(.black), font: .header3, alignment: .center)
     
     
-    lazy var headerView: NewListHeaderView = NewListHeaderView(frame: CGRect(x: .zero, y: .zero, width: .max, height: 80)).then {
+    lazy var headerView: NewListHeaderView = NewListHeaderView(frame: CGRect(x: .zero, y: .zero, width: .max, height: 64)).then {
         $0.delegate = self
+     
     }
     
     lazy var tableView: UITableView = UITableView().then {
@@ -105,7 +106,8 @@ extension BookMarkBottomSheetViewController {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $00.centerY.equalTo(closeButton.snp.centerY).offset(-2)
         }
         
         
