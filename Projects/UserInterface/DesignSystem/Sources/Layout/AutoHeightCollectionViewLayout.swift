@@ -32,8 +32,8 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
     }
     
     public override func prepare() {
-        guard let collectionView = collectionView else {
-            return
+        guard cache.isEmpty == true || cache.isEmpty == false, let collectionView = collectionView else {
+                return
         }
         
         let columnWidth = contentWidth / CGFloat(numberOfColumns)
@@ -63,7 +63,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
                     attributes.frame = insetFrame
                     cache.append(attributes)
             
-            contentHeight = max(contentHeight, frame.maxY)
+            contentHeight = frame.maxY
             
             yOffset[column] += height
             column = column < (numberOfColumns - 1) ? (column + 1) : 0
