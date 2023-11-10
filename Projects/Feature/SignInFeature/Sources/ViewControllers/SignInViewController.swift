@@ -107,7 +107,7 @@ extension SignInViewController {
         }
         
         stackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(24)
+            $0.horizontalEdges.equalToSuperview().inset(HORIZON_MARGIN1())
         }
     }
     

@@ -101,7 +101,7 @@ extension MyPageContentViewController {
         profileImage.snp.makeConstraints {
             $0.width.height.equalTo(64)
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(49)
-            $0.left.equalToSuperview().inset(25)
+            $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
         }
         
         profileLabel.snp.makeConstraints {
