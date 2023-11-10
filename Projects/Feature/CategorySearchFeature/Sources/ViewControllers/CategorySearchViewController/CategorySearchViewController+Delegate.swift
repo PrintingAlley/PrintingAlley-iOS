@@ -16,8 +16,9 @@ import UtilityModule
 extension CategorySearchViewController: CategoryEmptyHeaderViewDelegate {
     func press() {
         DEBUG_LOG("초기화")
-        output.tags.accept([])
-        input.fetchData.onNext(())
+        output.tags.accept([]) //TODO: 카테고리 id , 값 갱신 될 때 스크롤 상단으로 옮기기 , 스크롤 영역 핏하게 맞추기
+        input.pageID.accept(1)
+        input.isFetchByScroll.accept(false)
         filterCollectionView.reloadData()
     }
 
@@ -27,7 +28,8 @@ extension CategorySearchViewController: FilterViewControllerDelegate {
     func receive(result: [Tag]) {
         DEBUG_LOG("RESULT: \(result)")
         output.tags.accept(result)
-        input.fetchData.onNext(())
+        input.pageID.accept(1)
+        input.isFetchByScroll.accept(false)
         filterCollectionView.reloadData()
     }
 }
@@ -56,7 +58,8 @@ extension CategorySearchViewController: UICollectionViewDelegateFlowLayout {
         if collectionView.tag == 0 {
             tags.remove(at: indexPath.row)
             output.tags.accept(tags)
-            input.fetchData.onNext(())
+            input.pageID.accept(1)
+            input.isFetchByScroll.accept(false)
             filterCollectionView.reloadData()
         }
     }
@@ -93,7 +96,7 @@ extension CategorySearchViewController: UICollectionViewDataSource {
 
 extension CategorySearchViewController: AutoHeightLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        let product = output.dataSource.value.products[indexPath.row]
+        let product = output.dataSource.value[indexPath.row]
         
         return CGFloat(product.height * 171 / product.width)
     }

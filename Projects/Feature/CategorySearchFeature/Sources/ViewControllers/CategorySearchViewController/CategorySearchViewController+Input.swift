@@ -10,6 +10,7 @@ import Foundation
 import RxCocoa
 import UtilityModule
 import UIKit
+import BaseDomainInterface
 
 extension CategorySearchViewController {
     
@@ -45,15 +46,36 @@ extension CategorySearchViewController {
                 
                 guard let self else { return }
                 
-                let vc = self.productDetailFactory.makeView(id: dataSource.products[index].id)
+                let vc = self.productDetailFactory.makeView(id: dataSource[index].id)
                 
                 self.navigationController?.pushViewController(vc, animated: true)
             
-                
             })
             .disposed(by: disposeBag)
     
-        
     }
     
+    func bindGridView() {
+        gridCollectionView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        gridCollectionView.rx.willDisplayCell
+            .map { $1 }
+            .withLatestFrom(output.dataSource, resultSelector: { (indexPath, datasource) -> (IndexPath, [ProductEntity]) in
+                return (indexPath, datasource)
+            })
+            .filter{ (indexPath, datasources) -> Bool in
+                return indexPath.item == datasources.count - 1
+            }
+            .withLatestFrom(output.canLoadMore)
+            .filter{ $0 }
+            .map { _ in return }
+            .do(onNext: { [weak self] _ in
+                guard let self else {return }
+                input.isFetchByScroll.accept(true)
+            })
+            .bind(to: input.loadMore)
+            .disposed(by: disposeBag)
+    }
 }

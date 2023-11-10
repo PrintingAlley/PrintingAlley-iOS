@@ -20,7 +20,7 @@ import BaseFeatureInterface
 
 class CategorySearchViewController: UIViewController {
     
-    lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then{
+    lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then {
         $0.color = DesignSystemAsset.MainBlue.blue500.color
         $0.hidesWhenStopped = true
         
@@ -46,7 +46,7 @@ class CategorySearchViewController: UIViewController {
 
     lazy var filterButton: UIButton = FilterButton(title: "필터", id: -1, type: .filter, willChangeUI: false).then {
         $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
-        $0.semanticContentAttribute = .forceRightToLeft//<- 중요
+        $0.semanticContentAttribute = .forceRightToLeft //<- 중요
         $0.clipsToBounds = true
     }
     
@@ -67,7 +67,6 @@ class CategorySearchViewController: UIViewController {
     
     lazy var gridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.showsHorizontalScrollIndicator = false
-        $0.showsVerticalScrollIndicator = false
         $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
         $0.tag = 1
     }
@@ -186,7 +185,9 @@ extension CategorySearchViewController {
         bindIndicator(output: output)
         bindFilterButton()
         bindItemSelected()
-        input.fetchData.onNext(())
+        bindGridView()
+        input.pageID.accept(1)
+
     }
     
     func bindBackEvent() {
