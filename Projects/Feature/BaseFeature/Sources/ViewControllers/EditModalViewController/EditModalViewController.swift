@@ -31,8 +31,9 @@ public class EditModalViewController: UIViewController {
     lazy var titleLabel: AlleyLabel = AlleyLabel()
     
     lazy var textFieldContainerView: UIView = UIView().then {
+        $0.backgroundColor = DesignSystemAsset.Grey.grey50.color
         $0.layer.cornerRadius = 8
-        $0.layer.borderColor = DesignSystemAsset.Grey.grey300.color.cgColor
+        $0.layer.borderColor = DesignSystemAsset.Grey.grey100.color.cgColor
         $0.layer.borderWidth = 1
         
     }
