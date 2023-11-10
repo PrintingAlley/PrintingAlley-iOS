@@ -22,13 +22,12 @@ extension CategorySearchViewController {
                 guard let self else { return }
                 self.indicator.stopAnimating()
                 DEBUG_LOG("DS: \(dataSource.count)")
-                    if dataSource.isEmpty {
-                        gridCollectionView.backgroundView = emptyHeaderView
-                    }
-                    else {
-                        self.gridCollectionView.restore()
+                if dataSource.isEmpty {
+                    gridCollectionView.backgroundView = emptyHeaderView
                 }
-                
+                else {
+                    self.gridCollectionView.restore()
+                }
             })
             .bind(to: gridCollectionView.rx.items) { [weak self] (collectionView, index, model) -> UICollectionViewCell in
                 guard let self else { return UICollectionViewCell() }

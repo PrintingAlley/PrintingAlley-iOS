@@ -64,7 +64,7 @@ class CategorySearchViewModel: ViewModelType {
         input.pageID
             .withLatestFrom(output.tags){($0,$1)}
             .map { ($0, $1.map { $0.id })}
-            .flatMap { [weak self] (page,tags) -> Observable<ProductListEntity> in
+            .flatMap { [weak self] (page, tags) -> Observable<ProductListEntity> in
                 guard let self else { return Observable.empty() }
                 
                 return self.fetchProductListUseCase
