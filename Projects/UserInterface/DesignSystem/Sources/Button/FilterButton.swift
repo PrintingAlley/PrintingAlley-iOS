@@ -105,7 +105,7 @@ extension FilterButton {
             self.layer.borderColor = UIColor.setColor(.mainBlue(.blue500)).cgColor
             self.layer.borderWidth = 1.0
             self.setTitleColor(.setColor(.grey(.grey900)), for: .normal)
-            self.setImage(DesignSystemAsset.Icon.xmark.image, for: .normal)
+            self.setImage(DesignSystemAsset.Icon.close.image, for: .normal)
         }
         
         self.imageView?.contentMode = .scaleAspectFit

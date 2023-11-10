@@ -48,6 +48,8 @@ extension CategorySearchViewController {
                 
                 let vc = self.productDetailFactory.makeView(id: dataSource[index].id)
                 
+                vc.hidesBottomBarWhenPushed = true // 탭바 내림
+                
                 self.navigationController?.pushViewController(vc, animated: true)
             
             })

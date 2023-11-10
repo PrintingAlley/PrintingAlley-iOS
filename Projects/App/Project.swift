@@ -36,7 +36,8 @@ let targets: [Target] = [
             .domain(target: .UserDomain),
             .domain(target: .PrintShopDomain),
             .domain(target: .TagDomain),
-            .domain(target: .ProductDomain)
+            .domain(target: .ProductDomain),
+            .domain(target: .ContentDomain)
         ],
         settings: .settings(base: env.baseSetting)
     )

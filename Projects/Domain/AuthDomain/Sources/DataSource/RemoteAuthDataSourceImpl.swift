@@ -38,4 +38,10 @@ final class RemoteAuthDataSourceImpl: BaseRemoteDataSource<AuthAPI>, RemoteAuthD
             .map(BaseResponseDTO.self)
             .map{$0.toDomain()}
     }
+    
+    func versionCheck(version: String) -> Single<VersionCheckEntity> {
+        request(.versionCheck(version: version))
+            .map(VersionCheckResponseDTO.self)
+            .map{$0.toDomain()}
+    }
 }

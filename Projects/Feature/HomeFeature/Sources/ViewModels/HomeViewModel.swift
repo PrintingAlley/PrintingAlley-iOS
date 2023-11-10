@@ -12,49 +12,52 @@ import TagDomainInterface
 import RxRelay
 import RxSwift
 import BaseDomainInterface
+import ContentDomainInterface
 
 final class HomeViewModel: ViewModelType {
     
-    var fetchTagUseCase: any FetchTagUseCase
     var fetchHierarchyUseCase: any FetchHierarchyUseCase
+    var fetchContentsUseCase: any FetchContentsUseCase
     
     let disposeBag = DisposeBag()
     
-    init(fetchTagUseCase: FetchTagUseCase, fetchHierarchyUseCase: FetchHierarchyUseCase) {
-        self.fetchTagUseCase = fetchTagUseCase
+    init(fetchHierarchyUseCase: FetchHierarchyUseCase,fetchContentsUseCase : FetchContentsUseCase) {
         self.fetchHierarchyUseCase = fetchHierarchyUseCase
+        self.fetchContentsUseCase = fetchContentsUseCase
     }
     
     public struct Input {
-        let viewDidLoad: PublishSubject<Void> = .init()
+        
     }
     
     public struct Output{
         let tagDataSource: BehaviorRelay<[ChildrenTagEntity]> = .init(value: [])
+        let contentDataSource: BehaviorRelay<[ContentEntity]> = .init(value: [])
     }
     
     public func transform(input: Input) -> Output {
         let output = Output()
+            
+        let dataSourceForZip =  Observable.zip(
+            fetchHierarchyUseCase.execute()
+                .catchAndReturn(HierarchyEntity(statusCode: 0, message: "", hierarchies: []))
+                .asObservable(),
+            fetchContentsUseCase.execute()
+                .catchAndReturn(ContentGroupEntity(contents: [], statusCode: 0, message: ""))
+                .asObservable()
+        )
         
-        input.viewDidLoad
-            .flatMap({ [weak self] () -> Observable<[ChildrenTagEntity]> in
+        dataSourceForZip
+            .subscribe(onNext: { (tagsResult,contentResult) in
                 
-                guard let self else { return Observable.empty()}
-                
-                return self.fetchHierarchyUseCase.execute()
-                    .catch({ error in
-                        
-                        return Single<HierarchyEntity>.create { single in
-                            single(.success(HierarchyEntity(statusCode: 0, message: "", hierarchies: [])))
-                            return Disposables.create()
-                        }
-                    })
-                    .map{$0.hierarchies}
-                    .asObservable()
+                output.tagDataSource.accept(tagsResult.hierarchies)
+                DEBUG_LOG(contentResult)
+                output.contentDataSource.accept(contentResult.contents)
                 
             })
-            .bind(to: output.tagDataSource)
             .disposed(by: disposeBag)
+        
+
         
         return output
     }

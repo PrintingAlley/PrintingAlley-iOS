@@ -65,7 +65,7 @@ public extension UIFont.AlleyFontSystem {
             return UIFont(font: DesignSystemFontFamily.Pretendard.medium, size: 10) ?? .init()
 
         case .caption1:
-            return UIFont(font: DesignSystemFontFamily.Pretendard.regular, size: 12) ?? .init()
+            return UIFont(font: DesignSystemFontFamily.Pretendard.medium, size: 12) ?? .init()
 
         case .caption2:
             return UIFont(font: DesignSystemFontFamily.Pretendard.regular, size: 10) ?? .init()

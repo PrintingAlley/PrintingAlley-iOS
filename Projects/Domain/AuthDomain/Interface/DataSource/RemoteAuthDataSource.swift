@@ -16,5 +16,5 @@ public protocol RemoteAuthDataSource {
     func verify() -> Single<VerifyEntity>
     func logout() -> Single<BaseEntity>
     func withdraw() -> Single<BaseEntity>
-    
+    func versionCheck(version: String) -> Single<VersionCheckEntity>
 }

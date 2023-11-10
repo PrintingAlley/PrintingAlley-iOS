@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "person.circle.fill 1@2x.png",
+      "filename" : "Exclude@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "person.circle.fill 1@3x.png",
+      "filename" : "Exclude@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -22,4 +22,8 @@ extension AppComponent {
     var productDetailFactory: any ProductDetailFactory {
         ProductDetailComponent(parent: self)
     }
+    
+    var webViewFactory: any WebViewFactory {
+        WebViewComponent(parent: self)
+    }
 }
