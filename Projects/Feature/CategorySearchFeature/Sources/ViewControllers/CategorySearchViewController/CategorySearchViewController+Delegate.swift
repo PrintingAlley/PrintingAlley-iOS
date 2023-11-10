@@ -16,7 +16,7 @@ import UtilityModule
 extension CategorySearchViewController: CategoryEmptyHeaderViewDelegate {
     func press() {
         DEBUG_LOG("초기화")
-        output.tags.accept([]) //TODO: 카테고리 id, 값 갱신 될 때 스크롤 상단으로 옮기기 , 스크롤 영역 핏하게 맞추기
+        output.tags.accept([])
         input.pageID.accept(1)
         gridCollectionView .setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         input.isFetchByScroll.accept(false)
