@@ -40,8 +40,14 @@ class CategorySearchViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel()
     
-    private let opacityView = UIView().then {
-        $0.backgroundColor = .setColor(.sub(.white)).withAlphaComponent(0.3)
+    private let gradientView = UIView().then {
+        $0.backgroundColor = .none
+    }
+    
+    private let gradient = CAGradientLayer().then {
+        $0.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.withAlphaComponent(1).cgColor]
+        $0.startPoint = CGPoint(x: 0.0, y: 1.0)
+        $0.endPoint = CGPoint(x: 1.0, y: 1.0)
     }
 
     lazy var filterButton: UIButton = FilterButton(title: "필터", id: -1, type: .filter, willChangeUI: false).then {
@@ -55,11 +61,6 @@ class CategorySearchViewController: UIViewController {
         $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         $0.tag = 0
     }
-    
-    lazy var tableView: UITableView = UITableView().then {
-        $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
-        $0.separatorStyle = .none
-    } // 지워야함
     
     public lazy var layout = AutoHeightCollectionViewLayout().then {
         $0.delegate = self // 이 딜리게이트 받아줘야함
@@ -109,24 +110,24 @@ class CategorySearchViewController: UIViewController {
         self.naviTitleLabel.setTitle(title: viewModel.title, textColor: .sub(.black), font: .subtitle1, alignment: .center)
         configureCommonUI()
         bindViewModel()
-        
-        let gradient = CAGradientLayer()
-        gradient.frame = opacityView.frame
-        gradient.colors = [UIColor.blue.cgColor, UIColor.purple.cgColor]
-        gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
-        opacityView.layer.insertSublayer(gradient, at: 0)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         configureSwipeBack()
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        gradient.frame = gradientView.bounds
+        gradientView.layer.insertSublayer(gradient, at: 0)
+    }
 }
 
 extension CategorySearchViewController {
     func addSubviews() {
-        view.addSubviews(naviTitleView, filterCollectionView, opacityView, filterButton, gridCollectionView, indicator)
+        view.addSubviews(naviTitleView, filterCollectionView, gradientView, filterButton, gridCollectionView, indicator)
         naviTitleView.addSubviews(backButton, naviTitleLabel)
     }
     
@@ -162,10 +163,10 @@ extension CategorySearchViewController {
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(112 - filterCollectionView.contentInset.right)
         }
         
-        opacityView.snp.makeConstraints {
+        gradientView.snp.makeConstraints {
             $0.top.height.equalTo(filterButton)
-            $0.trailing.equalTo(filterCollectionView)
-            $0.width.equalTo(filterCollectionView.contentInset.right)
+            $0.trailing.equalTo(filterButton.snp.leading).inset(3)
+            $0.width.equalTo(13)
         }
         
         gridCollectionView.snp.makeConstraints {
