@@ -10,13 +10,13 @@ import Foundation
 import BaseDomain
 import ProductDomainInterface
 
-
 struct ProductListResponseDTO: Decodable {
     let products: [ProductResponseDTO]
+    let totalCount: Int
     let statusCode: Int?
     let message: String?
     
     func toDomain() -> ProductListEntity {
-        ProductListEntity(statusCode: statusCode ?? 0, message: message ?? "", products: products.map({$0.toDomain()}) )
+        ProductListEntity(statusCode: statusCode ?? 0, message: message ?? "", products: products.map({$0.toDomain()}), totalCount: totalCount)
     }
 }
