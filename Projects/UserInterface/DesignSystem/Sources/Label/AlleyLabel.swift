@@ -21,7 +21,7 @@ public final class AlleyLabel: UILabel {
     
     public init(
         _ title: String = "",
-        textColor: UIColor.AlleyColorSystem = .mainBlue(.blue1000),
+        textColor: UIColor.AlleyColorSystem = .mainBlue(.blue500),
         font: UIFont.AlleyFontSystem = .subtitle2,
         alignment: NSTextAlignment = .left
     ) {

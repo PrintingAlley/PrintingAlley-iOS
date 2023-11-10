@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "mdi-light_account.png",
+      "filename" : "mdi-light_account-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "mdi-light_account@2x.png",
+      "filename" : "mdi-light_account@2x-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "mdi-light_account@3x.png",
+      "filename" : "mdi-light_account@3x-1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
