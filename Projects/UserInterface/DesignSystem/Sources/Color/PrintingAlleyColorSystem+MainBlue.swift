@@ -20,7 +20,6 @@ public extension UIColor.AlleyColorSystem {
         case blue700
         case blue800
         case blue900
-        case blue1000
     }
 }
 
@@ -37,7 +36,6 @@ public extension UIColor.AlleyColorSystem.Mainblue {
         case .blue700: return DesignSystemAsset.MainBlue.blue700.color
         case .blue800: return DesignSystemAsset.MainBlue.blue800.color
         case .blue900: return DesignSystemAsset.MainBlue.blue900.color
-        case .blue1000: return DesignSystemAsset.MainBlue.blue1000.color
         }
     }
 }

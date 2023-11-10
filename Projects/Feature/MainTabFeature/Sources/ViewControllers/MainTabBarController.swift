@@ -34,6 +34,7 @@ public class MainTabBarController: UITabBarController {
         UITabBarItem(title: "내 주변", image: DesignSystemAsset.BottomTabIcon.defaultMapMarker.image, selectedImage: DesignSystemAsset.BottomTabIcon.selectedMapMarker.image),
         UITabBarItem(title: "나의 골목", image: DesignSystemAsset.BottomTabIcon.defaultPerson.image, selectedImage: DesignSystemAsset.BottomTabIcon.selectedPerson.image)
         ]
+        
         return items
     }()
 
@@ -68,10 +69,10 @@ extension MainTabBarController {
     private func styleTabBar() {
         let normalAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.font: UIFont.setFont(.body3),
-            NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey700))
+            NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey600))
         ]
         let selectedAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: UIColor.setColor(.mainBlue(.blue500))
+            NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey1000))
         ]
         self.tabBar.backgroundColor = .setColor(.sub(.white))
         self.tabBar.layer.borderColor = UIColor.setColor(.grey(.grey100)).cgColor
@@ -82,5 +83,7 @@ extension MainTabBarController {
             item.imageInsets = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
             item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 2)
         }
+        
+        self.tabBar.tintColor =  DesignSystemAsset.Grey.grey1000.color  // 선택된 탭바 아이템 색 변경
     }
 }
