@@ -43,7 +43,7 @@ class CategorySearchViewModel: ViewModelType {
     public struct Output {
         let dataSource: BehaviorRelay<[ProductEntity]> = .init(value: [])
         let runIndicator: BehaviorRelay<Void> = .init(value: ())
-        let tags: BehaviorRelay<[Tag]> = .init(value: [])
+        let tags: BehaviorRelay<[Tag]> = .init(value: []) // 카테고리 id 제외한 필터 태그값
         var canLoadMore: BehaviorRelay<Bool> = .init(value: true)
     }
      
