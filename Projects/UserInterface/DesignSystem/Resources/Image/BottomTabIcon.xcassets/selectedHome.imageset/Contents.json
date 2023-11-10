@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Artboard 12 copy 5.png",
+      "filename" : "mdi-light_home-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Artboard 12 copy 5@2x.png",
+      "filename" : "mdi-light_home@2x-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Artboard 12 copy 5@3x.png",
+      "filename" : "mdi-light_home@3x-1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

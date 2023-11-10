@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Artboard 12 copy 7.png",
+      "filename" : "mdi-light_map-marker-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Artboard 12 copy 7@2x.png",
+      "filename" : "mdi-light_map-marker@2x-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Artboard 12 copy 7@3x.png",
+      "filename" : "mdi-light_map-marker@3x-1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
