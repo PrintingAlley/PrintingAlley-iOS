@@ -101,7 +101,7 @@ extension BookMarkBottomSheetViewController {
         
         closeButton.snp.makeConstraints {
             $0.width.height.equalTo(24)
-            $0.left.equalToSuperview().inset(24)
+            $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.centerY.equalToSuperview()
         }
         

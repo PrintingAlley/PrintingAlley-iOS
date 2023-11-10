@@ -59,14 +59,14 @@ extension BookMarkListTableViewCell {
         baseLine.snp.makeConstraints {
             $0.height.equalTo(1)
             $0.left.equalTo(frontImageView.snp.left)
-            $0.right.equalToSuperview().inset(24)
+            $0.right.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.top.equalToSuperview()
         }
         
         frontImageView.snp.makeConstraints {
             $0.width.height.equalTo(48)
             $0.top.bottom.equalToSuperview().inset(10)
-            $0.left.equalToSuperview().inset(24)
+            $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
         }
         
         titleLabel.snp.makeConstraints {
@@ -84,7 +84,7 @@ extension BookMarkListTableViewCell {
         rightArrowImageView.snp.makeConstraints {
             $0.width.height.equalTo(24)
             $0.centerY.equalTo(frontImageView.snp.centerY)
-            $0.right.equalToSuperview().inset(24)
+            $0.right.equalToSuperview().inset(HORIZON_MARGIN1())
 
         }
         

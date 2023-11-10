@@ -57,7 +57,7 @@ extension NewListHeaderView {
         imageView.snp.makeConstraints {
             $0.width.height.equalTo(30)
             $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().inset(33)
+            $0.left.equalToSuperview().inset(22)
            
         }
         
