@@ -111,16 +111,6 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
 }
 
 
-extension ProductDetailViewController: ProductDetailTableViewCellDelegate {
-    func copy(text: String) {
-        COPY(text: text)
-        
-        input.askToast.onNext(BaseEntity(statusCode: 0, message: "클립보드에 복사되었습니다\n인쇄사 찾기에서 바로 검색해보세요"))
-    }
-    
-}
-
-
 extension ProductDetailViewController: BookMarkBottomSheetViewControllerDelegate {
     func success(id: Int) { // 세이브 성공 했으니 저장상태 업데이트
         viewModel.isSaved = true

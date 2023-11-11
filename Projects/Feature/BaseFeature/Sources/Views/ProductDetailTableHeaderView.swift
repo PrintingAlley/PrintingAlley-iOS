@@ -60,7 +60,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     public weak var delegate: ProductDetailTableHeaderViewDelegate?
     
     var isSaved: Bool = false
-    var model: ProductHeaderInfo = ProductHeaderInfo(id: 0, title: "", subtitle: "", images: [])
+    var model: ProductHeaderInfo = ProductHeaderInfo(id: 0, title: "", subtitle: "",printShop: "",designer: "", images: [])
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
