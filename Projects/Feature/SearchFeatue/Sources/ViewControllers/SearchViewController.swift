@@ -33,6 +33,8 @@ final class SearchViewController: UIViewController, ContainerViewType {
         $0.register(PrintShopTableViewCell.self, forCellReuseIdentifier: PrintShopTableViewCell.identifier)
     }
     
+    lazy var emptyHeaderView: EmptyTableHeaderView = EmptyTableHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80), text: "검색 결과가 없어요.")
+    
     init(viewModel: SearchViewModel!) {
         DEBUG_LOG("\(Self.self) Init ✅ ")
         self.viewModel = viewModel

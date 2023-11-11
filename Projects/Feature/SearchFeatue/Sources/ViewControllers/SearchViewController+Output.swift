@@ -17,9 +17,7 @@ extension SearchViewController {
             .do { [weak self] dataSource in
                 guard let self else { return }
                 
-                if dataSource.isEmpty {
-                    // TODO: 검색결과 없음 뷰
-                }
+                self.printingTableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
             }
             .bind(to: printingTableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
                 
