@@ -18,6 +18,7 @@ final class ContentsCollectionViewCell: UICollectionViewCell {
     
     private let image = UIImageView().then {
         $0.contentMode = .scaleToFill
+        $0.setRound(.allCorners, radius: 8)
     }
     
     private let label = AlleyLabel().then {
