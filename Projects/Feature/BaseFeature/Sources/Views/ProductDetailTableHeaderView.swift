@@ -15,7 +15,6 @@ import Then
 public protocol ProductDetailTableHeaderViewDelegate: AnyObject {
     func save(id: Int, isBookmarked: Bool)
     func move()
-    func pop()
 }
 
 
@@ -56,11 +55,11 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     lazy var movePrintShopButton: UIButton = UIButton().then {
         $0.addTarget(self, action: #selector(move), for: .touchUpInside)
     }
-    
+        
     lazy var designerLabel: AlleyLabel = AlleyLabel()
     
     lazy var emptyView: UIView = UIView().then {
-        $0.backgroundColor = colorFromRGB("E7E8EE")
+        $0.backgroundColor = DesignSystemAsset.Grey.grey50.color
     }
     
     lazy var infoLabel: AlleyLabel = AlleyLabel("작품 상세정보", textColor: .sub(.black), font: .subtitle2)
@@ -121,11 +120,11 @@ extension ProductDetailTableHeaderView {
         
         printShopLabel.snp.makeConstraints {
             $0.left.right.equalTo(HORIZON_MARGIN1())
-            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(15)
         }
         
         designerLabel.snp.makeConstraints {
-            $0.top.equalTo(printShopLabel.snp.bottom).offset(4)
+            $0.top.equalTo(printShopLabel.snp.bottom).offset(2)
             $0.left.right.equalTo(printShopLabel)
             $0.bottom.equalToSuperview().inset(21)
         }
@@ -137,7 +136,7 @@ extension ProductDetailTableHeaderView {
         }
         
         infoLabel.snp.makeConstraints {
-            $0.top.equalTo(emptyView.snp.bottom).offset(16)
+            $0.top.equalTo(emptyView.snp.bottom).offset(17)
             $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.right.equalToSuperview()
             $0.bottom.equalToSuperview()
@@ -154,10 +153,6 @@ extension ProductDetailTableHeaderView {
     
     @objc func move() {
         delegate?.move()
-    }
-    
-    @objc func pop() {
-        delegate?.pop()
     }
     
     func update(model: ProductHeaderInfo, isSaved: Bool) { 

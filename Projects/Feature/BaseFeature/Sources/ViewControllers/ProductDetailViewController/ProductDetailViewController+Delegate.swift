@@ -46,11 +46,6 @@ extension ProductDetailViewController: UITableViewDelegate {
 
 extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
     
-    func pop() {
-        
-    }
-    
-    
     func move() {
         DEBUG_LOG("MOVE MOVE")
     }

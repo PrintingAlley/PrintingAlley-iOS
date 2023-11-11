@@ -45,8 +45,8 @@ extension ProductDetailTableViewCell {
     
     func makeConstraints() {
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
-            $0.left.right.equalToSuperview().inset(24)
+            $0.top.equalToSuperview().inset(12)
+            $0.left.right.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.width.lessThanOrEqualTo(APP_WIDTH() - (24+24))
             $0.bottom.equalToSuperview()
         }
@@ -72,7 +72,7 @@ extension ProductDetailTableViewCell {
             return
         }
             
-        titleLabel.setLineSpacing(lineSpacing: 6)
+        titleLabel.setLineSpacing(lineSpacing: 9)
 
         
     }
