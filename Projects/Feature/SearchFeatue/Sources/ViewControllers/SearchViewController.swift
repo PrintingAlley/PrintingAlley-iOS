@@ -14,8 +14,7 @@ import UtilityModule
 import RxCocoa
 import RxSwift
 import RxDataSources
-import BaseFeatureInterface
-import SearchFeatueInterface
+import BaseFeature
 
 final class SearchViewController: UIViewController, ContainerViewType {
     private var viewModel: SearchViewModel!
@@ -23,20 +22,23 @@ final class SearchViewController: UIViewController, ContainerViewType {
     let disposeBag = DisposeBag()
     let input = SearchViewModel.Input()
     
-    var afterSearchFactory: AfterSearchFactory!
-    
-    lazy var afterVc = afterSearchFactory.makeView(dataSource: [])
-    
     var contentView: UIView! = UIView()
     
     let searchBar = SearchBar()
     
-    init(viewModel: SearchViewModel!, afterSearchFactory: AfterSearchFactory) {
+    public lazy var printingTableView = UITableView().then {
+        $0.backgroundColor = .setColor(.sub(.white))
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.separatorStyle = .none
+        $0.delegate = self
+        $0.dataSource = self
+        $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
+    }
+    
+    init(viewModel: SearchViewModel!) {
         DEBUG_LOG("\(Self.self) Init ✅ ")
         self.viewModel = viewModel
-        self.afterSearchFactory = afterSearchFactory
         super.init(nibName: nil, bundle: nil)
-        self.add(asChildViewController: afterVc)
     }
     
     deinit {
@@ -69,7 +71,7 @@ extension SearchViewController {
 // MARK: - UI 관련 함수들
 extension SearchViewController {
     private func addSubviews() {
-        view.addSubviews(searchBar, contentView)
+        view.addSubviews(searchBar, printingTableView)
     }
     
     private func makeConstraints() {
@@ -79,10 +81,11 @@ extension SearchViewController {
             $0.height.equalTo(56)
         }
         
-        contentView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(125)
+        printingTableView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(8)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+
     }
     
     private func setKeyboardDown() {
@@ -97,4 +100,26 @@ extension SearchViewController {
     private func touchBackbtn() {
         self.navigationController?.popViewController(animated: true)
     }
+}
+
+
+// MARK: - TableView 관련 함수들
+extension SearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        106
+    }
+}
+
+extension SearchViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: PrintingTableViewCell.identifier, for: indexPath)
+                as? PrintingTableViewCell else { return UITableViewCell() }
+        return cell
+    }
+
 }
