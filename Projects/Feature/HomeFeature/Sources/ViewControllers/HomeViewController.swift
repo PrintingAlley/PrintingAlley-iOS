@@ -11,7 +11,6 @@ import UtilityModule
 import DesignSystem
 import Then
 import SnapKit
-import SearchFeatueInterface
 import RxSwift
 import RxDataSources
 import BaseFeature
@@ -63,7 +62,7 @@ final class HomeViewController: UIViewController {
     
     public let headerViewHeight: CGFloat = 280
     
-    init(viewModel: HomeViewModel, searchFactory: SearchFactory, categorySearchFactory: CategorySearchFactory, webviewFacotry: WebViewFactory) {
+    init(viewModel: HomeViewModel, categorySearchFactory: CategorySearchFactory, webviewFacotry: WebViewFactory) {
         self.categorySearchFactory = categorySearchFactory
         self.webviewFactory = webviewFacotry
         self.viewModel = viewModel

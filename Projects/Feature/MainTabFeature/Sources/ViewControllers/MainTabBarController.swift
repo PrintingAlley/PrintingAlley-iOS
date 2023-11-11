@@ -10,19 +10,18 @@ import UIKit
 import DesignSystem
 import MyPageFeatureInterface
 import HomeFeatureInterface
-import NearByMeFeatureInterface
+import SearchFeatueInterface
 import UtilityModule
 
 public class MainTabBarController: UITabBarController {
     private var myPageFactory: any MyPageFactory
     private var homeFactory: any HomeFactory
-    private var nearByMeFactory: any NearByMeFactory
-    // 탭바 이미지 적용 필요
+    private var searchFactory: any SearchFactory
 
     private lazy var tabbarControllers: [UIViewController] = {
         let viewControllers = [
             homeFactory.makeView().wrapNavigationController,
-            nearByMeFactory.makeView().wrapNavigationController,
+            searchFactory.makeView().wrapNavigationController,
             myPageFactory.makeView().wrapNavigationController
         ]
         return viewControllers
@@ -38,10 +37,10 @@ public class MainTabBarController: UITabBarController {
         return items
     }()
 
-    init(myPageFactory: MyPageFactory, homeFactory: HomeFactory, nearByMeFactory: NearByMeFactory) {
+    init(myPageFactory: MyPageFactory, homeFactory: HomeFactory, searchFactory: SearchFactory) {
         self.myPageFactory = myPageFactory
         self.homeFactory = homeFactory
-        self.nearByMeFactory = nearByMeFactory
+        self.searchFactory = searchFactory
         super.init(nibName: nil, bundle: nil)
     }
     
