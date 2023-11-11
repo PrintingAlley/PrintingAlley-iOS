@@ -32,13 +32,6 @@ final class SearchViewController: UIViewController, ContainerViewType {
     
     var contentView: UIView! = UIView()
     
-    private let navigationBar = UIView()
-    
-    private lazy var backButton = UIButton().then {
-        $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
-        $0.addTarget(self, action: #selector(touchBackbtn), for: .touchUpInside)
-    }
-    
     let searchBar = SearchBar()
     
     init(viewModel: SearchViewModel!, beforeSearchFactory: BeforeSearchFactory, afterSearchFactory: AfterSearchFactory) {
@@ -94,29 +87,14 @@ extension SearchViewController {
     }
     
     private func addSubviews() {
-        view.addSubviews(navigationBar, contentView)
-        navigationBar.addSubviews(backButton, searchBar)
+        view.addSubviews(searchBar, contentView)
     }
     
     private func makeConstraints() {
-        navigationBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(17)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
-            $0.height.equalTo(32)
-        }
-        
-        backButton.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.width.height.equalTo(24)
-            $0.centerY.equalToSuperview()
-        }
-        
         searchBar.snp.makeConstraints {
-            $0.leading.equalTo(backButton.snp.trailing).offset(8)
-            $0.width.equalTo(317)
-            $0.height.equalTo(52)
-            $0.centerY.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(11)
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(56)
         }
         
         contentView.snp.makeConstraints {
