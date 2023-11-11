@@ -12,8 +12,8 @@ import Then
 import DesignSystem
 import BaseDomainInterface
 
-public final class PrintingTableViewCell: UITableViewCell {
-    public static let identifier = "PrintingTableViewCell"
+public final class PrintShopTableViewCell: UITableViewCell {
+    public static let identifier = "PrintShopTableViewCell"
     
     private let image = UIImageView().then {
         $0.image = DesignSystemAsset.Icon.bluebookMark.image
@@ -46,7 +46,7 @@ public final class PrintingTableViewCell: UITableViewCell {
 }
 
 // MARK: - UI 관련 함수
-extension PrintingTableViewCell {
+extension PrintShopTableViewCell {
     private func addSubview() {
         contentView.addSubviews(separator, image, name, printingTag, descriptioin, address)
     }
@@ -92,7 +92,7 @@ extension PrintingTableViewCell {
 }
 
 // MARK: - 데이터 바인딩 함수
-public extension PrintingTableViewCell {
+public extension PrintShopTableViewCell {
      func bindData(model: PrintShopEntity) {
         // TODO: 이미지 바인딩
         self.name.text = model.name

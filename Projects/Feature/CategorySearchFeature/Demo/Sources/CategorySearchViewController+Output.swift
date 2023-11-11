@@ -35,7 +35,7 @@ extension CategorySearchViewController {
                 
                 guard let self else {return UITableViewCell()}
                 
-                guard let cell = talbeView.dequeueReusableCell(withIdentifier: PrintingTableViewCell.identifier) as? PrintingTableViewCell else {
+                guard let cell = talbeView.dequeueReusableCell(withIdentifier: PrintShopTableViewCell.identifier) as? PrintShopTableViewCell else {
                     return UITableViewCell()
                 }
                 

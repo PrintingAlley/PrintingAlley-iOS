@@ -50,7 +50,7 @@ class CategorySearchViewController: UIViewController {
     }
     
     lazy var tableView: UITableView = UITableView().then {
-        $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
+        $0.register(PrintShopTableViewCell.self, forCellReuseIdentifier: PrintShopTableViewCell.identifier)
         $0.separatorStyle = .none
     }
     
