@@ -27,6 +27,8 @@ public final class BookMarkDetailViewModel: ViewModelType {
         self.bookMarkGroupId = id
         self.fetchBookMarkDetailUseCase = fetchBookMarkDetailUseCase
         self.removeBookMarkUseCase = removeBookMarkUseCase
+        
+        DEBUG_LOG("\(Self.self) Init ✅")
     }
     deinit {
     
@@ -36,11 +38,11 @@ public final class BookMarkDetailViewModel: ViewModelType {
     
     public struct Input {
         let fetchDataSource: PublishSubject<Void> = .init()
-        let removePrintShop: PublishSubject<Int> = .init()
+        let removeBookMark: PublishSubject<Int> = .init()
     }
     
     public struct Output {
-        let dataSource: BehaviorRelay<BookMarkGroupEntity> = .init(value: BookMarkGroupEntity(id: 0, name: "", bookmarks: [], statusCode: 0, message: ""))
+        let dataSource: BehaviorRelay<BookMarkGroupEntity> = .init(value: BookMarkGroupEntity(id: 0, name: "", bookmarks: []))
         let showToast: PublishRelay<BaseEntity> = .init()
     }
     
@@ -49,15 +51,15 @@ public final class BookMarkDetailViewModel: ViewModelType {
         
         input.fetchDataSource
             .withUnretained(self){($0,$1)}
-            .flatMap({ (owner,_) -> Observable<BookMarkGroupEntity> in
+            .flatMap({ (owner,_) -> Observable<BookMarkGroupWrapperEntity> in
+                  
                 return owner.fetchBookMarkDetailUseCase
                         .execute(id: owner.bookMarkGroupId)
                         .catch({ error in
-    
+                                DEBUG_LOG("EEROR: \(error)")
                             let alleryError = error.asAlleyError
-                            DEBUG_LOG(alleryError.asAFError?.responseCode)
-                                return Single<BookMarkGroupEntity>.create { single in
-                                    single(.success(BookMarkGroupEntity(id: 0, name: "", bookmarks: [], statusCode: 0, message: alleryError.errorDescription!)))
+                                return Single<BookMarkGroupWrapperEntity>.create { single in
+                                    single(.success(BookMarkGroupWrapperEntity(bookmarkGroup: BookMarkGroupEntity(id: 0, name: "", bookmarks: []), statusCode: 0, message: alleryError.errorDescription ?? "")))
                                     return Disposables.create()
                                 }
 
@@ -65,11 +67,12 @@ public final class BookMarkDetailViewModel: ViewModelType {
                         })
                         .asObservable()
             })
+            .map{$0.bookmarkGroup}
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
     
         
-        input.removePrintShop
+        input.removeBookMark
             .withUnretained(self)
             .flatMap({ (owner,id) -> Observable<BaseEntity> in
                 

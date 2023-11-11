@@ -12,5 +12,5 @@ import RxSwift
 import BaseDomainInterface
 
 public protocol FetchBookMarkDetailUseCase {
-    func execute(id: Int) -> Single<BookMarkGroupEntity>
+    func execute(id: Int) -> Single<BookMarkGroupWrapperEntity>
 }

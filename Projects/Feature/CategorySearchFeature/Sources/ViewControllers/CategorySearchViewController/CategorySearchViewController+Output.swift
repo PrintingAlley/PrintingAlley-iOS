@@ -35,7 +35,6 @@ extension CategorySearchViewController {
                 let indexPath: IndexPath = IndexPath(row: index, section: 0)
                 
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PinterestCollectionViewCell.identifer, for: indexPath) as? PinterestCollectionViewCell else { return UICollectionViewCell() }
-                cell.bookmarkButton.isHidden = true
                 cell.update(model: model)
                 
                 return cell

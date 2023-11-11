@@ -22,7 +22,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public static let identifer = "PinterestCollectionViewCell"
     
-    weak var delegate: PinterestCollectionViewCellDelegate?
+    public weak var delegate: PinterestCollectionViewCellDelegate?
     var id:Int!
     
     public var imageView = UIImageView().then {

@@ -11,6 +11,7 @@ import RxSwift
 import RxDataSources
 import UIKit
 import BookMarkDomainInterface
+import BaseFeature
 
 extension BookMarkDetailViewController {
     func bindDataSource(input: BookMarkDetailViewModel.Input, output: BookMarkDetailViewModel.Output) {
@@ -20,41 +21,38 @@ extension BookMarkDetailViewController {
                 
                 guard let self else {return}
                 
-                self.tableView.tableHeaderView = dataSource.bookmarks.isEmpty ? emptyHeaderView : nil
                 self.naviTitleLabel.setTitle(title: dataSource.name, textColor: .sub(.black), font: .header3,alignment: .center)
+                self.countLabel.setTitle(title: "작품 \(dataSource.bookmarks.count)개", textColor: .grey(.grey400), font: .caption1, alignment: .center)
                 
-                self.countLabel.setTitle(title: "장소 \(dataSource.bookmarks.count)개", textColor: .grey(.grey400), font: .caption1,alignment: .center)
-                
-            })
-            .map({$0.bookmarks})
-            .bind(to: tableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
-                
-                guard let self else { return UITableViewCell() }
-                
-                let indexPath: IndexPath = IndexPath(row: index, section: 0)
-                
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: BookMarkDetailTableViewCell.identifier, for: indexPath) as? BookMarkDetailTableViewCell  else {
-                    return UITableViewCell()
+                if dataSource.bookmarks.isEmpty {
+                    self.gridCollectionView.setEmptyMessage("저장된 작품이 없습니다.")
                 }
                 
-                cell.deleagte = self
-                cell.selectionStyle = .none
-                cell.update(model: model, isLast: output.dataSource.value.bookmarks.count-1 == index)
+                else {
+                    self.gridCollectionView.restore()
+                }
+                
+            })
+            .map{$0.bookmarks}
+            .bind(to: gridCollectionView.rx.items){ [weak self]  (collectionView,indexPath,model) -> UICollectionViewCell in
+                
+                guard let self else {return UICollectionViewCell()}
+                
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:PinterestCollectionViewCell.identifer, for: IndexPath(row: indexPath, section: 0)) as? PinterestCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                
+                cell.update(model: model.product, isBookMark: true, id: model.id)
+                cell.delegate = self  // 삭제 델리 게이트
                 
                 return cell
             }
-        
             .disposed(by: disposeBag)
         
     }
     
     func bindItemSelected(output: BookMarkDetailViewModel.Output) {
-        tableView.rx.itemSelected
-            .subscribe(onNext: {
-                
-                print($0)
-            })
-            .disposed(by: disposeBag)
+       
     }
     
     
