@@ -83,9 +83,7 @@ extension SearchBar {
     
     @objc
     private func textFieldDidChange() {
-        if searchTextField.hasText {
-            searchButton.isHighlighted = true
-        }
+        searchButton.isHighlighted = searchTextField.hasText
     }
 }
 
