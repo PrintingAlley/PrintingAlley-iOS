@@ -26,4 +26,8 @@ extension AppComponent {
     var webViewFactory: any WebViewFactory {
         WebViewComponent(parent: self)
     }
+    
+    var alleyPageFactory: any AlleyPageFactory {
+        AlleyPageComponent(parent: self)
+    }
 }
