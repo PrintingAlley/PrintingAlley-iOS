@@ -10,7 +10,6 @@ import Foundation
 import NeedleFoundation
 import UIKit
 import HomeFeatureInterface
-import SearchFeatueInterface
 import TagDomainInterface
 import CategorySearchFeatureInterface
 import ContentDomainInterface
@@ -18,7 +17,6 @@ import BaseFeatureInterface
 
 public protocol HomeDependency: Dependency {
     var homeFactory: any HomeFactory { get }
-    var searchFactory: any SearchFactory { get }
     var tagDomainFactory: any TagDomainFactory { get }
     var categorySearchFactory: any CategorySearchFactory { get }
     var contentDomainFactory: any ContentDomainFactory { get }
@@ -28,6 +26,6 @@ public protocol HomeDependency: Dependency {
 
 public final class HomeComponent: Component<HomeDependency>, HomeFactory {
     public func makeView() -> UIViewController {
-        HomeViewController(viewModel: HomeViewModel(fetchHierarchyUseCase: dependency.tagDomainFactory.fetchHierarchyUseCase, fetchContentsUseCase: dependency.contentDomainFactory.fetchContentsUseCase), searchFactory: dependency.searchFactory, categorySearchFactory: dependency.categorySearchFactory, webviewFacotry: dependency.webViewFactory)
+        HomeViewController(viewModel: HomeViewModel(fetchHierarchyUseCase: dependency.tagDomainFactory.fetchHierarchyUseCase, fetchContentsUseCase: dependency.contentDomainFactory.fetchContentsUseCase), categorySearchFactory: dependency.categorySearchFactory, webviewFacotry: dependency.webViewFactory)
     }
 }
