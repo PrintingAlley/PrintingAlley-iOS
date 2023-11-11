@@ -12,6 +12,7 @@ import RxDataSources
 import UIKit
 import BookMarkDomainInterface
 import BaseFeature
+import UtilityModule
 
 extension BookMarkDetailViewController {
     func bindDataSource(input: BookMarkDetailViewModel.Input, output: BookMarkDetailViewModel.Output) {
@@ -52,7 +53,8 @@ extension BookMarkDetailViewController {
     }
     
     func bindItemSelected(output: BookMarkDetailViewModel.Output) {
-       
+     
+        
     }
     
     

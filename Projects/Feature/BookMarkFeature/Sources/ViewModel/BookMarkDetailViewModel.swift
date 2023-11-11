@@ -56,7 +56,6 @@ public final class BookMarkDetailViewModel: ViewModelType {
                 return owner.fetchBookMarkDetailUseCase
                         .execute(id: owner.bookMarkGroupId)
                         .catch({ error in
-                                DEBUG_LOG("EEROR: \(error)")
                             let alleryError = error.asAlleyError
                                 return Single<BookMarkGroupWrapperEntity>.create { single in
                                     single(.success(BookMarkGroupWrapperEntity(bookmarkGroup: BookMarkGroupEntity(id: 0, name: "", bookmarks: []), statusCode: 0, message: alleryError.errorDescription ?? "")))
