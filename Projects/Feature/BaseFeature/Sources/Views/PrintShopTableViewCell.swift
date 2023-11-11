@@ -22,11 +22,11 @@ public final class PrintShopTableViewCell: UITableViewCell {
         $0.setRound([.allCorners], radius: 9)
     }
     
-    private let name = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .subtitle1)
+    private let name = AlleyLabel("인쇄소 이름", textColor: .sub(.black), font: .subtitle1)
     
-    private let descriptioin = AlleyLabel("엽서, 카드 #상담가능", textColor: .sub(.black), font: .body2)
+    private let introduction = AlleyLabel("인쇄소 소개", textColor: .sub(.black), font: .body2)
     
-    private let address = AlleyLabel("서울 중구 퇴계로39길 11", textColor: .grey(.grey300), font: .body2)
+    private let address = AlleyLabel("주소", textColor: .grey(.grey500), font: .body2)
     
     private let separator = UIView().then {
         $0.backgroundColor = .setColor(.grey(.grey100))
@@ -46,7 +46,7 @@ public final class PrintShopTableViewCell: UITableViewCell {
 // MARK: - UI 관련 함수
 extension PrintShopTableViewCell {
     private func addSubview() {
-        contentView.addSubviews(separator, image, name, descriptioin, address)
+        contentView.addSubviews(separator, image, name, introduction, address)
     }
     
     private func makeConstraints() {
@@ -68,18 +68,18 @@ extension PrintShopTableViewCell {
         }
 
         name.snp.makeConstraints {
-            $0.top.equalTo(image)
+            $0.top.equalTo(image).inset(3)
             $0.leading.equalTo(image.snp.trailing).offset(16)
         }
         
-        descriptioin.snp.makeConstraints {
+        introduction.snp.makeConstraints {
             $0.leading.equalTo(name)
             $0.top.equalTo(name.snp.bottom).offset(2)
         }
         
         address.snp.makeConstraints {
             $0.leading.equalTo(name)
-            $0.top.equalTo(descriptioin.snp.bottom).offset(2)
+            $0.top.equalTo(introduction.snp.bottom).offset(2)
         }
     }
 }
@@ -89,7 +89,7 @@ public extension PrintShopTableViewCell {
      func bindData(model: PrintShopEntity) {
         // TODO: 이미지 바인딩
         self.name.text = model.name
-        self.descriptioin.text = model.introduction
+        self.introduction.text = model.introduction
         self.address.text = model.address
     }
 }
