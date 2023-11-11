@@ -140,9 +140,6 @@ private class SearchDependencya86903a2c751a4f762e8Provider: SearchDependency {
     var printShopDomainFactory: any PrintShopDomainFactory {
         return appComponent.printShopDomainFactory
     }
-    var afterSearchFactory: any AfterSearchFactory {
-        return appComponent.afterSearchFactory
-    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -487,7 +484,6 @@ extension AfterSearchComponent: Registration {
 extension SearchComponent: Registration {
     public func registerItems() {
         keyPathToName[\SearchDependency.printShopDomainFactory] = "printShopDomainFactory-any PrintShopDomainFactory"
-        keyPathToName[\SearchDependency.afterSearchFactory] = "afterSearchFactory-any AfterSearchFactory"
     }
 }
 extension BeforeSearchComponent: Registration {

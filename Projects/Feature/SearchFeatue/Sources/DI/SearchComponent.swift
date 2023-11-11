@@ -13,11 +13,10 @@ import PrintShopDomainInterface
 
 public protocol SearchDependency: Dependency {
     var printShopDomainFactory: any PrintShopDomainFactory { get }
-    var afterSearchFactory: any AfterSearchFactory { get }
 }
 
 public final class SearchComponent: Component<SearchDependency>, SearchFactory {
     public func makeView() -> UIViewController {
-        SearchViewController(viewModel: SearchViewModel(fetchPrintShopListUseCase: dependency.printShopDomainFactory.fetchPrintShopListUseCase), afterSearchFactory: dependency.afterSearchFactory)
+        SearchViewController(viewModel: SearchViewModel(fetchPrintShopListUseCase: dependency.printShopDomainFactory.fetchPrintShopListUseCase))
     }
 }
