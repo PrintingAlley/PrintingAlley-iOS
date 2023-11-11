@@ -12,9 +12,18 @@ import UtilityModule
 import BaseDomainInterface
 import Kingfisher
 
+public protocol PinterestCollectionViewCellDelegate: AnyObject {
+    func remove(id:Int)
+}
+
+
+
 public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public static let identifer = "PinterestCollectionViewCell"
+    
+    var model: ProductEntity!
+    weak var delegate: PinterestCollectionViewCellDelegate?
     
     public var imageView = UIImageView().then {
         $0.setRound([.allCorners], radius: 8)
@@ -71,9 +80,11 @@ extension PinterestCollectionViewCell {
         }
     }
     
-    public func update(model: ProductEntity) {
+    public func update(model: ProductEntity, isBookMark: Bool = false) {
         self.imageView.kf.setImage(with: URL(string: model.mainImage))
         self.title.text = model.name
+        self.model = model
+        self.bookmarkButton.isHidden = !isBookMark
         
         self.imageHeight = CGFloat(171 * model.height / model.width)
         
@@ -100,8 +111,7 @@ extension PinterestCollectionViewCell {
 extension PinterestCollectionViewCell {
     @objc
     private func touchUpBookmark() {
-        bookmarkButton.isSelected.toggle()
-        DEBUG_LOG("북마크 버튼 누름")
+        delegate?.remove(id: model.id)
     }
     
 }
