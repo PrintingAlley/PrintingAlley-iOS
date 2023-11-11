@@ -40,9 +40,21 @@ extension ProductDetailViewController: UITableViewDelegate {
         
         return headerview
     }
+    
+    
 }
 
 extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
+    
+    func pop() {
+        
+    }
+    
+    
+    func move() {
+        DEBUG_LOG("MOVE MOVE")
+    }
+    
     func save(id: Int, isBookmarked: Bool) {
         
         
@@ -108,6 +120,8 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
             
         }
     }
+    
+
 }
 
 
