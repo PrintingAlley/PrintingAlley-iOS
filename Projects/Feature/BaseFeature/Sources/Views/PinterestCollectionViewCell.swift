@@ -72,7 +72,7 @@ extension PinterestCollectionViewCell {
     }
     
     public func update(model: ProductEntity) {
-        self.imageView.kf.setImage(with: URL(string: model.mainImage))
+        self.imageView.kf.setImage(with: URL(string: model.mainImage), placeholder: DesignSystemAsset.PlaceHolder.largePH.image)
         self.title.text = model.name
         
         self.imageHeight = CGFloat(171 * model.height / model.width)

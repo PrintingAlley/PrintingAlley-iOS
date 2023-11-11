@@ -90,7 +90,7 @@ extension PrintShopTableViewCell {
 // MARK: - 데이터 바인딩 함수
 public extension PrintShopTableViewCell {
      func update(model: PrintShopEntity) {
-         self.image.kf.setImage(with: URL(string: model.logoImage))
+         self.image.kf.setImage(with: URL(string: model.logoImage), placeholder: DesignSystemAsset.PlaceHolder.smallPH.image)
          self.name.text = model.name
          self.introduction.text = model.introduction
          self.address.text = model.address
