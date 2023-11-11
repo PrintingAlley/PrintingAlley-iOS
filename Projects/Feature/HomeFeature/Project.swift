@@ -11,7 +11,6 @@ let project = Project.module(
         .implements(module: .feature(.HomeFeature), dependencies: [
             .feature(target: .BaseFeature),
             .feature(target: .HomeFeature, type: .interface),
-            .feature(target: .SearchFeatue, type: .interface),
             .domain(target: .TagDomain,type: .interface),
             .domain(target: .BaseDomain,type: .interface),
             .domain(target: .ContentDomain, type: .interface),

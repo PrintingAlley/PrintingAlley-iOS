@@ -21,6 +21,7 @@ class BookMarkDetailViewController: UIViewController {
 
     var viewModel: BookMarkDetailViewModel!
     var editModalFactory: any EditModalFactory
+    var productDetailFactory: any ProductDetailFactory
     
     let disposeBag = DisposeBag()
     let input = BookMarkDetailViewModel.Input()
@@ -55,9 +56,10 @@ class BookMarkDetailViewController: UIViewController {
     
     
     
-    init(editModalFactory: EditModalFactory, viewModel: BookMarkDetailViewModel!) {
+    init(editModalFactory: EditModalFactory, productDetailFactory: ProductDetailFactory, viewModel: BookMarkDetailViewModel!) {
         DEBUG_LOG("\(Self.self) Init ✅ ")
         self.editModalFactory = editModalFactory
+        self.productDetailFactory = productDetailFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

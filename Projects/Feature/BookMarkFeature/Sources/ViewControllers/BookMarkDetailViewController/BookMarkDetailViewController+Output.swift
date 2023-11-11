@@ -13,6 +13,7 @@ import UIKit
 import BookMarkDomainInterface
 import BaseFeature
 import UtilityModule
+import RxCocoa
 
 extension BookMarkDetailViewController {
     func bindDataSource(input: BookMarkDetailViewModel.Input, output: BookMarkDetailViewModel.Output) {
@@ -54,6 +55,21 @@ extension BookMarkDetailViewController {
     
     func bindItemSelected(output: BookMarkDetailViewModel.Output) {
      
+        gridCollectionView
+            .rx
+            .itemSelected
+            .map({$0.row})
+            .subscribe(onNext: { [weak self ]  index in
+                
+                guard let self else {return}
+                
+                let vc = self.productDetailFactory.makeView(id: output.dataSource.value.bookmarks[index].product.id)
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+                
+            })
+            .disposed(by: disposeBag)
         
     }
     
