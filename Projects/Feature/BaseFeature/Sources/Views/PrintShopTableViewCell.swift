@@ -23,7 +23,10 @@ public final class PrintShopTableViewCell: UITableViewCell {
     
     private let name = AlleyLabel("인쇄소 이름", textColor: .sub(.black), font: .subtitle1)
     
-    private let introduction = AlleyLabel("인쇄소 소개", textColor: .sub(.black), font: .body2)
+    private let introduction = AlleyLabel("인쇄소 소개", textColor: .sub(.black), font: .body2).then {
+        $0.numberOfLines = 1
+        $0.lineBreakMode = .byTruncatingTail
+    }
     
     private let address = AlleyLabel("주소", textColor: .grey(.grey500), font: .body2)
     
@@ -74,6 +77,7 @@ extension PrintShopTableViewCell {
         introduction.snp.makeConstraints {
             $0.leading.equalTo(name)
             $0.top.equalTo(name.snp.bottom).offset(2)
+            $0.trailing.equalToSuperview().inset(24)
         }
         
         address.snp.makeConstraints {
