@@ -142,7 +142,7 @@ extension ProductDetailTableHeaderView {
         
         subtitleLabel.lineBreakMode = .byTruncatingTail
         
-        saveButton.setImage(isSaved ? DesignSystemAsset.Icon.bluebookMark.image : DesignSystemAsset.Icon.emptyBookMark.image, for: .normal)
+        saveButton.setImage(isSaved ? DesignSystemAsset.Icon.blueBookMark.image : DesignSystemAsset.Icon.emptyBookMark.image, for: .normal)
         
         collectionView.reloadData()
     }
