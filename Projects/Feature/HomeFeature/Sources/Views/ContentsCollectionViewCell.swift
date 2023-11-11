@@ -17,10 +17,14 @@ final class ContentsCollectionViewCell: UICollectionViewCell {
     static let identifier = "ContentsCollectionViewCell"
     
     private let image = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleToFill
+        $0.setRound(.allCorners, radius: 8)
     }
     
-    private let label = AlleyLabel()
+    private let label = AlleyLabel().then {
+        $0.lineBreakMode = .byTruncatingTail
+        $0.numberOfLines = 2
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,14 +45,13 @@ extension ContentsCollectionViewCell {
     
     private func makeConstraints() {
         image.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.leading.equalToSuperview()
             $0.width.height.equalTo(163)
-            $0.centerX.equalToSuperview()
         }
         
         label.snp.makeConstraints {
             $0.top.equalTo(image.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
     }
     

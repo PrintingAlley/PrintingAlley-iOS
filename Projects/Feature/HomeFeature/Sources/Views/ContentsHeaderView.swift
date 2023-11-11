@@ -30,12 +30,15 @@ final class ContentsHeaderView: UICollectionReusableView {
     private let lineSpacing: CGFloat = 32
     
     public lazy var categoryCollectionView = makeCollectionView(scrollDirection: .vertical).then {
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
-        
     }
     
-    private let contentsTitle = AlleyLabel("인쇄가 어려운 당신에게", font: .subtitle1)
+    private let sectionLine = UIView().then {
+        $0.backgroundColor = .setColor(.grey(.grey50))
+    }
     
+    private let contentsTitle = AlleyLabel("인쇄가 어려운 당신에게", textColor: .sub(.black),font: .subtitle1)
     
     private lazy var showMoreTouchButton = UIButton().then {
         $0.backgroundColor = .none
@@ -51,7 +54,7 @@ final class ContentsHeaderView: UICollectionReusableView {
         $0.contentMode = .scaleAspectFill
     }
     
-    weak var delgate:ContentsHeaderViewDelegate?
+    weak var delgate: ContentsHeaderViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,39 +70,44 @@ final class ContentsHeaderView: UICollectionReusableView {
 
 extension ContentsHeaderView {
     private func addSubviews() {
-        addSubviews(categoryCollectionView, contentsTitle, showMoreContainer)
-        showMoreContainer.addSubviews(showMoreText, showMoreIcon)
-        showMoreContainer.addSubviews(showMoreTouchButton)
+        addSubviews(categoryCollectionView, contentsTitle, sectionLine, showMoreContainer)
+//        showMoreContainer.addSubviews(showMoreText, showMoreIcon)
+//        showMoreContainer.addSubviews(showMoreTouchButton)
     }
     
     private func makeConstraints() {
         categoryCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(40)
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(172)
+            $0.height.equalTo(188)
+        }
+        sectionLine.snp.makeConstraints {
+            $0.top.equalTo(categoryCollectionView.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(10)
         }
         contentsTitle.snp.makeConstraints {
-            $0.top.equalTo(categoryCollectionView.snp.bottom).offset(42)
+            $0.top.equalTo(sectionLine.snp.bottom).offset(18)
             $0.leading.equalToSuperview().inset(24)
         }
-        showMoreContainer.snp.makeConstraints {
-            $0.centerY.equalTo(contentsTitle)
-            $0.width.equalTo(44)
-            $0.trailing.equalToSuperview().inset(24)
-        }
-        showMoreText.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.centerY.equalToSuperview()
-        }
-        showMoreIcon.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.width.equalTo(9)
-            $0.leading.equalTo(showMoreText.snp.trailing).offset(3)
-        }
-        showMoreTouchButton.snp.makeConstraints {
-            $0.width.height.equalTo(40)
-            $0.edges.equalToSuperview()
-        }
+//        showMoreContainer.snp.makeConstraints {
+//            $0.centerY.equalTo(contentsTitle)
+//            $0.width.equalTo(44)
+//            $0.trailing.equalToSuperview().inset(24)
+//        }
+//        showMoreText.snp.makeConstraints {
+//            $0.leading.equalToSuperview()
+//            $0.centerY.equalToSuperview()
+//        }
+//        showMoreIcon.snp.makeConstraints {
+//            $0.centerY.equalToSuperview()
+//            $0.width.equalTo(9)
+//            $0.leading.equalTo(showMoreText.snp.trailing).offset(3)
+//        }
+//        showMoreTouchButton.snp.makeConstraints {
+//            $0.width.height.equalTo(40)
+//            $0.edges.equalToSuperview()
+//        }
     }
 }
 
