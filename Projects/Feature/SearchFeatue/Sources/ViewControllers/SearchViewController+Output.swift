@@ -9,13 +9,28 @@
 import RxSwift
 import UIKit
 import UtilityModule
+import BaseFeature
 
-extension SearchViewController { // TODO: - 텍스트로 검색 결과 데이터 소스 받아오기
+extension SearchViewController {
     func bindDataSource(input: SearchViewModel.Input, output: SearchViewModel.Output) {
         output.dataSource
-            .do(onNext: { datasource in
-                print("\(datasource)")
-            })
-//            .disposed(by: disposeBag)
+            .do { [weak self] dataSource in
+                guard let self else { return }
+                
+                if dataSource.isEmpty {
+                    // TODO: 검색결과 없음 뷰
+                }
+            }
+            .bind(to: printingTableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
+                
+                guard let self else { return UITableViewCell() }
+                
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: PrintShopTableViewCell.identifier) as? PrintShopTableViewCell else { return UITableViewCell() }
+                
+                cell.update(model: model)
+                
+                return cell
+            }
+            .disposed(by: disposeBag)
     }
 }

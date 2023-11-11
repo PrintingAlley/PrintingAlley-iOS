@@ -30,8 +30,6 @@ final class SearchViewController: UIViewController, ContainerViewType {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.separatorStyle = .none
-        $0.delegate = self
-        $0.dataSource = self
         $0.register(PrintShopTableViewCell.self, forCellReuseIdentifier: PrintShopTableViewCell.identifier)
     }
     
@@ -102,24 +100,9 @@ extension SearchViewController {
     }
 }
 
-
 // MARK: - TableView 관련 함수들
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         106
     }
-}
-
-extension SearchViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: PrintShopTableViewCell.identifier, for: indexPath)
-                as? PrintShopTableViewCell else { return UITableViewCell() }
-        return cell
-    }
-
 }

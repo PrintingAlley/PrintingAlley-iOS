@@ -11,14 +11,13 @@ import SnapKit
 import Then
 import DesignSystem
 import BaseDomainInterface
+import Kingfisher
 
 public final class PrintShopTableViewCell: UITableViewCell {
     public static let identifier = "PrintShopTableViewCell"
     
     private let image = UIImageView().then {
-        $0.image = DesignSystemAsset.Icon.bluebookMark.image
-        $0.contentMode = .scaleAspectFit
-        $0.backgroundColor = .lightGray
+        $0.contentMode = .scaleToFill
         $0.setRound([.allCorners], radius: 9)
     }
     
@@ -86,10 +85,10 @@ extension PrintShopTableViewCell {
 
 // MARK: - 데이터 바인딩 함수
 public extension PrintShopTableViewCell {
-     func bindData(model: PrintShopEntity) {
-        // TODO: 이미지 바인딩
-        self.name.text = model.name
-        self.introduction.text = model.introduction
-        self.address.text = model.address
-    }
+     func update(model: PrintShopEntity) {
+         self.image.kf.setImage(with: URL(string: model.logoImage))
+         self.name.text = model.name
+         self.introduction.text = model.introduction
+         self.address.text = model.address
+     }
 }

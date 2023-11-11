@@ -23,31 +23,26 @@ extension SearchViewController {
             .disposed(by: disposeBag)
         
         editingChanged
-            .subscribe(onNext: { [weak self] _ in
-                guard let searchText = self?.searchBar.searchTextField.text else { return }
-                guard let self = self else { return }
-                
-                if searchText.isEmpty {
-//                    changeToBeforeVC()
-                } else {
-                    DEBUG_LOG("\(searchText)")
-                }
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                guard let searchText = self.searchBar.searchTextField.text else { return }
+                input.textString.accept(searchText)
             })
             .disposed(by: disposeBag)
         
-        editingDidEnd
-            .map { [weak self] in self?.searchBar.searchTextField.text ?? "" } // 텍스트 필드의 현재 텍스트 가져오기
-            .subscribe(onNext: { [weak self] searchText in
-                guard let self = self else { return }
-                
-                if searchText.isEmpty {
-                    DEBUG_LOG("비었다~")
-//                    changeToBeforeVC()
-                } else {
-//                    changeToAfterVC()
-                    DEBUG_LOG("안 비었다: \(searchText)")
-                }
-            })
-            .disposed(by: disposeBag)
+//        editingDidEnd
+//            .map { [weak self] in self?.searchBar.searchTextField.text ?? "" } // 텍스트 필드의 현재 텍스트 가져오기
+//            .subscribe(onNext: { [weak self] searchText in
+//                guard let self = self else { return }
+//
+//                if searchText.isEmpty {
+//                    DEBUG_LOG("비었다~")
+////                    changeToBeforeVC()
+//                } else {
+////                    changeToAfterVC()
+//                    DEBUG_LOG("안 비었다: \(searchText)")
+//                }
+//            })
+//            .disposed(by: disposeBag)
     }
 }

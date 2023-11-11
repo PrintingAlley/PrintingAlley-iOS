@@ -12,7 +12,6 @@ import RxDataSources
 import UIKit
 import BaseFeature
 
-
 extension CategorySearchViewController {
     
     func bindDataSource(output: CategorySearchViewModel.Output) {
@@ -24,14 +23,12 @@ extension CategorySearchViewController {
                 
                 if dataSource.isEmpty {
                     self.tableView.tableHeaderView = headerView
-                }
-                
-                else {
+                } else {
                     self.tableView.tableHeaderView = nil
                 }
         
             })
-            .bind(to: tableView.rx.items){ [weak self] (talbeView,index,model) -> UITableViewCell in
+            .bind(to: tableView.rx.items){ [weak self] (talbeView, index, model) -> UITableViewCell in
                 
                 guard let self else {return UITableViewCell()}
                 
@@ -40,13 +37,10 @@ extension CategorySearchViewController {
                 }
                 
                 cell.selectionStyle = .none
-                cell.bindData(model: model)
                 
                 return cell
             }
             .disposed(by: disposeBag)
-        
-        
     }
     
 }
