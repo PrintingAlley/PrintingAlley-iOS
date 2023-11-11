@@ -13,6 +13,7 @@ import Then
 import MainTabFeatureInterface
 import RxSwift
 import DesignSystem
+import Lottie
 
 public class RootViewController: UIViewController {
 
@@ -22,11 +23,8 @@ public class RootViewController: UIViewController {
     let input: RootViewModel.Input = .init()
     let disposeBag = DisposeBag()
     
-    lazy var label: UILabel = UILabel().then{
-        $0.text = "스플래쉬"
-        $0.textColor = .blue
-    }
-    
+    lazy var logoContentView: UIView = UIView()
+        
     
     init(mainTabFactory: MainTabFactory ,viewModel: RootViewModel!) {
         self.mainTabFactory = mainTabFactory
@@ -46,18 +44,20 @@ public class RootViewController: UIViewController {
         configureCommonUI()
         bidViewModel()
         
+        self.view.backgroundColor = DesignSystemAsset.MainBlue.blue500.color
+        lottiePlay()
     }
 
 }
 
 extension RootViewController {
     func addSubviews() {
-        self.view.addSubview(label)
+        self.view.addSubview(logoContentView)
     }
     
     func makeConstraints() {
-        label.snp.makeConstraints {
-            $0.center.equalToSuperview()
+        logoContentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -80,6 +80,7 @@ extension RootViewController {
     func bindStartLottieAndAppCheck(input: RootViewModel.Input) {
         input.startLottie.onNext(())
         input.fetchVersionCheck.onNext(())
+        lottiePlay()
     }
     
     
@@ -183,5 +184,30 @@ extension RootViewController {
         guard let storeURL = URL(string: "https://itunes.apple.com/kr/app/id/\(appID)"),
             UIApplication.shared.canOpenURL(storeURL) else { return }
         UIApplication.shared.open(storeURL)
+    }
+    
+    private func lottiePlay() {
+        let animationView = LottieAnimationView(name: "Splash", bundle: DesignSystemResources.bundle)
+        animationView.frame = self.logoContentView.bounds
+        animationView.backgroundColor = .clear
+        animationView.contentMode = .scaleAspectFill
+        animationView.loopMode = .playOnce
+
+        self.logoContentView.addSubview(animationView)
+        
+        let originWidth: CGFloat = 156.0
+        let originHeight: CGFloat = 160.0
+        let rate: CGFloat = originHeight/max(1.0, originWidth)
+
+        let width: CGFloat = (156.0 * APP_WIDTH()) / 375.0
+        let height: CGFloat = width * rate
+
+        animationView.snp.makeConstraints {
+            $0.width.equalTo(width)
+            $0.height.equalTo(height)
+            $0.centerX.equalTo(self.logoContentView.snp.centerX)
+            $0.centerY.equalTo(self.logoContentView.snp.centerY)
+        }
+        animationView.play()
     }
 }
