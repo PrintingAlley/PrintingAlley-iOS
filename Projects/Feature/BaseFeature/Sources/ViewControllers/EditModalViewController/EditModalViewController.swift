@@ -269,7 +269,7 @@ extension EditModalViewController {
         }
         
         textField.snp.makeConstraints {
-            $0.left.equalToSuperview().inset(16)
+            $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.right.equalToSuperview().inset(55)
             $0.top.bottom.equalToSuperview().inset(17)
            
@@ -277,7 +277,7 @@ extension EditModalViewController {
         
         limitLabel.snp.makeConstraints {
             
-            $0.right.equalToSuperview().inset(16)
+            $0.right.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.centerY.equalTo(textField.snp.centerY)
         }
         

@@ -114,7 +114,7 @@ extension PrintShopDetailViewController {
         
         backButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().inset(16)
+            $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.width.height.equalTo(24)
         }
         
