@@ -542,6 +542,11 @@ extension BookMarkDetailComponent: Registration {
         keyPathToName[\BookMarkDetailDependency.editModalFactory] = "editModalFactory-any EditModalFactory"
     }
 }
+extension AlleyPageComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension BookMarkBottomSheetComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkBottomSheetDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
@@ -634,6 +639,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->FilterComponent", factoryf50b858bcdf190c46b17f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkComponent", factory28d0c1b9536190951087f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDetailComponent", factoryc8e52bb402c24cd9a5e2f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->AlleyPageComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->WebViewComponent", factoryEmptyDependencyProvider)
