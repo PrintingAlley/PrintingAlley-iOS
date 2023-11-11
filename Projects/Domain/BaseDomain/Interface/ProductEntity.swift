@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public struct ProductEntity {
     
     public let id: Int
@@ -20,6 +19,12 @@ public struct ProductEntity {
     public let tags: [ChildrenTagEntity]
     public let reviews: [ReviewEntity]
     public let isBookmarked: Bool
+    public var width: Int {
+        return findIntFromString(string: mainImage, pattern: "width=(\\d+)")
+    }
+    public var height: Int {
+        return findIntFromString(string: mainImage, pattern: "&height=(\\d+)")
+    }
     public let statusCode: Int
     public let message: String
 
@@ -47,4 +52,22 @@ public struct ProductEntity {
         ProductEntity(id: 0, name: "", size: "" ,  paper: "", afterProcess: "", designer: "" , introduction: "", description: "", mainImage: "", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [ChildrenTagEntity.makeErrorEntity()], reviews: [ReviewEntity.makeErrorEnitity(message: "")], isBookmarked:  false  , statusCode: 400, message: message)
     }
     
+    public func findIntFromString(string: String, pattern: String) -> Int {
+        var result = 0
+        
+        do {
+        let regex = try NSRegularExpression(pattern: pattern)
+            
+            if let match = regex.firstMatch(in: string, range: NSRange(string.startIndex..., in: string)) {
+                let range = Range(match.range(at: 1), in: string)
+                
+                if let resultStr = range.flatMap({ String(string[$0]) }), let resultInt = Int(resultStr) {
+                    result = resultInt
+                }
+            }
+        } catch {
+            print("정규표현식 에러")
+        }
+        return result
+    }
 }

@@ -17,7 +17,9 @@ extension CategorySearchViewController: CategoryEmptyHeaderViewDelegate {
     func press() {
         DEBUG_LOG("초기화")
         output.tags.accept([])
-        input.fetchData.onNext(())
+        input.pageID.accept(1)
+        gridCollectionView .setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        input.isFetchByScroll.accept(false)
         filterCollectionView.reloadData()
     }
 
@@ -27,7 +29,9 @@ extension CategorySearchViewController: FilterViewControllerDelegate {
     func receive(result: [Tag]) {
         DEBUG_LOG("RESULT: \(result)")
         output.tags.accept(result)
-        input.fetchData.onNext(())
+        input.pageID.accept(1)
+        gridCollectionView .setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        input.isFetchByScroll.accept(false)
         filterCollectionView.reloadData()
     }
 }
@@ -56,7 +60,9 @@ extension CategorySearchViewController: UICollectionViewDelegateFlowLayout {
         if collectionView.tag == 0 {
             tags.remove(at: indexPath.row)
             output.tags.accept(tags)
-            input.fetchData.onNext(())
+            input.pageID.accept(1)
+            gridCollectionView .setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            input.isFetchByScroll.accept(false)
             filterCollectionView.reloadData()
         }
     }
@@ -93,7 +99,8 @@ extension CategorySearchViewController: UICollectionViewDataSource {
 
 extension CategorySearchViewController: AutoHeightLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 170
-        // 이미지 height 넘겨주면 됨
+        let product = output.dataSource.value[indexPath.row]
+        
+        return CGFloat(product.height * 171 / product.width)
     }
 }

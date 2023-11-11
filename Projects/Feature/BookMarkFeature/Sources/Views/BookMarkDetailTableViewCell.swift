@@ -36,7 +36,7 @@ class BookMarkDetailTableViewCell: UITableViewCell {
 
     }
     lazy var button: UIButton = UIButton().then {
-        $0.setImage(DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
     }
     
     lazy var baseLine: UIView = UIView().then {
