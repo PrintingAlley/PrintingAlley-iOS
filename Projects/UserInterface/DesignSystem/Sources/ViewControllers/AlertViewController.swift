@@ -14,15 +14,36 @@ import Then
 public enum AlertType {
     case onlyConfirm    // 확인 버튼
     case delete
+    case offerUpdate
+    case forceUpdate
+    case logout
+    case exit
     
     var confirmText: String {
         
         switch self {
             
-        case .onlyConfirm:
+        case .onlyConfirm, .logout:
             return "확인"
         case .delete:
             return "삭제"
+        case .offerUpdate,.forceUpdate:
+            return "업데이트"
+        case .exit:
+            return "종료"
+        }
+    }
+    
+    var cancelText: String {
+        
+        switch self {
+            
+        case .onlyConfirm, .delete:
+            return "취소"
+        case .offerUpdate:
+            return "다음에"
+        case .forceUpdate, .logout, .exit:
+            return ""
         }
     }
     
@@ -30,10 +51,11 @@ public enum AlertType {
         
         switch self {
             
-        case .onlyConfirm:
+        case .onlyConfirm, .forceUpdate, .logout, .exit:
             return true
-        case .delete:
+        case .delete, .offerUpdate:
             return false
+
         }
     }
     
@@ -63,12 +85,7 @@ public class AlertViewController: UIViewController {
         $0.numberOfLines = 0
     }
     
-    lazy var cancelButton: UIButton = UIButton().then{
-        $0.setTitle("취소", for: .normal)
-        $0.setTitleColor(DesignSystemAsset.Grey.grey400.color, for: .normal)
-        $0.titleLabel?.font = .setFont(.body2)
-        $0.contentHorizontalAlignment = .center
-    }
+    lazy var cancelButton: UIButton = UIButton()
     lazy var confirmButton: UIButton = UIButton()
     
     
@@ -101,7 +118,6 @@ public class AlertViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
    public override func viewDidLoad() {
         super.viewDidLoad()
         addSubViews()
@@ -128,10 +144,16 @@ extension AlertViewController {
         
         titleLabel.setTitle(title: self.titleString, textColor: .sub(.black), font: .subtitle2, alignment: .center)
         contentLabel.setTitle(title: self.contentString, textColor: .sub(.black), font: .body2, alignment: .center)
+        
         confirmButton.setTitle(self.type.confirmText, for: .normal)
         confirmButton.titleLabel?.font = .setFont(.subtitle3)
         confirmButton.setTitleColor(DesignSystemAsset.MainBlue.blue500.color, for: .normal)
         confirmButton.contentHorizontalAlignment = .center
+        
+        cancelButton.setTitle(self.type.cancelText, for: .normal)
+        cancelButton.setTitleColor(DesignSystemAsset.Grey.grey400.color, for: .normal)
+        cancelButton.titleLabel?.font = .setFont(.body2)
+        cancelButton.contentHorizontalAlignment = .center
         
         cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
         confirmButton.addTarget(self, action: #selector(confirmAction), for: .touchUpInside)
@@ -139,14 +161,16 @@ extension AlertViewController {
     
     func makeConstraints() {
         
+        let width = UIScreen.main.bounds.size.width
+        
         alertView.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(58)
+            $0.width.equalTo( width - ((width * (116.0))/390.0))
             $0.center.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
-            $0.left.right.equalToSuperview().inset(40)
+            $0.left.right.equalToSuperview().inset(25)
             
         }
         
@@ -177,7 +201,6 @@ extension AlertViewController {
             $0.bottom.equalToSuperview()
         }
         
-
     }
     
     @objc func cancelAction() {

@@ -50,4 +50,8 @@ struct AuthRepositoryImpl: AuthRepository {
 
     }
     
+    func versionCheck(version: String) -> Single<VersionCheckEntity> {
+        remoteAuthDataSource.versionCheck(version: version)
+    }
+    
 }

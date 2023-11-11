@@ -90,7 +90,7 @@ final class SignInViewModel: NSObject, ViewModelType {
                         let alleryError = err.asAlleyError
                         
                         return Single<TokenEntity>.create { single in
-                            single(.success(TokenEntity(access_token: "",statusCode: 401,message: alleryError.errorDescription)))
+                            single(.success(TokenEntity(access_token: "",statusCode: 401,message: alleryError.errorDescription!)))
                             return Disposables.create()
                 
                         }

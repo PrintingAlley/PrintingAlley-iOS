@@ -23,7 +23,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -73,6 +73,8 @@
 		<string>$(BASE_URL)</string>
 		<key>NAVER_MAP_CLIENT_ID</key>
 		<string>$(NAVER_MAP_CLIENT_ID)</string>
+		<key>APP_ID</key>
+		<string>$(APP_ID)</string>
 	</dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
@@ -98,6 +100,8 @@
 		<string>$(BASE_URL)</string>
 		<key>NAVER_MAP_CLIENT_ID</key>
 		<string>$(NAVER_MAP_CLIENT_ID)</string>
+		<key>APP_ID</key>
+		<string>$(APP_ID)</string>
 	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

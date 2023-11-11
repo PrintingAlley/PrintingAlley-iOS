@@ -22,12 +22,12 @@ struct BookMarkRepositoryImpl: BookMarkRepository {
         self.remoteBookMarkDataSource = remoteBookMarkDataSource
     }
     
-    func fetchMyBookMarks() -> Single<[MyBookMarkEntity]> {
+    func fetchMyBookMarks() -> Single<BookMarkGroupsEntity> {
         remoteBookMarkDataSource.fetchMyBookMarks()
     }
     
-    func addBookMark(printShopId: Int, bookmarkGroupId: Int) -> Single<BaseEntity> {
-        remoteBookMarkDataSource.addBookMark(printShopId: printShopId, bookmarkGroupId: bookmarkGroupId)
+    func addBookMark(productId: Int, bookmarkGroupId: Int) -> Single<AddBookMarkEntity> {
+        remoteBookMarkDataSource.addBookMark(productId: productId, bookmarkGroupId: bookmarkGroupId)
     }
     
     func removeBookMark(id: Int) -> Single<BaseEntity> {
@@ -46,7 +46,7 @@ struct BookMarkRepositoryImpl: BookMarkRepository {
         remoteBookMarkDataSource.removeBookMarkGroup(ids: ids)
     }
     
-    func fetchBookMarkDetail(id: Int) -> Single<BookMarkDetailEntity> {
+    func fetchBookMarkDetail(id: Int) -> Single<BookMarkGroupEntity> {
         remoteBookMarkDataSource.fetchBookMarkDetail(id: id)
     }
     

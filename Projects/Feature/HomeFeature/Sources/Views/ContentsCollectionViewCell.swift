@@ -10,16 +10,21 @@ import UIKit
 import Then
 import SnapKit
 import DesignSystem
+import Kingfisher
+import ContentDomainInterface
 
 final class ContentsCollectionViewCell: UICollectionViewCell {
     static let identifier = "ContentsCollectionViewCell"
     
     private let image = UIImageView().then {
-        $0.backgroundColor = .lightGray
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleToFill
+        $0.setRound(.allCorners, radius: 8)
     }
     
-    private let label = AlleyLabel("콘텐츠 타이틀", font: .caption2)
+    private let label = AlleyLabel().then {
+        $0.lineBreakMode = .byTruncatingTail
+        $0.numberOfLines = 2
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,14 +45,18 @@ extension ContentsCollectionViewCell {
     
     private func makeConstraints() {
         image.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.leading.equalToSuperview()
             $0.width.height.equalTo(163)
-            $0.centerX.equalToSuperview()
         }
         
         label.snp.makeConstraints {
             $0.top.equalTo(image.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
+    }
+    
+    public func update(model: ContentEntity) {
+        image.kf.setImage(with: URL(string: model.thumbnail))
+        label.setTitle(title: model.title, textColor: .sub(.black), font: .caption1)
     }
 }

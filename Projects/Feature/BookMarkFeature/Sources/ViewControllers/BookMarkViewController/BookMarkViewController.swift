@@ -56,14 +56,8 @@ class BookMarkViewController: UIViewController {
         $0.setTitleColor(DesignSystemAsset.Grey.grey300.color, for: .disabled)
         $0.setTitleColor(DesignSystemAsset.Sub.red.color, for: .normal)
         
-//        $0.setImage(DesignSystemAsset.Icon.trash.image, for: .disabled)
-//        $0.setImage(DesignSystemAsset.Icon.trashRed.image, for: .normal)
-        
         $0.titleLabel?.font = .setFont(.body1)
         
-//        $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
-//        $0.semanticContentAttribute = .forceLeftToRight // 이미지 왼쪽에 배치
-//        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0) //<- 중요
         
         
     }
@@ -71,12 +65,23 @@ class BookMarkViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel("저장목록", textColor: .sub(.black), font: .header3, alignment: .center)
     
-    lazy var emptyHeaderView: EmptyTableHeaderView = EmptyTableHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80), text: "아직 저장목록이 없어요.")
+    lazy var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .vertical
+        $0.minimumLineSpacing = 16
+        $0.minimumInteritemSpacing = 16
+        $0.sectionInset = UIEdgeInsets(top: 24, left: 16.0, bottom: 20, right: 16.0)
+        
+        
+        $0.itemSize = .init(width: GRID_WIDHT() , height: GRID_HEIGHT())
+        
+    }
     
-    lazy var tableView :UITableView = UITableView().then {
-        $0.register(BookMarkTableViewCell.self, forCellReuseIdentifier: BookMarkTableViewCell.identifier)
-        $0.separatorStyle = .none
+    lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.refreshControl = refreshControl
+        $0.register(BookMarkCollectionViewCell.self, forCellWithReuseIdentifier: BookMarkCollectionViewCell.identifer)
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
+        
     }
     
 
@@ -113,7 +118,7 @@ class BookMarkViewController: UIViewController {
 
 extension BookMarkViewController {
     func addSubviews() {
-        self.view.addSubviews(naviTitleView, tableView, indicator, baseLine)
+        self.view.addSubviews(naviTitleView, collectionView, indicator, baseLine)
         naviTitleView.addSubviews(backButton, naviTitleLabel,deleteButton, editOrDoneButton)
     }
     
@@ -153,7 +158,7 @@ extension BookMarkViewController {
             $0.width.height.equalTo(29)
         }
         
-        tableView.snp.makeConstraints {
+        collectionView.snp.makeConstraints {
             $0.top.equalTo(baseLine.snp.bottom)
             $0.left.right.bottom.equalToSuperview()
         }
@@ -190,19 +195,4 @@ extension BookMarkViewController {
     
   
 
-}
-
-
-extension BookMarkViewController: BookMarkTableViewCellDelegate {
-    func tapChecked(id: Int?) {
-        
-        guard let id = id as? Int else {
-            return
-        }
-        
-        input.tapItem.onNext(id)
-       
-        
-    }
-    
 }

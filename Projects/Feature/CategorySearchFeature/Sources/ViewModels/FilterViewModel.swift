@@ -12,14 +12,15 @@ import RxSwift
 import RxRelay
 import BaseDomainInterface
 import TagDomainInterface
+import DesignSystem
 
 class FilterViewModel: ViewModelType {
     
     var id: Int!
     
     let disposeBag = DisposeBag()
-    public var fillterIdSet:Set<Int> = .init()
-    let dataSource:BehaviorRelay<[ChildrenTagEntity]> = .init(value: [])
+    public var fillterIdSet: Set<Tag> = .init()
+    let dataSource: BehaviorRelay<[ChildrenTagEntity]> = .init(value: [])
     
     
     var fetchTagUseCase: any FetchTagUseCase
@@ -48,9 +49,9 @@ class FilterViewModel: ViewModelType {
         
         fetchTagUseCase
             .execute(id: id)
-            .catchAndReturn(ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: []))
+            .catchAndReturn(TagEntity(tag: ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: []), statusCode: 0, message: ""))
             .asObservable()
-            .map{$0.children}
+            .map{$0.tag.children}
             .bind(to:self.dataSource)
             .disposed(by: disposeBag)
         
@@ -59,7 +60,7 @@ class FilterViewModel: ViewModelType {
             .subscribe(onNext: { [weak self] (notification) in
                 
                 guard let self else {return}
-                guard let id = notification.object as? Int else { return }
+                guard let id = notification.object as? Tag else { return }
                 
                 if self.fillterIdSet.contains(id) {
                     self.fillterIdSet.remove(id)

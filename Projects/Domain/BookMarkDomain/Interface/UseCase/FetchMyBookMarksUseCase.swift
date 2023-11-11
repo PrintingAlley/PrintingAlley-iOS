@@ -11,5 +11,5 @@ import RxSwift
 
 
 public protocol FetchMyBookMarksUseCase {
-    func execute() -> Single<[MyBookMarkEntity]>
+    func execute() -> Single<BookMarkGroupsEntity>
 }

@@ -15,11 +15,22 @@ import RxDataSources
 import SnapKit
 import Then
 import CategorySearchFeatureInterface
-
+import BaseDomainInterface
+import BaseFeatureInterface
 
 class CategorySearchViewController: UIViewController {
-
     
+    lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then {
+        $0.color = DesignSystemAsset.MainBlue.blue500.color
+        $0.hidesWhenStopped = true
+        
+    }
+    
+    lazy var emptyHeaderView = CategoryEmptyHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: APP_HEIGHT())).then {
+        $0.isUserInteractionEnabled = true
+        $0.delegate = self
+    }
+
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
         
@@ -29,39 +40,56 @@ class CategorySearchViewController: UIViewController {
     
     lazy var naviTitleLabel: AlleyLabel = AlleyLabel()
     
-    lazy var filterButton: UIButton = UIButton().then {
-        $0.setTitle("필터", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = .setFont(.body1)
-        
-        $0.setImage(DesignSystemAsset.Icon.filter.image, for: .normal)
-        $0.imageView?.contentMode = .scaleAspectFit
+    private let gradientView = UIView().then {
+        $0.backgroundColor = .none
+    }
+    
+    private let gradient = CAGradientLayer().then {
+        $0.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.withAlphaComponent(1).cgColor]
+        $0.startPoint = CGPoint(x: 0.0, y: 1.0)
+        $0.endPoint = CGPoint(x: 1.0, y: 1.0)
+    }
+
+    lazy var filterButton: UIButton = FilterButton(title: "필터", id: -1, type: .filter, willChangeUI: false).then {
         $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
-        $0.semanticContentAttribute = .forceRightToLeft//<- 중요
-        $0.imageEdgeInsets = .init(top: 0, left: 4, bottom: 0, right: 0) //<- 중요
-        
-        $0.backgroundColor = DesignSystemAsset.MainBlue.blue500.color
-        $0.layer.cornerRadius = 16
+        $0.semanticContentAttribute = .forceRightToLeft //<- 중요
         $0.clipsToBounds = true
     }
     
-    lazy var tableView: UITableView = UITableView().then {
-        $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
-        $0.separatorStyle = .none
+    lazy var filterCollectionView = makeCollectionView(layout: UICollectionViewFlowLayout(), scrollDirection: .horizontal, delegate: self, dataSource: self).then {
+        $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
+        $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+        $0.tag = 0
+    }
+    
+    public lazy var layout = AutoHeightCollectionViewLayout().then {
+        $0.delegate = self // 이 딜리게이트 받아줘야함
+    }
+    
+    lazy var gridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+        $0.showsHorizontalScrollIndicator = false
+        $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
+        $0.tag = 1
     }
     
     lazy var headerView: CategoryEmptyHeaderView = CategoryEmptyHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: APP_HEIGHT()/2)).then {
         $0.delegate = self
     }
     
-
     var viewModel: CategorySearchViewModel!
+    
+    let input = CategorySearchViewModel.Input()
+    lazy var output = viewModel.transform(input: input)
+    
     var filterFactory: any FilterFactory
+    
+    var productDetailFactory: any ProductDetailFactory
 
     let disposeBag = DisposeBag()
     
-    init(filterFactory: FilterFactory, viewModel: CategorySearchViewModel) {
+    init(filterFactory: FilterFactory, productDetailFactory: ProductDetailFactory, viewModel: CategorySearchViewModel) {
         self.filterFactory = filterFactory
+        self.productDetailFactory = productDetailFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -79,7 +107,7 @@ class CategorySearchViewController: UIViewController {
 
         addSubviews()
         makeConstraints()
-        self.naviTitleLabel.setTitle(title: viewModel.title, textColor: .sub(.black), font: .subtitle1,alignment: .center)
+        self.naviTitleLabel.setTitle(title: viewModel.title, textColor: .sub(.black), font: .subtitle1, alignment: .center)
         configureCommonUI()
         bindViewModel()
     }
@@ -89,17 +117,18 @@ class CategorySearchViewController: UIViewController {
         configureSwipeBack()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 
-
-    
+        gradient.frame = gradientView.bounds
+        gradientView.layer.insertSublayer(gradient, at: 0)
+    }
 }
 
 extension CategorySearchViewController {
     func addSubviews() {
-        self.view.addSubviews(naviTitleView,filterButton,tableView)
-        
-        naviTitleView.addSubviews(backButton,naviTitleLabel)
-        
+        view.addSubviews(naviTitleView, filterCollectionView, gradientView, filterButton, gridCollectionView, indicator)
+        naviTitleView.addSubviews(backButton, naviTitleLabel)
     }
     
     func makeConstraints() {
@@ -121,26 +150,45 @@ extension CategorySearchViewController {
         }
         
         filterButton.snp.makeConstraints {
+            $0.top.equalTo(naviTitleView.snp.bottom).offset(16)
             $0.width.equalTo(67)
             $0.height.equalTo(32)
-            $0.top.equalTo(naviTitleView.snp.bottom).offset(16)
             $0.right.equalToSuperview().inset(27)
         }
         
-        tableView.snp.makeConstraints {
+        filterCollectionView.snp.makeConstraints {
+            $0.height.equalTo(32)
+            $0.top.equalTo(naviTitleView.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().inset(24)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(112 - filterCollectionView.contentInset.right)
+        }
+        
+        gradientView.snp.makeConstraints {
+            $0.top.height.equalTo(filterButton)
+            $0.trailing.equalTo(filterButton.snp.leading).inset(3)
+            $0.width.equalTo(13)
+        }
+        
+        gridCollectionView.snp.makeConstraints {
             $0.top.equalTo(filterButton.snp.bottom).offset(16)
-            $0.left.right.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
     
     func bindViewModel() {
-        let input = CategorySearchViewModel.Input()
-        let output = viewModel.transform(input: input)
         
         bindBackEvent()
         bindDataSource(output: output)
-        
+        bindIndicator(output: output)
         bindFilterButton()
+        bindItemSelected()
+        bindGridView()
+        input.pageID.accept(1)
+
     }
     
     func bindBackEvent() {
@@ -148,11 +196,9 @@ extension CategorySearchViewController {
             .rx
             .tap
             .withUnretained(self)
-            .subscribe(onNext: { (owner,_) in
-                
+            .subscribe(onNext: { (owner, _) in
                 owner.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
-
     }
 }

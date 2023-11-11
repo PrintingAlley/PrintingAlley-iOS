@@ -14,4 +14,5 @@ public protocol AuthDomainFactory {
     var verifyUserUseCase: any VerifyUserUseCase { get }
     var logOutUseCase: any LogOutUseCase { get }
     var withDrawUseCase: any WithDrawUseCase { get }
+    var versionCheckUseCase: any VersionCheckUseCase { get }
 }

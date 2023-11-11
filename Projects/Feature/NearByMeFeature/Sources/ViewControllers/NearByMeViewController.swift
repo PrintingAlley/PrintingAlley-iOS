@@ -13,7 +13,7 @@ import UtilityModule
 
 class NearByMeViewController: UIViewController {
 
-    var naverMapView:NMFNaverMapView!
+   var naverMapView:NMFNaverMapView!
     let locationManager = CLLocationManager() /// 앱에서 위치 관련 이벤트 전달을 시작하고 중지할 때 사용하는 객체
     
     required init?(coder: NSCoder) {

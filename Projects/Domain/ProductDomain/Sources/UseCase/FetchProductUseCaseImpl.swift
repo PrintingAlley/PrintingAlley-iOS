@@ -22,7 +22,7 @@ struct FetchProductUseCaseImpl: FetchProductUseCase {
     }
     
     
-    func execute(id: Int) -> Single<ProductEntity> {
+    func execute(id: Int) -> Single<ProductDetailEntity> {
         productRepository.fetchProduct(id: id)
     }
     

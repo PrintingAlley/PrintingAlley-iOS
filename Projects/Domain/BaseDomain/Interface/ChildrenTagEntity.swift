@@ -1,6 +1,6 @@
 //
 //  ChildrenTagEntity.swift
-//  BaseDomain
+//  BaseDomainInterface
 //
 //  Created by yongbeomkwak on 10/24/23.
 //  Copyright © 2023 com. All rights reserved.
@@ -22,6 +22,10 @@ public struct ChildrenTagEntity {
         self.image = image
         self.parentID = parentID
         self.children = children
+    }
+    
+    public static func makeErrorEntity() -> Self  {
+        ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: [])
     }
 
     public static func makeDummy() -> [Self] {[

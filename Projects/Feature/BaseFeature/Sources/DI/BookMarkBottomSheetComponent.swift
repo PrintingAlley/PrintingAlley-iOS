@@ -21,8 +21,8 @@ public protocol BookMarkBottomSheetDependency: Dependency {
 public final class BookMarkBottomSheetComponent: Component<BookMarkBottomSheetDependency>, BookMarkBottomSheetFactory {
     
     
-    public func makeView() -> UIViewController {
-        BookMarkBottomSheetViewController(editModalFactory: dependency.editModalFactory, viewModel: BookMarkBottomSheetViewModel())
+    public func makeView(id: Int) -> UIViewController {
+        BookMarkBottomSheetViewController(editModalFactory: dependency.editModalFactory, viewModel: BookMarkBottomSheetViewModel(id:id, fetchMyBookMarksUseCase: dependency.bookMarkDomainFactory.fetchMyBookMarksUseCase, addBookMarkUseCase: dependency.bookMarkDomainFactory.addBookMarkUseCase))
     }
     
 }

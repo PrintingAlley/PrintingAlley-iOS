@@ -40,7 +40,7 @@ public final class BookMarkDetailViewModel: ViewModelType {
     }
     
     public struct Output {
-        let dataSource: BehaviorRelay<BookMarkDetailEntity> = .init(value: BookMarkDetailEntity(id: 0, name: "", bookmarks: [], statusCode: 0, message: ""))
+        let dataSource: BehaviorRelay<BookMarkGroupEntity> = .init(value: BookMarkGroupEntity(id: 0, name: "", bookmarks: [], statusCode: 0, message: ""))
         let showToast: PublishRelay<BaseEntity> = .init()
     }
     
@@ -49,15 +49,15 @@ public final class BookMarkDetailViewModel: ViewModelType {
         
         input.fetchDataSource
             .withUnretained(self){($0,$1)}
-            .flatMap({ (owner,_) -> Observable<BookMarkDetailEntity> in
+            .flatMap({ (owner,_) -> Observable<BookMarkGroupEntity> in
                 return owner.fetchBookMarkDetailUseCase
                         .execute(id: owner.bookMarkGroupId)
                         .catch({ error in
     
                             let alleryError = error.asAlleyError
                             DEBUG_LOG(alleryError.asAFError?.responseCode)
-                                return Single<BookMarkDetailEntity>.create { single in
-                                    single(.success(BookMarkDetailEntity(id: 0, name: "", bookmarks: [], statusCode: 0, message: alleryError.errorDescription)))
+                                return Single<BookMarkGroupEntity>.create { single in
+                                    single(.success(BookMarkGroupEntity(id: 0, name: "", bookmarks: [], statusCode: 0, message: alleryError.errorDescription!)))
                                     return Disposables.create()
                                 }
 
@@ -79,7 +79,7 @@ public final class BookMarkDetailViewModel: ViewModelType {
                         let alleryError = error.asAlleyError
                         DEBUG_LOG(alleryError.asAFError?.responseCode)
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription!)))
                                 return Disposables.create()
                             }
 

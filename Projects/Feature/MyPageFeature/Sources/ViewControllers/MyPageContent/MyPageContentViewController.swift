@@ -100,8 +100,8 @@ extension MyPageContentViewController {
     func makeConstraints() {
         profileImage.snp.makeConstraints {
             $0.width.height.equalTo(64)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(42)
-            $0.left.equalToSuperview().inset(25)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(49)
+            $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
         }
         
         profileLabel.snp.makeConstraints {
@@ -118,7 +118,7 @@ extension MyPageContentViewController {
         }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(profileImage.snp.bottom).offset(41)
+            $0.top.equalTo(profileImage.snp.bottom).offset(37)
             $0.left.right.bottom.equalToSuperview()
         }
         

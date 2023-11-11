@@ -49,10 +49,18 @@ private extension BaseRemoteDataSource {
         provider.rx.request(api)
             .timeout(.seconds(10), scheduler: MainScheduler.asyncInstance)
             .catch { error in
+                
+                if error.localizedDescription.contains("401") { // 임시 토큰 만료 확인용 코드
+                    return Single.error(api.errorMap[401] ?? error)
+                }
+                
                 guard let errorCode = (error as? MoyaError)?.response?.statusCode else {
+                    print("KKK: \((error as? MoyaError)) ")
                     if let moyaError = (error as? MoyaError), moyaError.errorCode == 6 {
+                        print("KKK: \(moyaError.response?.statusCode)")
                         return Single.error(api.errorMap[1009] ?? error)
                     }
+                    
                     return Single.error(error)
                 }
                 // AlleyError에 있으면 해당 코드 사용

@@ -48,7 +48,7 @@ extension MyPageCollectionViewCell {
         
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(4)
-            $0.width.height.equalTo(30)
+            $0.width.height.equalTo(28)
             $0.centerX.equalToSuperview()
             
         }
@@ -70,7 +70,7 @@ extension MyPageCollectionViewCell {
             imageView.image = DesignSystemAsset.Icon.bell.image
             
         case .bookMark:
-            imageView.image = DesignSystemAsset.Icon.bookMark.image
+            imageView.image = DesignSystemAsset.Icon.blackEmptyBookMark.image
             
         case .review:
             imageView.image = DesignSystemAsset.Icon.textBubble.image

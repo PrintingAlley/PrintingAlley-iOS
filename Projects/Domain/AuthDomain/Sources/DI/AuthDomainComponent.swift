@@ -35,12 +35,18 @@ public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDom
         WithDrawUseCaseImpl(authRepository: authRepository)
     }
     
+    
+    public var versionCheckUseCase: any VersionCheckUseCase {
+        VersionCheckUseCaseImpl(authRepository: authRepository)
+    }
+    
+    
+    
     public var authRepository: any AuthRepository {
         AuthRepositoryImpl(
             localAuthDataSource: localAuthDataSource, remoteAuthDataSource: remoteAuthDataSource
         )
     }
-    
     
     
     var remoteAuthDataSource: any RemoteAuthDataSource {

@@ -17,7 +17,10 @@ public enum FilterButtonType {
     case selectedWithX
 }
 
-
+public struct Tag: Hashable {
+    public let name: String
+    public let id: Int
+}
 
 public final class FilterButton: UIButton {
     
@@ -37,7 +40,11 @@ public final class FilterButton: UIButton {
     
     public var id: Int!
     
-    public var willChangeUI: Bool = false
+    public var willChangeUI: Bool = false {
+        didSet {
+            self.isUserInteractionEnabled = willChangeUI
+        }
+    }
     
     public init(title: String,id: Int, type: FilterButtonType, willChangeUI: Bool) {
         self.type = type
@@ -70,7 +77,7 @@ extension FilterButton {
     func configureUI(_ type: FilterButtonType) {
         let stringSize = (title as NSString).size(withAttributes: [NSAttributedString.Key.font: UIFont.setFont(.body1)])
         
-        self.setRound([.allCorners], radius: (stringSize.height + 8) / 2)
+        self.setRound([.allCorners], radius: (stringSize.height + 8) / 7 * 4)
         self.setTitle(title, for: .normal)
         self.titleLabel?.font = UIFont.setFont(.body1)
         
@@ -83,7 +90,7 @@ extension FilterButton {
             
         case .filter:
             self.backgroundColor = .setColor(.mainBlue(.blue500))
-            self.setImage(DesignSystemAsset.Icon.back.image, for: .normal) // 이미지 변경
+            self.setImage(DesignSystemAsset.Icon.filter.image, for: .normal) // 이미지 변경
             self.setTitleColor(.setColor(.sub(.white)), for: .normal)
             
         case .selected:
@@ -98,9 +105,10 @@ extension FilterButton {
             self.layer.borderColor = UIColor.setColor(.mainBlue(.blue500)).cgColor
             self.layer.borderWidth = 1.0
             self.setTitleColor(.setColor(.grey(.grey900)), for: .normal)
-            self.setImage(DesignSystemAsset.Icon.xmark.image, for: .normal)
+            self.setImage(DesignSystemAsset.Icon.close.image, for: .normal)
         }
         
+        self.imageView?.contentMode = .scaleAspectFit
         self.semanticContentAttribute = .forceRightToLeft
         self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         self.contentEdgeInsets = UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 10)
@@ -124,7 +132,6 @@ extension FilterButton {
             configureUI(type)
         }
         
-        NotificationCenter.default.post(name: Notification.Name("filterToggle"), object: self.id)
-        
+        NotificationCenter.default.post(name: Notification.Name("filterToggle"), object: Tag(name: self.title, id: self.id))
     }
 }

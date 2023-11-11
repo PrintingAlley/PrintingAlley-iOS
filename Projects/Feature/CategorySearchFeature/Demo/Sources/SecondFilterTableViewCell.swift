@@ -43,8 +43,7 @@ class SecondFilterTableViewCell: UITableViewCell {
             $0.left.equalToSuperview().inset(24)
         }
         
-//        tableView.backgroundColor = .black
-//        subtitleLabel.backgroundColor = .red
+
         
     }
 

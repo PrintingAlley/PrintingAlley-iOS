@@ -11,7 +11,7 @@ import UtilityModule
 import RxRelay
 import RxSwift
 import BaseDomainInterface
-import SearchDomainInterface
+import PrintShopDomainInterface
 
 public class SearchViewModel: ViewModelType {
     
@@ -42,14 +42,15 @@ public class SearchViewModel: ViewModelType {
             .distinctUntilChanged()
             .flatMapLatest { [unowned self] text in
                 return self.fetchPrintShopListUseCase
-                    .execute(searchText: text, tagIds: [])
+                    .execute(page: 1, searchText: text)
                     .asObservable()
                     .catchError { error in
                         let alertError = error.asAlleyError
                         
-                        return .just([PrintShopEntity(id: 0, name: "", address: "", phone: "", email: "", homepage: "", representative: "", introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "", tags: [])])
+                        return .just(PrintShopListEntity(printShops: [], statusCode: 0, message: ""))
                     }
             }
+            .map{$0.printShops}
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
         print("\(output.dataSource)")

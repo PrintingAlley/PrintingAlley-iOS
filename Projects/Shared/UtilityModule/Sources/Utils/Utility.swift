@@ -91,3 +91,21 @@ public func OS_NAME() -> String {
 public func LOGOUT() {
     PreferenceManager.user = nil 
 }
+
+public func COPY(text: String) {
+    UIPasteboard.general.string = text //클립보드 복사
+}
+
+
+public func GRID_WIDHT() -> CGFloat {
+    return (APP_WIDTH() - (16*3)) / 2
+}
+
+public func GRID_HEIGHT() -> CGFloat {
+    
+    return  (GRID_WIDHT() * 199.0) / 171.0
+}
+
+public func HORIZON_MARGIN1() -> CGFloat {
+    return 16.0
+}

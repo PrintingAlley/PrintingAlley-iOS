@@ -1,17 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "Artboard 17 copy.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Artboard 17 copy@2x.png",
+      "filename" : "Vector@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Artboard 17 copy@3x.png",
+      "filename" : "Vector@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

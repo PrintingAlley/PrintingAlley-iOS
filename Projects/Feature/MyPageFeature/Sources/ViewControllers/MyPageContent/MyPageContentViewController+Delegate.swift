@@ -53,6 +53,9 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
         case .bookMark:
             
             let vc = bookMarkFactory.makeView()
+            
+            vc.hidesBottomBarWhenPushed = true //탭바 숨김
+            
             self.navigationController?.pushViewController(vc, animated: true)
             
         case .review:
@@ -71,7 +74,7 @@ extension MyPageContentViewController: MyPageFooterViewDelegate {
             input.tapLogOut.onNext(())
         case .withdraw:
             
-            let vc = AlertViewController(title:"탈퇴하시나요?", content: "탈퇴하시면 이용 중인 인쇄골목이\n패쇄되며, 모든 데이터는 복구가 불\n가능합니다.", type:  .delete, completion: { [weak self] in
+            let vc = AlertViewController(title:"탈퇴하시나요?", content: "저장목록, 리뷰 등 활동 정보가 전부 사라지고 다시 복구할 수 없어요", type:  .delete, completion: { [weak self] in
                 
                 guard let self else {return}
                 

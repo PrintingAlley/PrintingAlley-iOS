@@ -11,6 +11,8 @@ import BookMarkFeature
 import BookMarkFeatureInterface
 import CategorySearchFeature
 import CategorySearchFeatureInterface
+import ContentDomain
+import ContentDomainInterface
 import Foundation
 import HomeFeature
 import HomeFeatureInterface
@@ -25,11 +27,11 @@ import MyPageFeatureInterface
 import NearByMeFeature
 import NearByMeFeatureInterface
 import NeedleFoundation
+import PrintShopDomain
+import PrintShopDomainInterface
 import ProductDomain
 import ProductDomainInterface
 import RootFeature
-import SearchDomain
-import SearchDomainInterface
 import SearchFeatue
 import SearchFeatueInterface
 import SignInFeature
@@ -135,8 +137,8 @@ private func factoryeb2da679e35e2c4fb9a5e3b0c44298fc1c149afb(_ component: Needle
     return AfterSearchDependency61822c19bc2eb46d7c52Provider()
 }
 private class SearchDependencya86903a2c751a4f762e8Provider: SearchDependency {
-    var searchDomainFactory: any SearchDomainFactory {
-        return appComponent.searchDomainFactory
+    var printShopDomainFactory: any PrintShopDomainFactory {
+        return appComponent.printShopDomainFactory
     }
     var beforeSearchFactory: any BeforeSearchFactory {
         return appComponent.beforeSearchFactory
@@ -212,6 +214,12 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var categorySearchFactory: any CategorySearchFactory {
         return appComponent.categorySearchFactory
     }
+    var contentDomainFactory: any ContentDomainFactory {
+        return appComponent.contentDomainFactory
+    }
+    var webViewFactory: any WebViewFactory {
+        return appComponent.webViewFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -233,11 +241,14 @@ private func factory53f303ca6b0d301565d8e3b0c44298fc1c149afb(_ component: Needle
     return NearByMeDependencyfb289c9eb0cc94c83621Provider()
 }
 private class CategorySearchDependencybc5b867b843f81f14b34Provider: CategorySearchDependency {
-    var searchDomainFactory: any SearchDomainFactory {
-        return appComponent.searchDomainFactory
+    var productDomainFactory: any ProductDomainFactory {
+        return appComponent.productDomainFactory
     }
     var filterFactory: any FilterFactory {
         return appComponent.filterFactory
+    }
+    var productDetailFactory: any ProductDetailFactory {
+        return appComponent.productDetailFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -325,6 +336,25 @@ private class EditModalDependencye914ce2425a804be0d58Provider: EditModalDependen
 private func factory05e011369db72b170e1ef47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return EditModalDependencye914ce2425a804be0d58Provider(appComponent: parent1(component) as! AppComponent)
 }
+private class ProductDetailDependency1e6e934c90b49cbc48b5Provider: ProductDetailDependency {
+    var bookMarkBottomSheetFactory: any BookMarkBottomSheetFactory {
+        return appComponent.bookMarkBottomSheetFactory
+    }
+    var productDomainFactory: any ProductDomainFactory {
+        return appComponent.productDomainFactory
+    }
+    var bookMarkDomainFactory: any BookMarkDomainFactory {
+        return appComponent.bookMarkDomainFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->ProductDetailComponent
+private func factorydd8ac0cf9df6ffed7cb6f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ProductDetailDependency1e6e934c90b49cbc48b5Provider(appComponent: parent1(component) as! AppComponent)
+}
 private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
@@ -337,6 +367,19 @@ private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDoma
 /// ^->AppComponent->BookMarkDomainComponent
 private func factory9b3fac1bd377f0830537f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BookMarkDomainDependency2ef018453822a996a9abProvider(appComponent: parent1(component) as! AppComponent)
+}
+private class ContentDomainDependencye01728553bb650fbed25Provider: ContentDomainDependency {
+    var jwtStoreFactory: any JwtStoreFactory {
+        return appComponent.jwtStoreFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->ContentDomainComponent
+private func factory5918d17a9811afd8dadef47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ContentDomainDependencye01728553bb650fbed25Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class ProductDomainDependency46ea2c6b79a1a6907fb1Provider: ProductDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
@@ -364,7 +407,7 @@ private class TagDomainDependency8436ae71fd9cf2012d70Provider: TagDomainDependen
 private func factory6a92323f94d86d563660f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return TagDomainDependency8436ae71fd9cf2012d70Provider(appComponent: parent1(component) as! AppComponent)
 }
-private class SearchDomainDependencyb3556c153b9920da1f67Provider: SearchDomainDependency {
+private class PrintShopDomainDependency7e887160334225a022d6Provider: PrintShopDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
     }
@@ -373,9 +416,9 @@ private class SearchDomainDependencyb3556c153b9920da1f67Provider: SearchDomainDe
         self.appComponent = appComponent
     }
 }
-/// ^->AppComponent->SearchDomainComponent
-private func factoryf0c6bf6699cff1bf3dc4f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return SearchDomainDependencyb3556c153b9920da1f67Provider(appComponent: parent1(component) as! AppComponent)
+/// ^->AppComponent->PrintShopDomainComponent
+private func factoryc5a02ffad7cab4fbb37af47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return PrintShopDomainDependency7e887160334225a022d6Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
@@ -449,7 +492,7 @@ extension AfterSearchComponent: Registration {
 }
 extension SearchComponent: Registration {
     public func registerItems() {
-        keyPathToName[\SearchDependency.searchDomainFactory] = "searchDomainFactory-any SearchDomainFactory"
+        keyPathToName[\SearchDependency.printShopDomainFactory] = "printShopDomainFactory-any PrintShopDomainFactory"
         keyPathToName[\SearchDependency.beforeSearchFactory] = "beforeSearchFactory-any BeforeSearchFactory"
         keyPathToName[\SearchDependency.afterSearchFactory] = "afterSearchFactory-any AfterSearchFactory"
     }
@@ -478,6 +521,8 @@ extension HomeComponent: Registration {
         keyPathToName[\HomeDependency.searchFactory] = "searchFactory-any SearchFactory"
         keyPathToName[\HomeDependency.tagDomainFactory] = "tagDomainFactory-any TagDomainFactory"
         keyPathToName[\HomeDependency.categorySearchFactory] = "categorySearchFactory-any CategorySearchFactory"
+        keyPathToName[\HomeDependency.contentDomainFactory] = "contentDomainFactory-any ContentDomainFactory"
+        keyPathToName[\HomeDependency.webViewFactory] = "webViewFactory-any WebViewFactory"
     }
 }
 extension NearByMeComponent: Registration {
@@ -487,8 +532,9 @@ extension NearByMeComponent: Registration {
 }
 extension CategorySearchComponent: Registration {
     public func registerItems() {
-        keyPathToName[\CategorySearchDependency.searchDomainFactory] = "searchDomainFactory-any SearchDomainFactory"
+        keyPathToName[\CategorySearchDependency.productDomainFactory] = "productDomainFactory-any ProductDomainFactory"
         keyPathToName[\CategorySearchDependency.filterFactory] = "filterFactory-any FilterFactory"
+        keyPathToName[\CategorySearchDependency.productDetailFactory] = "productDetailFactory-any ProductDetailFactory"
     }
 }
 extension FilterComponent: Registration {
@@ -520,9 +566,26 @@ extension EditModalComponent: Registration {
         keyPathToName[\EditModalDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
     }
 }
+extension WebViewComponent: Registration {
+    public func registerItems() {
+
+    }
+}
+extension ProductDetailComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\ProductDetailDependency.bookMarkBottomSheetFactory] = "bookMarkBottomSheetFactory-any BookMarkBottomSheetFactory"
+        keyPathToName[\ProductDetailDependency.productDomainFactory] = "productDomainFactory-any ProductDomainFactory"
+        keyPathToName[\ProductDetailDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
+    }
+}
 extension BookMarkDomainComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+    }
+}
+extension ContentDomainComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\ContentDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
 extension ProductDomainComponent: Registration {
@@ -535,9 +598,9 @@ extension TagDomainComponent: Registration {
         keyPathToName[\TagDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
-extension SearchDomainComponent: Registration {
+extension PrintShopDomainComponent: Registration {
     public func registerItems() {
-        keyPathToName[\SearchDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
+        keyPathToName[\PrintShopDomainDependency.jwtStoreFactory] = "jwtStoreFactory-any JwtStoreFactory"
     }
 }
 extension AuthDomainComponent: Registration {
@@ -585,10 +648,13 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->BookMarkDetailComponent", factoryc8e52bb402c24cd9a5e2f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->WebViewComponent", factoryEmptyDependencyProvider)
+    registerProviderFactory("^->AppComponent->ProductDetailComponent", factorydd8ac0cf9df6ffed7cb6f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->ContentDomainComponent", factory5918d17a9811afd8dadef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ProductDomainComponent", factory5ac7597a79163de1a05ff47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->TagDomainComponent", factory6a92323f94d86d563660f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->SearchDomainComponent", factoryf0c6bf6699cff1bf3dc4f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->PrintShopDomainComponent", factoryc5a02ffad7cab4fbb37af47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->UserDomainComponent", factory46488402f315d7f9530cf47b58f8f304c97af4d5)
 }

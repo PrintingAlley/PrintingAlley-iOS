@@ -14,6 +14,7 @@ let project = Project.module(
             .feature(target: .SearchFeatue, type: .interface),
             .domain(target: .TagDomain,type: .interface),
             .domain(target: .BaseDomain,type: .interface),
+            .domain(target: .ContentDomain, type: .interface),
             .feature(target: .CategorySearchFeature, type: .interface)
         ]),
         .demo(module: .feature(.HomeFeature), dependencies: [

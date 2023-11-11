@@ -36,6 +36,10 @@ public final class ProductDomainComponent: Component<ProductDomainDependency>, P
         DeleteReviewUseCaseImpl(productRepository: productRepository)
     }
     
+    public var fetchProductReviewUseCase: any FetchProductReviewUseCase {
+        FetchProductReviewUseCaseImpl(productRepository: productRepository)
+    }
+    
     
     public var remoteProductDataSource: any RemoteProductDataSource {
         RemoteProductDataSourceImpl(jwtStore: dependency.jwtStoreFactory.jwtStore)
@@ -45,5 +49,6 @@ public final class ProductDomainComponent: Component<ProductDomainDependency>, P
         ProductRepositoryImpl(remoteProductDataSource: remoteProductDataSource)
     }
     
+
     
  }

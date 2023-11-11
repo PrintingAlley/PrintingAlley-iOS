@@ -108,18 +108,28 @@ extension BookMarkViewModel {
     func bindFetchDataSource(input: Input, output: Output) {
         
         input.fetchDataSource
-            .flatMap{ [weak self] _ -> Observable<[MyBookMarkEntity]> in
+            .flatMap{ [weak self] _ -> Observable<BookMarkGroupsEntity> in
             
                 guard let self else {return Observable.empty()}
                 
                 return self.fetchMyBookMarksUseCase.execute()
                     .catch({ error in
                         let alleryError = error.asAlleyError
+                        DEBUG_LOG("ERR: \(error)")
+                        if alleryError == .tokenExpired {
+                            
+                            output.showToast.onNext(BaseEntity(statusCode: 0, message: alleryError.errorDescription!))
+                        }
                         
-                        output.showToast.onNext(BaseEntity(statusCode: 0, message: alleryError.errorDescription))
+                        else {
+                            output.showToast.onNext(BaseEntity(statusCode: 0, message: alleryError.errorDescription!))
+                        }
                         
-                            return Single<[MyBookMarkEntity]>.create { single in
-                                single(.success([]))
+                    
+                       
+                        
+                            return Single<BookMarkGroupsEntity>.create { single in
+                                single(.success(BookMarkGroupsEntity(bookmarkGroups: [], statusCode: 0, message: alleryError.errorDescription!)))
                                 return Disposables.create()
                             }
 
@@ -128,6 +138,7 @@ extension BookMarkViewModel {
                     .asObservable()
                 
             }
+            .map{$0.bookmarkGroups}
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
     }
@@ -146,14 +157,15 @@ extension BookMarkViewModel {
                         let alleryError = error.asAlleyError
                         
                         if alleryError == .tokenExpired {
+                            
                             return Single<BaseEntity>.create { single in
-                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription)))
+                                single(.success(BaseEntity(statusCode: 401, message: alleryError.errorDescription!)))
                                 return Disposables.create()
                             }
                         }
                         
                         return Single<BaseEntity>.create { single in
-                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription)))
+                            single(.success(BaseEntity(statusCode: 0, message: alleryError.errorDescription!)))
                             return Disposables.create()
                         }
                     })

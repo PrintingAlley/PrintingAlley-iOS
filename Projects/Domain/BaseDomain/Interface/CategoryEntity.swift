@@ -11,8 +11,8 @@ import Foundation
 
 public struct CategoryEntity {
     let id: Int
-    let name: String
-    let image: String
+    public let name: String
+    public let image: String
     let statusCode: Int
     let message: String
     
@@ -22,6 +22,10 @@ public struct CategoryEntity {
         self.image = image
         self.statusCode = statusCode
         self.message = message
+    }
+    
+    public static func makeErrorEntity() -> Self {
+        CategoryEntity(id: 0, name: "", image: "", statusCode: 0, message: "")
     }
     
 }

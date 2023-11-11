@@ -20,6 +20,6 @@ public protocol RootDependency: Dependency {
 
 public final class RootComponent: Component<RootDependency> {
     public func makeView() -> RootViewController {
-        return RootViewController(mainTabFactory:dependency.mainTabFactory,viewModel: RootViewModel(logOutUseCase: dependency.authDomainFactory.logOutUseCase, verifyUserUseCase:  dependency.authDomainFactory.verifyUserUseCase))
+        return RootViewController(mainTabFactory:dependency.mainTabFactory,viewModel: RootViewModel(logOutUseCase: dependency.authDomainFactory.logOutUseCase, verifyUserUseCase:  dependency.authDomainFactory.verifyUserUseCase, versionCheckUseCase: dependency.authDomainFactory.versionCheckUseCase))
     }
 }

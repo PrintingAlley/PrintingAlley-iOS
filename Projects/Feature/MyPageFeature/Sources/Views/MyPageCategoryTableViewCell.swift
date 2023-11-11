@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 import DesignSystem
+import UtilityModule
 
 class MyPageCategoryTableViewCell: UITableViewCell {
     
@@ -41,13 +42,14 @@ extension MyPageCategoryTableViewCell {
     func makeConstraints() {
         
         label.snp.makeConstraints {
-            $0.left.top.equalToSuperview().inset(24)
+            $0.top.equalToSuperview().inset(24)
+            $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.bottom.equalToSuperview()
         }
         
         arrowImageView.snp.makeConstraints {
             $0.width.height.equalTo(24)
-            $0.right.equalToSuperview().inset(24)
+            $0.right.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.centerY.equalTo(label.snp.centerY)
         }
     
