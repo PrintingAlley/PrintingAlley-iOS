@@ -22,8 +22,8 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public static let identifer = "PinterestCollectionViewCell"
     
-    var model: ProductEntity!
     weak var delegate: PinterestCollectionViewCellDelegate?
+    var id:Int!
     
     public var imageView = UIImageView().then {
         $0.setRound([.allCorners], radius: 8)
@@ -80,10 +80,10 @@ extension PinterestCollectionViewCell {
         }
     }
     
-    public func update(model: ProductEntity, isBookMark: Bool = false) {
+    public func update(model: ProductEntity, isBookMark: Bool = false, id: Int = 0) {
         self.imageView.kf.setImage(with: URL(string: model.mainImage))
         self.title.text = model.name
-        self.model = model
+        self.id = id // 북마크에서 사용될 값
         self.bookmarkButton.isHidden = !isBookMark
         
         self.imageHeight = CGFloat(171 * model.height / model.width)
@@ -111,7 +111,7 @@ extension PinterestCollectionViewCell {
 extension PinterestCollectionViewCell {
     @objc
     private func touchUpBookmark() {
-        delegate?.remove(id: model.id)
+        delegate?.remove(id: id)
     }
     
 }
