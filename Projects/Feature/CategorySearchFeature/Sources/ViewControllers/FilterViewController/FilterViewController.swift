@@ -130,7 +130,7 @@ extension FilterViewController {
         
         buttonContainerView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(24)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
+            $0.bottom.equalToSuperview().inset(30)
         }
         
         resetButton.snp.makeConstraints {
