@@ -39,11 +39,11 @@ public enum AlertType {
         switch self {
             
         case .onlyConfirm, .delete:
-            "취소"
+            return "취소"
         case .offerUpdate:
-            "다음에"
+            return "다음에"
         case .forceUpdate, .logout, .exit:
-            ""
+            return ""
         }
     }
     

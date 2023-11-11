@@ -29,7 +29,7 @@ extension ContentAPI: AlleyAPI {
         switch self {
             
         case .fetchContents:
-            ""
+            return ""
         }
 
        

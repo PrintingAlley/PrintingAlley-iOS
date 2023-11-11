@@ -32,7 +32,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
     }
     
     public override func prepare() {
-        guard cache.isEmpty == true || cache.isEmpty == false, let collectionView = collectionView else {
+        guard let collectionView = collectionView else {
                 return
         }
         
