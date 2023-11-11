@@ -19,7 +19,8 @@ let dependencies = Dependencies(
             .remote(url: "https://github.com/RxSwiftCommunity/RxDataSources.git", requirement: .upToNextMajor(from: "5.0.2")),
             .remote(url: "https://github.com/RxSwiftCommunity/RxKeyboard.git", requirement: .upToNextMajor(from: "2.0.1")),
             .remote(url: "https://github.com/scenee/FloatingPanel.git", requirement: .upToNextMajor(from: "2.8.0")),
-            .remote(url: "https://github.com/huri000/SwiftEntryKit", requirement: .upToNextMajor(from: "2.0.0"))
+            .remote(url: "https://github.com/huri000/SwiftEntryKit", requirement: .upToNextMajor(from: "2.0.0")),
+            .remote(url: "https://github.com/airbnb/lottie-ios.git", requirement: .upToNextMajor(from: "4.3.3"))
         ],
         baseSettings: .settings(
             configurations: [
