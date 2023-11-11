@@ -24,8 +24,6 @@ public final class PrintShopTableViewCell: UITableViewCell {
     
     private let name = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .subtitle1)
     
-    private let printingTag = AlleyLabel("인쇄 / 후가공", textColor: .mainBlue(.blue500), font: .subtitle3)
-    
     private let descriptioin = AlleyLabel("엽서, 카드 #상담가능", textColor: .sub(.black), font: .body2)
     
     private let address = AlleyLabel("서울 중구 퇴계로39길 11", textColor: .grey(.grey300), font: .body2)
@@ -48,7 +46,7 @@ public final class PrintShopTableViewCell: UITableViewCell {
 // MARK: - UI 관련 함수
 extension PrintShopTableViewCell {
     private func addSubview() {
-        contentView.addSubviews(separator, image, name, printingTag, descriptioin, address)
+        contentView.addSubviews(separator, image, name, descriptioin, address)
     }
     
     private func makeConstraints() {
@@ -72,11 +70,6 @@ extension PrintShopTableViewCell {
         name.snp.makeConstraints {
             $0.top.equalTo(image)
             $0.leading.equalTo(image.snp.trailing).offset(16)
-        }
-        
-        printingTag.snp.makeConstraints {
-            $0.leading.equalTo(name.snp.trailing).offset(6)
-            $0.centerY.equalTo(name)
         }
         
         descriptioin.snp.makeConstraints {
