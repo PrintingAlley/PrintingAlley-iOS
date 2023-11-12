@@ -14,40 +14,39 @@ import UtilityModule
 import RxCocoa
 import RxSwift
 import RxDataSources
-import BaseFeatureInterface
-import SearchFeatueInterface
+import BaseFeature
 
 final class SearchViewController: UIViewController, ContainerViewType {
+    lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then {
+        $0.color = DesignSystemAsset.MainBlue.blue500.color
+        $0.hidesWhenStopped = true
+        
+    }
+    
     private var viewModel: SearchViewModel!
     
     let disposeBag = DisposeBag()
     let input = SearchViewModel.Input()
     
-    var afterSearchFactory: AfterSearchFactory!
-    var beforeSearchFactory: BeforeSearchFactory!
-    
-    // 지울 필요 있는 변수 ..
-    lazy var beforeVc = beforeSearchFactory.makeView()
-    lazy var afterVc = afterSearchFactory.makeView(dataSource: [])
-    
     var contentView: UIView! = UIView()
     
-    private let navigationBar = UIView()
-    
-    private lazy var backButton = UIButton().then {
-        $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
-        $0.addTarget(self, action: #selector(touchBackbtn), for: .touchUpInside)
+    lazy var searchBar = SearchBar().then {
+        $0.delegate = self
     }
     
-    let searchBar = SearchBar()
+    public lazy var printingTableView = UITableView().then {
+        $0.backgroundColor = .setColor(.sub(.white))
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.separatorStyle = .none
+        $0.register(PrintShopTableViewCell.self, forCellReuseIdentifier: PrintShopTableViewCell.identifier)
+    }
     
-    init(viewModel: SearchViewModel!, beforeSearchFactory: BeforeSearchFactory, afterSearchFactory: AfterSearchFactory) {
+    lazy var emptyHeaderView = SearchEmptyHeaderView()
+    
+    init(viewModel: SearchViewModel!) {
         DEBUG_LOG("\(Self.self) Init ✅ ")
         self.viewModel = viewModel
-        self.beforeSearchFactory = beforeSearchFactory
-        self.afterSearchFactory = afterSearchFactory
         super.init(nibName: nil, bundle: nil)
-        self.add(asChildViewController: beforeVc)
     }
     
     deinit {
@@ -74,55 +73,32 @@ extension SearchViewController {
         let output = viewModel.transform(input: input)
         bindUIEvent(input: input)
         bindDataSource(input: input, output: output)
+        bindIndicator(output: output)
     }
 }
 
 // MARK: - UI 관련 함수들
 extension SearchViewController {
-    func changeToAfterVC() {
-        UIView.animate(withDuration: 0.4) {
-            self.remove(asChildViewController: self.beforeVc)
-            self.add(asChildViewController: self.afterVc)
-        }
-    }
-    
-    func changeToBeforeVC() {
-        UIView.animate(withDuration: 0.4) {
-            self.remove(asChildViewController: self.afterVc)
-            self.add(asChildViewController: self.beforeVc)
-        }
-    }
-    
     private func addSubviews() {
-        view.addSubviews(navigationBar, contentView)
-        navigationBar.addSubviews(backButton, searchBar)
+        view.addSubviews(searchBar, printingTableView, indicator)
     }
     
     private func makeConstraints() {
-        navigationBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(17)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(17)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
-            $0.height.equalTo(32)
-        }
-        
-        backButton.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.width.height.equalTo(24)
-            $0.centerY.equalToSuperview()
-        }
-        
         searchBar.snp.makeConstraints {
-            $0.leading.equalTo(backButton.snp.trailing).offset(8)
-            $0.width.equalTo(317)
-            $0.height.equalTo(52)
-            $0.centerY.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(11)
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(56)
         }
         
-        contentView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(125)
+        printingTableView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(8)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+
     }
     
     private func setKeyboardDown() {
@@ -136,5 +112,18 @@ extension SearchViewController {
     @objc
     private func touchBackbtn() {
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - TableView 관련 함수들
+extension SearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        106
+    }
+}
+
+extension SearchViewController: SearchBarDelegate {
+    func press() {
+        input.textString.accept("")
     }
 }

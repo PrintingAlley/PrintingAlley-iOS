@@ -77,9 +77,11 @@ extension FilterButton {
     func configureUI(_ type: FilterButtonType) {
         let stringSize = (title as NSString).size(withAttributes: [NSAttributedString.Key.font: UIFont.setFont(.body1)])
         
-        self.setRound([.allCorners], radius: (stringSize.height + 8) / 7 * 4)
+        self.setRound([.allCorners], radius: (stringSize.height + 8) / 17 * 9)
         self.setTitle(title, for: .normal)
         self.titleLabel?.font = UIFont.setFont(.body1)
+        self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
+        self.contentEdgeInsets = UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 10)
         
         switch type {
         case .basic:
@@ -106,12 +108,12 @@ extension FilterButton {
             self.layer.borderWidth = 1.0
             self.setTitleColor(.setColor(.grey(.grey900)), for: .normal)
             self.setImage(DesignSystemAsset.Icon.close.image, for: .normal)
+            self.imageEdgeInsets = UIEdgeInsets(top: 3, left: 7, bottom: 3, right: 5)
         }
         
         self.imageView?.contentMode = .scaleAspectFit
         self.semanticContentAttribute = .forceRightToLeft
-        self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
-        self.contentEdgeInsets = UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 10)
+
     }
     private func addTargets() {
         self.addTarget(self, action: #selector(touchUpFilterButton), for: .touchUpInside)

@@ -10,8 +10,14 @@ import UIKit
 import Then
 import SnapKit
 
+public protocol SearchBarDelegate: AnyObject {
+    func press()
+}
+
 public final class SearchBar: UIView {
 
+    public weak var delegate: SearchBarDelegate?
+    
     public lazy var searchTextField = UITextField().then {
         let attributedPlaceholder = NSAttributedString(string: "플레이스 홀더 색상 바꾸기!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey400)), NSAttributedString.Key.font: UIFont.setFont(.body1)])
         $0.attributedPlaceholder = attributedPlaceholder
@@ -74,8 +80,8 @@ extension SearchBar {
     private func touchSearchIcon() {
         if searchButton.isHighlighted {
             searchTextField.text?.removeAll()
-            searchTextField.sendActions(for: .editingChanged) // 액션을 전달해줘야 editingChange 상태로 인식함
             searchButton.isHighlighted = false
+            delegate?.press()
         } else {
             print("검색")
         }
@@ -83,9 +89,7 @@ extension SearchBar {
     
     @objc
     private func textFieldDidChange() {
-        if searchTextField.hasText {
-            searchButton.isHighlighted = true
-        }
+        searchButton.isHighlighted = searchTextField.hasText
     }
 }
 

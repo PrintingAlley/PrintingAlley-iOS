@@ -12,19 +12,19 @@ import UIKit
 import MainTabFeatureInterface
 import MyPageFeatureInterface
 import HomeFeatureInterface
-import NearByMeFeatureInterface
+import SearchFeatueInterface
 
 public protocol MainTabDependency: Dependency {
     var mypageFactory: any MyPageFactory { get }
     var homeFactory: any HomeFactory { get }
-    var nearByMeFactory: any NearByMeFactory { get }
+    var searchFactory: any SearchFactory { get }
 }
 
 public final class MainTabComponent: Component<MainTabDependency>, MainTabFactory {
     public func makeView() -> UIViewController {
         MainTabBarController(
             myPageFactory: dependency.mypageFactory,
-            homeFactory: dependency.homeFactory,nearByMeFactory: dependency.nearByMeFactory
+            homeFactory: dependency.homeFactory, searchFactory: dependency.searchFactory
         )
     }
 }

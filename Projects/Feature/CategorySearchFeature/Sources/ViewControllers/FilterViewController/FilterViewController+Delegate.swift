@@ -35,7 +35,7 @@ extension FilterViewController: UITableViewDelegate {
         let numberOfrow = numberOfItem % 4 == .zero ?  numberOfItem / 4 : (numberOfItem / 4 + 1) // 필터 줄
         
         let offset1: CGFloat = 16.0
-        let offset2: CGFloat = 8.0
+        let offset2: CGFloat = 6.0
 
         
         if viewModel.dataSource.value[section].children[row].children.isEmpty {

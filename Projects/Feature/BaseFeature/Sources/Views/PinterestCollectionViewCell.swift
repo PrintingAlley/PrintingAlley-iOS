@@ -80,8 +80,8 @@ extension PinterestCollectionViewCell {
         }
     }
     
-    public func update(model: ProductEntity, isBookMark: Bool = false, id: Int = 0) {
-        self.imageView.kf.setImage(with: URL(string: model.mainImage))
+    public func update(model: ProductEntity) {
+        self.imageView.kf.setImage(with: URL(string: model.mainImage), placeholder: DesignSystemAsset.PlaceHolder.largePH.image)
         self.title.text = model.name
         self.id = id // 북마크에서 사용될 값
         self.bookmarkButton.isHidden = !isBookMark

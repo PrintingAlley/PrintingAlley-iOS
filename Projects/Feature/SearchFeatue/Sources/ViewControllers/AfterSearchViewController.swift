@@ -32,7 +32,7 @@ final class AfterSearchViewController: UIViewController {
         $0.separatorStyle = .none
         $0.delegate = self
         $0.dataSource = self
-        $0.register(PrintingTableViewCell.self, forCellReuseIdentifier: PrintingTableViewCell.identifier)
+        $0.register(PrintShopTableViewCell.self, forCellReuseIdentifier: PrintShopTableViewCell.identifier)
     }
     
     init(viewModel: AfterSearchViewModel) {
@@ -126,8 +126,8 @@ extension AfterSearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: PrintingTableViewCell.identifier, for: indexPath)
-                as? PrintingTableViewCell else { return UITableViewCell() }
+            withIdentifier: PrintShopTableViewCell.identifier, for: indexPath)
+                as? PrintShopTableViewCell else { return UITableViewCell() }
         return cell
     }
 

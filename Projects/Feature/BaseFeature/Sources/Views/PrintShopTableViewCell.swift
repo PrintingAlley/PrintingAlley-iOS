@@ -12,24 +12,24 @@ import Then
 import DesignSystem
 import BaseDomainInterface
 import UtilityModule
+import Kingfisher
 
-public final class PrintingTableViewCell: UITableViewCell {
-    public static let identifier = "PrintingTableViewCell"
+public final class PrintShopTableViewCell: UITableViewCell {
+    public static let identifier = "PrintShopTableViewCell"
     
     private let image = UIImageView().then {
-        $0.image = DesignSystemAsset.Icon.blueBookMark.image
-        $0.contentMode = .scaleAspectFit
-        $0.backgroundColor = .lightGray
+        $0.contentMode = .scaleToFill
         $0.setRound([.allCorners], radius: 9)
     }
     
-    private let name = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .subtitle1)
+    private let name = AlleyLabel("인쇄소 이름", textColor: .sub(.black), font: .subtitle1)
     
-    private let printingTag = AlleyLabel("인쇄 / 후가공", textColor: .mainBlue(.blue500), font: .subtitle3)
+    private let introduction = AlleyLabel("인쇄소 소개", textColor: .sub(.black), font: .body2).then {
+        $0.numberOfLines = 1
+        $0.lineBreakMode = .byTruncatingTail
+    }
     
-    private let descriptioin = AlleyLabel("엽서, 카드 #상담가능", textColor: .sub(.black), font: .body2)
-    
-    private let address = AlleyLabel("서울 중구 퇴계로39길 11", textColor: .grey(.grey300), font: .body2)
+    private let address = AlleyLabel("주소", textColor: .grey(.grey500), font: .body2)
     
     private let separator = UIView().then {
         $0.backgroundColor = .setColor(.grey(.grey100))
@@ -47,9 +47,9 @@ public final class PrintingTableViewCell: UITableViewCell {
 }
 
 // MARK: - UI 관련 함수
-extension PrintingTableViewCell {
+extension PrintShopTableViewCell {
     private func addSubview() {
-        contentView.addSubviews(separator, image, name, printingTag, descriptioin, address)
+        contentView.addSubviews(separator, image, name, introduction, address)
     }
     
     private func makeConstraints() {
@@ -75,29 +75,25 @@ extension PrintingTableViewCell {
             $0.leading.equalTo(image.snp.trailing).offset(HORIZON_MARGIN1())
         }
         
-        printingTag.snp.makeConstraints {
-            $0.leading.equalTo(name.snp.trailing).offset(6)
-            $0.centerY.equalTo(name)
-        }
-        
-        descriptioin.snp.makeConstraints {
+        introduction.snp.makeConstraints {
             $0.leading.equalTo(name)
             $0.top.equalTo(name.snp.bottom).offset(2)
+            $0.trailing.equalToSuperview().inset(24)
         }
         
         address.snp.makeConstraints {
             $0.leading.equalTo(name)
-            $0.top.equalTo(descriptioin.snp.bottom).offset(2)
+            $0.top.equalTo(introduction.snp.bottom).offset(2)
         }
     }
 }
 
 // MARK: - 데이터 바인딩 함수
-public extension PrintingTableViewCell {
-     func bindData(model: PrintShopEntity) {
-        // TODO: 이미지 바인딩
-        self.name.text = model.name
-        self.descriptioin.text = model.introduction
-        self.address.text = model.address
-    }
+public extension PrintShopTableViewCell {
+     func update(model: PrintShopEntity) {
+         self.image.kf.setImage(with: URL(string: model.logoImage), placeholder: DesignSystemAsset.PlaceHolder.smallPH.image)
+         self.name.text = model.name
+         self.introduction.text = model.introduction
+         self.address.text = model.address
+     }
 }

@@ -75,8 +75,8 @@ private class MainTabDependency2826cdb310ed0b17a725Provider: MainTabDependency {
     var homeFactory: any HomeFactory {
         return appComponent.homeFactory
     }
-    var nearByMeFactory: any NearByMeFactory {
-        return appComponent.nearByMeFactory
+    var searchFactory: any SearchFactory {
+        return appComponent.searchFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -140,12 +140,6 @@ private class SearchDependencya86903a2c751a4f762e8Provider: SearchDependency {
     var printShopDomainFactory: any PrintShopDomainFactory {
         return appComponent.printShopDomainFactory
     }
-    var beforeSearchFactory: any BeforeSearchFactory {
-        return appComponent.beforeSearchFactory
-    }
-    var afterSearchFactory: any AfterSearchFactory {
-        return appComponent.afterSearchFactory
-    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -204,9 +198,6 @@ private func factoryda2925fd76da866a652af47b58f8f304c97af4d5(_ component: Needle
 private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var homeFactory: any HomeFactory {
         return appComponent.homeFactory
-    }
-    var searchFactory: any SearchFactory {
-        return appComponent.searchFactory
     }
     var tagDomainFactory: any TagDomainFactory {
         return appComponent.tagDomainFactory
@@ -471,7 +462,7 @@ extension MainTabComponent: Registration {
     public func registerItems() {
         keyPathToName[\MainTabDependency.mypageFactory] = "mypageFactory-any MyPageFactory"
         keyPathToName[\MainTabDependency.homeFactory] = "homeFactory-any HomeFactory"
-        keyPathToName[\MainTabDependency.nearByMeFactory] = "nearByMeFactory-any NearByMeFactory"
+        keyPathToName[\MainTabDependency.searchFactory] = "searchFactory-any SearchFactory"
     }
 }
 extension MyPageComponent: Registration {
@@ -496,8 +487,6 @@ extension AfterSearchComponent: Registration {
 extension SearchComponent: Registration {
     public func registerItems() {
         keyPathToName[\SearchDependency.printShopDomainFactory] = "printShopDomainFactory-any PrintShopDomainFactory"
-        keyPathToName[\SearchDependency.beforeSearchFactory] = "beforeSearchFactory-any BeforeSearchFactory"
-        keyPathToName[\SearchDependency.afterSearchFactory] = "afterSearchFactory-any AfterSearchFactory"
     }
 }
 extension BeforeSearchComponent: Registration {
@@ -521,7 +510,6 @@ extension SignInComponent: Registration {
 extension HomeComponent: Registration {
     public func registerItems() {
         keyPathToName[\HomeDependency.homeFactory] = "homeFactory-any HomeFactory"
-        keyPathToName[\HomeDependency.searchFactory] = "searchFactory-any SearchFactory"
         keyPathToName[\HomeDependency.tagDomainFactory] = "tagDomainFactory-any TagDomainFactory"
         keyPathToName[\HomeDependency.categorySearchFactory] = "categorySearchFactory-any CategorySearchFactory"
         keyPathToName[\HomeDependency.contentDomainFactory] = "contentDomainFactory-any ContentDomainFactory"
