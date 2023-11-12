@@ -14,15 +14,18 @@ import RxSwift
 import RxDataSources
 import UtilityModule
 import BaseFeatureInterface
+import BaseFeature
 
 
 class BookMarkDetailViewController: UIViewController {
 
     var viewModel: BookMarkDetailViewModel!
     var editModalFactory: any EditModalFactory
+    var productDetailFactory: any ProductDetailFactory
     
     let disposeBag = DisposeBag()
     let input = BookMarkDetailViewModel.Input()
+    var output: BookMarkDetailViewModel.Output!
     
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
@@ -42,23 +45,21 @@ class BookMarkDetailViewController: UIViewController {
     
     lazy var countLabel: AlleyLabel = AlleyLabel()
     
-    
-    lazy var emptyHeaderView: EmptyTableHeaderView = EmptyTableHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 80), text: "아직 저장목록이 없어요.")
-    
-    lazy var tableView :UITableView = UITableView().then {
-        $0.register(BookMarkDetailTableViewCell.self, forCellReuseIdentifier: BookMarkDetailTableViewCell.identifier)
-        $0.separatorStyle = .none
+    public lazy var layout = AutoHeightCollectionViewLayout().then {
+        $0.delegate = self // 이 딜리게이트 받아줘야함
     }
     
-    lazy var baseLine: UIView = UIView().then {
-        $0.backgroundColor = .black.withAlphaComponent(0.1)
+    lazy var gridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+        $0.showsHorizontalScrollIndicator = false
+        $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
     }
     
-
     
-    init(editModalFactory: EditModalFactory, viewModel: BookMarkDetailViewModel!) {
+    
+    init(editModalFactory: EditModalFactory, productDetailFactory: ProductDetailFactory, viewModel: BookMarkDetailViewModel!) {
         DEBUG_LOG("\(Self.self) Init ✅ ")
         self.editModalFactory = editModalFactory
+        self.productDetailFactory = productDetailFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -92,7 +93,7 @@ extension BookMarkDetailViewController {
     
     
     func addSubviews() {
-        self.view.addSubviews(naviTitleView, countLabel, baseLine, tableView)
+        self.view.addSubviews(naviTitleView, countLabel, gridCollectionView)
         naviTitleView.addSubviews(backButton, naviTitleLabel,editButton)
     }
     
@@ -118,31 +119,24 @@ extension BookMarkDetailViewController {
             $0.horizontalEdges.equalToSuperview()
         }
         
+        gridCollectionView.snp.makeConstraints {
+            $0.top.equalTo(countLabel.snp.bottom).offset(24)
+            $0.left.right.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
         editButton.snp.makeConstraints {
             $0.width.height.equalTo(24)
             $0.centerY.equalToSuperview()
             $0.right.equalToSuperview().inset(24)
         }
         
-        baseLine.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.top.equalTo(countLabel.snp.bottom).offset(21)
-            $0.horizontalEdges.equalToSuperview()
-        }
-        
-        
-        tableView.snp.makeConstraints {
-            $0.top.equalTo(baseLine.snp.bottom)
-            $0.left.right.bottom.equalToSuperview()
-        }
+
         
         
     }
     
     func bindViewModel() {
-       
-        let output = self.viewModel.transform(input: input)
-        
+        output = viewModel.transform(input: input)
         bindViewDidLoad(input: input)
         bindBackButton()
         bindEditButton()
@@ -157,15 +151,3 @@ extension BookMarkDetailViewController {
 }
 
 
-extension BookMarkDetailViewController: BookMarkDetailTableViewCellDelegate {
-    
-    func tapBookMark(id: Int?) {
-        guard let id = id as? Int else {
-            return
-        }
-        
-        input.removePrintShop.onNext(id)
-    }
-
-    
-}

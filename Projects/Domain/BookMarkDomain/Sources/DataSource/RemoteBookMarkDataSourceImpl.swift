@@ -62,9 +62,9 @@ final class RemoteBookMarkDataSourceImpl: BaseRemoteDataSource<BookMarkAPI>, Rem
             .map{$0.toDomain()}
     }
     
-    func fetchBookMarkDetail(id: Int) -> Single<BookMarkGroupEntity> {
+    func fetchBookMarkDetail(id: Int) -> Single<BookMarkGroupWrapperEntity> {
         request(.fetchBookMarkDetail(id: id))
-            .map(BookMarkGroupResponseDTO.self)
+            .map(BookMarkGroupWrapperResponseDTO.self)
             .map{$0.toDomain()}
     }
     

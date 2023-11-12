@@ -295,6 +295,9 @@ private class BookMarkDetailDependency82d727e486e840545c2dProvider: BookMarkDeta
     var editModalFactory: any EditModalFactory {
         return appComponent.editModalFactory
     }
+    var productDetailFactory: any ProductDetailFactory {
+        return appComponent.productDetailFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -552,6 +555,7 @@ extension BookMarkDetailComponent: Registration {
     public func registerItems() {
         keyPathToName[\BookMarkDetailDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"
         keyPathToName[\BookMarkDetailDependency.editModalFactory] = "editModalFactory-any EditModalFactory"
+        keyPathToName[\BookMarkDetailDependency.productDetailFactory] = "productDetailFactory-any ProductDetailFactory"
     }
 }
 extension AlleyPageComponent: Registration {

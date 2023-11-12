@@ -269,7 +269,7 @@ extension EditModalViewController {
         }
         
         textField.snp.makeConstraints {
-            $0.left.equalToSuperview().inset(16)
+            $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.right.equalToSuperview().inset(55)
             $0.top.bottom.equalToSuperview().inset(17)
            

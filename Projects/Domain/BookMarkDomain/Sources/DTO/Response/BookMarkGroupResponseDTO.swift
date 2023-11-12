@@ -15,13 +15,11 @@ public struct BookMarkGroupResponseDTO: Decodable {
     let id: Int
     let name: String
     let bookmarks: [BookMarkResponseDTO]
-    let statusCode: Int?
-    let message: String?
     
     
     
     func toDomain() -> BookMarkGroupEntity {
-       BookMarkGroupEntity(id: id, name: name, bookmarks: [], statusCode: 0, message: "")
+        BookMarkGroupEntity(id: id, name: name, bookmarks: bookmarks.map{$0.toDomain()})
     }
 
 }

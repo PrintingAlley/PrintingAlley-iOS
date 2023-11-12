@@ -13,15 +13,13 @@ public struct BookMarkGroupEntity {
     public let id: Int
     public let name: String
     public let bookmarks: [BookMarkEntity]
-    public let statusCode: Int
-    public let message: String
+
     
-    public init(id: Int, name: String, bookmarks: [BookMarkEntity], statusCode: Int, message: String) {
+    public init(id: Int, name: String, bookmarks: [BookMarkEntity]) {
         self.id = id
         self.name = name
         self.bookmarks = bookmarks
-        self.statusCode = statusCode
-        self.message = message
+
     }
     
 

@@ -11,6 +11,7 @@ import SnapKit
 import Then
 import DesignSystem
 import BaseDomainInterface
+import UtilityModule
 
 public final class PrintingTableViewCell: UITableViewCell {
     public static let identifier = "PrintingTableViewCell"
@@ -71,7 +72,7 @@ extension PrintingTableViewCell {
 
         name.snp.makeConstraints {
             $0.top.equalTo(image)
-            $0.leading.equalTo(image.snp.trailing).offset(16)
+            $0.leading.equalTo(image.snp.trailing).offset(HORIZON_MARGIN1())
         }
         
         printingTag.snp.makeConstraints {
