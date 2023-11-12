@@ -14,6 +14,7 @@ import Then
 
 public protocol ProductDetailTableHeaderViewDelegate: AnyObject {
     func save(id: Int, isBookmarked: Bool)
+    func move()
 }
 
 
@@ -44,23 +45,30 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     lazy var titleLabel: AlleyLabel = AlleyLabel().then {
         $0.numberOfLines = 0
     }
-    lazy var subtitleLabel: AlleyLabel = AlleyLabel().then {
-        $0.numberOfLines = 1
-    }
     
     lazy var saveButton: UIButton = UIButton().then {
         $0.addTarget(self, action: #selector(save), for: .touchUpInside)
     }
     
-    lazy var emptyView: UIView = UIView().then {
-        $0.backgroundColor = colorFromRGB("E7E8EE")
+    lazy var printShopLabel: AlleyLabel = AlleyLabel()
+    
+    lazy var movePrintShopButton: UIButton = UIButton().then {
+        $0.addTarget(self, action: #selector(move), for: .touchUpInside)
     }
+        
+    lazy var designerLabel: AlleyLabel = AlleyLabel()
+    
+    lazy var emptyView: UIView = UIView().then {
+        $0.backgroundColor = DesignSystemAsset.Grey.grey50.color
+    }
+    
+    lazy var infoLabel: AlleyLabel = AlleyLabel("작품 상세정보", textColor: .sub(.black), font: .subtitle2)
     
     
     public weak var delegate: ProductDetailTableHeaderViewDelegate?
     
     var isSaved: Bool = false
-    var model: ProductHeaderInfo = ProductHeaderInfo(id: 0, title: "", subtitle: "", images: [])
+    var model: ProductHeaderInfo = ProductHeaderInfo(id: 0, title: "", subtitle: "",printShop: "",designer: "", images: [])
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -80,8 +88,8 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
 
 extension ProductDetailTableHeaderView {
     func addSubviews() {
-        self.addSubviews(collectionView, infoView, emptyView)
-        self.infoView.addSubviews(titleLabel, subtitleLabel, saveButton)
+        self.addSubviews(collectionView, infoView, emptyView, infoLabel)
+        self.infoView.addSubviews(titleLabel, saveButton, printShopLabel, designerLabel, movePrintShopButton )
     }
     
     func makeConstraints() {
@@ -98,14 +106,8 @@ extension ProductDetailTableHeaderView {
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(18)
-            $0.left.equalToSuperview().inset(21)
+            $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.right.equalToSuperview().inset(64)
-        }
-        
-        subtitleLabel.snp.makeConstraints {
-            $0.left.right.equalTo(titleLabel)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(6)
-            $0.bottom.equalToSuperview().inset(21)
         }
         
         saveButton.snp.makeConstraints {
@@ -116,10 +118,32 @@ extension ProductDetailTableHeaderView {
 
         }
         
+        printShopLabel.snp.makeConstraints {
+            $0.left.right.equalTo(HORIZON_MARGIN1())
+            $0.top.equalTo(titleLabel.snp.bottom).offset(15)
+        }
+        
+        designerLabel.snp.makeConstraints {
+            $0.top.equalTo(printShopLabel.snp.bottom).offset(2)
+            $0.left.right.equalTo(printShopLabel)
+            $0.bottom.equalToSuperview().inset(21)
+        }
+        
         emptyView.snp.makeConstraints {
             $0.top.equalTo(infoView.snp.bottom)
-            $0.left.right.bottom.equalToSuperview()
+            $0.left.right.equalToSuperview()
             $0.height.equalTo(10)
+        }
+        
+        infoLabel.snp.makeConstraints {
+            $0.top.equalTo(emptyView.snp.bottom).offset(17)
+            $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
+            $0.right.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+        movePrintShopButton.snp.makeConstraints {
+            $0.edges.equalTo(printShopLabel)
         }
     }
     
@@ -127,20 +151,19 @@ extension ProductDetailTableHeaderView {
         delegate?.save(id: model.id, isBookmarked: self.isSaved)
     }
     
+    @objc func move() {
+        delegate?.move()
+    }
+    
     func update(model: ProductHeaderInfo, isSaved: Bool) { 
         self.model = model
         self.isSaved = isSaved
         titleLabel.setTitle(title: model.title, textColor: .sub(.black), font: .header3)
-        subtitleLabel.setTitle(title: model.subtitle, textColor: .grey(.grey400), font: .subtitle3)
         
-        subtitleLabel.snp.updateConstraints {
-            $0.left.right.equalTo(titleLabel)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(6)
-            $0.bottom.equalToSuperview().inset(21)
-        }
+        printShopLabel.setMultipleAttributeText(text1: "담당 인쇄사  ", text2: model.printShop, color1: DesignSystemAsset.Grey.grey300.color, color2: DesignSystemAsset.MainBlue.blue500.color, font1: .subtitle3, font2: .subtitle3)
         
+        designerLabel.setMultipleAttributeText(text1: "디자인  ", text2: model.designer, color1: DesignSystemAsset.Grey.grey300.color, color2: .black, font1: .subtitle3, font2: .body2)
         
-        subtitleLabel.lineBreakMode = .byTruncatingTail
         
         saveButton.setImage(isSaved ? DesignSystemAsset.Icon.blueBookMark.image : DesignSystemAsset.Icon.emptyBookMark.image, for: .normal)
         
