@@ -40,9 +40,16 @@ extension ProductDetailViewController: UITableViewDelegate {
         
         return headerview
     }
+    
+    
 }
 
 extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
+    
+    func move() {
+        DEBUG_LOG("MOVE MOVE")
+    }
+    
     func save(id: Int, isBookmarked: Bool) {
         
         
@@ -108,16 +115,8 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
             
         }
     }
-}
-
-
-extension ProductDetailViewController: ProductDetailTableViewCellDelegate {
-    func copy(text: String) {
-        COPY(text: text)
-        
-        input.askToast.onNext(BaseEntity(statusCode: 0, message: "클립보드에 복사되었습니다\n인쇄사 찾기에서 바로 검색해보세요"))
-    }
     
+
 }
 
 
