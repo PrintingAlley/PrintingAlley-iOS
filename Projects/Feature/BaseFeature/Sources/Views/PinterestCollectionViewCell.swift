@@ -38,7 +38,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     }
     
     public lazy var bookmarkButton = UIButton().then { // 필요할 때 isHidden 시키기
-        $0.setImage(DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
         $0.setImage(DesignSystemAsset.Icon.emptyBookMark.image, for: .selected)
         $0.addTarget(self, action: #selector(touchUpBookmark), for: .touchUpInside)
     }
@@ -80,7 +80,7 @@ extension PinterestCollectionViewCell {
         }
     }
     
-    public func update(model: ProductEntity) {
+    public func update(model: ProductEntity, isBookMark: Bool = false, id: Int = 0) {
         self.imageView.kf.setImage(with: URL(string: model.mainImage), placeholder: DesignSystemAsset.PlaceHolder.largePH.image)
         self.title.text = model.name
         self.id = id // 북마크에서 사용될 값

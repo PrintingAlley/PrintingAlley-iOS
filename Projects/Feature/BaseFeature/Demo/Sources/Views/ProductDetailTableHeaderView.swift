@@ -48,7 +48,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     }
     
     lazy var saveButton: UIButton = UIButton().then {
-        $0.setImage(DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
     }
     
     lazy var emptyView: UIView = UIView().then {

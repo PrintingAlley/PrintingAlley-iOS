@@ -165,7 +165,7 @@ extension ProductDetailTableHeaderView {
         designerLabel.setMultipleAttributeText(text1: "디자인  ", text2: model.designer, color1: DesignSystemAsset.Grey.grey300.color, color2: .black, font1: .subtitle3, font2: .body2)
         
         
-        saveButton.setImage(isSaved ? DesignSystemAsset.Icon.blueBookMark.image : DesignSystemAsset.Icon.emptyBookMark.image, for: .normal)
+        saveButton.setImage(isSaved ? DesignSystemAsset.Icon.bluebookMark.image : DesignSystemAsset.Icon.emptyBookMark.image, for: .normal)
         
         collectionView.reloadData()
     }
