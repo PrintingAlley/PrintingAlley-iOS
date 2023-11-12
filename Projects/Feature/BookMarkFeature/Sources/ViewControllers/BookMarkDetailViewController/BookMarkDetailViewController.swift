@@ -121,7 +121,7 @@ extension BookMarkDetailViewController {
         
         gridCollectionView.snp.makeConstraints {
             $0.top.equalTo(countLabel.snp.bottom).offset(24)
-            $0.left.right.bottom.equalToSuperview()
+            $0.left.right.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
         
         editButton.snp.makeConstraints {
