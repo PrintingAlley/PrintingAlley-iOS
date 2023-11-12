@@ -17,6 +17,12 @@ import RxDataSources
 import BaseFeature
 
 final class SearchViewController: UIViewController, ContainerViewType {
+    lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then {
+        $0.color = DesignSystemAsset.MainBlue.blue500.color
+        $0.hidesWhenStopped = true
+        
+    }
+    
     private var viewModel: SearchViewModel!
     
     let disposeBag = DisposeBag()
@@ -65,13 +71,14 @@ extension SearchViewController {
         let output = viewModel.transform(input: input)
         bindUIEvent(input: input)
         bindDataSource(input: input, output: output)
+        bindIndicator(output: output)
     }
 }
 
 // MARK: - UI 관련 함수들
 extension SearchViewController {
     private func addSubviews() {
-        view.addSubviews(searchBar, printingTableView)
+        view.addSubviews(searchBar, printingTableView, indicator)
     }
     
     private func makeConstraints() {
@@ -84,6 +91,10 @@ extension SearchViewController {
         printingTableView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(8)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
 
     }

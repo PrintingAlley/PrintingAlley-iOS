@@ -17,6 +17,7 @@ extension SearchViewController {
             .do { [weak self] dataSource in
                 guard let self else { return }
                 
+                self.indicator.stopAnimating()
                 self.printingTableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
             }
             .bind(to: printingTableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
@@ -29,6 +30,18 @@ extension SearchViewController {
                 
                 return cell
             }
+            .disposed(by: disposeBag)
+    }
+    
+    ///  indcator 시작
+    func bindIndicator(output: SearchViewModel.Output) {
+        output.runIndicator
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                guard let self else {return}
+                
+                self.indicator.startAnimating()
+            })
             .disposed(by: disposeBag)
     }
 }

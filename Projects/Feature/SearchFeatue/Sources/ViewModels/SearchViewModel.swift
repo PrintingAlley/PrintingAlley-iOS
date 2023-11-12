@@ -33,6 +33,7 @@ public class SearchViewModel: ViewModelType {
     }
     
     public struct Output {
+        let runIndicator: BehaviorRelay<Void> = .init(value: ())
         let dataSource: PublishSubject<[PrintShopEntity]> = .init()
     }
     
@@ -40,6 +41,7 @@ public class SearchViewModel: ViewModelType {
         let output = Output()
         input.textString
             .distinctUntilChanged()
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .flatMapLatest { [unowned self] text in
                 return self.fetchPrintShopListUseCase
                     .execute(page: 1, searchText: text)

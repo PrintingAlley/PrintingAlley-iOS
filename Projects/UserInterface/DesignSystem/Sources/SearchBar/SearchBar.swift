@@ -74,7 +74,6 @@ extension SearchBar {
     private func touchSearchIcon() {
         if searchButton.isHighlighted {
             searchTextField.text?.removeAll()
-            searchTextField.sendActions(for: .editingChanged) // 액션을 전달해줘야 editingChange 상태로 인식함
             searchButton.isHighlighted = false
         } else {
             print("검색")
