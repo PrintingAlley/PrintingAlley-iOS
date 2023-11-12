@@ -11,6 +11,7 @@ import SnapKit
 import Then
 import DesignSystem
 import BaseDomainInterface
+import UtilityModule
 import Kingfisher
 
 public final class PrintShopTableViewCell: UITableViewCell {
@@ -70,8 +71,8 @@ extension PrintShopTableViewCell {
         }
 
         name.snp.makeConstraints {
-            $0.top.equalTo(image).inset(3)
-            $0.leading.equalTo(image.snp.trailing).offset(16)
+            $0.top.equalTo(image)
+            $0.leading.equalTo(image.snp.trailing).offset(HORIZON_MARGIN1())
         }
         
         introduction.snp.makeConstraints {

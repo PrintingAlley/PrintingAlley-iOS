@@ -18,7 +18,8 @@ import UtilityModule
 extension BookMarkDetailViewController {
     
     func bindViewDidLoad(input: BookMarkDetailViewModel.Input) {
-        input.fetchDataSource.onNext(())
+       input.fetchDataSource.onNext(())
+        
     }
     
     /// 뒤로가기 버튼

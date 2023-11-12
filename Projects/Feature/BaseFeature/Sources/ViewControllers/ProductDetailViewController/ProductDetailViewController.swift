@@ -95,7 +95,7 @@ extension ProductDetailViewController {
         self.backButton.snp.makeConstraints {
             $0.width.height.equalTo(24)
             $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(23)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(17)
         }
         
         self.homeButton.snp.makeConstraints {
