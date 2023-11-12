@@ -66,6 +66,7 @@ public final class BookMarkDetailViewModel: ViewModelType {
                         })
                         .asObservable()
             })
+            .debug("KWKW")
             .map{$0.bookmarkGroup}
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)

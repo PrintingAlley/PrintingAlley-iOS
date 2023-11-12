@@ -19,7 +19,7 @@ public struct BookMarkGroupResponseDTO: Decodable {
     
     
     func toDomain() -> BookMarkGroupEntity {
-       BookMarkGroupEntity(id: id, name: name, bookmarks: [])
+        BookMarkGroupEntity(id: id, name: name, bookmarks: bookmarks.map{$0.toDomain()})
     }
 
 }
