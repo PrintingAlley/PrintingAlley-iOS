@@ -30,7 +30,9 @@ final class SearchViewController: UIViewController, ContainerViewType {
     
     var contentView: UIView! = UIView()
     
-    let searchBar = SearchBar()
+    lazy var searchBar = SearchBar().then {
+        $0.delegate = self
+    }
     
     public lazy var printingTableView = UITableView().then {
         $0.backgroundColor = .setColor(.sub(.white))
@@ -117,5 +119,11 @@ extension SearchViewController {
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         106
+    }
+}
+
+extension SearchViewController: SearchBarDelegate {
+    func press() {
+        input.textString.accept("")
     }
 }
