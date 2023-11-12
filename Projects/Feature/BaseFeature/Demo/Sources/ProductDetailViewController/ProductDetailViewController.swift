@@ -86,6 +86,8 @@ extension ProductDetailViewController {
     @objc func moveBack() {
         self.navigationController?.popViewController(animated: true)
     }
+    
+
 }
 
 

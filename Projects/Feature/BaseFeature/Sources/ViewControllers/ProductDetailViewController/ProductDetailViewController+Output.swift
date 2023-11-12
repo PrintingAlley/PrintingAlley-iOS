@@ -48,7 +48,6 @@ extension ProductDetailViewController {
                 
                 cell.update(model: model, index: indexPath)
                 cell.selectionStyle = .none
-                cell.delegate = self
                 return cell
             }
         

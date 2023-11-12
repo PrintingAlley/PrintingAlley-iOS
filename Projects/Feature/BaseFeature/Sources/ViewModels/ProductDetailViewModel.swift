@@ -18,6 +18,8 @@ public struct ProductHeaderInfo {
     let id: Int
     let title: String
     let subtitle: String
+    let printShop: String
+    let designer: String
     let images: [String]
 }
 
@@ -52,7 +54,7 @@ final class ProductDetailViewModel: ViewModelType {
     
     struct Output {
         let showToast: PublishSubject<BaseEntity> = .init()
-        let headerInfo: BehaviorRelay<ProductHeaderInfo> = .init(value:  ProductHeaderInfo(id: 0, title: "", subtitle: "", images: []))
+        let headerInfo: BehaviorRelay<ProductHeaderInfo> = .init(value:  ProductHeaderInfo(id: 0, title: "", subtitle: "",printShop: "", designer: "",images: []))
         let dataInfo: BehaviorRelay<ProductDataInfo> = .init(value: ProductDataInfo(dataSoruce: []))
     }
     
@@ -98,9 +100,8 @@ final class ProductDetailViewModel: ViewModelType {
                 
                 self.isSaved = dataSource.isBookmarked
                 
-                
-                output.headerInfo.accept(ProductHeaderInfo(id: dataSource.id, title: dataSource.name, subtitle: dataSource.category.name , images: dataSource.images))
-                output.dataInfo.accept(ProductDataInfo(dataSoruce: [dataSource.printShop.name, dataSource.designer,dataSource.size, dataSource.paper, dataSource.tags.map{$0.name}.joined(separator: ", "), dataSource.afterProcess]))
+                output.headerInfo.accept(ProductHeaderInfo(id: dataSource.id, title: dataSource.name, subtitle: dataSource.category.name,printShop: dataSource.printShop.name,designer:dataSource.designer , images: dataSource.images))
+                output.dataInfo.accept(ProductDataInfo(dataSoruce: [dataSource.size, dataSource.paper, dataSource.tags.map{$0.name}.joined(separator: ", "), dataSource.afterProcess]))
             })
             .disposed(by: disposeBag)
         

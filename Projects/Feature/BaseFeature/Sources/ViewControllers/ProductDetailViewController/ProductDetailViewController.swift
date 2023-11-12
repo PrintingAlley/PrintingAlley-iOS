@@ -31,6 +31,12 @@ class ProductDetailViewController: UIViewController {
         $0.addTarget(self, action: #selector(moveBack), for: .touchUpInside)
     }
     
+    lazy var homeButton: UIButton = UIButton().then {
+        $0.setImage(DesignSystemAsset.Icon.whiteHome.image, for: .normal)
+        $0.imageView?.contentMode = .scaleAspectFill
+        $0.addTarget(self, action: #selector(pop), for: .touchUpInside)
+    }
+    
     var viewModel: ProductDetailViewModel!
     var input: ProductDetailViewModel.Input = .init()
     lazy var output = viewModel.transform(input: input)
@@ -76,7 +82,7 @@ class ProductDetailViewController: UIViewController {
 
 extension ProductDetailViewController {
     func addSubviews() {
-        self.view.addSubviews(tableView,backButton)
+        self.view.addSubviews(tableView,backButton,homeButton)
     }
     
     func makeConstraints() {
@@ -85,16 +91,27 @@ extension ProductDetailViewController {
             $0.left.right.bottom.equalToSuperview()
         }
         
+        
         self.backButton.snp.makeConstraints {
             $0.width.height.equalTo(24)
             $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(17)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(23)
+        }
+        
+        self.homeButton.snp.makeConstraints {
+            $0.width.height.equalTo(34)
+            $0.right.equalToSuperview().inset(HORIZON_MARGIN1())
+            $0.centerY.equalTo(backButton)
         }
     }
     
     
     @objc func moveBack() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func pop() {
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func bindViewModel() {
