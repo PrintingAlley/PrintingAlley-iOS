@@ -118,6 +118,10 @@ public class AlertViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("\(Self.self) Deinit ❌")
+    }
+    
    public override func viewDidLoad() {
         super.viewDidLoad()
         addSubViews()

@@ -29,7 +29,7 @@ extension MyPageContentViewController: UITableViewDelegate {
             showMail()
             
         case .service:
-            let vc = webViewFactory.makeView(title: "서비스 이용약관", url: "")
+            let vc = webViewFactory.makeView(title: "서비스 이용약관", url: "\(WEB_URL())/policy/service")
             
             vc.hidesBottomBarWhenPushed = true
             

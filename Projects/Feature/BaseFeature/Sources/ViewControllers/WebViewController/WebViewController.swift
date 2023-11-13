@@ -23,16 +23,19 @@ class WebViewController: UIViewController {
     
     lazy var  contentController: WKUserContentController = WKUserContentController()
     
+    let pagePreferences: WKWebpagePreferences = WKWebpagePreferences().then {
+        $0.allowsContentJavaScript = true
+        
+    }
+    
     lazy var configuration = WKWebViewConfiguration().then{
         /** preference, contentController 설정 */
         $0.preferences = preferences
+        $0.defaultWebpagePreferences = pagePreferences
         $0.userContentController = contentController
     }
     
-    let pagePreferences: WKWebpagePreferences = WKWebpagePreferences().then {
-        $0.allowsContentJavaScript = true
-    }
-    
+
     
     lazy var backgroundView: UIView = UIView().then {
         $0.backgroundColor = .white
@@ -51,6 +54,7 @@ class WebViewController: UIViewController {
 
     lazy var webView: WKWebView! = WKWebView(frame: .zero, configuration: configuration).then {
         $0.backgroundColor = .white
+    
     }
     
     var naviTitle: String!
@@ -130,14 +134,15 @@ extension WebViewController {
     
     func setWebViewURLRequest() {
         
-        var componets = URLComponents(string: self.url)!
-        
-        let request = URLRequest(url: componets.url!)
-        
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        
-        webView.load(request) // 이동
+        if let url = URL(string: self.url) {
+            let request = URLRequest(url: url)
+            webView.uiDelegate = self
+            webView.navigationDelegate = self
+            webView.load(request)
+        } else {
+            // URL 생성 실패 처리
+            print("Invalid URL")
+        }
         
         
     }
@@ -157,6 +162,14 @@ extension WebViewController: WKNavigationDelegate {
         
         decisionHandler(.allow)
     }
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+          DEBUG_LOG("페이지 로딩 시작")
+      }
+
+      func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+          DEBUG_LOG("페이지 로딩 완료")
+      }
 }
 
 extension WebViewController: WKScriptMessageHandler {

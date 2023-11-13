@@ -84,3 +84,7 @@ public func NAVER_MAP_CLIENT_ID() -> String {
 public func APP_ID() -> String {
     CONFIG()["APP_ID"] as? String ?? ""
 }
+
+public func WEB_URL() -> String {
+    CONFIG()["WEB_URL"] as? String ?? ""
+}
