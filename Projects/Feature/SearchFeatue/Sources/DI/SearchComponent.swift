@@ -10,13 +10,15 @@ import NeedleFoundation
 import UIKit
 import SearchFeatueInterface
 import PrintShopDomainInterface
+import BaseFeatureInterface
 
 public protocol SearchDependency: Dependency {
     var printShopDomainFactory: any PrintShopDomainFactory { get }
+    var printShopDetailFactory: any PrintShopDetailFactory { get }
 }
 
 public final class SearchComponent: Component<SearchDependency>, SearchFactory {
     public func makeView() -> UIViewController {
-        SearchViewController(viewModel: SearchViewModel(fetchPrintShopListUseCase: dependency.printShopDomainFactory.fetchPrintShopListUseCase))
+        SearchViewController(printShopDetailFactory: dependency.printShopDetailFactory, viewModel: SearchViewModel(fetchPrintShopListUseCase: dependency.printShopDomainFactory.fetchPrintShopListUseCase))
     }
 }
