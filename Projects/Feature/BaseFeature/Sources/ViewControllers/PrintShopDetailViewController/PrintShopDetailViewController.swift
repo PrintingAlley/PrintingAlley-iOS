@@ -1,6 +1,6 @@
 //
 //  PrintShopDetailViewController.swift
-//  BaseFeature
+//  BaseFeatureDemo
 //
 //  Created by yongbeomkwak on 10/29/23.
 //  Copyright © 2023 com. All rights reserved.
