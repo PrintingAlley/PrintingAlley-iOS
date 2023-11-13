@@ -11,6 +11,7 @@ import SnapKit
 import Then
 import UtilityModule
 import DesignSystem
+import RxSwift
 
 class PrintShopDetailViewController: UIViewController {
 
@@ -31,8 +32,15 @@ class PrintShopDetailViewController: UIViewController {
     
     private lazy var navigationView = UIView()
     
-    private lazy var backButton = UIButton().then {
-        $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
+    lazy var backButton: UIButton = UIButton().then {
+        $0.setImage(DesignSystemAsset.Icon.backWhite.image, for: .normal)
+        $0.addTarget(self, action: #selector(moveBack), for: .touchUpInside)
+    }
+    
+    lazy var homeButton: UIButton = UIButton().then {
+        $0.setImage(DesignSystemAsset.Icon.whiteHome.image, for: .normal)
+        $0.imageView?.contentMode = .scaleAspectFill
+        $0.addTarget(self, action: #selector(pop), for: .touchUpInside)
     }
     
     private lazy var titleView = UIView().then {
@@ -71,6 +79,8 @@ class PrintShopDetailViewController: UIViewController {
     let tmp: [String] = ["tmpPrintShop", "tmpPrintShop", "tmpPrintShop"]
     
     private let viewModel: PrintShopDetailViewModel!
+    
+    let disposeBag = DisposeBag()
         
     init(viewModel: PrintShopDetailViewModel) {
         self.viewModel = viewModel
@@ -90,6 +100,7 @@ class PrintShopDetailViewController: UIViewController {
         configureCommonUI()
         addSubviews()
         makeConstraints()
+        bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,11 +109,12 @@ class PrintShopDetailViewController: UIViewController {
     }
 }
 
+// MARK: - UI
 extension PrintShopDetailViewController {
     func addSubviews() {
         view.addSubviews(scrollView)
         scrollView.addSubviews(imageCollectionView, navigationView, titleView, separateLine, controllerView)
-        navigationView.addSubview(backButton)
+        navigationView.addSubviews(backButton, homeButton)
         titleView.addSubviews(titleLabel, introduction, callButton)
         controllerView.addSubviews(pageViewController.view)
         
@@ -116,15 +128,21 @@ extension PrintShopDetailViewController {
         }
 
         navigationView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(12)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(12)
             $0.height.equalTo(32)
-            $0.left.right.equalToSuperview()
+            $0.left.right.equalTo(view.safeAreaLayoutGuide)
         }
         
         backButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.width.height.equalTo(24)
+        }
+        
+        homeButton.snp.makeConstraints {
+            $0.width.height.equalTo(34)
+            $0.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
+            $0.centerY.equalTo(backButton)
         }
         
         imageCollectionView.snp.makeConstraints {
@@ -172,6 +190,21 @@ extension PrintShopDetailViewController {
         }
     }
 }
+
+extension PrintShopDetailViewController {
+    func bindViewModel() {
+        
+    }
+    
+    @objc func moveBack() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func pop() {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+}
+
 extension PrintShopDetailViewController: UICollectionViewDelegate {
     
 }
