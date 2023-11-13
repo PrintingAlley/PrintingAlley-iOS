@@ -19,4 +19,25 @@ extension SearchViewController {
             .bind(to: self.input.textString)
             .disposed(by: disposeBag)
     }
+    
+    func bindItemSelected() {
+        printingTableView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        printingTableView
+            .rx
+            .itemSelected
+            .map( { $0.row })
+            .withLatestFrom(output.dataSource) { ($0, $1)}
+            .subscribe(onNext: { [weak self] (index, dataSource) in
+                guard let self else { return }
+                
+                let vc = self.printShopDetailFactory.makeView(id: dataSource[index].id)
+                
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
 }
