@@ -30,6 +30,7 @@ class MyPageHeaderView: UIView {
         $0.dataSource = self
         $0.delegate = self
         $0.register(MyPageCollectionViewCell.self, forCellWithReuseIdentifier: MyPageCollectionViewCell.identifer)
+        $0.backgroundColor = .clear
 
     }
     
