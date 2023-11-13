@@ -52,6 +52,7 @@ class BookMarkDetailViewController: UIViewController {
     lazy var gridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.showsHorizontalScrollIndicator = false
         $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
+        $0.backgroundColor = .clear
     }
     
     
