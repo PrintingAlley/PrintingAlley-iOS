@@ -14,9 +14,7 @@ import DesignSystem
 
 class PrintShopDetailViewController: UIViewController {
 
-    private let scrollView = UIScrollView().then {
-        $0.backgroundColor = .lightGray
-    }
+    private let scrollView = UIScrollView()
     
     private lazy var layout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -57,11 +55,13 @@ class PrintShopDetailViewController: UIViewController {
         $0.backgroundColor = .setColor(.grey(.grey50))
     }
     
-    private let controllerView = UIView()
+    private let controllerView = UIView().then {
+        $0.backgroundColor = .brown
+    }
     
     lazy var pageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보", "작업"])).then {
 
-        let vc1 = UIViewController()
+        let vc1 = PrintShopInfoViewController() // TODO: - 팩토리로 빼기
         let vc2 = UIViewController()
         
         vc2.view.backgroundColor = .green

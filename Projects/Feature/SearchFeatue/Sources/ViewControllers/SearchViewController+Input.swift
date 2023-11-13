@@ -21,15 +21,12 @@ extension SearchViewController {
     }
     
     func bindItemSelected() {
-        printingTableView.rx
-            .setDelegate(self)
-            .disposed(by: disposeBag)
         
         printingTableView
             .rx
             .itemSelected
             .map( { $0.row })
-            .withLatestFrom(output.dataSource) { ($0, $1)}
+            .withLatestFrom(output.dataSource) { ($0, $1) }
             .subscribe(onNext: { [weak self] (index, dataSource) in
                 guard let self else { return }
                 

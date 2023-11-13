@@ -33,7 +33,6 @@ class CategorySearchViewController: UIViewController {
 
     lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
-        
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
     }
@@ -188,7 +187,6 @@ extension CategorySearchViewController {
         bindItemSelected()
         bindGridView()
         input.pageID.accept(1)
-
     }
     
     func bindBackEvent() {
