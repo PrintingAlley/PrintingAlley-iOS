@@ -57,9 +57,9 @@ class PrintShopDetailViewController: UIViewController {
         $0.backgroundColor = .setColor(.grey(.grey50))
     }
     
-    private let controllerView: UIView = UIView()
+    private let controllerView = UIView()
     
-    lazy var pageViewController: AlleyPageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보", "라뷰"])).then {
+    lazy var pageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보", "작업"])).then {
 
         let vc1 = UIViewController()
         let vc2 = UIViewController()

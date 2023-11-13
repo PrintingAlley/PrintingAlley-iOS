@@ -15,7 +15,6 @@ class PageTitleCollectionViewCell: UICollectionViewCell {
     
     lazy var label: AlleyLabel = AlleyLabel()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
@@ -35,18 +34,13 @@ extension PageTitleCollectionViewCell {
     
     func makeConstraints() {
         label.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview().inset(15)
+            $0.verticalEdges.equalToSuperview().inset(16)
             $0.horizontalEdges.equalToSuperview()
         }
         
     }
     
     func update(title: String, isSelectedIndex: Bool) {
-        
-        
-        isSelectedIndex ?  label.setTitle(title: title, textColor: .sub(.black), font: .body1,alignment: .center)  :   label.setTitle(title: title, textColor: .grey(.grey500), font: .body1,alignment: .center)
-        
+        isSelectedIndex ? label.setTitle(title: title, textColor: .sub(.black), font: .body1, alignment: .center) : label.setTitle(title: title, textColor: .grey(.grey500), font: .body1, alignment: .center)
     }
-    
-
 }
