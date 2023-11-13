@@ -330,6 +330,17 @@ private class EditModalDependencye914ce2425a804be0d58Provider: EditModalDependen
 private func factory05e011369db72b170e1ef47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return EditModalDependencye914ce2425a804be0d58Provider(appComponent: parent1(component) as! AppComponent)
 }
+private class PrintShopDetailDependency796e358411338a10d23bProvider: PrintShopDetailDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->PrintShopDetailComponent
+private func factory2be1884dea2b5d392babe3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return PrintShopDetailDependency796e358411338a10d23bProvider()
+}
 private class ProductDetailDependency1e6e934c90b49cbc48b5Provider: ProductDetailDependency {
     var bookMarkBottomSheetFactory: any BookMarkBottomSheetFactory {
         return appComponent.bookMarkBottomSheetFactory
@@ -563,6 +574,11 @@ extension EditModalComponent: Registration {
         keyPathToName[\EditModalDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
     }
 }
+extension PrintShopDetailComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension WebViewComponent: Registration {
     public func registerItems() {
 
@@ -646,6 +662,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->AlleyPageComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->BookMarkBottomSheetComponent", factory04ad8419cbe014f877eaf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->EditModalComponent", factory05e011369db72b170e1ef47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->PrintShopDetailComponent", factory2be1884dea2b5d392babe3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->WebViewComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->ProductDetailComponent", factorydd8ac0cf9df6ffed7cb6f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)

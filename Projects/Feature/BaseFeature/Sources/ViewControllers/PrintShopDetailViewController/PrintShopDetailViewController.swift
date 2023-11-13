@@ -69,8 +69,11 @@ class PrintShopDetailViewController: UIViewController {
     }
 
     let tmp: [String] = ["tmpPrintShop", "tmpPrintShop", "tmpPrintShop"]
+    
+    private let viewModel: PrintShopDetailViewModel!
         
-    init() {
+    init(viewModel: PrintShopDetailViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     

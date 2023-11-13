@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 import UIKit
 
-
 extension AlleyPageViewController {
     
     func bindConstraints(output: AlleyPageViewModel.Output) {
@@ -21,22 +20,15 @@ extension AlleyPageViewController {
                 
                 guard let self else {return}
                 
-                self.indicaatorBar.snp.updateConstraints {
+                self.indicatorBar.snp.updateConstraints {
                     $0.left.equalToSuperview().offset(newConstraint)
                 }
                 
                 UIView.animate(withDuration: 0.3, delay: .zero, options: .curveEaseOut) {
                     
-                    
                     self.view.layoutIfNeeded()
                 }
-                
-               
-    
             })
             .disposed(by: disposeBag)
-        
-        
     }
-    
 }
