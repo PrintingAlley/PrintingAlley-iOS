@@ -49,7 +49,9 @@ class WebViewController: UIViewController {
         $0.addTarget(self, action: #selector(back), for: .touchUpInside)
     }
 
-    lazy var webView: WKWebView! = WKWebView(frame: .zero, configuration: configuration)
+    lazy var webView: WKWebView! = WKWebView(frame: .zero, configuration: configuration).then {
+        $0.backgroundColor = .white
+    }
     
     var naviTitle: String!
     var url: String!
@@ -137,12 +139,6 @@ extension WebViewController {
         
         webView.load(request) // 이동
         
-        webView.alpha = 0
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
-            self.webView.alpha = 1
-        }) { _ in
-            
-        }
         
     }
     
