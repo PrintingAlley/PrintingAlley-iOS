@@ -15,22 +15,25 @@ import MessageUI // import For MailSystem
 extension MyPageContentViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let vc = AlertViewController(title:"준비중입니다.", content: "조금만 기다려주세요!", type:  .onlyConfirm)
+        let alertVc = AlertViewController(title:"준비중입니다.", content: "조금만 기다려주세요!", type:  .onlyConfirm)
         
-        vc.modalPresentationStyle = .overFullScreen
+        alertVc.modalPresentationStyle = .overFullScreen
         
         switch viewModel.categories[indexPath.row] {
             //TODO: 추후 해당 화면 이동 코드
         case .pushAlarmSetting:
-            self.present(vc, animated: false)
+            self.present(alertVc, animated: false)
         case .faq:
-            self.present(vc, animated: false)
+            self.present(alertVc, animated: false)
         case .request:
             showMail()
             
         case .service:
-            self.present(vc, animated: false)
+            let vc = webViewFactory.makeView(title: "서비스 이용약관", url: "\(WEB_URL())/policy/service")
             
+            vc.hidesBottomBarWhenPushed = true
+            
+            self.navigationController?.pushViewController(vc, animated: true)
             
         }
     }

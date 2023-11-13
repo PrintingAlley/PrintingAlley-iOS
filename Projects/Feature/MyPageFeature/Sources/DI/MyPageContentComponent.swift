@@ -20,10 +20,11 @@ public protocol MyPageContentDependency: Dependency {
     var userDomainFactory: any UserDomainFactory { get }
     var editModalFactory: any EditModalFactory { get }
     var authDomainFactory: any AuthDomainFactory { get }
+    var webViewFactory: any WebViewFactory { get }
 }
 
 public final class MyPageContentComponent: Component<MyPageContentDependency>, MyPageContentFactory {
     public func makeView() -> UIViewController {
-        MyPageContentViewController(bookMarkFactory: dependency.bookMarkFactory, editModalFactory: dependency.editModalFactory,viewModel: MyPageContentViewModel(fetchUserInfoUseCase: dependency.userDomainFactory.fetchUserInfoUseCase, logOutUseCase: dependency.authDomainFactory.logOutUseCase, withDrawUseCase: dependency.authDomainFactory.withDrawUseCase))
+        MyPageContentViewController(bookMarkFactory: dependency.bookMarkFactory, editModalFactory: dependency.editModalFactory, webViewFactory:dependency.webViewFactory , viewModel: MyPageContentViewModel(fetchUserInfoUseCase: dependency.userDomainFactory.fetchUserInfoUseCase, logOutUseCase: dependency.authDomainFactory.logOutUseCase, withDrawUseCase: dependency.authDomainFactory.withDrawUseCase))
     }
 }

@@ -32,6 +32,7 @@ class MyPageCollectionViewCell: UICollectionViewCell {
     
     override public init(frame: CGRect) {
         super.init(frame: .zero)
+        self.contentView.backgroundColor = .clear
         self.addSubviews(imageView, label)
         makeConstraints()
  

@@ -81,6 +81,7 @@ class BookMarkViewController: UIViewController {
         $0.register(BookMarkCollectionViewCell.self, forCellWithReuseIdentifier: BookMarkCollectionViewCell.identifer)
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
+        $0.backgroundColor = .clear
         
     }
     
