@@ -49,6 +49,9 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
         
         for item in 0..<collectionView.numberOfItems(inSection: 0) { // 전체 item 개수를 돌면서, 캐시에 아이템 정보 저장
             let indexPath = IndexPath(item: item, section: 0)
+            if indexPath.row == 0 {
+                contentHeight = 0
+            }
             
             // 동적 높이 계산
             let photoHeight = delegate?.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath) ?? 200
@@ -63,7 +66,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
                     attributes.frame = insetFrame
                     cache.append(attributes)
             
-            contentHeight = frame.maxY
+            contentHeight = max(frame.maxY, contentHeight)
             
             yOffset[column] += height
             column = column < (numberOfColumns - 1) ? (column + 1) : 0
