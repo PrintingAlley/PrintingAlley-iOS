@@ -10,11 +10,9 @@ import UIKit
 import SnapKit
 import Then
 import UtilityModule
-import BaseDomainInterface
+import BaseDomainInterface // entity용
 
 final class PrintShopInfoViewController: UIViewController {
-    
-    let tmp = PrintShopEntity(id: 1, name: "인쇄소잉", address: "강남구", phone: "핸드폰번호", email: "이메일@이메일", homepage: "홈페이지유", representative: "하이루", introduction: "소개", logoImage: "이미지", backgroundImage: "이미지", latitude: "", longitude: "", products: [])
 
     private lazy var tableView = UITableView().then {
         $0.isScrollEnabled = false
@@ -24,15 +22,10 @@ final class PrintShopInfoViewController: UIViewController {
         $0.register(PrintShopInfoTableViewCell.self, forCellReuseIdentifier: PrintShopInfoTableViewCell.identifier)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .red
-        configureCommonUI()
-        addSubviews()
-        makeConstraints()
-    }
+    let viewModel: PrintShopInfoViewModel!
     
-    init() {
+    init(viewModel: PrintShopInfoViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         DEBUG_LOG("\(Self.self) Init ✅ ")
     }
@@ -43,6 +36,14 @@ final class PrintShopInfoViewController: UIViewController {
     
     deinit {
         DEBUG_LOG("\(Self.self) Deinit ❌")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .red
+        configureCommonUI()
+        addSubviews()
+        makeConstraints()
     }
 }
 
@@ -74,7 +75,7 @@ extension PrintShopInfoViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PrintShopInfoTableViewCell.identifier, for: indexPath) as? PrintShopInfoTableViewCell else {
             return UITableViewCell()
         }
-        cell.update(model: tmp, index: indexPath.row) // key: value 로 줘야하나?
+        cell.update(model: viewModel.printShop, index: indexPath.row) // key: value 로 줘야하나?
         return cell
     }
 

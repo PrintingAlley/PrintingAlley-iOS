@@ -12,8 +12,15 @@ import Then
 import UtilityModule
 import DesignSystem
 import RxSwift
+import BaseDomainInterface
 
 class PrintShopDetailViewController: UIViewController {
+    
+    let printShopTmp = PrintShopEntity(id: 1, name: "인쇄소잉", address: "강남구", phone: "핸드폰번호", email: "이메일@이메일", homepage: "홈페이지유", representative: "하이루", introduction: "소개", logoImage: "이미지", backgroundImage: "이미지", latitude: "", longitude: "", products: [
+        ProductEntity(id: 1, name: "안녕", size: "", paper: "", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: ""),
+        ProductEntity(id: 1, name: "안녕", size: "", paper: "", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: ""),
+        ProductEntity(id: 1, name: "안녕", size: "", paper: "", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: "")
+    ])
 
     private let scrollView = UIScrollView()
     
@@ -22,13 +29,11 @@ class PrintShopDetailViewController: UIViewController {
         $0.minimumLineSpacing = .zero
     }
 
-    private lazy var imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+    private lazy var imageCollectionView = makeCollectionView(layout: layout, scrollDirection: .horizontal, delegate: self, dataSource: self).then {
         $0.backgroundColor = .setColor(.sub(.white))
-        $0.dataSource = self
-        $0.delegate = self
         $0.isPagingEnabled = true // 컨텐츠 만큼 스크롤
         $0.register(PrintShopPhotosCollectionViewCell.self, forCellWithReuseIdentifier: PrintShopPhotosCollectionViewCell.identifier)
-    } // TODO: makeCollectionView 함수로 변경
+    }
     
     private lazy var navigationView = UIView()
     
@@ -69,8 +74,8 @@ class PrintShopDetailViewController: UIViewController {
     
     lazy var pageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보", "작업"])).then {
 
-        let vc1 = PrintShopInfoViewController() // TODO: - 팩토리로 빼기
-        let vc2 = UIViewController()
+        let vc1 = PrintShopInfoViewController(viewModel: PrintShopInfoViewModel(printShop: printShopTmp)) // TODO: - 팩토리로 빼기
+        let vc2 = PrintShopProudctsViewController(viewModel: PrintShopProudctsViewModel(products: printShopTmp.products))
 
         $0.setChildren([vc1, vc2])
     }
