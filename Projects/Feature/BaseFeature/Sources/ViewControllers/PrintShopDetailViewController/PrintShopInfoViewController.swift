@@ -75,7 +75,7 @@ extension PrintShopInfoViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PrintShopInfoTableViewCell.identifier, for: indexPath) as? PrintShopInfoTableViewCell else {
             return UITableViewCell()
         }
-        cell.update(model: viewModel.printShop, index: indexPath.row) // key: value 로 줘야하나?
+        cell.update(model: viewModel.printShop, index: indexPath.row)
         return cell
     }
 
