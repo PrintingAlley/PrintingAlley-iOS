@@ -10,8 +10,11 @@ import UIKit
 import SnapKit
 import Then
 import UtilityModule
+import BaseDomainInterface
 
 final class PrintShopInfoViewController: UIViewController {
+    
+    let tmp = PrintShopEntity(id: 1, name: "인쇄소잉", address: "강남구", phone: "핸드폰번호", email: "이메일@이메일", homepage: "홈페이지유", representative: "하이루", introduction: "소개", logoImage: "이미지", backgroundImage: "이미지", latitude: "", longitude: "", products: [])
 
     private lazy var tableView = UITableView().then {
         $0.backgroundColor = .white
@@ -26,6 +29,19 @@ final class PrintShopInfoViewController: UIViewController {
         configureCommonUI()
         addSubviews()
         makeConstraints()
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        DEBUG_LOG("\(Self.self) Init ✅ ")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
     }
 }
 
@@ -50,14 +66,14 @@ extension PrintShopInfoViewController: UITableViewDelegate {
 
 extension PrintShopInfoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        6
+        5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PrintShopInfoTableViewCell.identifier, for: indexPath) as? PrintShopInfoTableViewCell else {
             return UITableViewCell()
         }
-        // cell update
+        cell.update(model: tmp, index: indexPath.row) // key: value 로 줘야하나?
         return cell
     }
 

@@ -11,6 +11,8 @@ import SnapKit
 import Then
 import DesignSystem
 import UtilityModule
+import BaseDomainInterface
+
 // TODO: - 폴더 이동하기
 class PrintShopInfoTableViewCell: UITableViewCell {
     
@@ -60,6 +62,35 @@ extension PrintShopInfoTableViewCell {
             $0.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.height.equalTo(1)
+        }
+    }
+}
+
+extension PrintShopInfoTableViewCell {
+    public func update(model: PrintShopEntity, index: Int) {
+        switch index {
+        case 0:
+            iconImage.image = DesignSystemAsset.Icon.locationGrey.image
+            label.text = model.address
+
+        case 1:
+            iconImage.image = DesignSystemAsset.Icon.callGrey.image
+            label.text = model.phone
+
+        case 2:
+            iconImage.image = DesignSystemAsset.Icon.mailGrey.image
+            label.text = model.email
+
+        case 3:
+            iconImage.image = DesignSystemAsset.Icon.clockGrey.image
+            label.text = model.email // 영업 시간
+
+        case 4:
+            iconImage.image = DesignSystemAsset.Icon.dotTextBubble.image
+            label.text = model.introduction
+
+        default:
+            return
         }
     }
 }

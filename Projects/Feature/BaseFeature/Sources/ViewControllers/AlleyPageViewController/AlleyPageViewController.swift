@@ -49,8 +49,13 @@ class AlleyPageViewController: UIViewController {
     }
     
     init(viewModel: AlleyPageViewModel) {
+        DEBUG_LOG("\(Self.self) Init ✅ ")
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        DEBUG_LOG("\(Self.self) Deinit ❌")
     }
     
     required init?(coder: NSCoder) {

@@ -71,8 +71,7 @@ class PrintShopDetailViewController: UIViewController {
 
         let vc1 = PrintShopInfoViewController() // TODO: - 팩토리로 빼기
         let vc2 = UIViewController()
-        
-        vc2.view.backgroundColor = .green
+
         $0.setChildren([vc1, vc2])
     }
 
@@ -109,7 +108,7 @@ class PrintShopDetailViewController: UIViewController {
     }
 }
 
-// MARK: - UI
+// MARK: - UI 함수들
 extension PrintShopDetailViewController {
     func addSubviews() {
         view.addSubviews(scrollView)
@@ -182,6 +181,7 @@ extension PrintShopDetailViewController {
         controllerView.snp.makeConstraints {
             $0.top.equalTo(titleView.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(400)
             $0.bottom.equalToSuperview()
         }
         
@@ -205,10 +205,7 @@ extension PrintShopDetailViewController {
     }
 }
 
-extension PrintShopDetailViewController: UICollectionViewDelegate {
-    
-}
-
+// MARK: - Collectionview Delegate
 extension PrintShopDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: APP_WIDTH(), height: 251)
