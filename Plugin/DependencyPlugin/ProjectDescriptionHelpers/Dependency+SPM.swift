@@ -25,6 +25,7 @@ public extension TargetDependency.SPM {
     static let RxKeyBoard = TargetDependency.external(name: "RxKeyboard")
     static let FloatingPanel = TargetDependency.external(name: "FloatingPanel")
     static let SwiftEntryKit = TargetDependency.external(name: "SwiftEntryKit")
+    static let SVGKit = TargetDependency.external(name: "SVGKit")
     
 }
 
