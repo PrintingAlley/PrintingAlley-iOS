@@ -21,6 +21,7 @@ public class PrintShopProudctsViewController: UIViewController {
     }
     
     private lazy var productsGridView = UICollectionView(frame: .zero, collectionViewLayout: gridLayout).then {
+        $0.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         $0.dataSource = self
         $0.showsHorizontalScrollIndicator = false
         $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
@@ -49,8 +50,7 @@ extension PrintShopProudctsViewController {
     
     private func makeConstraints() {
         productsGridView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(32)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
 }

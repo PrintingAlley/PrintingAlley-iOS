@@ -36,11 +36,11 @@ class AlleyPageViewController: UIViewController {
     }
 
     lazy var indicatorBar: UIView = UIView().then {
-        $0.backgroundColor = .setColor(.sub(.black))
+        $0.backgroundColor = .setColor(.grey(.grey800))
     }
     
     lazy var baseLine: UIView = UIView().then {
-        $0.backgroundColor = .black.withAlphaComponent(0.1)
+        $0.backgroundColor = .setColor(.grey(.grey100))
     }
     
     lazy var pageViewController: UIPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil).then {
@@ -94,8 +94,8 @@ extension AlleyPageViewController {
         
         baseLine.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(1)
-            $0.top.equalTo(collectionView.snp.bottom)
+            $0.height.equalTo(0.8)
+            $0.centerY.equalTo(collectionView.snp.bottom)
         }
         
         indicatorBar.snp.makeConstraints {

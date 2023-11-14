@@ -15,6 +15,7 @@ import BaseDomainInterface // entity용
 final class PrintShopInfoViewController: UIViewController {
 
     private lazy var tableView = UITableView().then {
+        $0.separatorStyle = .none
         $0.backgroundColor = .white
         $0.delegate = self
         $0.dataSource = self
@@ -60,8 +61,8 @@ extension PrintShopInfoViewController {
 }
 
 extension PrintShopInfoViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        40
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        41
     }
 }
 

@@ -48,7 +48,10 @@ class PrintShopDetailViewController: UIViewController {
         $0.addTarget(self, action: #selector(pop), for: .touchUpInside)
     }
 
-    lazy var titleLabel = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .header3)
+    lazy var titleLabel = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .header3).then {
+        $0.lineBreakMode = .byTruncatingTail
+        $0.numberOfLines = 1
+    }
 
     lazy var introduction = AlleyLabel("인쇄", textColor: .grey(.grey500), font: .subtitle3) // TODO: - 색상 변경
 
@@ -57,7 +60,7 @@ class PrintShopDetailViewController: UIViewController {
         $0.setTitle("전화", for: .normal)
         $0.setTitleColor(.black, for: .normal)
         $0.titleLabel?.font = .setFont(.body2)
-        $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 3, bottom: 4, right: 3)
+        $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 3, bottom: 24, right: 3)
         $0.alignTextBelow()
     }
     
@@ -148,24 +151,25 @@ extension PrintShopDetailViewController {
         imageCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(251)
+            $0.height.equalTo(209)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(imageCollectionView.snp.bottom).offset(24)
+            $0.top.equalTo(imageCollectionView.snp.bottom).offset(18)
             $0.leading.equalToSuperview().inset(HORIZON_MARGIN1())
+            $0.width.lessThanOrEqualTo(281)
         }
         
         introduction.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(4)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(3)
             $0.leading.equalTo(titleLabel)
         }
         
         callButton.snp.makeConstraints {
-            $0.bottom.equalTo(introduction)
+            $0.top.equalTo(imageCollectionView.snp.bottom).offset(20)
             $0.width.equalTo(30)
-            $0.height.equalTo(48)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
+            $0.height.equalTo(57)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(32)
         }
         
         separateLine.snp.makeConstraints {
@@ -190,6 +194,7 @@ extension PrintShopDetailViewController {
 
 extension PrintShopDetailViewController {
     func bindViewModel() {
+        bindButton()
     }
     
     @objc func moveBack() {
@@ -202,6 +207,7 @@ extension PrintShopDetailViewController {
 }
 
 // MARK: - Collectionview Delegate
+// TODO: - 딜리게이트 분리
 extension PrintShopDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: APP_WIDTH(), height: 251)

@@ -19,7 +19,7 @@ final class PrintShopInfoTableViewCell: UITableViewCell {
     
     private let iconImage = UIImageView().then {
         $0.image = DesignSystemAsset.Icon.bell.image
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleToFill
     }
     
     private let label = AlleyLabel("텍스트", textColor: .sub(.black), font: .body2)
@@ -61,17 +61,20 @@ extension PrintShopInfoTableViewCell {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(iconImage.snp.trailing).offset(10)
             $0.width.lessThanOrEqualTo(263)
+            $0.height.equalTo(22)
         }
         
         copyButton.snp.makeConstraints {
             $0.leading.equalTo(label.snp.trailing).offset(8)
             $0.centerY.equalToSuperview()
+            $0.width.equalTo(53)
+            $0.height.equalTo(24)
         }
         
         separateLine.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
-            $0.height.equalTo(1)
+            $0.height.equalTo(0.8)
         }
     }
 }
