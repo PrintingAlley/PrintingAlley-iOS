@@ -22,7 +22,6 @@ public class PrintShopProudctsViewController: UIViewController {
     
     private lazy var productsGridView = UICollectionView(frame: .zero, collectionViewLayout: gridLayout).then {
         $0.dataSource = self
-        $0.isScrollEnabled = false
         $0.showsHorizontalScrollIndicator = false
         $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
     }

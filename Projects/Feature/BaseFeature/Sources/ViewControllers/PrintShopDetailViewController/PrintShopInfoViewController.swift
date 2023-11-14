@@ -15,7 +15,6 @@ import BaseDomainInterface // entity용
 final class PrintShopInfoViewController: UIViewController {
 
     private lazy var tableView = UITableView().then {
-        $0.isScrollEnabled = false
         $0.backgroundColor = .white
         $0.delegate = self
         $0.dataSource = self

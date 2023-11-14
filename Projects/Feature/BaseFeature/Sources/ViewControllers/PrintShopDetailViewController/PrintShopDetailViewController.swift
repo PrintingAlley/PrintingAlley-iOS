@@ -18,8 +18,8 @@ class PrintShopDetailViewController: UIViewController {
     
     let printShopTmp = PrintShopEntity(id: 1, name: "인쇄소잉", address: "강남구", phone: "핸드폰번호", email: "이메일@이메일", homepage: "홈페이지유", representative: "하이루", introduction: "소개", logoImage: "이미지", backgroundImage: "이미지", latitude: "", longitude: "", products: [
         ProductEntity(id: 1, name: "안녕", size: "", paper: "", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "https://printingstreets.uk/cb59424b-3352-4750-90e0-84131f43718f_28afe2c0-6042-429a-8289-423e4b4a7800_4c7fdc9ad4ec035f858a142d2177531e.png?width=564&height=564", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: ""),
-        ProductEntity(id: 1, name: "안녕", size: "", paper: "", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "https://printingstreets.uk/cb59424b-3352-4750-90e0-84131f43718f_28afe2c0-6042-429a-8289-423e4b4a7800_4c7fdc9ad4ec035f858a142d2177531e.png?width=564&height=564", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: ""),
-        ProductEntity(id: 1, name: "안녕", size: "", paper: "", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "https://printingstreets.uk/cb59424b-3352-4750-90e0-84131f43718f_28afe2c0-6042-429a-8289-423e4b4a7800_4c7fdc9ad4ec035f858a142d2177531e.png?width=564&height=564", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: "")
+        ProductEntity(id: 1, name: "안녕", size: "", paper: "", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "https://printingstreets.uk/cb76c11a-9cd4-43c5-99db-8db650172d66_f4049ed7-97c0-4b2c-8214-923041d9115e_57a63cbb4b2434e7c82525485f669477.png?width=800&height=1061", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: ""),
+        ProductEntity(id: 1, name: "안녕", size: "", paper: "", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "https://printingstreets.uk/cb76c11a-9cd4-43c5-99db-8db650172d66_f4049ed7-97c0-4b2c-8214-923041d9115e_57a63cbb4b2434e7c82525485f669477.png?width=800&height=1061", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: ""),
     ])
 
     private let scrollView = UIScrollView()
@@ -186,12 +186,13 @@ extension PrintShopDetailViewController {
         controllerView.snp.makeConstraints {
             $0.top.equalTo(titleView.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(400)
-            $0.bottom.equalToSuperview()
+            $0.height.equalTo(pageViewController.view.snp.height)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         pageViewController.view.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalToSuperview()
         }
     }
 }

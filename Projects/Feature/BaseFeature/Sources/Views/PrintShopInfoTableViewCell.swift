@@ -13,8 +13,7 @@ import DesignSystem
 import UtilityModule
 import BaseDomainInterface
 
-// TODO: - 폴더 이동하기
-class PrintShopInfoTableViewCell: UITableViewCell {
+final class PrintShopInfoTableViewCell: UITableViewCell {
     
     static let identifier = "PrintShopInfoTableViewCell"
     
@@ -26,7 +25,6 @@ class PrintShopInfoTableViewCell: UITableViewCell {
     private let label = AlleyLabel("텍스트", textColor: .sub(.black), font: .body2)
     
     private lazy var copyButton = CopyButton().then {
-        $0.isHidden = true
         $0.addTarget(self, action: #selector(copyLabel), for: .touchUpInside)
     }
     
@@ -84,26 +82,27 @@ extension PrintShopInfoTableViewCell {
         case 0:
             iconImage.image = DesignSystemAsset.Icon.locationGrey.image
             label.text = model.address
-            copyButton.isHidden = false
             copyObject = "주소"
 
         case 1:
             iconImage.image = DesignSystemAsset.Icon.callGrey.image
             label.text = model.phone
-            copyButton.isHidden = false
             copyObject = "연락처"
 
         case 2:
             iconImage.image = DesignSystemAsset.Icon.mailGrey.image
             label.text = model.email
+            copyObject = "이메일 주소"
 
         case 3:
             iconImage.image = DesignSystemAsset.Icon.clockGrey.image
             label.text = model.email // 영업 시간
+            copyButton.isHidden = true
 
         case 4:
             iconImage.image = DesignSystemAsset.Icon.dotTextBubble.image
             label.text = model.introduction
+            copyButton.isHidden = true
 
         default:
             return
