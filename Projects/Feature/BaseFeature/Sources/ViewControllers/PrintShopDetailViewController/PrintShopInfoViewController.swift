@@ -74,6 +74,7 @@ extension PrintShopInfoViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PrintShopInfoTableViewCell.identifier, for: indexPath) as? PrintShopInfoTableViewCell else {
             return UITableViewCell()
         }
+        cell.selectionStyle = .none
         cell.update(model: viewModel.printShop, index: indexPath.row)
         return cell
     }

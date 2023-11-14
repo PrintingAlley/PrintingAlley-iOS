@@ -31,7 +31,7 @@ final class PrintShopInfoTableViewCell: UITableViewCell {
     private var copyObject = "복사 대상"
     
     private let separateLine = UIView().then {
-        $0.backgroundColor = .black.withAlphaComponent(0.8)
+        $0.backgroundColor = .setColor(.grey(.grey100))
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

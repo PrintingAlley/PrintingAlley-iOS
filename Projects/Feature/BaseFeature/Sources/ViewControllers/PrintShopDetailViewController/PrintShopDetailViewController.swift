@@ -47,10 +47,6 @@ class PrintShopDetailViewController: UIViewController {
         $0.imageView?.contentMode = .scaleAspectFill
         $0.addTarget(self, action: #selector(pop), for: .touchUpInside)
     }
-    
-    private lazy var titleView = UIView().then {
-        $0.backgroundColor = .setColor(.sub(.white))
-    }
 
     lazy var titleLabel = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .header3)
 
@@ -61,6 +57,7 @@ class PrintShopDetailViewController: UIViewController {
         $0.setTitle("전화", for: .normal)
         $0.setTitleColor(.black, for: .normal)
         $0.titleLabel?.font = .setFont(.body2)
+        $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 3, bottom: 4, right: 3)
         $0.alignTextBelow()
     }
     
@@ -73,7 +70,6 @@ class PrintShopDetailViewController: UIViewController {
     }
     
     lazy var pageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보", "작업"])).then {
-
         let vc1 = PrintShopInfoViewController(viewModel: PrintShopInfoViewModel(printShop: printShopTmp)) // TODO: - 팩토리로 빼기
         let vc2 = PrintShopProudctsViewController(viewModel: PrintShopProudctsViewModel(products: printShopTmp.products))
 
@@ -117,9 +113,8 @@ class PrintShopDetailViewController: UIViewController {
 extension PrintShopDetailViewController {
     func addSubviews() {
         view.addSubviews(scrollView)
-        scrollView.addSubviews(imageCollectionView, navigationView, titleView, separateLine, controllerView)
+        scrollView.addSubviews(imageCollectionView, navigationView, titleLabel, introduction, callButton, separateLine, controllerView)
         navigationView.addSubviews(backButton, homeButton)
-        titleView.addSubviews(titleLabel, introduction, callButton)
         controllerView.addSubviews(pageViewController.view)
         
         addChild(pageViewController)
@@ -128,7 +123,8 @@ extension PrintShopDetailViewController {
     
     func makeConstraints() {
         scrollView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
         }
 
         navigationView.snp.makeConstraints {
@@ -155,14 +151,8 @@ extension PrintShopDetailViewController {
             $0.height.equalTo(251)
         }
         
-        titleView.snp.makeConstraints {
-            $0.top.equalTo(imageCollectionView.snp.bottom)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(168)
-        }
-        
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(24)
+            $0.top.equalTo(imageCollectionView.snp.bottom).offset(24)
             $0.leading.equalToSuperview().inset(HORIZON_MARGIN1())
         }
         
@@ -172,22 +162,23 @@ extension PrintShopDetailViewController {
         }
         
         callButton.snp.makeConstraints {
-            $0.width.height.equalTo(48)
-            $0.bottom.equalToSuperview().inset(24)
-            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(introduction)
+            $0.width.equalTo(30)
+            $0.height.equalTo(48)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(24)
         }
         
         separateLine.snp.makeConstraints {
-            $0.top.equalTo(titleView.snp.bottom)
+            $0.top.equalTo(introduction.snp.bottom).offset(24)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(10)
         }
         
         controllerView.snp.makeConstraints {
-            $0.top.equalTo(titleView.snp.bottom)
+            $0.top.equalTo(separateLine.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(pageViewController.view.snp.height)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view)
         }
         
         pageViewController.view.snp.makeConstraints {
@@ -199,7 +190,6 @@ extension PrintShopDetailViewController {
 
 extension PrintShopDetailViewController {
     func bindViewModel() {
-        
     }
     
     @objc func moveBack() {
