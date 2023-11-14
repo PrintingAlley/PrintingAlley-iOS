@@ -8,7 +8,7 @@
 
 import Foundation
 import UtilityModule
-
+// TODO: - 폴더 이동하기
 final class PrintShopDetailViewModel: ViewModelType {
     
     var id: Int!
