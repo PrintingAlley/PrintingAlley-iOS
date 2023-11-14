@@ -25,6 +25,10 @@ class PrintShopInfoTableViewCell: UITableViewCell {
     
     private let label = AlleyLabel("텍스트", textColor: .sub(.black), font: .body2)
     
+    private let copyButton = CopyButton().then {
+        $0.isHidden = true
+    }
+    
     private let separateLine = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.8)
     }
@@ -42,7 +46,7 @@ class PrintShopInfoTableViewCell: UITableViewCell {
 
 extension PrintShopInfoTableViewCell {
     private func addSubviews() {
-        contentView.addSubviews(iconImage, label, separateLine)
+        contentView.addSubviews(iconImage, label, separateLine, copyButton)
     }
     
     private func makeConstraints() {
@@ -56,6 +60,11 @@ extension PrintShopInfoTableViewCell {
             $0.centerY.equalTo(iconImage)
             $0.leading.equalTo(iconImage.snp.trailing).offset(10)
             $0.width.lessThanOrEqualTo(263)
+        }
+        
+        copyButton.snp.makeConstraints {
+            $0.leading.equalTo(label.snp.trailing).offset(8)
+            $0.centerY.equalTo(label)
         }
         
         separateLine.snp.makeConstraints {
@@ -72,10 +81,12 @@ extension PrintShopInfoTableViewCell {
         case 0:
             iconImage.image = DesignSystemAsset.Icon.locationGrey.image
             label.text = model.address
+            copyButton.isHidden = false
 
         case 1:
             iconImage.image = DesignSystemAsset.Icon.callGrey.image
             label.text = model.phone
+            copyButton.isHidden = false
 
         case 2:
             iconImage.image = DesignSystemAsset.Icon.mailGrey.image
