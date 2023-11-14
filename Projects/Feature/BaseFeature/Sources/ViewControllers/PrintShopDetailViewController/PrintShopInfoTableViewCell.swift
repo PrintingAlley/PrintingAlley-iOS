@@ -25,9 +25,12 @@ class PrintShopInfoTableViewCell: UITableViewCell {
     
     private let label = AlleyLabel("텍스트", textColor: .sub(.black), font: .body2)
     
-    private let copyButton = CopyButton().then {
+    private lazy var copyButton = CopyButton().then {
         $0.isHidden = true
+        $0.addTarget(self, action: #selector(copyLabel), for: .touchUpInside)
     }
+    
+    private var copyObject = "복사 대상"
     
     private let separateLine = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.8)
@@ -57,14 +60,14 @@ extension PrintShopInfoTableViewCell {
         }
         
         label.snp.makeConstraints {
-            $0.centerY.equalTo(iconImage)
+            $0.centerY.equalToSuperview()
             $0.leading.equalTo(iconImage.snp.trailing).offset(10)
             $0.width.lessThanOrEqualTo(263)
         }
         
         copyButton.snp.makeConstraints {
             $0.leading.equalTo(label.snp.trailing).offset(8)
-            $0.centerY.equalTo(label)
+            $0.centerY.equalToSuperview()
         }
         
         separateLine.snp.makeConstraints {
@@ -82,11 +85,13 @@ extension PrintShopInfoTableViewCell {
             iconImage.image = DesignSystemAsset.Icon.locationGrey.image
             label.text = model.address
             copyButton.isHidden = false
+            copyObject = "주소"
 
         case 1:
             iconImage.image = DesignSystemAsset.Icon.callGrey.image
             label.text = model.phone
             copyButton.isHidden = false
+            copyObject = "연락처"
 
         case 2:
             iconImage.image = DesignSystemAsset.Icon.mailGrey.image
@@ -103,5 +108,11 @@ extension PrintShopInfoTableViewCell {
         default:
             return
         }
+    }
+    
+    @objc
+    func copyLabel() {
+        UIPasteboard.general.string = self.label.text
+        contentView.showToast(text: "\(copyObject)가 복사되었어요!")
     }
 }

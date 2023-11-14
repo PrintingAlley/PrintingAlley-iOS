@@ -17,6 +17,7 @@ final class PrintShopInfoViewController: UIViewController {
     let tmp = PrintShopEntity(id: 1, name: "인쇄소잉", address: "강남구", phone: "핸드폰번호", email: "이메일@이메일", homepage: "홈페이지유", representative: "하이루", introduction: "소개", logoImage: "이미지", backgroundImage: "이미지", latitude: "", longitude: "", products: [])
 
     private lazy var tableView = UITableView().then {
+        $0.isScrollEnabled = false
         $0.backgroundColor = .white
         $0.delegate = self
         $0.dataSource = self
