@@ -51,7 +51,8 @@ public extension Project {
             base: env.baseSetting
                 .merging(.codeSign)
                 .merging(settings)
-                .merging(ldFlagsSettings),
+                .merging(ldFlagsSettings)
+                .merging(.headerSearchPaths),
             configurations: configurations,
             defaultSettings: .recommended
         )

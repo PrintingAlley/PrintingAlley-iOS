@@ -11,7 +11,7 @@ import SnapKit
 import Then
 import UtilityModule
 import KakaoSDKCommon
-//import GoogleSignIn
+import GoogleSignIn
 import RxSwift
 import DesignSystem
 
@@ -116,7 +116,7 @@ extension SignInViewController {
         bindshowToast(output: output)
         
         
-        //bindGoogleLogin(output: output)
+        bindGoogleLogin(output: output)
     }
     
     func bindshowToast(output: SignInViewModel.Output) {
@@ -127,7 +127,7 @@ extension SignInViewController {
             })
             .disposed(by: disposeBag)
     }
-    /*
+    
      func bindGoogleLogin(output: SignInViewModel.Output) {
      
      output.runGoogleLogin.subscribe(onNext: { [weak self] in
@@ -152,9 +152,8 @@ extension SignInViewController {
      let givenName = user.profile?.givenName
      let familyName = user.profile?.familyName
      
-     // let profilePicUrl = user.profile?.imageURL(withDimension: 320)
      
-     self.viewModel.oauthToken.accept((user.idToken!.tokenString, .google)) //TODO: 예외처리
+         self.viewModel.oauthToken.accept((user.accessToken.tokenString, .google)) //TODO: 예외처리
      }
      
      })
@@ -162,7 +161,7 @@ extension SignInViewController {
      
      
      }
-     */
+     
 }
 
 extension SignInViewController: LoginButtonViewDelegate {
