@@ -15,13 +15,13 @@ public extension UIView {
     public func showToast(text: String) {
             var attributes = EKAttributes.bottomFloat
             attributes.displayDuration = 2
-            attributes.entryBackground = .color(color: EKColor(rgb: 0x47484C).with(alpha: 0.8))
+        attributes.entryBackground = .color(color: EKColor(rgb: 0x000000).with(alpha: 1.0))
             attributes.roundCorners = .all(radius: 20)
-            attributes.positionConstraints.verticalOffset = 30
+            attributes.positionConstraints.verticalOffset = 5
         
             let style = EKProperty.LabelStyle(
                 font: .setFont(.body2),
-                color: EKColor(rgb: 0xFCFCFD),
+                color: EKColor(rgb: 0xFFFFFF),
                 alignment: .center
             )
             let labelContent = EKProperty.LabelContent(
