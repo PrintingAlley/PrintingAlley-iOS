@@ -21,6 +21,7 @@ public class PrintShopProductsViewController: UIViewController {
     }
     
     private lazy var productsGridView = UICollectionView(frame: .zero, collectionViewLayout: gridLayout).then {
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         $0.dataSource = self
         $0.showsHorizontalScrollIndicator = false

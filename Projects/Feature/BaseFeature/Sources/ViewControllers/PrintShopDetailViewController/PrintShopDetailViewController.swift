@@ -27,8 +27,6 @@ class PrintShopDetailViewController: UIViewController {
     lazy var output = viewModel.transform(input: input)
     
     let disposeBag = DisposeBag()
-
-    private let scrollView = UIScrollView()
     
     private lazy var layout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -78,14 +76,9 @@ class PrintShopDetailViewController: UIViewController {
         $0.backgroundColor = .brown
     }
     
-    lazy var vc1 = printShopInfoFactory.makeView(printShop: output.dataSource.value)
-    lazy var vc2 = printShopProductsFactory.makeView(products: output.dataSource.value.products)
-    
     lazy var pageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보", "작업"])).then {
-        let vc1 = printShopInfoFactory.makeView(printShop: output.dataSource.value)
-        let vc2 = printShopProductsFactory.makeView(products: output.dataSource.value.products)
         
-        $0.setChildren([vc1, vc2])
+        $0.setChildren([UIViewController()])
     }
 
     let tmp: [String] = ["tmpPrintShop", "tmpPrintShop", "tmpPrintShop"]
@@ -122,8 +115,7 @@ class PrintShopDetailViewController: UIViewController {
 // MARK: - UI 함수들
 extension PrintShopDetailViewController {
     func addSubviews() {
-        view.addSubviews(scrollView)
-        scrollView.addSubviews(imageCollectionView, navigationView, titleLabel, typeLabel, callButton, separateLine, controllerView)
+        view.addSubviews(imageCollectionView, navigationView, titleLabel, typeLabel, callButton, separateLine, controllerView)
         navigationView.addSubviews(backButton, homeButton)
         controllerView.addSubviews(pageViewController.view)
         
@@ -132,11 +124,6 @@ extension PrintShopDetailViewController {
     }
     
     func makeConstraints() {
-        scrollView.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalToSuperview()
-        }
-
         navigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(12)
             $0.height.equalTo(32)
@@ -188,10 +175,9 @@ extension PrintShopDetailViewController {
         controllerView.snp.makeConstraints {
             $0.top.equalTo(separateLine.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(pageViewController.view.snp.height)
             $0.bottom.equalTo(view)
         }
-        
+
         pageViewController.view.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalToSuperview()

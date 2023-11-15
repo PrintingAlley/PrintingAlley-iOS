@@ -107,7 +107,8 @@ extension AlleyPageViewController {
         
         pageViewController.view.snp.makeConstraints {
             $0.top.equalTo(baseLine.snp.bottom)
-            $0.left.right.bottom.equalToSuperview()
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view)
         } // TODO: - 페이지컨트롤러 레이블 레이아웃 맞추기..
     }
     
