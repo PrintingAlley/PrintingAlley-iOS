@@ -35,15 +35,15 @@ extension PrintShopAPI: AlleyAPI {
             return ""
             
         case .one(id: let id):
-            return "\(id)"
+            return "/\(id)"
         case .fetchReview(id: let id):
-            return "\(id)/review"
+            return "/\(id)/review"
         case .createReview(id: let id, content: _, rating: _, images: _):
-            return "\(id)/review"
+            return "/\(id)/review"
         case .editReview(id: let id, reviewId: let reviewId, content: _, rating: _, images: _):
-            return "\(id)/review/\(reviewId)"
+            return "/\(id)/review/\(reviewId)"
         case .deleteReview(id: let id, reviewId: let reviewId):
-            return "\(id)/review/\(reviewId)"
+            return "/\(id)/review/\(reviewId)"
         }
     }
     
