@@ -337,6 +337,9 @@ private func factory05e011369db72b170e1ef47b58f8f304c97af4d5(_ component: Needle
     return EditModalDependencye914ce2425a804be0d58Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class PrintShopDetailDependency796e358411338a10d23bProvider: PrintShopDetailDependency {
+    var printShopDomainFactory: any PrintShopDomainFactory {
+        return appComponent.printShopDomainFactory
+    }
     var printShopInfoFactory: any PrintShopInfoFactory {
         return appComponent.printShopInfoFactory
     }
@@ -594,6 +597,7 @@ extension PrintShopInfoComponent: Registration {
 }
 extension PrintShopDetailComponent: Registration {
     public func registerItems() {
+        keyPathToName[\PrintShopDetailDependency.printShopDomainFactory] = "printShopDomainFactory-any PrintShopDomainFactory"
         keyPathToName[\PrintShopDetailDependency.printShopInfoFactory] = "printShopInfoFactory-any PrintShopInfoFactory"
         keyPathToName[\PrintShopDetailDependency.printShopProductsFactory] = "printShopProductsFactory-any PrintShopProductsFactory"
     }
