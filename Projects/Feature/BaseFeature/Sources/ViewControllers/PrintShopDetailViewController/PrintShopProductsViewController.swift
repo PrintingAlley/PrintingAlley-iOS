@@ -60,7 +60,7 @@ extension PrintShopProductsViewController {
 extension PrintShopProductsViewController {
     func bindViewModel() {
         if viewModel.products.isEmpty {
-            self.productsGridView.setEmptyMessage("작품이 없습니다.")
+            self.productsGridView.setEmptyMessage("등록된 작품이 없어요.")
         }
     }
 }

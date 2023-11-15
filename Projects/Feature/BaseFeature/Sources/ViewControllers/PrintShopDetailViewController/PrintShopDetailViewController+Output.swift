@@ -9,18 +9,21 @@
 import Foundation
 import RxSwift
 import RxRelay
+import RxDataSources
 import UIKit
 
 extension PrintShopDetailViewController {
     func bindDataSource(output: PrintShopDetailViewModel.Output) {
         
-        imageCollectionView.delegate = self
+        imageCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
         
         output.dataSource
             .skip(1)
             .do(onNext: { [weak self] dataSource in
                 guard let self else { return }
-                
+
+                self.indicator.stopAnimating()
                 update(model: dataSource)
             })
                 .map { [$0.logoImage, $0.backgroundImage] }
@@ -32,6 +35,17 @@ extension PrintShopDetailViewController {
                 cell.update(model: model)
                 return cell
             }
+            .disposed(by: disposeBag)
+    }
+    
+    ///  indcator 시작
+    func bindIndicator(output: PrintShopDetailViewModel.Output) {
+        output.runIndicator
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                guard let self else {return}
+                self.indicator.startAnimating()
+            })
             .disposed(by: disposeBag)
     }
 }

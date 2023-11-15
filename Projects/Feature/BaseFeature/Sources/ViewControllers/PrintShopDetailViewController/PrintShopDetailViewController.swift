@@ -28,6 +28,11 @@ class PrintShopDetailViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
+    lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then{
+        $0.color = DesignSystemAsset.MainBlue.blue500.color
+        $0.hidesWhenStopped = true
+    }
+    
     private lazy var layout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = .zero
@@ -78,7 +83,7 @@ class PrintShopDetailViewController: UIViewController {
     
     lazy var pageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보", "작업"])).then {
         
-        $0.setChildren([UIViewController()])
+        $0.setChildren([UIViewController(), UIViewController()])
     }
 
     let tmp: [String] = ["tmpPrintShop", "tmpPrintShop", "tmpPrintShop"]
@@ -189,6 +194,7 @@ extension PrintShopDetailViewController {
     func bindViewModel() {
         bindButton()
         bindDataSource(output: output)
+        bindIndicator(output: output)
     }
     
     @objc func moveBack() {
