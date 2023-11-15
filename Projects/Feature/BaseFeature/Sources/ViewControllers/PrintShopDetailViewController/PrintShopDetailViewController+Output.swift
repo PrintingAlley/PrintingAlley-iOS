@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 extension PrintShopDetailViewController {
     func bindDataSource(output: PrintShopDetailViewModel.Output) {
@@ -14,7 +15,6 @@ extension PrintShopDetailViewController {
             .skip(1)
             .subscribe(onNext: { [weak self] dataSource in
                 guard let self else { return }
-                
                 update(model: dataSource)
             })
             .disposed(by: disposeBag)

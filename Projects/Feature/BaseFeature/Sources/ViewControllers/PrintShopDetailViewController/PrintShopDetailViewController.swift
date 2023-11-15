@@ -84,10 +84,13 @@ class PrintShopDetailViewController: UIViewController {
         $0.backgroundColor = .brown
     }
     
+    lazy var vc1 = printShopInfoFactory.makeView(printShop: output.dataSource.value)
+    lazy var vc2 = printShopProductsFactory.makeView(products: output.dataSource.value.products)
+    
     lazy var pageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보", "작업"])).then {
-        let vc1 = printShopInfoFactory.makeView(printShop: printShopTmp)
-        let vc2 = printShopProductsFactory.makeView(products: printShopTmp.products)
-
+        let vc1 = printShopInfoFactory.makeView(printShop: output.dataSource.value)
+        let vc2 = printShopProductsFactory.makeView(products: output.dataSource.value.products)
+        
         $0.setChildren([vc1, vc2])
     }
 
@@ -219,6 +222,11 @@ extension PrintShopDetailViewController {
     func update(model: PrintShopEntity) {
         self.titleLabel.text = model.name
         self.typeLabel.text = model.type
+        
+        let vc1 = printShopInfoFactory.makeView(printShop: output.dataSource.value)
+        let vc2 = printShopProductsFactory.makeView(products: output.dataSource.value.products)
+        
+        self.pageViewController.setChildren([vc1, vc2])
     }
 }
 

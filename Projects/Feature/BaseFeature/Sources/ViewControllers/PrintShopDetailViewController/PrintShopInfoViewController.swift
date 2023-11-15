@@ -41,7 +41,7 @@ final class PrintShopInfoViewController: UIViewController {
     private let afterProcessTitle = AlleyLabel("굵은글씨", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left)
     private let afterProcessLabel = AlleyLabel("후가공 내용", textColor: .grey(.grey500), font: .body2)
     
-    let viewModel: PrintShopInfoViewModel!
+    public let viewModel: PrintShopInfoViewModel!
     
     init(viewModel: PrintShopInfoViewModel) {
         self.viewModel = viewModel
