@@ -8,13 +8,21 @@
 
 import Foundation
 import UtilityModule
-// TODO: - 폴더 이동하기
+import RxSwift
+import RxRelay
+import BaseDomainInterface
+import PrintShopDomainInterface
+
 final class PrintShopDetailViewModel: ViewModelType {
     
     var id: Int!
+    var fetchPrintShopUseCase: any FetchPrintShopUseCase
     
-    init(id: Int) {
+    let disposeBag = DisposeBag()
+    
+    init(id: Int, fetchPrintShopUseCase: FetchPrintShopUseCase) {
         self.id = id
+        self.fetchPrintShopUseCase = fetchPrintShopUseCase
     }
     
     struct Input {
@@ -22,11 +30,26 @@ final class PrintShopDetailViewModel: ViewModelType {
     }
     
     struct Output {
-        
+        let dataSource: BehaviorRelay<PrintShopEntity> = .init(value: .init(id: 0, name: "", address: "", phone: "", email: "", homepage: "", type: "", printType: "", afterProcess: "", businessHours: "", introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "", products: []))
     }
     
     func transform(input: Input) -> Output {
         let output = Output()
+        
+        fetchPrintShopUseCase.execute(id: id)
+            .catch { error in
+                let error = error.asAlleyError
+                
+                DEBUG_LOG(error.localizedDescription)
+                
+                return Single<PrintShopEntity>.create { single in
+                    single(.success(PrintShopEntity.makeErrorEntity()))
+                    return Disposables.create()
+                }
+            }
+            .asObservable()
+            .bind(to: output.dataSource)
+            .disposed(by: disposeBag)
         
         return output
     }

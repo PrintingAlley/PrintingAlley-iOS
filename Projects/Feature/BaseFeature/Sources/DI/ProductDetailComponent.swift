@@ -26,4 +26,3 @@ public final class ProductDetailComponent: Component<ProductDetailDependency>, P
     }
     
 }
-

@@ -12,10 +12,21 @@ import Then
 import UtilityModule
 import DesignSystem
 import RxSwift
-import BaseDomainInterface
+import BaseDomainInterface // 임시 entity용
 import BaseFeatureInterface
+import PrintShopDomainInterface
 
 class PrintShopDetailViewController: UIViewController {
+    
+    let printShopInfoFactory: PrintShopInfoFactory!
+    let printShopProductsFactory: PrintShopProductsFactory!
+    
+    private let viewModel: PrintShopDetailViewModel!
+    
+    let input = PrintShopDetailViewModel.Input()
+    lazy var output = viewModel.transform(input: input)
+    
+    let disposeBag = DisposeBag()
     
     let printShopTmp = PrintShopEntity(id: 1, name: "인쇄소", address: "강남구", phone: "행드폰번호", email: "이메일", homepage: "홈페이지", type: "인쇄기획사", printType: "먼데?", afterProcess: "후가공", businessHours: "영업시간", introduction: "소개글", logoImage: "", backgroundImage: "", latitude: "", longitude: "", products: [
         ProductEntity(id: 1, name: "안녕", size: "", paper: "", printType: "타입", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "https://printingstreets.uk/cb59424b-3352-4750-90e0-84131f43718f_28afe2c0-6042-429a-8289-423e4b4a7800_4c7fdc9ad4ec035f858a142d2177531e.png?width=564&height=564", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: ""),
@@ -54,7 +65,7 @@ class PrintShopDetailViewController: UIViewController {
         $0.numberOfLines = 1
     }
 
-    lazy var introduction = AlleyLabel("인쇄", textColor: .grey(.grey500), font: .subtitle3) // TODO: - 색상 변경
+    lazy var typeLabel = AlleyLabel("인쇄", textColor: .grey(.grey500), font: .subtitle3) // TODO: - 색상 변경
 
     lazy var callButton: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.callBlack.image, for: .normal)
@@ -81,13 +92,6 @@ class PrintShopDetailViewController: UIViewController {
     }
 
     let tmp: [String] = ["tmpPrintShop", "tmpPrintShop", "tmpPrintShop"]
-    
-    let printShopInfoFactory: PrintShopInfoFactory!
-    let printShopProductsFactory: PrintShopProductsFactory!
-    
-    private let viewModel: PrintShopDetailViewModel!
-    
-    let disposeBag = DisposeBag()
     
     init(printShopInfoFactory: PrintShopInfoFactory, printShopProductsFactory: PrintShopProductsFactory, viewModel: PrintShopDetailViewModel) {
         self.printShopInfoFactory = printShopInfoFactory
@@ -122,7 +126,7 @@ class PrintShopDetailViewController: UIViewController {
 extension PrintShopDetailViewController {
     func addSubviews() {
         view.addSubviews(scrollView)
-        scrollView.addSubviews(imageCollectionView, navigationView, titleLabel, introduction, callButton, separateLine, controllerView)
+        scrollView.addSubviews(imageCollectionView, navigationView, titleLabel, typeLabel, callButton, separateLine, controllerView)
         navigationView.addSubviews(backButton, homeButton)
         controllerView.addSubviews(pageViewController.view)
         
@@ -166,7 +170,7 @@ extension PrintShopDetailViewController {
             $0.width.lessThanOrEqualTo(281)
         }
         
-        introduction.snp.makeConstraints {
+        typeLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(3)
             $0.leading.equalTo(titleLabel)
         }
@@ -179,7 +183,7 @@ extension PrintShopDetailViewController {
         }
         
         separateLine.snp.makeConstraints {
-            $0.top.equalTo(introduction.snp.bottom).offset(24)
+            $0.top.equalTo(typeLabel.snp.bottom).offset(24)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(10)
         }
@@ -201,6 +205,7 @@ extension PrintShopDetailViewController {
 extension PrintShopDetailViewController {
     func bindViewModel() {
         bindButton()
+        bindDataSource(output: output)
     }
     
     @objc func moveBack() {
@@ -209,6 +214,11 @@ extension PrintShopDetailViewController {
     
     @objc func pop() {
         self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func update(model: PrintShopEntity) {
+        self.titleLabel.text = model.name
+        self.typeLabel.text = model.type
     }
 }
 
