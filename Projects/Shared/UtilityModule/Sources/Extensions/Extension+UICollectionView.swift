@@ -24,7 +24,7 @@ public extension UICollectionView {
         view.addSubview(label)
         
         label.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(60)
+            $0.top.equalToSuperview().inset(64)
             $0.left.right.equalToSuperview()
         }
         
