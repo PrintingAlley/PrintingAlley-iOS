@@ -28,6 +28,7 @@ class ProductDetailTableViewCell: UITableViewCell {
         
         addSubviews()
         makeConstraints()
+        self.contentView.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
