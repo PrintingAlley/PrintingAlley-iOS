@@ -109,6 +109,7 @@ extension SearchViewController {
     private func setKeyboardDown() {
         let keyboardDownGesture = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
         self.view.addGestureRecognizer(keyboardDownGesture)
+        keyboardDownGesture.cancelsTouchesInView = false
     }
 }
 

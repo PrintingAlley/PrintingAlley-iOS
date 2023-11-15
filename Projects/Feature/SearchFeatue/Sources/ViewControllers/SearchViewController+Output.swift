@@ -26,6 +26,7 @@ extension SearchViewController {
                 
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: PrintShopTableViewCell.identifier) as? PrintShopTableViewCell else { return UITableViewCell() }
                 
+                cell.selectionStyle = .none
                 cell.update(model: model)
                 
                 return cell

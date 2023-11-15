@@ -21,7 +21,6 @@ extension SearchViewController {
     }
     
     func bindItemSelected() {
-        
         printingTableView
             .rx
             .itemSelected
