@@ -13,8 +13,13 @@ import UtilityModule
 import BaseDomainInterface // entity용
 
 final class PrintShopInfoViewController: UIViewController {
+    
+    let cellHeight: CGFloat = 41
+    let cellCount: CGFloat = 5
+    let tableViewInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
     private lazy var tableView = UITableView().then {
+        $0.contentInset = tableViewInsets
         $0.separatorStyle = .none
         $0.backgroundColor = .white
         $0.delegate = self
@@ -55,14 +60,17 @@ extension PrintShopInfoViewController {
     
     private func makeConstraints() {
         tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(cellHeight * cellCount + tableViewInsets.top + tableViewInsets.bottom)
         }
+        
+        
     }
 }
 
 extension PrintShopInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        41
+        cellHeight
     }
 }
 

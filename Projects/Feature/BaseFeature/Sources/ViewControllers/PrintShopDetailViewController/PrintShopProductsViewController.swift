@@ -12,9 +12,9 @@ import UtilityModule
 import SnapKit
 import Then
 
-public class PrintShopProudctsViewController: UIViewController {
+public class PrintShopProductsViewController: UIViewController {
 
-    let viewModel: PrintShopProudctsViewModel!
+    let viewModel: PrintShopProductsViewModel!
     
     private lazy var gridLayout = AutoHeightCollectionViewLayout().then {
         $0.delegate = self
@@ -27,7 +27,7 @@ public class PrintShopProudctsViewController: UIViewController {
         $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
     }
     
-    init(viewModel: PrintShopProudctsViewModel!) {
+    init(viewModel: PrintShopProductsViewModel!) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         addSubViews()
@@ -43,7 +43,7 @@ public class PrintShopProudctsViewController: UIViewController {
     }
 }
 
-extension PrintShopProudctsViewController {
+extension PrintShopProductsViewController {
     private func addSubViews() {
         view.addSubviews(productsGridView)
     }
@@ -55,7 +55,7 @@ extension PrintShopProudctsViewController {
     }
 }
 
-extension PrintShopProudctsViewController: UICollectionViewDataSource {
+extension PrintShopProductsViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.products.count
     }
@@ -70,7 +70,7 @@ extension PrintShopProudctsViewController: UICollectionViewDataSource {
     }
 }
 
-extension PrintShopProudctsViewController: AutoHeightLayoutDelegate {
+extension PrintShopProductsViewController: AutoHeightLayoutDelegate {
     public func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         let product = viewModel.products[indexPath.row]
         

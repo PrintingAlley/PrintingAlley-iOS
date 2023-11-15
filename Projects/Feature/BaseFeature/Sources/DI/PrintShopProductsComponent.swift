@@ -13,6 +13,6 @@ import BaseDomainInterface
 
 public final class PrintShopProductsComponent: Component<EmptyDependency>, PrintShopProductsFactory {
     public func makeView(products: [ProductEntity]) -> UIViewController {
-        PrintShopProudctsViewController(viewModel: PrintShopProudctsViewModel(products: products))
+        PrintShopProductsViewController(viewModel: PrintShopProductsViewModel(products: products))
     }
 }

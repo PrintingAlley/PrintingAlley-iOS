@@ -1,5 +1,5 @@
 //
-//  PrintShopProudctsViewModel.swift
+//  PrintShopProductsViewModel.swift
 //  BaseFeature
 //
 //  Created by 박의서 on 2023/11/14.
@@ -9,7 +9,7 @@
 import Foundation
 import BaseDomainInterface
 
-class PrintShopProudctsViewModel {
+class PrintShopProductsViewModel {
     
     var products: [ProductEntity]!
     
