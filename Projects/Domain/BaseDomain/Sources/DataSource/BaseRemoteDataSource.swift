@@ -55,9 +55,9 @@ private extension BaseRemoteDataSource {
                 }
                 
                 guard let errorCode = (error as? MoyaError)?.response?.statusCode else {
-                    print("KKK: \((error as? MoyaError)) ")
+
                     if let moyaError = (error as? MoyaError), moyaError.errorCode == 6 {
-                        print("KKK: \(moyaError.response?.statusCode)")
+            
                         return Single.error(api.errorMap[1009] ?? error)
                     }
                     

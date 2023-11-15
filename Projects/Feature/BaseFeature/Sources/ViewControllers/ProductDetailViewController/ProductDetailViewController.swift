@@ -24,6 +24,7 @@ class ProductDetailViewController: UIViewController {
         $0.bounces = false
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
+        $0.backgroundColor = .white
     }
     
     lazy var backButton: UIButton = UIButton().then {

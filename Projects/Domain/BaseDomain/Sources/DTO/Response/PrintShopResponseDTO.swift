@@ -14,13 +14,13 @@ public struct PrintShopResponseDTO: Decodable {
     let id: Int
     let name, address, phone, email: String
     let homepage: String
-    let representative, introduction: String
+    let type, businessHours, introduction: String
     let logoImage, backgroundImage: String
     let latitude, longitude: String
     let products: [ProductResponseDTO]?
-    
+    let printType, afterProcess: String?
     
     public func toDomain() -> PrintShopEntity {
-        PrintShopEntity(id: id, name: name, address: address, phone: phone, email: email, homepage: homepage, representative: representative, introduction: introduction, logoImage: logoImage, backgroundImage: backgroundImage, latitude: latitude, longitude: longitude,products: products?.map{$0.toDomain()} ?? [])
+        PrintShopEntity(id: id, name: name, address: address, phone: phone, email: email, homepage: homepage, type: type, printType: printType ?? "", afterProcess: afterProcess ?? "", businessHours: businessHours  , introduction: introduction, logoImage: logoImage, backgroundImage: backgroundImage, latitude: latitude, longitude: longitude,products: products?.map{$0.toDomain()} ?? [])
     }
 }
