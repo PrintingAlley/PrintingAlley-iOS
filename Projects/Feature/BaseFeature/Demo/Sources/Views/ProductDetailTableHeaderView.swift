@@ -48,7 +48,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     }
     
     lazy var saveButton: UIButton = UIButton().then {
-        $0.setImage(DesignSystemAsset.Icon.bluebookMark.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.blueBookMark.image, for: .normal)
     }
     
     lazy var emptyView: UIView = UIView().then {
@@ -128,10 +128,8 @@ extension ProductDetailTableHeaderView {
         titleLabel.setTitle(title: "아아라라라", textColor: .sub(.black), font: .header3)
         subtitleLabel.setTitle(title: "명함", textColor: .grey(.grey100), font: .subtitle3)
     }
-    
 
 }
-
 
 extension ProductDetailTableHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -147,8 +145,6 @@ extension ProductDetailTableHeaderView: UICollectionViewDataSource {
         cell.update(image: dummyImages[indexPath.row])
         return cell
     }
-    
-    
 }
 
 extension ProductDetailTableHeaderView: UICollectionViewDelegateFlowLayout {

@@ -15,18 +15,13 @@ import RxCocoa
 import RxSwift
 import RxDataSources
 import BaseFeature
+import BaseFeatureInterface
 
 final class SearchViewController: UIViewController, ContainerViewType {
     lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large).then {
         $0.color = DesignSystemAsset.MainBlue.blue500.color
         $0.hidesWhenStopped = true
-        
     }
-    
-    private var viewModel: SearchViewModel!
-    
-    let disposeBag = DisposeBag()
-    let input = SearchViewModel.Input()
     
     var contentView: UIView! = UIView()
     
@@ -43,8 +38,18 @@ final class SearchViewController: UIViewController, ContainerViewType {
     
     lazy var emptyHeaderView = SearchEmptyHeaderView()
     
-    init(viewModel: SearchViewModel!) {
+    private var viewModel: SearchViewModel!
+    
+    let input = SearchViewModel.Input()
+    lazy var output = viewModel.transform(input: input)
+
+    let disposeBag = DisposeBag()
+    
+    var printShopDetailFactory: any PrintShopDetailFactory
+    
+    init(printShopDetailFactory: PrintShopDetailFactory, viewModel: SearchViewModel!) {
         DEBUG_LOG("\(Self.self) Init ✅ ")
+        self.printShopDetailFactory = printShopDetailFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -70,10 +75,10 @@ final class SearchViewController: UIViewController, ContainerViewType {
 // MARK: - 네트워크 관련 함수들
 extension SearchViewController {
     private func bindViewModel() {
-        let output = viewModel.transform(input: input)
         bindUIEvent(input: input)
         bindDataSource(input: input, output: output)
         bindIndicator(output: output)
+        bindItemSelected()
     }
 }
 
@@ -104,6 +109,7 @@ extension SearchViewController {
     private func setKeyboardDown() {
         let keyboardDownGesture = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
         self.view.addGestureRecognizer(keyboardDownGesture)
+        keyboardDownGesture.cancelsTouchesInView = false
     }
 }
 

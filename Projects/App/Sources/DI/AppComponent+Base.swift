@@ -23,6 +23,18 @@ extension AppComponent {
         ProductDetailComponent(parent: self)
     }
     
+    var printShopDetailFactory: any PrintShopDetailFactory {
+        PrintShopDetailComponent(parent: self)
+    }
+    
+    var printShopInfoFactory: any PrintShopInfoFactory {
+        PrintShopInfoComponent(parent: self)
+    }
+    
+    var printShopProductsFactory: any PrintShopProductsFactory {
+        PrintShopProductsComponent(parent: self)
+    }
+    
     var webViewFactory: any WebViewFactory {
         WebViewComponent(parent: self)
     }

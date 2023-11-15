@@ -11,12 +11,11 @@ import UtilityModule
 import RxSwift
 import RxRelay
 
-final class AlleyPageViewModel : ViewModelType {
-    
-    
+final class AlleyPageViewModel: ViewModelType {
+  
     let disposeBag = DisposeBag()
     
-    public var titles:[String] = []
+    public var titles: [String] = []
     
     init(titles: [String]) {
         self.titles = titles
@@ -29,13 +28,11 @@ final class AlleyPageViewModel : ViewModelType {
     struct Output {
         let barConstraints: PublishRelay<CGFloat> = .init()
      }
-    
-    
+
     func transform(input: Input) -> Output {
         
         let output = Output()
-        
-        
+ 
         input.selectedIndex
             .skip(1)
             .map({ [weak self]  index -> CGFloat in
@@ -46,9 +43,6 @@ final class AlleyPageViewModel : ViewModelType {
             })
             .bind(to: output.barConstraints)
             .disposed(by: disposeBag)
-        
-        
-        
         return output
     }
     

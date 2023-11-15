@@ -19,17 +19,7 @@ class ProductDetailTableViewCell: UITableViewCell {
         $0.numberOfLines = 1
     }
 
-    lazy var button: UIButton = UIButton().then {
-        $0.setTitle("복사", for: .normal)
-        $0.setTitleColor(DesignSystemAsset.MainBlue.blue500.color, for: .normal)
-        $0.titleLabel?.font = .setFont(.body2)
-        
-        $0.setImage(DesignSystemAsset.Icon.copy.image, for: .normal)
-        
-        $0.contentHorizontalAlignment = .center // // how to position content horizontally inside control. default is center
-        $0.semanticContentAttribute = .forceLeftToRight // 이미지 왼쪽에 배치
-        $0.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 4) //<- 중요
-    }
+    lazy var button = CopyButton()
     
     lazy var baseLine: UIView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.1)

@@ -21,7 +21,7 @@ extension AlleyPageViewController {
                 
                 guard let self else {return}
                 
-                self.indicaatorBar.snp.updateConstraints {
+                self.indicatorBar.snp.updateConstraints {
                     $0.left.equalToSuperview().offset(newConstraint)
                 }
                 

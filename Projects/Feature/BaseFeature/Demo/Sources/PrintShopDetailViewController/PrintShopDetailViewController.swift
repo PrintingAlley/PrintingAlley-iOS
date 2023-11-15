@@ -1,6 +1,6 @@
 //
 //  PrintShopDetailViewController.swift
-//  BaseFeatureDemo
+//  BaseFeature
 //
 //  Created by yongbeomkwak on 10/29/23.
 //  Copyright © 2023 com. All rights reserved.
@@ -14,54 +14,61 @@ import DesignSystem
 
 class PrintShopDetailViewController: UIViewController {
 
-    lazy var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
+    private let scrollView = UIScrollView().then {
+        $0.backgroundColor = .lightGray
+    }
+    
+    private lazy var layout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = .zero
-    
     }
-    lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-        
-        $0.register(PrintShopPhotosCollectionViewCell.self, forCellWithReuseIdentifier: PrintShopPhotosCollectionViewCell.identifier)
+
+    private lazy var imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.dataSource = self
         $0.delegate = self
         $0.isPagingEnabled = true // 컨텐츠 만큼 스크롤
-    }
+        $0.register(PrintShopPhotosCollectionViewCell.self, forCellWithReuseIdentifier: PrintShopPhotosCollectionViewCell.identifier)
+    } // TODO: makeCollectionView 함수로 변경
     
-    lazy var naviTitleView: UIView = UIView()
+    private lazy var navigationView = UIView()
     
-    lazy var backButton: UIButton = UIButton().then {
+    private lazy var backButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
     }
     
-    lazy var headerView: UIView = UIView()
-    lazy var titleLabel: AlleyLabel = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .subtitle1)
-    lazy var subTitleLabel: AlleyLabel = AlleyLabel("인쇄", textColor: .grey(.grey500), font: .subtitle3)
-    lazy var callButton: UIButton = UIButton().then{
+    private lazy var titleView = UIView().then {
+        $0.backgroundColor = .setColor(.sub(.white))
+    }
+
+    lazy var titleLabel = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .header3)
+
+    lazy var introduction = AlleyLabel("인쇄", textColor: .grey(.grey500), font: .subtitle3) // TODO: - 색상 변경
+
+    lazy var callButton: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.callBlack.image, for: .normal)
         $0.setTitle("전화", for: .normal)
         $0.setTitleColor(.black, for: .normal)
         $0.titleLabel?.font = .setFont(.body2)
         $0.alignTextBelow()
-        
     }
     
-    lazy var containerView: UIView = UIView()
+    private let separateLine = UIView().then {
+        $0.backgroundColor = .setColor(.grey(.grey50))
+    }
     
-    lazy var pageViewController: AlleyPageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보","라뷰"])).then{
+    private let controllerView = UIView()
+    
+    lazy var pageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보", "작업"])).then {
 
         let vc1 = UIViewController()
-        
-        
         let vc2 = UIViewController()
         
         vc2.view.backgroundColor = .green
-        
-        $0.setChildren([vc1,vc2])
+        $0.setChildren([vc1, vc2])
     }
-    
 
-    
-    let tmp: [String] = ["tmpPrintShop","tmpPrintShop","tmpPrintShop"]
+    let tmp: [String] = ["tmpPrintShop", "tmpPrintShop", "tmpPrintShop"]
         
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -75,38 +82,37 @@ class PrintShopDetailViewController: UIViewController {
         DEBUG_LOG("\(Self.self) Deinit ❌")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-       //aconfigureCommonUI()
+        configureCommonUI()
         addSubviews()
         makeConstraints()
-        view.backgroundColor = .blue
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureSwipeBack()
     }
-    
-
 }
-
 
 extension PrintShopDetailViewController {
     func addSubviews() {
-        self.view.addSubviews(collectionView,naviTitleView,headerView,containerView)
-        self.naviTitleView.addSubview(backButton)
-        self.headerView.addSubviews(titleLabel,subTitleLabel,callButton)
-        self.containerView.addSubviews(pageViewController.view)
+        view.addSubviews(scrollView)
+        scrollView.addSubviews(imageCollectionView, navigationView, titleView, separateLine, controllerView)
+        navigationView.addSubview(backButton)
+        titleView.addSubviews(titleLabel, introduction, callButton)
+        controllerView.addSubviews(pageViewController.view)
         
         addChild(pageViewController)
         pageViewController.didMove(toParent: self)
     }
     
     func makeConstraints() {
-        naviTitleView.snp.makeConstraints {
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        navigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(12)
             $0.height.equalTo(32)
             $0.left.right.equalToSuperview()
@@ -118,57 +124,54 @@ extension PrintShopDetailViewController {
             $0.width.height.equalTo(24)
         }
         
-        collectionView.snp.makeConstraints {
+        imageCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.left.right.equalToSuperview()
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(251)
         }
         
-        headerView.snp.makeConstraints {
-            $0.top.equalTo(collectionView.snp.bottom)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(100)
+        titleView.snp.makeConstraints {
+            $0.top.equalTo(imageCollectionView.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(168)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.left.equalToSuperview().inset(24)
-    
+            $0.top.equalToSuperview().inset(24)
+            $0.leading.equalToSuperview().inset(HORIZON_MARGIN1())
         }
         
-        subTitleLabel.snp.makeConstraints {
-            $0.left.equalTo(titleLabel.snp.left)
+        introduction.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(4)
+            $0.leading.equalTo(titleLabel)
         }
         
         callButton.snp.makeConstraints {
-            $0.width.equalTo(30)
-            $0.height.equalTo(48)
-            $0.top.equalTo(titleLabel.snp.top)
-            $0.right.equalToSuperview().inset(31)
+            $0.width.height.equalTo(48)
+            $0.bottom.equalToSuperview().inset(24)
+            $0.centerX.equalToSuperview()
         }
         
+        separateLine.snp.makeConstraints {
+            $0.top.equalTo(titleView.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(10)
+        }
         
-        containerView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom).offset(10)
-            $0.left.right.bottom.equalToSuperview()
+        controllerView.snp.makeConstraints {
+            $0.top.equalTo(titleView.snp.bottom)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
         }
         
         pageViewController.view.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
-        
-        
-        
-        
     }
 }
-
-
 extension PrintShopDetailViewController: UICollectionViewDelegate {
     
 }
-
 
 extension PrintShopDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -190,6 +193,4 @@ extension PrintShopDetailViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
-    
 }

@@ -1,16 +1,15 @@
 //
-//  PrintShopEntity.swift
+//  PrintShopDetailEntity.swift
 //  BaseDomainInterface
 //
-//  Created by yongbeomkwak on 10/23/23.
+//  Created by 박의서 on 2023/11/15.
 //  Copyright © 2023 com. All rights reserved.
 //
 
 import Foundation
 
-
 // MARK: - PrintShop
-public struct PrintShopEntity {
+public struct PrintShopDetailEntity {
     public let id: Int
     public let name, address, phone, email: String
     public let homepage: String
@@ -38,7 +37,7 @@ public struct PrintShopEntity {
         self.products = products
     }
     
-    public static func makeErrorEntity() -> PrintShopEntity {
-        PrintShopEntity(id: 0, name: "Error Entity", address: "", phone: "", email: "", homepage: "",type: "",printType: "",afterProcess: "",businessHours: "" ,introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "",products: [])
+    public static func makeErrorEntity() -> PrintShopDetailEntity {
+        PrintShopDetailEntity(id: 0, name: "Error Entity", address: "", phone: "", email: "", homepage: "",type: "",printType: "",afterProcess: "",businessHours: "" ,introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "",products: [])
     }
 }

@@ -15,9 +15,7 @@ import DesignSystem
 
 class AlleyPageViewController: UIViewController {
 
-    
     public var viewControllers: [UIViewController] = []
-
     
     let disposeBag = DisposeBag()
     
@@ -25,34 +23,33 @@ class AlleyPageViewController: UIViewController {
     
     lazy var input: AlleyPageViewModel.Input = .init()
     
-    
     lazy var layer: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
     }
     
     lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layer).then {
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.bounces = false
         $0.register(PageTitleCollectionViewCell.self, forCellWithReuseIdentifier: PageTitleCollectionViewCell.identifer)
         $0.delegate = self
         $0.dataSource = self
     }
 
-
-    lazy var indicaatorBar: UIView = UIView().then {
-        $0.backgroundColor = .blue
+    lazy var indicatorBar: UIView = UIView().then {
+        $0.backgroundColor = .setColor(.grey(.grey800))
     }
     
     lazy var baseLine: UIView = UIView().then {
-        $0.backgroundColor = .black.withAlphaComponent(0.1)
+        $0.backgroundColor = .setColor(.grey(.grey100))
     }
-    
     
     lazy var pageViewController: UIPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil).then {
         $0.dataSource = self
-        $0.delegate = self 
+        $0.delegate = self
     }
     
     init(viewModel: AlleyPageViewModel) {
+        DEBUG_LOG("\(Self.self) Init ✅ ")
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -65,7 +62,6 @@ class AlleyPageViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -73,21 +69,17 @@ class AlleyPageViewController: UIViewController {
         configureCommonUI()
         bindViewModel()
     }
-    
-
 }
 
 extension AlleyPageViewController {
     
-    
     public func setChildren(_ viewControllers: [UIViewController]) {
         self.viewControllers = viewControllers
         pageViewController.setViewControllers([self.viewControllers[0]], direction: .forward, animated: true)
-    
     }
     
     func addSubviews() {
-        self.view.addSubviews(collectionView,baseLine,indicaatorBar,pageViewController.view)
+        view.addSubviews(collectionView, baseLine, indicatorBar, pageViewController.view)
         addChild(pageViewController)
         pageViewController.didMove(toParent: self)
     }
@@ -102,43 +94,28 @@ extension AlleyPageViewController {
         
         baseLine.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(1)
-            $0.top.equalTo(collectionView.snp.bottom)
+            $0.height.equalTo(0.8)
+            $0.centerY.equalTo(collectionView.snp.bottom)
         }
         
-        indicaatorBar.snp.makeConstraints {
+        indicatorBar.snp.makeConstraints {
             $0.bottom.equalTo(baseLine.snp.bottom)
             $0.height.equalTo(2)
-            $0.width.equalTo(APP_WIDTH() / CGFloat(viewControllers.count ))
+            $0.width.equalTo(APP_WIDTH() / CGFloat(viewControllers.count))
             $0.left.equalToSuperview()
-            
         }
-        
         
         pageViewController.view.snp.makeConstraints {
             $0.top.equalTo(baseLine.snp.bottom)
-            $0.left.right.bottom.equalToSuperview()
-
-        }
-        
-        
-        
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view)
+        } // TODO: - 페이지컨트롤러 레이블 레이아웃 맞추기..
     }
     
     func bindViewModel() {
-        
         let output = viewModel.transform(input: input)
-        
         
         bindCollectionEvent()
         bindConstraints(output: output)
     }
-    
-
-    
 }
-
-
-
-
-
