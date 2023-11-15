@@ -46,7 +46,7 @@ class FilterViewController: UIViewController {
     
     lazy var findButton: UIButton = UIButton().then {
         $0.backgroundColor = DesignSystemAsset.MainBlue.blue500.color
-        $0.setTitle("인쇄소 찾아보기", for: .normal)
+        $0.setTitle("찾아보기", for: .normal)
         $0.setTitleColor(DesignSystemAsset.Sub.white.color, for: .normal)
         $0.titleLabel?.font = .setFont(.subtitle1)
         $0.layer.cornerRadius = 8
