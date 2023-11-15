@@ -56,14 +56,12 @@ public final class FilterButton: UIButton {
         addTargets()
         
         NotificationCenter.default.rx.notification(Notification.Name("refreshFilter"))
-            .map{_ in ()}
+            .map{ _ in () }
             .subscribe(onNext: { [weak self] _ in
                 
                 guard let self else {return}
                 configureUI(self.type)
                 self.isSelected = false
-                
-                
             })
             .disposed(by: disposeBag)
     }
@@ -91,15 +89,15 @@ extension FilterButton {
             self.setTitleColor(.setColor(.grey(.grey900)), for: .normal)
             
         case .filter:
-            self.backgroundColor = .setColor(.mainBlue(.blue500))
-            self.setImage(DesignSystemAsset.Icon.filter.image, for: .normal) // 이미지 변경
+            self.backgroundColor = .setColor(.sub(.black))
+            self.setImage(DesignSystemAsset.Icon.filter.image, for: .normal)
             self.setTitleColor(.setColor(.sub(.white)), for: .normal)
             
         case .selected:
-            self.backgroundColor = .setColor(.mainBlue(.blue50))
-            self.layer.borderColor = UIColor.setColor(.mainBlue(.blue500)).cgColor
+            self.backgroundColor = .setColor(.grey(.grey100))
+            self.layer.borderColor = UIColor.setColor(.grey(.grey900)).cgColor
             self.layer.borderWidth = 1.0
-            self.setTitleColor(.setColor(.mainBlue(.blue500)), for: .normal)
+            self.setTitleColor(.setColor(.grey(.grey900)), for: .normal)
             self.titleLabel?.font = UIFont.setFont(.subtitle2)
             
         case .selectedWithX:
@@ -107,7 +105,7 @@ extension FilterButton {
             self.layer.borderColor = UIColor.setColor(.mainBlue(.blue500)).cgColor
             self.layer.borderWidth = 1.0
             self.setTitleColor(.setColor(.grey(.grey900)), for: .normal)
-            self.setImage(DesignSystemAsset.Icon.close.image, for: .normal)
+            self.setImage(DesignSystemAsset.Icon.close.image, for: .normal) // TODO: - 이미지 벼경
             self.imageEdgeInsets = UIEdgeInsets(top: 3, left: 7, bottom: 3, right: 5)
         }
         
