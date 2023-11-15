@@ -16,7 +16,7 @@ import BaseDomainInterface
 final class RemotePrintShopDataSourceImpl: BaseRemoteDataSource<PrintShopAPI>, RemotePrintShopDataSource {
     func fetchPrintShop(id: Int) -> RxSwift.Single<BaseDomainInterface.PrintShopEntity> {
         request(.one(id: id))
-            .map(PrintShopResponseDTO.self)
+            .map(PrintShopDetailResponseDTO.self)
             .map{$0.toDomain()}
     }
     
