@@ -27,12 +27,6 @@ class PrintShopDetailViewController: UIViewController {
     lazy var output = viewModel.transform(input: input)
     
     let disposeBag = DisposeBag()
-    
-    let printShopTmp = PrintShopEntity(id: 1, name: "인쇄소", address: "강남구", phone: "행드폰번호", email: "이메일", homepage: "홈페이지", type: "인쇄기획사", printType: "먼데?", afterProcess: "후가공", businessHours: "영업시간", introduction: "소개글", logoImage: "", backgroundImage: "", latitude: "", longitude: "", products: [
-        ProductEntity(id: 1, name: "안녕", size: "", paper: "", printType: "타입", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "https://printingstreets.uk/cb59424b-3352-4750-90e0-84131f43718f_28afe2c0-6042-429a-8289-423e4b4a7800_4c7fdc9ad4ec035f858a142d2177531e.png?width=564&height=564", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: ""),
-        ProductEntity(id: 1, name: "안녕", size: "", paper: "", printType: "타입", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "https://printingstreets.uk/cb76c11a-9cd4-43c5-99db-8db650172d66_f4049ed7-97c0-4b2c-8214-923041d9115e_57a63cbb4b2434e7c82525485f669477.png?width=800&height=1061", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: ""),
-        ProductEntity(id: 1, name: "안녕", size: "", paper: "", printType: "타입", afterProcess: "", designer: "", introduction: "하이루", description: "", mainImage: "https://printingstreets.uk/cb76c11a-9cd4-43c5-99db-8db650172d66_f4049ed7-97c0-4b2c-8214-923041d9115e_57a63cbb4b2434e7c82525485f669477.png?width=800&height=1061", images: [], category: .makeErrorEntity(), printShop: .makeErrorEntity(), tags: [], reviews: [], isBookmarked: false, statusCode: 200, message: "")
-    ])
 
     private let scrollView = UIScrollView()
     
@@ -41,7 +35,7 @@ class PrintShopDetailViewController: UIViewController {
         $0.minimumLineSpacing = .zero
     }
 
-    private lazy var imageCollectionView = makeCollectionView(layout: layout, scrollDirection: .horizontal, delegate: self, dataSource: self).then {
+    public lazy var imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.isPagingEnabled = true // 컨텐츠 만큼 스크롤
         $0.register(PrintShopPhotosCollectionViewCell.self, forCellWithReuseIdentifier: PrintShopPhotosCollectionViewCell.identifier)
@@ -231,25 +225,8 @@ extension PrintShopDetailViewController {
 }
 
 // MARK: - Collectionview Delegate
-// TODO: - 딜리게이트 분리
 extension PrintShopDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: APP_WIDTH(), height: 251)
-    }
-}
-
-extension PrintShopDetailViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        tmp.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PrintShopPhotosCollectionViewCell.identifier, for: indexPath) as? PrintShopPhotosCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        cell.update(id: tmp[indexPath.row])
-        
-        return cell
     }
 }

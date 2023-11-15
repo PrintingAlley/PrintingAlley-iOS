@@ -114,7 +114,7 @@ extension PrintShopInfoTableViewCell {
     
     @objc
     func copyLabel() {
-        UIPasteboard.general.string = self.label.text
+        COPY(text: self.label.text ?? "")
         contentView.showToast(text: "\(copyObject)가 복사되었어요!")
     }
 }

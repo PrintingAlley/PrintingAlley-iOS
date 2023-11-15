@@ -16,7 +16,7 @@ class PrintShopPhotosCollectionViewCell: UICollectionViewCell {
     
     static let identifier: String = "PrintShopPhotosCollectionViewCell"
     
-    lazy var imageView:UIImageView = UIImageView().then {
+    lazy var imageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
     }
     
@@ -47,8 +47,8 @@ extension PrintShopPhotosCollectionViewCell {
     }
     
     
-    public func update(id: String) {
-        imageView.image = DesignSystemAsset.Logo.tmpPrintShop.image
+    public func update(model: String) {
+        imageView.kf.setImage(with: URL(string: model))
     }
     
 }
