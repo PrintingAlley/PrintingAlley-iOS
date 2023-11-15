@@ -99,7 +99,7 @@ extension PrintShopInfoTableViewCell {
 
         case 3:
             iconImage.image = DesignSystemAsset.Icon.clockGrey.image
-            label.text = model.email // 영업 시간
+            label.text = model.businessHours
             copyButton.isHidden = true
 
         case 4:
