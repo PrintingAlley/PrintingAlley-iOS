@@ -35,6 +35,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
         $0.delegate = self
         $0.register(ProductDetailHeaderCollectionViewCell.self, forCellWithReuseIdentifier: ProductDetailHeaderCollectionViewCell.identifer)
         $0.bounces = false
+        $0.backgroundColor = .white
     }
     
     
