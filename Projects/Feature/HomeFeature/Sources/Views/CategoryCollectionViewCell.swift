@@ -58,7 +58,7 @@ extension CategoryCollectionViewCell {
     public func update(model: ChildrenTagEntity) {
         label.setTitle(title: model.name, textColor: .grey(.grey800), font: .body2)
         image.kf
-            .setImage(with: URL(string: model.image),options: [.processor(SVGImgProcessor())])
+            .setImage(with: URL(string: model.image))
         
     }
 }
