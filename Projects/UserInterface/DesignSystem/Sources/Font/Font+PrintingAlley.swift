@@ -96,13 +96,13 @@ public extension UIFont.AlleyFontSystem {
             return 24
             
         case .body2:
-            return 20
+            return 22
             
         case .body3:
             return 12
             
         case .caption1:
-            return 18
+            return 16
             
         case .caption2:
             return 12

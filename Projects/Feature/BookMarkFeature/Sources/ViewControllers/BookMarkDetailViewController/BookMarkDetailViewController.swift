@@ -35,7 +35,7 @@ class BookMarkDetailViewController: UIViewController {
     }
 
     lazy var editButton: UIButton = UIButton().then{
-        $0.setImage(DesignSystemAsset.Icon.pencil.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.smallPencil.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFit
     }
     

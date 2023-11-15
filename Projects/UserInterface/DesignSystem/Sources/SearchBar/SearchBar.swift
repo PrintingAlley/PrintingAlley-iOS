@@ -29,7 +29,7 @@ public final class SearchBar: UIView {
     private lazy var searchButton = UIButton().then {
         $0.addTarget(self, action: #selector(touchSearchIcon), for: .touchUpInside)
         $0.setImage(DesignSystemAsset.Icon.search.image, for: .normal)
-        $0.setImage(DesignSystemAsset.Icon.roundXmark.image, for: .highlighted)
+        $0.setImage(DesignSystemAsset.Icon.smallclose.image, for: .highlighted)
     }
     
     override public func layoutSubviews() {

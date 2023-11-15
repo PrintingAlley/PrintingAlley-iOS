@@ -109,3 +109,11 @@ public func GRID_HEIGHT() -> CGFloat {
 public func HORIZON_MARGIN1() -> CGFloat {
     return 16.0
 }
+
+public func RADIUS1() -> CGFloat {
+    return 8.0
+}
+
+public func RADIUS2() -> CGFloat {
+    return 16.0
+}
