@@ -60,7 +60,7 @@ extension PrintShopTableViewCell {
         
         separator.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.bottom.equalToSuperview()
         }
         

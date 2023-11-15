@@ -90,8 +90,8 @@ extension SearchViewController {
     
     private func makeConstraints() {
         searchBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(11)
-            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(17)
+            $0.leading.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.height.equalTo(56)
         }
         

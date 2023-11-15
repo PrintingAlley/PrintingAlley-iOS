@@ -60,7 +60,7 @@ final class HomeViewController: UIViewController {
     
     public let contentsCount = 4 // 더미
     
-    public let headerViewHeight: CGFloat = 280
+    public let headerViewHeight: CGFloat = 284
     
     init(viewModel: HomeViewModel, categorySearchFactory: CategorySearchFactory, webviewFacotry: WebViewFactory) {
         self.categorySearchFactory = categorySearchFactory
@@ -118,7 +118,7 @@ extension HomeViewController {
         }
         
         logoImage.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(26)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(33)
             $0.centerX.equalToSuperview()
         }
         

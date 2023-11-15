@@ -21,7 +21,7 @@ class CategoryEmptyHeaderView: UIView {
 
     lazy var titleLabel: AlleyLabel = AlleyLabel("설정한 필터에 맞는 검색 결과가 없어요.", textColor: .sub(.black), font: .subtitle2, alignment: .center)
     
-    lazy var subtitleLabel: AlleyLabel = AlleyLabel("설정한 필터에 맞는 검색 결과가 없어요.", textColor: .grey(.grey300), font: .subtitle3, alignment: .center)
+    lazy var subtitleLabel: AlleyLabel = AlleyLabel("필터를 조정하거나 초기화 해보세요.", textColor: .grey(.grey300), font: .subtitle3, alignment: .center)
     
     lazy var button: UIButton = UIButton().then {
         $0.backgroundColor = .setColor(.grey(.grey50))

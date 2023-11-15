@@ -105,7 +105,7 @@ extension FilterButton {
             self.layer.borderColor = UIColor.setColor(.mainBlue(.blue500)).cgColor
             self.layer.borderWidth = 1.0
             self.setTitleColor(.setColor(.grey(.grey900)), for: .normal)
-            self.setImage(DesignSystemAsset.Icon.close.image, for: .normal) // TODO: - 이미지 벼경
+            self.setImage(DesignSystemAsset.Icon.smallclose.image, for: .normal) // TODO: - 이미지 벼경
             self.imageEdgeInsets = UIEdgeInsets(top: 3, left: 7, bottom: 3, right: 5)
         }
         

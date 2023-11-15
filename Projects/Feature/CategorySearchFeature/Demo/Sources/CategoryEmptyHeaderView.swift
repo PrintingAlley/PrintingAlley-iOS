@@ -20,7 +20,7 @@ class CategoryEmptyHeaderView: UIView {
 
     lazy var titleLabel: AlleyLabel = AlleyLabel("설정한 필터에 맞는 검색 결과가 없어요.",textColor: .sub(.black),font: .subtitle2,alignment: .center)
     
-    lazy var subtitleLabel: AlleyLabel = AlleyLabel("설정한 필터에 맞는 검색 결과가 없어요.",textColor: .grey(.grey300),font: .subtitle3,alignment: .center)
+    lazy var subtitleLabel: AlleyLabel = AlleyLabel("필터를 조정하거나 초기화 해보세요.",textColor: .grey(.grey300),font: .subtitle3,alignment: .center)
     
     lazy var button: UIButton = UIButton().then {
         $0.backgroundColor = .setColor(.grey(.grey50))
@@ -29,7 +29,7 @@ class CategoryEmptyHeaderView: UIView {
         $0.titleLabel?.font = .setFont(.subtitle2)
         
         $0.layer.cornerRadius = 8
-        $0.layer.borderColor = .setColor(.grey(.grey100))
+        $0.layer.borderColor = UIColor.setColor(.grey(.grey100)).cgColor
         $0.layer.borderWidth = 1
         
         $0.addTarget(self, action: #selector(press), for: .touchUpInside)

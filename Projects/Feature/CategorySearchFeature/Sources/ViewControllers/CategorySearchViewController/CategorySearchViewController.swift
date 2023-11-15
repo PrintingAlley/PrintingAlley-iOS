@@ -106,7 +106,7 @@ class CategorySearchViewController: UIViewController {
 
         addSubviews()
         makeConstraints()
-        self.naviTitleLabel.setTitle(title: viewModel.title, textColor: .sub(.black), font: .subtitle1, alignment: .center)
+        self.naviTitleLabel.setTitle(title: viewModel.title, textColor: .sub(.black), font: .header3, alignment: .center)
         configureCommonUI()
         bindViewModel()
     }
@@ -170,7 +170,8 @@ extension CategorySearchViewController {
         
         gridCollectionView.snp.makeConstraints {
             $0.top.equalTo(filterButton.snp.bottom).offset(16)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(24)
         }
 
         indicator.snp.makeConstraints {
