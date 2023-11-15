@@ -8,8 +8,24 @@
 
 import Foundation
 import BaseDomainInterface
+import UtilityModule
+import RxRelay
 
-class PrintShopProductsViewModel {
+class PrintShopProductsViewModel: ViewModelType {
+    
+    struct Input {
+
+    }
+    
+    struct Output {
+        
+    }
+    
+    func transform(input: Input) -> Output {
+        let output = Output()
+        
+        return output
+    }
     
     var products: [ProductEntity]!
     

@@ -32,6 +32,7 @@ public class PrintShopProductsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         addSubViews()
         makeConstraints()
+        bindViewModel()
     }
     
     required init?(coder: NSCoder) {
@@ -51,6 +52,14 @@ extension PrintShopProductsViewController {
     private func makeConstraints() {
         productsGridView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+    }
+}
+
+extension PrintShopProductsViewController {
+    func bindViewModel() {
+        if viewModel.products.isEmpty {
+            self.productsGridView.setEmptyMessage("작품이 없습니다.")
         }
     }
 }
