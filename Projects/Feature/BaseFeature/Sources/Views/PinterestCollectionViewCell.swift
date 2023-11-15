@@ -26,7 +26,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     var id: Int!
     
     public var imageView = UIImageView().then {
-        $0.setRound([.allCorners], radius: 8)
+        $0.setRound([.allCorners], radius: RADIUS1())
         $0.contentMode = .scaleAspectFit
     }
     

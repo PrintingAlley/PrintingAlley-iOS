@@ -54,7 +54,7 @@ class BookMarkViewController: UIViewController {
         $0.setTitle("삭제", for: .disabled)
         
         $0.setTitleColor(DesignSystemAsset.Grey.grey300.color, for: .disabled)
-        $0.setTitleColor(DesignSystemAsset.Sub.red.color, for: .normal)
+        $0.setTitleColor(DesignSystemAsset.Sub.red500.color, for: .normal)
         
         $0.titleLabel?.font = .setFont(.body1)
         

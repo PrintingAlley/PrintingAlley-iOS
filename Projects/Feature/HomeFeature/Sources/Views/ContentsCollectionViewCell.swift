@@ -12,13 +12,14 @@ import SnapKit
 import DesignSystem
 import Kingfisher
 import ContentDomainInterface
+import UtilityModule
 
 final class ContentsCollectionViewCell: UICollectionViewCell {
     static let identifier = "ContentsCollectionViewCell"
     
     private let image = UIImageView().then {
         $0.contentMode = .scaleToFill
-        $0.setRound(.allCorners, radius: 8)
+        $0.setRound(.allCorners, radius: RADIUS1())
     }
     
     private let label = AlleyLabel().then {

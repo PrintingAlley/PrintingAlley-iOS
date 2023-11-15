@@ -16,14 +16,14 @@ public final class BookMarkCollectionViewCell: UICollectionViewCell {
 
     
     lazy var imageView = UIImageView().then {
-        $0.setRound([.allCorners], radius: 8)
+        $0.setRound([.allCorners], radius: RADIUS1())
         $0.image = DesignSystemAsset.Logo.tmpCard1.image
         $0.contentMode = .scaleAspectFill
     }
     
     lazy var whiteEmptyView: UIView = UIView().then {
         $0.backgroundColor = .white.withAlphaComponent(0.4)
-        $0.setRound([.allCorners], radius: 8)
+        $0.setRound([.allCorners], radius: RADIUS1())
     }
     
     lazy var button: UIButton = UIButton().then {

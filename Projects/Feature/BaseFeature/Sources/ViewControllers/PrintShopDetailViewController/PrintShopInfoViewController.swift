@@ -32,7 +32,7 @@ final class PrintShopInfoViewController: UIViewController {
     
     private let greyRoundView = UIView().then {
         $0.backgroundColor = .setColor(.grey(.grey50))
-        $0.setRound(.allCorners, radius: 8)
+        $0.setRound(.allCorners, radius: RADIUS1())
     }
     
     private let printTypeTitle = AlleyLabel("인쇄 방식", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {

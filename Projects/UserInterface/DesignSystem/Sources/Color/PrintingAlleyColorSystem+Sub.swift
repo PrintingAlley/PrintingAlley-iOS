@@ -12,7 +12,7 @@ public extension UIColor.AlleyColorSystem {
     enum Sub: PrintingAlleyColorable {
         case white
         case black
-        case red
+        case red500
     }
 }
 
@@ -21,7 +21,7 @@ public extension UIColor.AlleyColorSystem.Sub {
         switch self {
         case .white: return DesignSystemAsset.Sub.white.color
         case .black: return DesignSystemAsset.Sub.black.color
-        case .red : return DesignSystemAsset.Sub.red.color
+        case .red500 : return DesignSystemAsset.Sub.red500.color
         }
     }
 }
