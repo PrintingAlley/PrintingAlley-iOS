@@ -35,11 +35,19 @@ final class PrintShopInfoViewController: UIViewController {
         $0.setRound(.allCorners, radius: 8)
     }
     
-    private let printTypeTitle = AlleyLabel("굵은글씨", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left)
-    private let printTypeLabel = AlleyLabel("디지털인쇄, 옵셋인쇄", textColor: .grey(.grey500), font: .body2)
+    private let printTypeTitle = AlleyLabel("인쇄 방식", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
+        $0.sizeToFit()
+    }
+    public lazy var printTypeLabel = AlleyLabel("\(viewModel.printShop.printType)", textColor: .grey(.grey500), font: .body2).then {
+        $0.sizeToFit()
+    }
     
-    private let afterProcessTitle = AlleyLabel("굵은글씨", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left)
-    private let afterProcessLabel = AlleyLabel("후가공 내용", textColor: .grey(.grey500), font: .body2)
+    private let afterProcessTitle = AlleyLabel("후가공", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
+        $0.sizeToFit()
+    }
+    public lazy var afterProcessLabel = AlleyLabel("\(viewModel.printShop.afterProcess)", textColor: .grey(.grey500), font: .body2).then {
+        $0.sizeToFit()
+    }
     
     public let viewModel: PrintShopInfoViewModel!
     
@@ -88,9 +96,9 @@ extension PrintShopInfoViewController {
         greyRoundView.snp.makeConstraints {
             $0.top.equalTo(tableView.snp.bottom).offset(16)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
-            $0.height.equalTo(250)
-            $0.bottom.equalToSuperview().inset(42) // TODO: - 텍스트 업데이트 후 높이 구해서 update
-        }
+            $0.height.equalTo(printTypeTitle.frame.height + printTypeLabel.frame.height + afterProcessTitle.frame.height + afterProcessLabel.frame.height + 36)
+            $0.bottom.equalToSuperview().inset(42)
+        } // height: 라벨 height + inset 값들
         
         printTypeTitle.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
@@ -133,5 +141,4 @@ extension PrintShopInfoViewController: UITableViewDataSource {
         cell.update(model: viewModel.printShop, index: indexPath.row)
         return cell
     }
-
 }
