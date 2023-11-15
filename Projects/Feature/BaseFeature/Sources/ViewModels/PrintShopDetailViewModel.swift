@@ -31,6 +31,7 @@ final class PrintShopDetailViewModel: ViewModelType {
     
     struct Output {
         let dataSource: BehaviorRelay<PrintShopEntity> = .init(value: .init(id: 0, name: "", address: "", phone: "", email: "", homepage: "", type: "", printType: "", afterProcess: "", businessHours: "", introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "", products: []))
+        let runIndicator: BehaviorRelay<Void> = .init(value: ())
     }
     
     func transform(input: Input) -> Output {
