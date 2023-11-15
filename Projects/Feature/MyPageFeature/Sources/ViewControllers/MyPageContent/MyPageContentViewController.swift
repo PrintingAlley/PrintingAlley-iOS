@@ -21,6 +21,8 @@ public class MyPageContentViewController: UIViewController {
 
     var bookMarkFactory: BookMarkFactory!
     var editModalFactory: EditModalFactory!
+    var webViewFactory: WebViewFactory!
+    
     var viewModel: MyPageContentViewModel!
     let disposeBag = DisposeBag()
     let input = MyPageContentViewModel.Input()
@@ -46,9 +48,12 @@ public class MyPageContentViewController: UIViewController {
     
     lazy var headerView: MyPageHeaderView = MyPageHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 78)).then {
         $0.deleagte = self
+        $0.backgroundColor = .clear
     }
     
-    lazy var footerView: MyPageFooterView = MyPageFooterView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 150))
+    lazy var footerView: MyPageFooterView = MyPageFooterView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 150)).then {
+        $0.backgroundColor = .clear
+    }
     
     lazy var tableView: UITableView = UITableView().then {
         $0.register(MyPageCategoryTableViewCell.self, forCellReuseIdentifier: MyPageCategoryTableViewCell.identifier)
@@ -58,15 +63,17 @@ public class MyPageContentViewController: UIViewController {
         $0.bounces = false // 오버 스크롤 방지
         $0.tableHeaderView = headerView
         $0.tableFooterView = footerView
+        $0.backgroundColor = .white
     }
     
     
     
-    init(bookMarkFactory: BookMarkFactory, editModalFactory: EditModalFactory, viewModel: MyPageContentViewModel!) {
+    init(bookMarkFactory: BookMarkFactory, editModalFactory: EditModalFactory, webViewFactory: WebViewFactory , viewModel: MyPageContentViewModel!) {
         
         self.viewModel = viewModel
         self.bookMarkFactory = bookMarkFactory
         self.editModalFactory = editModalFactory
+        self.webViewFactory = webViewFactory
         super.init(nibName: nil, bundle: nil)
     }
     

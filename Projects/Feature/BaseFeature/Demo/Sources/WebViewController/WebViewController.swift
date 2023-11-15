@@ -94,6 +94,7 @@ extension WebViewController {
         
         let request = URLRequest(url: componets.url!)
         
+        
         webView.uiDelegate = self
         webView.navigationDelegate = self
         

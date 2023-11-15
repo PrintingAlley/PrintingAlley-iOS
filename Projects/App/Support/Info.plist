@@ -71,6 +71,8 @@
 		<string>$(NAVER_SECRET)</string>
 		<key>BASE_URL</key>
 		<string>$(BASE_URL)</string>
+		<key>WEB_URL</key>
+		<string>$(WEB_URL)</string>
 		<key>NAVER_MAP_CLIENT_ID</key>
 		<string>$(NAVER_MAP_CLIENT_ID)</string>
 		<key>APP_ID</key>
@@ -98,6 +100,8 @@
 		<string>$(NAVER_SECRET)</string>
 		<key>BASE_URL</key>
 		<string>$(BASE_URL)</string>
+		<key>WEB_URL</key>
+		<string>$(WEB_URL)</string>
 		<key>NAVER_MAP_CLIENT_ID</key>
 		<string>$(NAVER_MAP_CLIENT_ID)</string>
 		<key>APP_ID</key>

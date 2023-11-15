@@ -116,6 +116,9 @@ private class MyPageContentDependencyc8db405cbc62d6eda9bfProvider: MyPageContent
     var authDomainFactory: any AuthDomainFactory {
         return appComponent.authDomainFactory
     }
+    var webViewFactory: any WebViewFactory {
+        return appComponent.webViewFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -491,6 +494,7 @@ extension MyPageContentComponent: Registration {
         keyPathToName[\MyPageContentDependency.userDomainFactory] = "userDomainFactory-any UserDomainFactory"
         keyPathToName[\MyPageContentDependency.editModalFactory] = "editModalFactory-any EditModalFactory"
         keyPathToName[\MyPageContentDependency.authDomainFactory] = "authDomainFactory-any AuthDomainFactory"
+        keyPathToName[\MyPageContentDependency.webViewFactory] = "webViewFactory-any WebViewFactory"
     }
 }
 extension AfterSearchComponent: Registration {

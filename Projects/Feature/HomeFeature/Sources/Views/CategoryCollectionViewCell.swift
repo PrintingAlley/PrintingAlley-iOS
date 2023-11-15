@@ -13,6 +13,7 @@ import DesignSystem
 import TagDomainInterface
 import BaseDomainInterface
 import Kingfisher
+import UtilityModule
 
 final class CategoryCollectionViewCell: UICollectionViewCell {
     static let identifier = "CategoryCollectionViewCell"
@@ -56,9 +57,8 @@ extension CategoryCollectionViewCell {
     
     public func update(model: ChildrenTagEntity) {
         label.setTitle(title: model.name, textColor: .grey(.grey800), font: .body2)
-        
         image.kf
-            .setImage(with: URL(string: model.image))
+            .setImage(with: URL(string: model.image),options: [.processor(SVGImgProcessor())])
         
     }
 }
