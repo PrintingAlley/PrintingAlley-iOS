@@ -30,7 +30,7 @@ class CategoryEmptyHeaderView: UIView {
         $0.titleLabel?.font = .setFont(.subtitle2)
         
         $0.layer.cornerRadius = 8
-        $0.layer.borderColor = .setColor(.grey(.grey100))
+        $0.layer.borderColor = UIColor.setColor(.grey(.grey100)).cgColor
         $0.layer.borderWidth = 1
         
         $0.addTarget(self, action: #selector(press), for: .touchUpInside)
