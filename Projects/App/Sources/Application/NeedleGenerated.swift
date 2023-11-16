@@ -377,6 +377,19 @@ private class ProductDetailDependency1e6e934c90b49cbc48b5Provider: ProductDetail
 private func factorydd8ac0cf9df6ffed7cb6f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return ProductDetailDependency1e6e934c90b49cbc48b5Provider(appComponent: parent1(component) as! AppComponent)
 }
+private class PrintShopProductsDependencyf34e490a03abe7ccf2b8Provider: PrintShopProductsDependency {
+    var productDetailFactory: any ProductDetailFactory {
+        return appComponent.productDetailFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->PrintShopProductsComponent
+private func factory653fb1901f08bc07d079f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return PrintShopProductsDependencyf34e490a03abe7ccf2b8Provider(appComponent: parent1(component) as! AppComponent)
+}
 private class BookMarkDomainDependency2ef018453822a996a9abProvider: BookMarkDomainDependency {
     var jwtStoreFactory: any JwtStoreFactory {
         return appComponent.jwtStoreFactory
@@ -620,7 +633,7 @@ extension ProductDetailComponent: Registration {
 }
 extension PrintShopProductsComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\PrintShopProductsDependency.productDetailFactory] = "productDetailFactory-any ProductDetailFactory"
     }
 }
 extension BookMarkDomainComponent: Registration {
@@ -698,7 +711,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->PrintShopDetailComponent", factory2be1884dea2b5d392babf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->WebViewComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->ProductDetailComponent", factorydd8ac0cf9df6ffed7cb6f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->PrintShopProductsComponent", factoryEmptyDependencyProvider)
+    registerProviderFactory("^->AppComponent->PrintShopProductsComponent", factory653fb1901f08bc07d079f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BookMarkDomainComponent", factory9b3fac1bd377f0830537f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ContentDomainComponent", factory5918d17a9811afd8dadef47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ProductDomainComponent", factory5ac7597a79163de1a05ff47b58f8f304c97af4d5)
