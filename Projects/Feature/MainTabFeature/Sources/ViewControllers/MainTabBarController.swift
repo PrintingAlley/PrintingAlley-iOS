@@ -54,9 +54,10 @@ public class MainTabBarController: UITabBarController {
         configureUI()
     }
     
-    public override func viewWillLayoutSubviews() {
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         tabBar.frame.size.height = 80
-            tabBar.frame.origin.y = view.frame.height - 80
+        tabBar.frame.origin.y = view.frame.height - 80
     }
 }
 

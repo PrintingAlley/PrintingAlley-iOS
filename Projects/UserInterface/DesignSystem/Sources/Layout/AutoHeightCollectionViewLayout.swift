@@ -66,7 +66,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
                     attributes.frame = insetFrame
                     cache.append(attributes)
             
-            contentHeight = max(frame.maxY, contentHeight)
+            contentHeight = max(frame.maxY, contentHeight) + 2 // contentInset을 위해 6 더함 (가장 밑 간격 24)
             
             yOffset[column] += height
             column = column < (numberOfColumns - 1) ? (column + 1) : 0
