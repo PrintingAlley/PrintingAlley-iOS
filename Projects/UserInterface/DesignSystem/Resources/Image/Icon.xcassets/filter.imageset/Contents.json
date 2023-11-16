@@ -1,16 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "Frame 1000002978.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "mdi-light_chevron-down@2x.png",
+      "filename" : "Frame 1000002978@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "mdi-light_chevron-down@3x.png",
+      "filename" : "Frame 1000002978@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

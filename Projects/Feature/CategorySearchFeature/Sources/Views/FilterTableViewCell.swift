@@ -12,7 +12,7 @@ import BaseDomainInterface
 import BaseFeature
 
 
-class TailFilterTableViewCell: UITableViewCell {
+class FilterTableViewCell: UITableViewCell {
 
     
     public static let identifier = "FirstFillterTableViewCell"
@@ -45,7 +45,7 @@ class TailFilterTableViewCell: UITableViewCell {
 
 }
 
-extension TailFilterTableViewCell {
+extension FilterTableViewCell {
     
     func makeCollectionView(layout: UICollectionViewFlowLayout, scrollDirection: UICollectionView.ScrollDirection) -> UICollectionView {
         layout.scrollDirection = scrollDirection
@@ -63,8 +63,7 @@ extension TailFilterTableViewCell {
     }
     
     func makeConstraints() {
-
-        
+    
         collectionView.snp.makeConstraints {
             $0.left.equalToSuperview().inset(24)
             $0.right.equalToSuperview()
@@ -82,7 +81,7 @@ extension TailFilterTableViewCell {
 
 
 
-extension TailFilterTableViewCell: UICollectionViewDelegateFlowLayout {
+extension FilterTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
@@ -96,14 +95,12 @@ extension TailFilterTableViewCell: UICollectionViewDelegateFlowLayout {
             $0.sizeToFit()
             
         }
-        
-        
-        
+  
         return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        4
+        6
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { //셀 층간의 간격 (세로)
@@ -113,7 +110,7 @@ extension TailFilterTableViewCell: UICollectionViewDelegateFlowLayout {
 
 }
 
-extension TailFilterTableViewCell: UICollectionViewDataSource {
+extension FilterTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         

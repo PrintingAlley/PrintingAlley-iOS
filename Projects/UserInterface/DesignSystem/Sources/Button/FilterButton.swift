@@ -101,12 +101,12 @@ extension FilterButton {
             self.titleLabel?.font = UIFont.setFont(.subtitle2)
             
         case .selectedWithX:
-            self.backgroundColor = .setColor(.mainBlue(.blue50))
-            self.layer.borderColor = UIColor.setColor(.mainBlue(.blue500)).cgColor
+            self.backgroundColor = .setColor(.sub(.white))
+            self.layer.borderColor = UIColor.setColor(.grey(.grey300)).cgColor
             self.layer.borderWidth = 1.0
             self.setTitleColor(.setColor(.grey(.grey900)), for: .normal)
-            self.setImage(DesignSystemAsset.Icon.close.image, for: .normal) // TODO: - 이미지 벼경
-            self.imageEdgeInsets = UIEdgeInsets(top: 3, left: 7, bottom: 3, right: 5)
+            self.setImage(DesignSystemAsset.Icon.smallclose.image, for: .normal)
+            self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         }
         
         self.imageView?.contentMode = .scaleAspectFit

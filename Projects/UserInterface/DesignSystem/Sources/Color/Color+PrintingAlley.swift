@@ -13,6 +13,7 @@ public extension UIColor {
         case mainBlue(Mainblue)
         case grey(Grey)
         case sub(Sub)
+        case yellow(Yellow)
     }
     
     static func setColor(_ style: AlleyColorSystem) -> UIColor {
@@ -24,6 +25,9 @@ public extension UIColor {
             return colorable.color
             
         case let .sub(colorable as PrintingAlleyColorable):
+            return colorable.color
+            
+        case let .yellow(colorable as PrintingAlleyColorable):
             return colorable.color
         }
     }

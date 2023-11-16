@@ -11,16 +11,24 @@ import DesignSystem
 import UtilityModule
 import SnapKit
 import Then
+import BaseFeatureInterface
+import RxSwift
 
 public class PrintShopProductsViewController: UIViewController {
 
+    let productDetailFactory: ProductDetailFactory!
+    
     let viewModel: PrintShopProductsViewModel!
+    
+    let input = PrintShopProductsViewModel.Input()
+    
+    let disposeBag = DisposeBag()
     
     private lazy var gridLayout = AutoHeightCollectionViewLayout().then {
         $0.delegate = self
     }
     
-    private lazy var productsGridView = UICollectionView(frame: .zero, collectionViewLayout: gridLayout).then {
+    lazy var productsGridView = UICollectionView(frame: .zero, collectionViewLayout: gridLayout).then {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         $0.dataSource = self
@@ -28,7 +36,8 @@ public class PrintShopProductsViewController: UIViewController {
         $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
     }
     
-    init(viewModel: PrintShopProductsViewModel!) {
+    init(viewModel: PrintShopProductsViewModel!, productDetailFactory: ProductDetailFactory) {
+        self.productDetailFactory = productDetailFactory
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         addSubViews()
@@ -59,9 +68,11 @@ extension PrintShopProductsViewController {
 
 extension PrintShopProductsViewController {
     func bindViewModel() {
+        let output = viewModel.transform(input: input)
         if viewModel.products.isEmpty {
             self.productsGridView.setEmptyMessage("등록된 작품이 없어요.")
         }
+        bindItemSelected(output: output)
     }
 }
 

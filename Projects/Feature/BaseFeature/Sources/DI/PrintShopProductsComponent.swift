@@ -11,8 +11,12 @@ import NeedleFoundation
 import BaseFeatureInterface
 import BaseDomainInterface
 
-public final class PrintShopProductsComponent: Component<EmptyDependency>, PrintShopProductsFactory {
+public protocol PrintShopProductsDependency: Dependency {
+    var productDetailFactory: any ProductDetailFactory { get }
+}
+
+public final class PrintShopProductsComponent: Component<PrintShopProductsDependency>, PrintShopProductsFactory {
     public func makeView(products: [ProductEntity]) -> UIViewController {
-        PrintShopProductsViewController(viewModel: PrintShopProductsViewModel(products: products))
+        PrintShopProductsViewController(viewModel: PrintShopProductsViewModel(products: products), productDetailFactory: dependency.productDetailFactory)
     }
 }

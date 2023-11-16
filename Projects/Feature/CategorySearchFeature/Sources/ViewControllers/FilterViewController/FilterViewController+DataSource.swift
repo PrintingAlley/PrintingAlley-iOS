@@ -38,20 +38,15 @@ extension FilterViewController: UITableViewDataSource {
         return thirdFloor + (secondFloor != .zero ? 1 : 0) // 섹션안에 2층짜리가 있으면 무조건 하나는 있어야함
         
     }
-    
-
-
-    
+     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        
-        if section == .zero {
-            return nil
-        }
+          
+//        if section == .zero {
+//            return nil
+//        }
         
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: FilterSectionHeaderView.identifer) as? FilterSectionHeaderView else {
-            
-            
+             
             return UIView()
         }
         
@@ -61,7 +56,6 @@ extension FilterViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        
         
         if section == .zero {
             guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: TopCellSectionFooterView.identifer) as? TopCellSectionFooterView else {
@@ -86,16 +80,14 @@ extension FilterViewController: UITableViewDataSource {
         let section = indexPath.section
         let row = indexPath.row
              
-        
         if viewModel.dataSource.value[section].children[row].children.isEmpty {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TailFilterTableViewCell.identifier, for: indexPath) as? TailFilterTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: FilterTableViewCell.identifier, for: indexPath) as? FilterTableViewCell else {
                 return UITableViewCell()
             }
             
             cell.update(model: viewModel.dataSource.value[section])
             cell.selectionStyle = .none
-        
-            
+         
             return cell
         }
         

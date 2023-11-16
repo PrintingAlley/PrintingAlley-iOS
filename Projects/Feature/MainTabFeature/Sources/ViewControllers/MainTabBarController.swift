@@ -29,9 +29,9 @@ public class MainTabBarController: UITabBarController {
     
     private let tabBarItems: [UITabBarItem] = {
         let items = [
-            UITabBarItem(title: "홈", image: DesignSystemAsset.BottomTabIcon.defaultHome.image, selectedImage: DesignSystemAsset.BottomTabIcon.selectedHome.image),
-            UITabBarItem(title: "인쇄소 찾기", image: DesignSystemAsset.BottomTabIcon.defaultSearch.image, selectedImage: DesignSystemAsset.BottomTabIcon.selectedSearch.image),
-        UITabBarItem(title: "나의 골목", image: DesignSystemAsset.BottomTabIcon.defaultPerson.image, selectedImage: DesignSystemAsset.BottomTabIcon.selectedPerson.image)
+            UITabBarItem(title: "홈", image: DesignSystemAsset.BottomTabIcon.defaultHome.image.withRenderingMode(.alwaysOriginal), selectedImage: DesignSystemAsset.BottomTabIcon.selectedHome.image.withRenderingMode(.alwaysOriginal)),
+            UITabBarItem(title: "인쇄사 찾기", image: DesignSystemAsset.BottomTabIcon.defaultSearch.image.withRenderingMode(.alwaysOriginal), selectedImage: DesignSystemAsset.BottomTabIcon.selectedSearch.image.withRenderingMode(.alwaysOriginal)),
+            UITabBarItem(title: "나의 골목", image: DesignSystemAsset.BottomTabIcon.defaultPerson.image.withRenderingMode(.alwaysOriginal), selectedImage: DesignSystemAsset.BottomTabIcon.selectedPerson.image.withRenderingMode(.alwaysOriginal))
         ]
         
         return items
@@ -50,10 +50,14 @@ public class MainTabBarController: UITabBarController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBar.backgroundColor = .brown
-        configureUI()
         styleTabBar()
-        
+        configureUI()
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tabBar.frame.size.height = 80
+        tabBar.frame.origin.y = view.frame.height - 80
     }
 }
 
@@ -79,8 +83,8 @@ extension MainTabBarController {
         for item in tabBarItems {
             item.setTitleTextAttributes(normalAttributes, for: .normal)
             item.setTitleTextAttributes(selectedAttributes, for: .selected)
-            item.imageInsets = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
-            item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 2)
+            item.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
         }
         
         self.tabBar.tintColor =  DesignSystemAsset.Grey.grey1000.color  // 선택된 탭바 아이템 색 변경
