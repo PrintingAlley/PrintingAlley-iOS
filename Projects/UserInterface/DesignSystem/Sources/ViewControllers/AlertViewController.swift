@@ -70,7 +70,7 @@ public class AlertViewController: UIViewController {
     var type: AlertType = .onlyConfirm
     
     lazy var alertView: UIView = UIView().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.layer.cornerRadius = 8
     }
     

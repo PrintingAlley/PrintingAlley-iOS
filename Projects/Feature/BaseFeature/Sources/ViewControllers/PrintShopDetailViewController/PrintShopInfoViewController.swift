@@ -24,7 +24,7 @@ final class PrintShopInfoViewController: UIViewController {
         $0.isScrollEnabled = false
         $0.contentInset = tableViewInsets
         $0.separatorStyle = .none
-        $0.backgroundColor = .white
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.delegate = self
         $0.dataSource = self
         $0.register(PrintShopInfoTableViewCell.self, forCellReuseIdentifier: PrintShopInfoTableViewCell.identifier)

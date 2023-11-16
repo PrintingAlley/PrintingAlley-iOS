@@ -35,7 +35,7 @@ class FilterViewController: UIViewController {
         $0.dataSource = self
         $0.separatorStyle = . none
         $0.bounces = false
-        $0.backgroundColor = .white
+        $0.backgroundColor = .setColor(.sub(.white))
     }
     
     lazy var baseLine: UIView = UIView().then {

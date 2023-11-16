@@ -37,12 +37,12 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
         $0.delegate = self
         $0.register(ProductDetailHeaderCollectionViewCell.self, forCellWithReuseIdentifier: ProductDetailHeaderCollectionViewCell.identifer)
         $0.bounces = false
-        $0.backgroundColor = .white
+        $0.backgroundColor = .setColor(.sub(.white))
     }
     
     
     lazy var infoView: UIView = UIView().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .setColor(.sub(.white))
     }
     
     lazy var titleLabel: AlleyLabel = AlleyLabel().then {
@@ -75,7 +75,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .white
+        self.backgroundColor = .setColor(.sub(.white))
         addSubviews()
         makeConstraints()
         
