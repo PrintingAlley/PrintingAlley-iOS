@@ -42,6 +42,7 @@ class PrintShopDetailViewController: UIViewController {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.isPagingEnabled = true // 컨텐츠 만큼 스크롤
         $0.register(PrintShopPhotosCollectionViewCell.self, forCellWithReuseIdentifier: PrintShopPhotosCollectionViewCell.identifier)
+        $0.bounces = false
     }
     
     private lazy var navigationView = UIView()
@@ -82,11 +83,9 @@ class PrintShopDetailViewController: UIViewController {
     }
     
     lazy var pageViewController = AlleyPageViewController(viewModel: AlleyPageViewModel(titles: ["정보", "작업"])).then {
-        
-        $0.setChildren([UIViewController(), UIViewController()])
+        $0.setChildren([UIViewController(),UIViewController()])
     }
 
-    let tmp: [String] = ["tmpPrintShop", "tmpPrintShop", "tmpPrintShop"]
     
     init(printShopInfoFactory: PrintShopInfoFactory, printShopProductsFactory: PrintShopProductsFactory, viewModel: PrintShopDetailViewModel) {
         self.printShopInfoFactory = printShopInfoFactory
@@ -115,6 +114,7 @@ class PrintShopDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         configureSwipeBack()
     }
+    
 }
 
 // MARK: - UI 함수들

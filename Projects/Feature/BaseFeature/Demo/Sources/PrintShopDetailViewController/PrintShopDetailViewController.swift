@@ -29,7 +29,7 @@ class PrintShopDetailViewController: UIViewController {
         $0.delegate = self
         $0.isPagingEnabled = true // 컨텐츠 만큼 스크롤
         $0.register(PrintShopPhotosCollectionViewCell.self, forCellWithReuseIdentifier: PrintShopPhotosCollectionViewCell.identifier)
-    } // TODO: makeCollectionView 함수로 변경
+    }
     
     private lazy var navigationView = UIView()
     
@@ -43,7 +43,7 @@ class PrintShopDetailViewController: UIViewController {
 
     lazy var titleLabel = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .header3)
 
-    lazy var introduction = AlleyLabel("인쇄", textColor: .grey(.grey500), font: .subtitle3) // TODO: - 색상 변경
+    lazy var introduction = AlleyLabel("인쇄", textColor: .grey(.grey500), font: .subtitle3) 
 
     lazy var callButton: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.callBlack.image, for: .normal)

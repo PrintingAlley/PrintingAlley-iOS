@@ -356,6 +356,9 @@ private func factory2be1884dea2b5d392babf47b58f8f304c97af4d5(_ component: Needle
     return PrintShopDetailDependency796e358411338a10d23bProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class ProductDetailDependency1e6e934c90b49cbc48b5Provider: ProductDetailDependency {
+    var printShopDetailFactory: any PrintShopDetailFactory {
+        return appComponent.printShopDetailFactory
+    }
     var bookMarkBottomSheetFactory: any BookMarkBottomSheetFactory {
         return appComponent.bookMarkBottomSheetFactory
     }
@@ -609,6 +612,7 @@ extension WebViewComponent: Registration {
 }
 extension ProductDetailComponent: Registration {
     public func registerItems() {
+        keyPathToName[\ProductDetailDependency.printShopDetailFactory] = "printShopDetailFactory-any PrintShopDetailFactory"
         keyPathToName[\ProductDetailDependency.bookMarkBottomSheetFactory] = "bookMarkBottomSheetFactory-any BookMarkBottomSheetFactory"
         keyPathToName[\ProductDetailDependency.productDomainFactory] = "productDomainFactory-any ProductDomainFactory"
         keyPathToName[\ProductDetailDependency.bookMarkDomainFactory] = "bookMarkDomainFactory-any BookMarkDomainFactory"

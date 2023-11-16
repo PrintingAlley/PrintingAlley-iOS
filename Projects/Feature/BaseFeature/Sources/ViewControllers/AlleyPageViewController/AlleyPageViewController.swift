@@ -33,6 +33,8 @@ class AlleyPageViewController: UIViewController {
         $0.register(PageTitleCollectionViewCell.self, forCellWithReuseIdentifier: PageTitleCollectionViewCell.identifer)
         $0.delegate = self
         $0.dataSource = self
+        $0.showsHorizontalScrollIndicator = false
+        $0.showsVerticalScrollIndicator = false
     }
 
     lazy var indicatorBar: UIView = UIView().then {
@@ -75,7 +77,7 @@ extension AlleyPageViewController {
     
     public func setChildren(_ viewControllers: [UIViewController]) {
         self.viewControllers = viewControllers
-        pageViewController.setViewControllers([self.viewControllers[0]], direction: .forward, animated: true)
+        pageViewController.setViewControllers([self.viewControllers[0]], direction: .forward, animated: false) // 첫 init 때 애니메이션 방지
     }
     
     func addSubviews() {

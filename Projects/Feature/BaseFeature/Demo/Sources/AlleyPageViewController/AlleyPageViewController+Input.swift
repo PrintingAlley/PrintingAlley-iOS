@@ -33,7 +33,6 @@ extension AlleyPageViewController {
                 
             })
             .map{$0.0}
-            .debug("WWW")
             .bind(to: input.selectedIndex)
             .disposed(by: disposeBag)
         

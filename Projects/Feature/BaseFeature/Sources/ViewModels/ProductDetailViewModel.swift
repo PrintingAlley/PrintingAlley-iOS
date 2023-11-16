@@ -18,7 +18,7 @@ public struct ProductHeaderInfo {
     let id: Int
     let title: String
     let subtitle: String
-    let printShop: String
+    let printShop: PrintShopEntity
     let designer: String
     let images: [String]
 }
@@ -54,7 +54,7 @@ final class ProductDetailViewModel: ViewModelType {
     
     struct Output {
         let showToast: PublishSubject<BaseEntity> = .init()
-        let headerInfo: BehaviorRelay<ProductHeaderInfo> = .init(value:  ProductHeaderInfo(id: 0, title: "", subtitle: "",printShop: "", designer: "",images: []))
+        let headerInfo: BehaviorRelay<ProductHeaderInfo> = .init(value:  ProductHeaderInfo(id: 0, title: "", subtitle: "",printShop: PrintShopEntity.makeErrorEntity(), designer: "",images: []))
         let dataInfo: BehaviorRelay<ProductDataInfo> = .init(value: ProductDataInfo(dataSoruce: []))
     }
     
@@ -100,7 +100,7 @@ final class ProductDetailViewModel: ViewModelType {
                 
                 self.isSaved = dataSource.isBookmarked
                 
-                output.headerInfo.accept(ProductHeaderInfo(id: dataSource.id, title: dataSource.name, subtitle: dataSource.category.name,printShop: dataSource.printShop.name,designer:dataSource.designer , images: dataSource.images))
+                output.headerInfo.accept(ProductHeaderInfo(id: dataSource.id, title: dataSource.name, subtitle: dataSource.category.name,printShop: dataSource.printShop,designer:dataSource.designer , images: dataSource.images))
                 output.dataInfo.accept(ProductDataInfo(dataSoruce: [dataSource.size, dataSource.paper, dataSource.printType, dataSource.afterProcess]))
             })
             .disposed(by: disposeBag)

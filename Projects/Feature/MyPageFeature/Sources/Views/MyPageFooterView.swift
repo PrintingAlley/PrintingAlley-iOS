@@ -26,7 +26,6 @@ public protocol MyPageFooterViewDelegate: AnyObject {
 class MyPageFooterView: UIView {
     
     
-    // TODO: 버튼들 동작 확인
     
     lazy var baseLine = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.1)
