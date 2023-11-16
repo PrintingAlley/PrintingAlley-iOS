@@ -55,6 +55,7 @@ class CategorySearchViewController: UIViewController {
     }
     
     lazy var filterCollectionView = makeCollectionView(layout: UICollectionViewFlowLayout(), scrollDirection: .horizontal, delegate: self, dataSource: self).then {
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
         $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         $0.tag = 0
@@ -65,6 +66,7 @@ class CategorySearchViewController: UIViewController {
     }
     
     lazy var gridCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.showsHorizontalScrollIndicator = false
         $0.register(PinterestCollectionViewCell.self, forCellWithReuseIdentifier: PinterestCollectionViewCell.identifer)
         $0.tag = 1

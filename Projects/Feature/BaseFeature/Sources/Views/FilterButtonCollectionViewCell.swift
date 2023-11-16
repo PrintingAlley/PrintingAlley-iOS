@@ -20,6 +20,7 @@ public final class FilterButtonCollectionViewCell: UICollectionViewCell {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.backgroundColor = .setColor(.sub(.white))
         addSubviews()
         makeConstraints()
     }

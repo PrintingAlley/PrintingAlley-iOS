@@ -28,6 +28,7 @@ class FilterViewController: UIViewController {
     }
      
     lazy var tableView: UITableView = UITableView(frame: .zero, style: .grouped).then {
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterTableViewCell.self, forCellReuseIdentifier: FilterTableViewCell.identifier)
         $0.register(SecondFilterTableViewCell.self, forCellReuseIdentifier: SecondFilterTableViewCell.identifier)
         $0.register(FilterSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: FilterSectionHeaderView.identifer)

@@ -22,8 +22,7 @@ class FilterSectionHeaderView: UITableViewHeaderFooterView {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        
-        self.contentView.backgroundColor = .setColor(.sub(.white))
+        self.contentView.backgroundColor = .white
         
         self.addSubviews(label, baseLine)
         

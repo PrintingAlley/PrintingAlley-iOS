@@ -10,6 +10,7 @@ import UIKit
 import DesignSystem
 import BaseDomainInterface
 import BaseFeature
+import UtilityModule
 
 
 class FilterTableViewCell: UITableViewCell {
@@ -24,6 +25,7 @@ class FilterTableViewCell: UITableViewCell {
     
     
     lazy var collectionView: UICollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .vertical).then {
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
         $0.bounces = false
     }
@@ -34,6 +36,7 @@ class FilterTableViewCell: UITableViewCell {
 
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .setColor(.sub(.white))
         addSubviews()
         makeConstraints()
         
