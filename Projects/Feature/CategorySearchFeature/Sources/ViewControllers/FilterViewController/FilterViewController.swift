@@ -19,7 +19,6 @@ public protocol FilterViewControllerDelegate: AnyObject {
     func receive(result: [Tag])
 }
 
-
 class FilterViewController: UIViewController {
 
     lazy var titleLabel: AlleyLabel = AlleyLabel("필터", textColor: .sub(.black), font: .subtitle1)
@@ -29,10 +28,9 @@ class FilterViewController: UIViewController {
     }
      
     lazy var tableView: UITableView = UITableView(frame: .zero, style: .grouped).then {
-        $0.register(TailFilterTableViewCell.self, forCellReuseIdentifier: TailFilterTableViewCell.identifier)
+        $0.register(FilterTableViewCell.self, forCellReuseIdentifier: FilterTableViewCell.identifier)
         $0.register(SecondFilterTableViewCell.self, forCellReuseIdentifier: SecondFilterTableViewCell.identifier)
         $0.register(FilterSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: FilterSectionHeaderView.identifer)
-        $0.register(TopCellSectionFooterView.self, forHeaderFooterViewReuseIdentifier: TopCellSectionFooterView.identifer)
         $0.delegate = self
         $0.dataSource = self
         $0.separatorStyle = . none

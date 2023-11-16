@@ -59,15 +59,14 @@ extension PrintShopInfoTableViewCell {
         }
         
         label.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().inset(6)
             $0.leading.equalTo(iconImage.snp.trailing).offset(10)
             $0.width.lessThanOrEqualTo(263)
-            $0.height.equalTo(22)
         }
         
         copyButton.snp.makeConstraints {
             $0.leading.equalTo(label.snp.trailing).offset(8)
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().inset(7)
             $0.width.equalTo(53)
             $0.height.equalTo(24)
         }

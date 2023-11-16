@@ -31,7 +31,6 @@ class CategorySearchViewController: UIViewController {
         $0.delegate = self
     }
 
-    lazy var naviTitleView: UIView = UIView()
     lazy var backButton: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.back.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
@@ -106,7 +105,7 @@ class CategorySearchViewController: UIViewController {
 
         addSubviews()
         makeConstraints()
-        self.naviTitleLabel.setTitle(title: viewModel.title, textColor: .sub(.black), font: .subtitle1, alignment: .center)
+        self.naviTitleLabel.setTitle(title: viewModel.title, textColor: .sub(.black), font: .header3, alignment: .center)
         configureCommonUI()
         bindViewModel()
     }
@@ -126,30 +125,24 @@ class CategorySearchViewController: UIViewController {
 
 extension CategorySearchViewController {
     func addSubviews() {
-        view.addSubviews(naviTitleView, filterCollectionView, gradientView, filterButton, gridCollectionView, indicator)
-        naviTitleView.addSubviews(backButton, naviTitleLabel)
+        view.addSubviews(backButton, naviTitleLabel, filterCollectionView, gradientView, filterButton, gridCollectionView, indicator)
     }
     
     func makeConstraints() {
         
-        naviTitleView.snp.makeConstraints {
-            $0.left.right.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(12)
-            $0.height.equalTo(32)
-        }
-        
         backButton.snp.makeConstraints {
-            $0.left.equalToSuperview().inset(20)
-            $0.centerY.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(22)
+            $0.leading.equalToSuperview().inset(16)
             $0.width.height.equalTo(24)
         }
         
         naviTitleLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(16)
+            $0.centerX.equalToSuperview()
         }
         
         filterButton.snp.makeConstraints {
-            $0.top.equalTo(naviTitleView.snp.bottom).offset(16)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(65)
             $0.width.equalTo(67)
             $0.height.equalTo(32)
             $0.right.equalToSuperview().inset(27)
@@ -157,7 +150,7 @@ extension CategorySearchViewController {
         
         filterCollectionView.snp.makeConstraints {
             $0.height.equalTo(32)
-            $0.top.equalTo(naviTitleView.snp.bottom).offset(16)
+            $0.centerY.equalTo(filterButton)
             $0.leading.equalToSuperview().inset(24)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(112 - filterCollectionView.contentInset.right)
         }
@@ -169,8 +162,9 @@ extension CategorySearchViewController {
         }
         
         gridCollectionView.snp.makeConstraints {
-            $0.top.equalTo(filterButton.snp.bottom).offset(16)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(filterButton.snp.bottom).offset(12)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
 
         indicator.snp.makeConstraints {

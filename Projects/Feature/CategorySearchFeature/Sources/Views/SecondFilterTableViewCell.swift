@@ -19,7 +19,7 @@ class SecondFilterTableViewCell: UITableViewCell {
     lazy var subtitleLabel: AlleyLabel = AlleyLabel()
     
     lazy var tableView: UITableView = UITableView().then{
-        $0.register(TailFilterTableViewCell.self, forCellReuseIdentifier: TailFilterTableViewCell.identifier)
+        $0.register(FilterTableViewCell.self, forCellReuseIdentifier: FilterTableViewCell.identifier)
         $0.dataSource = self
         $0.separatorStyle = .none
         $0.delegate = self
@@ -98,7 +98,7 @@ extension SecondFilterTableViewCell: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TailFilterTableViewCell.identifier, for: indexPath) as? TailFilterTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FilterTableViewCell.identifier, for: indexPath) as? FilterTableViewCell else {
             return UITableViewCell()
         }
         

@@ -35,7 +35,7 @@ class BookMarkDetailViewController: UIViewController {
     }
 
     lazy var editButton: UIButton = UIButton().then{
-        $0.setImage(DesignSystemAsset.Icon.smallPencil.image, for: .normal)
+        $0.setImage(DesignSystemAsset.Icon.pencil.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFit
     }
     
@@ -121,7 +121,7 @@ extension BookMarkDetailViewController {
         }
         
         gridCollectionView.snp.makeConstraints {
-            $0.top.equalTo(countLabel.snp.bottom).offset(24)
+            $0.top.equalTo(countLabel.snp.bottom).offset(13)
             $0.left.right.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
         

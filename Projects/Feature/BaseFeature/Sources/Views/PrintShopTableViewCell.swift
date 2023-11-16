@@ -60,13 +60,13 @@ extension PrintShopTableViewCell {
         
         separator.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.bottom.equalToSuperview()
         }
         
         image.snp.makeConstraints {
             $0.top.equalToSuperview().inset(16)
-            $0.leading.equalToSuperview().inset(24)
+            $0.leading.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.bottom.equalToSuperview().inset(16)
             $0.width.height.equalTo(74)
         }

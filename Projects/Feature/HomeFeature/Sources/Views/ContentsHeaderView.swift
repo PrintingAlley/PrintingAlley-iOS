@@ -24,9 +24,9 @@ final class ContentsHeaderView: UICollectionReusableView {
     
     private var dataSource: [ChildrenTagEntity] = []
     
-    private let cellSpacing: CGFloat = 30
+    private let cellSpacing: CGFloat = 34
     private let collectionViewInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
-    private lazy var cellSize = CGSize(width: (APP_WIDTH() - 30 - 30 - cellSpacing * 3) / 4, height: 70)
+    private lazy var cellSize = CGSize(width: (APP_WIDTH() - 30 - 30 - cellSpacing * 3) / 4, height: 78)
     private let lineSpacing: CGFloat = 32
     
     public lazy var categoryCollectionView = makeCollectionView(scrollDirection: .vertical).then {
@@ -87,8 +87,8 @@ extension ContentsHeaderView {
             $0.height.equalTo(10)
         }
         contentsTitle.snp.makeConstraints {
-            $0.top.equalTo(sectionLine.snp.bottom).offset(18)
-            $0.leading.equalToSuperview().inset(24)
+            $0.top.equalTo(sectionLine.snp.bottom).offset(HORIZON_MARGIN1())
+            $0.leading.equalToSuperview().inset(HORIZON_MARGIN1())
         }
 //        showMoreContainer.snp.makeConstraints {
 //            $0.centerY.equalTo(contentsTitle)
