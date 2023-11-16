@@ -30,7 +30,7 @@ public class MainTabBarController: UITabBarController {
     private let tabBarItems: [UITabBarItem] = {
         let items = [
             UITabBarItem(title: "홈", image: DesignSystemAsset.BottomTabIcon.defaultHome.image.withRenderingMode(.alwaysOriginal), selectedImage: DesignSystemAsset.BottomTabIcon.selectedHome.image.withRenderingMode(.alwaysOriginal)),
-            UITabBarItem(title: "인쇄소 찾기", image: DesignSystemAsset.BottomTabIcon.defaultSearch.image.withRenderingMode(.alwaysOriginal), selectedImage: DesignSystemAsset.BottomTabIcon.selectedSearch.image.withRenderingMode(.alwaysOriginal)),
+            UITabBarItem(title: "인쇄사 찾기", image: DesignSystemAsset.BottomTabIcon.defaultSearch.image.withRenderingMode(.alwaysOriginal), selectedImage: DesignSystemAsset.BottomTabIcon.selectedSearch.image.withRenderingMode(.alwaysOriginal)),
             UITabBarItem(title: "나의 골목", image: DesignSystemAsset.BottomTabIcon.defaultPerson.image.withRenderingMode(.alwaysOriginal), selectedImage: DesignSystemAsset.BottomTabIcon.selectedPerson.image.withRenderingMode(.alwaysOriginal))
         ]
         

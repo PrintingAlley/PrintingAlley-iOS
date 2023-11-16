@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Frame 1000002978.png",
+      "filename" : "mdi-light_home.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Frame 1000002978@2x.png",
+      "filename" : "mdi-light_home@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Frame 1000002978@3x.png",
+      "filename" : "mdi-light_home@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

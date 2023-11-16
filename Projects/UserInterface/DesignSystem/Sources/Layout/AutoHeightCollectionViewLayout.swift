@@ -12,7 +12,7 @@ public class AutoHeightCollectionViewLayout: UICollectionViewLayout {
     public weak var delegate: AutoHeightLayoutDelegate?
     
     private let numberOfColumns = 2
-    private let cellInsets = UIEdgeInsets(top: 0, left: 8, bottom: 4, right: 8)
+    private let cellInsets = UIEdgeInsets(top: 0, left: 8, bottom: 12, right: 8)
     
     private var cache: [UICollectionViewLayoutAttributes] = [] // 아이템 정보 저장할 캐시
     

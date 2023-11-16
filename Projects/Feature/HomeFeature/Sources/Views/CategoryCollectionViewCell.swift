@@ -50,7 +50,7 @@ extension CategoryCollectionViewCell {
         }
         
         label.snp.makeConstraints {
-            $0.top.equalTo(image.snp.bottom).offset(4)
+            $0.top.equalTo(image.snp.bottom).offset(2)
             $0.centerX.equalToSuperview()
         }
     }

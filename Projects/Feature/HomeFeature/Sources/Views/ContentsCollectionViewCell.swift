@@ -51,7 +51,7 @@ extension ContentsCollectionViewCell {
         }
         
         label.snp.makeConstraints {
-            $0.top.equalTo(image.snp.bottom).offset(10)
+            $0.top.equalTo(image.snp.bottom).offset(3)
             $0.leading.trailing.equalToSuperview()
         }
     }

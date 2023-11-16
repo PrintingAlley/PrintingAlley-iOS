@@ -62,7 +62,7 @@ class PrintShopDetailViewController: UIViewController {
         $0.numberOfLines = 1
     }
 
-    lazy var typeLabel = AlleyLabel("인쇄", textColor: .grey(.grey500), font: .subtitle3) // TODO: - 색상 변경
+    lazy var typeLabel = AlleyLabel("인쇄", textColor: .yellow(.yellow600), font: .subtitle3) // TODO: - 색상 변경
 
     lazy var callButton: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.callBlack.image, for: .normal)
@@ -131,20 +131,20 @@ extension PrintShopDetailViewController {
     func makeConstraints() {
         navigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(12)
-            $0.height.equalTo(32)
+            $0.height.equalTo(44)
             $0.left.right.equalTo(view.safeAreaLayoutGuide)
         }
         
         backButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(22)
             $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.width.height.equalTo(24)
         }
         
         homeButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(17)
             $0.width.height.equalTo(34)
             $0.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
-            $0.centerY.equalTo(backButton)
         }
         
         imageCollectionView.snp.makeConstraints {
@@ -172,7 +172,7 @@ extension PrintShopDetailViewController {
         }
         
         separateLine.snp.makeConstraints {
-            $0.top.equalTo(typeLabel.snp.bottom).offset(24)
+            $0.top.equalTo(imageCollectionView.snp.bottom).offset(96)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(10)
         }
