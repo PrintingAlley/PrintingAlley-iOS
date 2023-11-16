@@ -18,7 +18,8 @@ class SecondFilterTableViewCell: UITableViewCell {
     
     lazy var subtitleLabel: AlleyLabel = AlleyLabel()
     
-    lazy var tableView: UITableView = UITableView().then{
+    lazy var tableView: UITableView = UITableView().then {
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterTableViewCell.self, forCellReuseIdentifier: FilterTableViewCell.identifier)
         $0.dataSource = self
         $0.separatorStyle = .none
@@ -30,6 +31,7 @@ class SecondFilterTableViewCell: UITableViewCell {
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .setColor(.sub(.white))
         self.contentView.addSubviews(tableView,subtitleLabel)
         
         tableView.snp.makeConstraints {

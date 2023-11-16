@@ -19,6 +19,7 @@ class SecondFilterTableViewCell: UITableViewCell {
     lazy var subtitleLabel: AlleyLabel = AlleyLabel()
     
     lazy var tableView: UITableView = UITableView().then{
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.register(TailFilterTableViewCell.self, forCellReuseIdentifier: TailFilterTableViewCell.identifier)
         $0.dataSource = self
         $0.separatorStyle = .none
