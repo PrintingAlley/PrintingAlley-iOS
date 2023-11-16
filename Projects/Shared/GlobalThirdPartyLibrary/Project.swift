@@ -26,6 +26,7 @@ let project = Project.module(
             .SPM.SwiftEntryKit,
             .SPM.NaverMap,
             .SPM.SVGKit
+            .SPM.Lottie
         ])
     ]
 )

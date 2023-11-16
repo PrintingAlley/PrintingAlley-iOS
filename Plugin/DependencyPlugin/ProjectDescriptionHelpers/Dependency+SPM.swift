@@ -26,6 +26,7 @@ public extension TargetDependency.SPM {
     static let FloatingPanel = TargetDependency.external(name: "FloatingPanel")
     static let SwiftEntryKit = TargetDependency.external(name: "SwiftEntryKit")
     static let SVGKit = TargetDependency.external(name: "SVGKit")
+    static let Lottie = TargetDependency.external(name: "Lottie")
     
 }
 
