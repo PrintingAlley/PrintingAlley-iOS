@@ -80,7 +80,7 @@ class WebViewController: UIViewController {
         addSubviews()
         makeConstraints()
        
-        titleLabel.setTitle(title: naviTitle, textColor: .sub(.black), font: .body1, alignment: .center)
+        titleLabel.setTitle(title: naviTitle, textColor: .sub(.black), font: .header3, alignment: .center)
         setWebViewURLRequest()
         configureCommonUI()
     }
@@ -94,7 +94,7 @@ class WebViewController: UIViewController {
 
 extension WebViewController {
     func addSubviews() {
-        self.view.addSubviews(naviTitleView,backgroundView)
+        self.view.addSubviews(naviTitleView, backgroundView)
         
         naviTitleView.addSubviews(titleLabel,backButton)
         
@@ -127,7 +127,9 @@ extension WebViewController {
 
         
         webView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(naviTitleView.snp.bottom).offset(24)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
     }
