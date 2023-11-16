@@ -64,12 +64,6 @@ extension RootViewController {
     func bidViewModel() {
         let output = viewModel.transform(input: input)
      
-        /*
-          1. 앱 버전 체크 하며 네트워크 체크
-          2.
-         
-         */
-        
         bindStartLottieAndAppCheck(input: input)
         bindVersionCheck(input: input, output: output)
         bindUserResult(output: output)
@@ -206,7 +200,7 @@ extension RootViewController {
             $0.width.equalTo(width)
             $0.height.equalTo(height)
             $0.centerX.equalTo(self.logoContentView.snp.centerX)
-            $0.centerY.equalTo(self.logoContentView.snp.centerY)
+            $0.centerY.equalTo(self.logoContentView.snp.centerY).offset(-100)
         }
         animationView.play()
     }
