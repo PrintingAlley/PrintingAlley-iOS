@@ -63,7 +63,7 @@ public class MyPageContentViewController: UIViewController {
         $0.bounces = false // 오버 스크롤 방지
         $0.tableHeaderView = headerView
         $0.tableFooterView = footerView
-        $0.backgroundColor = .white
+        $0.backgroundColor = .setColor(.sub(.white))
     }
     
     

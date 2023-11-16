@@ -26,7 +26,7 @@ class MyPageCategoryTableViewCell: UITableViewCell {
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
-            self.contentView.backgroundColor = .white
+            self.contentView.backgroundColor = .setColor(.sub(.white))
             self.contentView.addSubviews(label, arrowImageView)
         
             makeConstraints()

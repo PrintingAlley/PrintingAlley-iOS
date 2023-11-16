@@ -24,7 +24,7 @@ public class EditModalViewController: UIViewController {
     let disposeBag = DisposeBag()
     
     lazy var contentView: UIView = UIView().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .setColor(.sub(.white))
         $0.layer.cornerRadius = 8
     }
 

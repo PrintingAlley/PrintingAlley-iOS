@@ -38,7 +38,7 @@ class WebViewController: UIViewController {
 
     
     lazy var backgroundView: UIView = UIView().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .setColor(.sub(.white))
     }
     
     lazy var naviTitleView: UIView = UIView()
@@ -53,7 +53,7 @@ class WebViewController: UIViewController {
     }
 
     lazy var webView: WKWebView! = WKWebView(frame: .zero, configuration: configuration).then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .setColor(.sub(.white))
     
     }
     
