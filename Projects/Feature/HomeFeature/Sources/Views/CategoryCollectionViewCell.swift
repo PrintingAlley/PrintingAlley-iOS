@@ -45,12 +45,12 @@ extension CategoryCollectionViewCell {
     private func makeConstraints() {
         image.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.width.height.equalTo(44)
+            $0.width.height.equalTo(54)
             $0.centerX.equalToSuperview()
         }
         
         label.snp.makeConstraints {
-            $0.top.equalTo(image.snp.bottom).offset(8)
+            $0.top.equalTo(image.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
     }

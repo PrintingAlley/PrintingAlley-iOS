@@ -46,7 +46,7 @@ class CategoryEmptyHeaderView: UIView {
         
         titleLabel.snp.makeConstraints {
             $0.left.right.equalToSuperview()
-            $0.top.equalToSuperview().inset(222)
+            $0.top.equalToSuperview().inset(208)
         }
         
         subtitleLabel.snp.makeConstraints {
@@ -60,7 +60,7 @@ class CategoryEmptyHeaderView: UIView {
             
             $0.centerX.equalToSuperview()
             
-            $0.top.equalTo(subtitleLabel.snp.bottom).offset(16)
+            $0.top.equalTo(subtitleLabel.snp.bottom).offset(18)
         }
                  
     }
