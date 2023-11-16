@@ -93,7 +93,7 @@ extension BookMarkViewController {
                 
                 else if result.statusCode == 401 {
                     self.view.showToast(text: result.message)
-                    // TODO: 토큰 exired 경우 LOGOUT
+                   
                 }
                 
                 else {

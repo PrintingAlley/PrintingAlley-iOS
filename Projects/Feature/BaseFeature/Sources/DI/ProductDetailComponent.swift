@@ -14,7 +14,7 @@ import ProductDomainInterface
 import BookMarkDomainInterface
 
 public protocol ProductDetailDependency: Dependency {
-    
+    var printShopDetailFactory: any PrintShopDetailFactory { get }
     var bookMarkBottomSheetFactory: any BookMarkBottomSheetFactory { get }
     var productDomainFactory: any ProductDomainFactory { get }
     var bookMarkDomainFactory: any BookMarkDomainFactory { get }
@@ -22,7 +22,7 @@ public protocol ProductDetailDependency: Dependency {
 
 public final class ProductDetailComponent: Component<ProductDetailDependency>, ProductDetailFactory {
     public func makeView(id: Int) -> UIViewController {
-        ProductDetailViewController(bookMarkBottomSheetFactory: dependency.bookMarkBottomSheetFactory, viewModel: ProductDetailViewModel(id: id,fetchProductUseCase: dependency.productDomainFactory.fetchProductUseCase, removeBookMarkUseCase: dependency.bookMarkDomainFactory.removeBookMarkUseCase))
+        ProductDetailViewController(bookMarkBottomSheetFactory: dependency.bookMarkBottomSheetFactory, printShopDetailFactory: dependency.printShopDetailFactory , viewModel: ProductDetailViewModel(id: id,fetchProductUseCase: dependency.productDomainFactory.fetchProductUseCase, removeBookMarkUseCase: dependency.bookMarkDomainFactory.removeBookMarkUseCase))
     }
     
 }

@@ -11,6 +11,8 @@ import DesignSystem
 import UtilityModule
 import SnapKit
 import Then
+import BaseFeatureInterface
+import BaseDomainInterface
 
 public protocol ProductDetailTableHeaderViewDelegate: AnyObject {
     func save(id: Int, isBookmarked: Bool)
@@ -69,7 +71,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
     public weak var delegate: ProductDetailTableHeaderViewDelegate?
     
     var isSaved: Bool = false
-    var model: ProductHeaderInfo = ProductHeaderInfo(id: 0, title: "", subtitle: "",printShop: "",designer: "", images: [])
+    var model: ProductHeaderInfo = ProductHeaderInfo(id: 0, title: "", subtitle: "",printShop: PrintShopEntity.makeErrorEntity(),designer: "", images: [])
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -161,7 +163,7 @@ extension ProductDetailTableHeaderView {
         self.isSaved = isSaved
         titleLabel.setTitle(title: model.title, textColor: .sub(.black), font: .header3)
         
-        printShopLabel.setMultipleAttributeText(text1: "담당 인쇄사  ", text2: model.printShop, color1: DesignSystemAsset.Grey.grey300.color, color2: DesignSystemAsset.MainBlue.blue500.color, font1: .subtitle3, font2: .subtitle3)
+        printShopLabel.setMultipleAttributeText(text1: "담당 인쇄사  ", text2: model.printShop.name, color1: DesignSystemAsset.Grey.grey300.color, color2: DesignSystemAsset.MainBlue.blue500.color, font1: .subtitle3, font2: .subtitle3)
         
         designerLabel.setMultipleAttributeText(text1: "디자인  ", text2: model.designer, color1: DesignSystemAsset.Grey.grey300.color, color2: .black, font1: .subtitle3, font2: .body2)
         

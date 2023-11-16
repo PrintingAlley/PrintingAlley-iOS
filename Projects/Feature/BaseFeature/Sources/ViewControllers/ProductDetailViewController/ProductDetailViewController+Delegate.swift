@@ -47,7 +47,10 @@ extension ProductDetailViewController: UITableViewDelegate {
 extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
     
     func move() {
-        DEBUG_LOG("MOVE MOVE")
+        
+        let vc = printShopDetailFactory.makeView(id: output.headerInfo.value.printShop.id)
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func save(id: Int, isBookmarked: Bool) {

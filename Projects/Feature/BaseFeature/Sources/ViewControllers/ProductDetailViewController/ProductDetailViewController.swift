@@ -42,6 +42,7 @@ class ProductDetailViewController: UIViewController {
     var input: ProductDetailViewModel.Input = .init()
     lazy var output = viewModel.transform(input: input)
     var bookMarkBottomSheetFactory: any BookMarkBottomSheetFactory
+    var printShopDetailFactory: any PrintShopDetailFactory
     
     var fpc: FloatingPanelController!
     
@@ -62,10 +63,11 @@ class ProductDetailViewController: UIViewController {
     }
 
     
-    init(bookMarkBottomSheetFactory: BookMarkBottomSheetFactory, viewModel: ProductDetailViewModel) {
+    init(bookMarkBottomSheetFactory: BookMarkBottomSheetFactory,printShopDetailFactory: PrintShopDetailFactory, viewModel: ProductDetailViewModel) {
 
         self.viewModel = viewModel
         self.bookMarkBottomSheetFactory = bookMarkBottomSheetFactory
+        self.printShopDetailFactory = printShopDetailFactory
         super.init(nibName: nil, bundle: nil)
     }
     
