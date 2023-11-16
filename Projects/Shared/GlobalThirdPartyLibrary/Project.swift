@@ -25,7 +25,7 @@ let project = Project.module(
             .SPM.FloatingPanel,
             .SPM.SwiftEntryKit,
             .SPM.NaverMap,
-            .SPM.SVGKit
+            .SPM.SVGKit,
             .SPM.Lottie
         ])
     ]
