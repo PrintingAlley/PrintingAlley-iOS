@@ -47,7 +47,7 @@ extension ContentsCollectionViewCell {
     private func makeConstraints() {
         image.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
-            $0.width.height.equalTo(163)
+            $0.width.height.equalTo(171)
         }
         
         label.snp.makeConstraints {

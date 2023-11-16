@@ -55,7 +55,7 @@ final class HomeViewController: UIViewController {
         $0.register(ContentsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ContentsHeaderView.identifier)
     }
     
-    public let contentsInsets = UIEdgeInsets(top: 16, left: 24, bottom: 20, right: 24)
+    public let contentsInsets = UIEdgeInsets(top: 16, left: HORIZON_MARGIN1(), bottom: 20, right: HORIZON_MARGIN1())
     public let contentsCellSpacing: CGFloat = 16
     
     public let contentsCount = 4 // 더미
