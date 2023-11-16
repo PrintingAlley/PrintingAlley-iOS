@@ -5,7 +5,9 @@ import ProjectDescriptionHelpers
 let project = Project.module(
     name: ModulePaths.Feature.BaseFeature.rawValue,
     targets: [
-        .interface(module: .feature(.BaseFeature)),
+        .interface(module: .feature(.BaseFeature) , dependencies: [
+            .domain(target: .BaseDomain, type: .interface)
+        ]),
         .implements(module: .feature(.BaseFeature), dependencies: [
             .shared(target: .UtilityModule),
             .feature(target: .BaseFeature,type:.interface),
