@@ -101,7 +101,7 @@ extension BookMarkDetailViewController {
     func makeConstraints() {
         naviTitleView.snp.makeConstraints {
             $0.left.right.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(12)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(15)
             $0.height.equalTo(32)
         }
         
