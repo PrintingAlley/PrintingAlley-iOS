@@ -96,13 +96,13 @@ extension ProductDetailViewController {
         
         
         self.backButton.snp.makeConstraints {
-            $0.width.height.equalTo(24)
+            $0.width.height.equalTo(32)
             $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(17)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(19)
         }
         
         self.homeButton.snp.makeConstraints {
-            $0.width.height.equalTo(34)
+            $0.width.height.equalTo(32)
             $0.right.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.centerY.equalTo(backButton)
         }
