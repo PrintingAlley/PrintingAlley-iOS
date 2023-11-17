@@ -48,7 +48,7 @@ extension PrintShopPhotosCollectionViewCell {
     
     
     public func update(model: String) {
-        imageView.kf.setImage(with: URL(string: model),placeholder: DesignSystemAsset.PlaceHolder.largePH.image)
+        imageView.kf.setImage(with: URL(string: model),placeholder: DesignSystemAsset.PlaceHolder.printShopPH.image)
     }
     
 }
