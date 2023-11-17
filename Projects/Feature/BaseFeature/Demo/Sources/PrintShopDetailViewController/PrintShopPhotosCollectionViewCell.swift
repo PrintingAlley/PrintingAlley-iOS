@@ -18,6 +18,7 @@ class PrintShopPhotosCollectionViewCell: UICollectionViewCell {
     
     lazy var imageView:UIImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
     }
     
     
