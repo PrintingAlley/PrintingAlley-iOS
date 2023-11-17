@@ -32,6 +32,11 @@ public final class SearchBar: UIView {
         $0.setImage(DesignSystemAsset.Icon.smallclose.image, for: .highlighted)
     }
     
+    private lazy var touchField = UIView().then {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchSearchBar))
+        $0.addGestureRecognizer(tapGesture)
+    }
+    
     override public func layoutSubviews() {
         self.setRound([.allCorners], radius: self.frame.height / 2)
     }
@@ -57,7 +62,7 @@ extension SearchBar {
     }
     
     private func addSubviews() {
-        self.addSubviews(searchTextField, searchButton)
+        self.addSubviews(searchTextField, searchButton, touchField)
     }
     
     private func makeConstraints() {
@@ -70,6 +75,11 @@ extension SearchBar {
             $0.width.height.equalTo(18)
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(23)
+        }
+        
+        touchField.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview()
+            $0.trailing.equalTo(searchButton.snp.leading)
         }
     }
 }
@@ -90,6 +100,11 @@ extension SearchBar {
     @objc
     private func textFieldDidChange() {
         searchButton.isHighlighted = searchTextField.hasText
+    }
+    
+    @objc
+    private func touchSearchBar() {
+        searchTextField.becomeFirstResponder()
     }
 }
 
