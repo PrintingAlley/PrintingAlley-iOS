@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxDataSources
 import UtilityModule
+import BaseDomainInterface
 
 extension SearchViewController {
     func bindUIEvent(input: SearchViewModel.Input) {
@@ -17,6 +18,21 @@ extension SearchViewController {
             .skip(1)
             .distinctUntilChanged()
             .bind(to: self.input.textString)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindTableView() {
+        printingTableView.rx.willDisplayCell
+            .map { $1 }
+            .withLatestFrom(output.dataSource, resultSelector: { (indexPath, dataSource) -> (IndexPath, [PrintShopEntity]) in
+                return (indexPath, dataSource)
+            })
+            .filter { (indexPath, dataSources) -> Bool in
+                return indexPath.item == dataSources.count - 1
+            }
+            .withLatestFrom(output.canLoadMore)
+            .filter{ $0 }
+            .bind(to: input.loadMore)
             .disposed(by: disposeBag)
     }
     

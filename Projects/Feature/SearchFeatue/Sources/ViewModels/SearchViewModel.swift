@@ -30,21 +30,39 @@ public class SearchViewModel: ViewModelType {
     
     public struct Input {
         let textString: BehaviorRelay<String> = BehaviorRelay(value: "")
+        var pageID: PublishRelay<(Int)> = .init()
+        var loadMore: PublishSubject<Void> = .init()
     }
     
     public struct Output {
         let runIndicator: BehaviorRelay<Void> = .init(value: ())
         let dataSource: PublishSubject<[PrintShopEntity]> = .init()
+        var canLoadMore: BehaviorRelay<Bool> = .init(value: true)
     }
     
     public func transform(input: Input) -> Output {
         let output = Output()
+        
+        let refresh = Observable.combineLatest(output.dataSource, input.pageID) { (dataSource, pageID) -> [PrintShopEntity] in
+            return pageID == 1 ? [] : dataSource
+        }
+        
+        input.loadMore
+            .withLatestFrom(input.pageID)
+            .subscribe(onNext: {
+                input.pageID.accept($0+1)
+        })
+        .disposed(by: disposeBag)
+        
         input.textString
             .distinctUntilChanged()
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
-            .flatMapLatest { [unowned self] text in
+            .withLatestFrom(input.pageID){ ($0, $1) }
+            .flatMap { [weak self] (text, page) -> Observable<PrintShopListEntity> in
+                guard let self else { return Observable.empty() }
+                
                 return self.fetchPrintShopListUseCase
-                    .execute(page: 1, searchText: text)
+                    .execute(page: input.pageID, searchText: text)
                     .catchError { error in
                         
                         print("WWW4 \(error.localizedDescription)")
@@ -59,6 +77,14 @@ public class SearchViewModel: ViewModelType {
             }
             .debug("WWW4")
             .map{$0.printShops}
+            .do(onNext: { (model) in
+                output.canLoadMore.accept(!model.isEmpty)
+            }, onError: { _ in
+                output.canLoadMore.accept(false)
+            })
+            .withLatestFrom(refresh, resultSelector: { (newModels, datasources) -> [PrintShopEntity] in
+                return datasources + newModels
+            })
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
         print("\(output.dataSource)")
