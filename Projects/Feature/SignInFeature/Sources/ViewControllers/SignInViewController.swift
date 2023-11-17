@@ -66,7 +66,7 @@ extension SignInViewController {
     func addSubviews() {
         
         self.view.addSubviews(versionLabel, stackView,logoTitle)
-        self.stackView.addArrangedSubview(kakaoButton, naverButton, appleButton, googleButton)
+        self.stackView.addArrangedSubview(kakaoButton, naverButton, appleButton)
         
     }
     
@@ -101,10 +101,10 @@ extension SignInViewController {
             $0.left.right.equalToSuperview()
         }
         
-        googleButton.snp.makeConstraints {
-            $0.height.equalTo(54)
-            $0.left.right.equalToSuperview()
-        }
+//        googleButton.snp.makeConstraints {
+//            $0.height.equalTo(54)
+//            $0.left.right.equalToSuperview()
+//        }
         
         stackView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(HORIZON_MARGIN1())
@@ -127,41 +127,41 @@ extension SignInViewController {
             })
             .disposed(by: disposeBag)
     }
-    /*
-     func bindGoogleLogin(output: SignInViewModel.Output) {
+    
+//     func bindGoogleLogin(output: SignInViewModel.Output) {
+//     
+//     output.runGoogleLogin.subscribe(onNext: { [weak self] in
+//     
+//         guard let self else {return}
+//         
+//         let id = GOOGLE_CLIENT_ID()  // 여기서는 반전시키지 말고 ID값 그대로 적용한다.
+//         let signInConfig = GIDConfiguration(clientID: id)
+//         
+//         GIDSignIn.sharedInstance.configuration = signInConfig
+//         
+//         GIDSignIn.sharedInstance.signIn(withPresenting: self) { [weak self] signInResult, error in
+//             guard let self else {return}
+//             guard error == nil else { return }
+//             guard let signInResult = signInResult else { return }
+//             
+//             let user = signInResult.user
+//             
+//             let emailAddress = user.profile?.email
+//             
+//             let fullName = user.profile?.name
+//             let givenName = user.profile?.givenName
+//             let familyName = user.profile?.familyName
+//             
+//             
+//                 self.viewModel.oauthToken.accept((user.accessToken.tokenString, .google)) //TODO: 예외처리
+//         }
+//     
+//     })
+//     .disposed(by: disposeBag)
+//     
+//     
+//     }
      
-     output.runGoogleLogin.subscribe(onNext: { [weak self] in
-     
-         guard let self else {return}
-         
-         let id = GOOGLE_CLIENT_ID()  // 여기서는 반전시키지 말고 ID값 그대로 적용한다.
-         let signInConfig = GIDConfiguration(clientID: id)
-         
-         GIDSignIn.sharedInstance.configuration = signInConfig
-         
-         GIDSignIn.sharedInstance.signIn(withPresenting: self) { [weak self] signInResult, error in
-             guard let self else {return}
-             guard error == nil else { return }
-             guard let signInResult = signInResult else { return }
-             
-             let user = signInResult.user
-             
-             let emailAddress = user.profile?.email
-             
-             let fullName = user.profile?.name
-             let givenName = user.profile?.givenName
-             let familyName = user.profile?.familyName
-             
-             
-                 self.viewModel.oauthToken.accept((user.accessToken.tokenString, .google)) //TODO: 예외처리
-         }
-     
-     })
-     .disposed(by: disposeBag)
-     
-     
-     }
-     */
 }
 
 extension SignInViewController: LoginButtonViewDelegate {

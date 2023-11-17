@@ -88,9 +88,10 @@ public struct TargetSpec: Configurable {
             entitlements: entitlements,
             scripts: scripts,
             dependencies: dependencies,
-            settings: settings ?? .settings(
+            settings: .settings(
                 base: env.baseSetting
                     .merging((product ?? self.product) == .framework ? .allLoadLDFlages : .ldFlages)
+                    .merging(.headerSearchPaths)
                 ,
                 configurations: .default,
                 defaultSettings: .recommended

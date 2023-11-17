@@ -47,11 +47,14 @@ public class SearchViewModel: ViewModelType {
                     .execute(page: 1, searchText: text)
                     .asObservable()
                     .catchError { error in
+                        
+                        print("WWW4 \(error.localizedDescription)")
                         let alertError = error.asAlleyError
                         
                         return .just(PrintShopListEntity(printShops: [], statusCode: 0, message: ""))
                     }
             }
+            .debug("WWW4")
             .map{$0.printShops}
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
