@@ -38,6 +38,6 @@ public struct PrintShopDetailEntity {
     }
     
     public static func makeErrorEntity() -> PrintShopDetailEntity {
-        PrintShopDetailEntity(id: 0, name: "Error Entity", address: "", phone: "", email: "", homepage: "",type: "",printType: "",afterProcess: "",businessHours: "" ,introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "",products: [])
+        PrintShopDetailEntity(id: 0, name: "", address: "", phone: "", email: "", homepage: "",type: "",printType: "",afterProcess: "",businessHours: "" ,introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "",products: [])
     }
 }
