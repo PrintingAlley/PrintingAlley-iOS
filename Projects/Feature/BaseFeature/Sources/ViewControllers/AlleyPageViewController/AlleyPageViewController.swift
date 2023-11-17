@@ -35,6 +35,7 @@ class AlleyPageViewController: UIViewController {
         $0.dataSource = self
         $0.showsHorizontalScrollIndicator = false
         $0.showsVerticalScrollIndicator = false
+        $0.isScrollEnabled = false 
     }
 
     lazy var indicatorBar: UIView = UIView().then {
