@@ -200,7 +200,7 @@ extension RootViewController {
             $0.width.equalTo(width)
             $0.height.equalTo(height)
             $0.centerX.equalTo(self.logoContentView.snp.centerX)
-            $0.centerY.equalTo(self.logoContentView.snp.centerY).offset(-100)
+            $0.centerY.equalTo(self.logoContentView.snp.centerY).offset(-16)
         }
         animationView.play()
     }
