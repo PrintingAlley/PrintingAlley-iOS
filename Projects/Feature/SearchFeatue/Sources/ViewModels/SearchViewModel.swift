@@ -45,14 +45,17 @@ public class SearchViewModel: ViewModelType {
             .flatMapLatest { [unowned self] text in
                 return self.fetchPrintShopListUseCase
                     .execute(page: 1, searchText: text)
-                    .asObservable()
                     .catchError { error in
                         
                         print("WWW4 \(error.localizedDescription)")
-                        let alertError = error.asAlleyError
+                        let alleyError = error.asAlleyError
                         
-                        return .just(PrintShopListEntity(printShops: [], statusCode: 0, message: ""))
+                        return Single<PrintShopListEntity>.create { single in
+                            single(.success(PrintShopListEntity(printShops: [], statusCode: 0, message: alleyError.errorDescription)))
+                            return Disposables.create()
+                        }
                     }
+                    .asObservable()
             }
             .debug("WWW4")
             .map{$0.printShops}
