@@ -48,18 +48,16 @@ public class SearchViewModel: ViewModelType {
         }
         
         input.loadMore
-            .withLatestFrom(input.pageID) // loadMore가 갱신될 때마다 pageID와 함께 내뱉음
-            .subscribe(onNext: { // loadMore가 갱신되면 pageID를 += 1
+            .withLatestFrom(input.pageID)
+            .subscribe(onNext: {
                 input.pageID.accept($0+1)
         })
         .disposed(by: disposeBag)
         
-//        input.textString // textMore가 갱신될 때마다 내뱉음.............. -> textMore과 pageID가 함께 갱신을 체크해줘야함....
-//        Observable.combineLatest(input.textString.distinctUntilChanged(), input.pageID.distinctUntilChanged())
-//            .distinctUntilChanged()
-        input.pageID
-            .withLatestFrom(input.textString.distinctUntilChanged()){ ($1, $0) }
+        input.textString
+            .distinctUntilChanged()
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .withLatestFrom(input.pageID){ ($0, $1) }
             .flatMap { [weak self] (text, pageID) -> Observable<PrintShopListEntity> in
                 guard let self else { return Observable.empty() }
                 
