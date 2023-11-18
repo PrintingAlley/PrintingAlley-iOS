@@ -22,6 +22,8 @@ extension SearchViewController {
     }
     
     func bindTableView() {
+        printingTableView.rx.setDelegate(self).disposed(by: disposeBag)
+        
         printingTableView.rx.willDisplayCell
             .map { $1 }
             .withLatestFrom(output.dataSource, resultSelector: { (indexPath, dataSource) -> (IndexPath, [PrintShopEntity]) in
@@ -32,6 +34,7 @@ extension SearchViewController {
             }
             .withLatestFrom(output.canLoadMore)
             .filter{ $0 }
+            .map { _ in return }
             .bind(to: input.loadMore)
             .disposed(by: disposeBag)
     }

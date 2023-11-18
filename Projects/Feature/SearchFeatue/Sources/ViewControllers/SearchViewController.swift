@@ -79,6 +79,8 @@ extension SearchViewController {
         bindDataSource(input: input, output: output)
         bindIndicator(output: output)
         bindItemSelected()
+        bindTableView()
+        input.pageID.accept(1)
     }
 }
 
