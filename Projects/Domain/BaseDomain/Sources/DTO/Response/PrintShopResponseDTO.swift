@@ -17,9 +17,9 @@ public struct PrintShopResponseDTO: Decodable {
     let type, businessHours, introduction: String
     let latitude, longitude: String
     let products: [ProductResponseDTO]?
-    let printType, afterProcess, backgroundImage, logoImage: String?
+    let printType, afterProcess, afterProcessBinding, backgroundImage, logoImage: String?
     
     public func toDomain() -> PrintShopEntity {
-        PrintShopEntity(id: id, name: name, address: address, phone: phone, email: email, homepage: homepage, type: type, printType: printType ?? "", afterProcess: afterProcess ?? "", businessHours: businessHours  , introduction: introduction, logoImage: logoImage ?? "", backgroundImage: backgroundImage ?? "" , latitude: latitude, longitude: longitude,products: products?.map{$0.toDomain()} ?? [])
+        PrintShopEntity(id: id, name: name, address: address, phone: phone, email: email, homepage: homepage, type: type, printType: printType ?? "", afterProcess: afterProcess ?? "", afterProcessBinding: afterProcessBinding ?? "", businessHours: businessHours , introduction: introduction, logoImage: logoImage ?? "", backgroundImage: backgroundImage ?? "", latitude: latitude, longitude: longitude,products: products?.map{$0.toDomain()} ?? [])
     }
 }

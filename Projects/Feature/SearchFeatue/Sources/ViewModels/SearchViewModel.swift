@@ -69,7 +69,7 @@ public class SearchViewModel: ViewModelType {
                         let alleyError = error.asAlleyError
                         
                         return Single<PrintShopListEntity>.create { single in
-                            single(.success(PrintShopListEntity(printShops: [], statusCode: 0, message: alleyError.errorDescription ?? "")))
+                            single(.success(PrintShopListEntity(printShops: [], totalCount: 0, statusCode: 0, message: alleyError.errorDescription ?? "")))
                             return Disposables.create()
                         }
                     }
