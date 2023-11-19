@@ -22,7 +22,7 @@ final class ContentsCollectionViewCell: UICollectionViewCell {
         $0.setRound(.allCorners, radius: RADIUS1())
     }
     
-    private let label = AlleyLabel().then {
+    private let label = AlleyLabel(textColor: .sub(.black), font: .body2).then {
         $0.lineBreakMode = .byTruncatingTail
         $0.numberOfLines = 2
     }
@@ -46,18 +46,19 @@ extension ContentsCollectionViewCell {
     
     private func makeConstraints() {
         image.snp.makeConstraints {
-            $0.top.leading.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.centerX.equalToSuperview()
             $0.width.height.equalTo(171)
         }
         
         label.snp.makeConstraints {
-            $0.top.equalTo(image.snp.bottom).offset(3)
+            $0.top.equalTo(image.snp.bottom).offset(7)
             $0.leading.trailing.equalToSuperview()
         }
     }
     
     public func update(model: ContentEntity) {
         image.kf.setImage(with: URL(string: model.thumbnail))
-        label.setTitle(title: model.title, textColor: .sub(.black), font: .caption1)
+        label.text = model.title
     }
 }

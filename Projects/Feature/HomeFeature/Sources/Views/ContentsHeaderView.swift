@@ -14,7 +14,6 @@ import DesignSystem
 import TagDomainInterface
 import BaseDomainInterface
 
-
 protocol ContentsHeaderViewDelegate: AnyObject {
     func categoryTap(id: Int,title: String)
 }
@@ -82,12 +81,12 @@ extension ContentsHeaderView {
             $0.height.equalTo(188)
         }
         sectionLine.snp.makeConstraints {
-            $0.top.equalTo(categoryCollectionView.snp.bottom).offset(30)
+            $0.top.equalTo(categoryCollectionView.snp.bottom).offset(32)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(10)
         }
         contentsTitle.snp.makeConstraints {
-            $0.top.equalTo(sectionLine.snp.bottom).offset(HORIZON_MARGIN1())
+            $0.top.equalTo(sectionLine.snp.bottom).offset(32)
             $0.leading.equalToSuperview().inset(HORIZON_MARGIN1())
         }
 //        showMoreContainer.snp.makeConstraints {

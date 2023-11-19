@@ -55,8 +55,9 @@ final class HomeViewController: UIViewController {
         $0.register(ContentsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ContentsHeaderView.identifier)
     }
     
-    public let contentsInsets = UIEdgeInsets(top: 16, left: HORIZON_MARGIN1(), bottom: 20, right: HORIZON_MARGIN1())
+    public let contentsInsets = UIEdgeInsets(top: 26, left: HORIZON_MARGIN1(), bottom: 20, right: HORIZON_MARGIN1())
     public let contentsCellSpacing: CGFloat = 16
+    public let contentLineSpacing: CGFloat = 36
     
     public let contentsCount = 4 // 더미
     
@@ -130,7 +131,7 @@ extension HomeViewController {
         contentsCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(calculateHeight(count: contentsCount, dividingBy: 2, cellHeight: 201, lineSpacing: 24, insets: contentsInsets) + headerViewHeight) // 유동적으로
+            $0.height.equalTo(calculateHeight(count: contentsCount, dividingBy: 2, cellHeight: 201, lineSpacing: contentLineSpacing, insets: contentsInsets) + headerViewHeight) // 유동적으로
             $0.bottom.equalToSuperview()
         }
     }

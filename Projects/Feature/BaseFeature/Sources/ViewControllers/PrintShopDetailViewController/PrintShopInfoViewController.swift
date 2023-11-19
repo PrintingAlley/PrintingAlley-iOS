@@ -53,6 +53,7 @@ final class PrintShopInfoViewController: UIViewController {
         configureCommonUI()
         addSubviews()
         makeConstraints()
+
     }
 }
 
@@ -65,8 +66,8 @@ extension PrintShopInfoViewController {
     private func makeConstraints() {
         tableView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(tableView.frame.height + footerView.frame.height)
-            $0.bottom.equalToSuperview().inset(8)
+            $0.height.equalTo(tableView.frame.height + footerView.frame.height + 42) // 42만ㅋ
+            $0.bottom.equalToSuperview()
         }
     }
 }
