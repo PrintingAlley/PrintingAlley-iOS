@@ -18,12 +18,11 @@ final class PrintShopInfoViewController: UIViewController {
     let cellCount: CGFloat = 5
     let tableViewInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
-    private let containerScrollView = UIScrollView()
-    
-    private let footerView = PrintShopDetailFooterView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: 309))
+    private lazy var footerView = PrintShopDetailFooterView().then {
+        $0.update(model: viewModel.printShop)
+    }
 
     private lazy var tableView = UITableView().then {
-        $0.isScrollEnabled = false
         $0.contentInset = tableViewInsets
         $0.separatorStyle = .none
         $0.backgroundColor = .setColor(.sub(.white))
@@ -32,32 +31,6 @@ final class PrintShopInfoViewController: UIViewController {
         $0.register(PrintShopInfoTableViewCell.self, forCellReuseIdentifier: PrintShopInfoTableViewCell.identifier)
         $0.tableFooterView = footerView
     }
-    
-//    private let greyRoundView = UIView().then {
-//        $0.backgroundColor = .setColor(.grey(.grey50))
-//        $0.setRound(.allCorners, radius: RADIUS1())
-//    }
-//    
-//    private let printTypeTitle = AlleyLabel("인쇄 방식", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
-//        $0.sizeToFit()
-//    }
-//    public lazy var printTypeLabel = AlleyLabel("\(viewModel.printShop.printType)", textColor: .grey(.grey500), font: .body2).then {
-//        $0.sizeToFit()
-//    }
-//    
-//    private let afterProcessTitle = AlleyLabel("후가공", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
-//        $0.sizeToFit()
-//    }
-//    public lazy var afterProcessLabel = AlleyLabel("\(viewModel.printShop.afterProcess)", textColor: .grey(.grey500), font: .body2).then {
-//        $0.sizeToFit()
-//    }
-//    
-//    private let afterProcessBindingTitle = AlleyLabel("후가공(제본)", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
-//        $0.sizeToFit()
-//    }
-//    public lazy var afterProcessBindingLabel = AlleyLabel("\(viewModel.printShop.afterProcessBinding)", textColor: .grey(.grey500), font: .body2).then {
-//        $0.sizeToFit()
-//    }
     
     public let viewModel: PrintShopInfoViewModel!
     
@@ -77,7 +50,6 @@ final class PrintShopInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
         configureCommonUI()
         addSubviews()
         makeConstraints()
@@ -87,57 +59,14 @@ final class PrintShopInfoViewController: UIViewController {
 // MARK: - UI 관련
 extension PrintShopInfoViewController {
     private func addSubviews() {
-        view.addSubviews(containerScrollView)
-        containerScrollView.addSubviews(tableView)
-//        greyRoundView.addSubviews(printTypeTitle, printTypeLabel, afterProcessTitle, afterProcessLabel, afterProcessBindingTitle, afterProcessBindingLabel)
+        view.addSubviews(tableView)
     }
     
     private func makeConstraints() {
-        containerScrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
         tableView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-//            $0.height.equalTo(cellHeight * cellCount + tableViewInsets.top + tableViewInsets.bottom)
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(tableView.frame.height + footerView.frame.height)
+            $0.bottom.equalToSuperview().inset(8)
         }
-        
-//        greyRoundView.snp.makeConstraints {
-//            $0.top.equalTo(tableView.snp.bottom).offset(16)
-//            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
-//            $0.height.equalTo(printTypeTitle.frame.height + printTypeLabel.frame.height + afterProcessTitle.frame.height + afterProcessLabel.frame.height + afterProcessBindingTitle.frame.height + afterProcessBindingLabel.frame.height + 52) // height: 라벨 height + inset 값들
-//            $0.bottom.equalToSuperview().inset(42)
-//        }
-//        
-//        printTypeTitle.snp.makeConstraints {
-//            $0.top.equalToSuperview().inset(10)
-//            $0.leading.equalToSuperview().inset(16)
-//        }
-//        
-//        printTypeLabel.snp.makeConstraints {
-//            $0.top.equalTo(printTypeTitle.snp.bottom)
-//            $0.leading.equalTo(printTypeTitle)
-//        }
-//        
-//        afterProcessTitle.snp.makeConstraints {
-//            $0.top.equalTo(printTypeLabel.snp.bottom).offset(16)
-//            $0.leading.equalTo(printTypeLabel)
-//        }
-//        
-//        afterProcessLabel.snp.makeConstraints {
-//            $0.top.equalTo(afterProcessTitle.snp.bottom)
-//            $0.leading.equalTo(afterProcessTitle)
-//        }
-//        
-//        afterProcessBindingTitle.snp.makeConstraints {
-//            $0.top.equalTo(afterProcessTitle.snp.bottom).offset(16)
-//            $0.leading.equalTo(afterProcessTitle)
-//        }
-//        
-//        afterProcessBindingLabel.snp.makeConstraints {
-//            $0.top.equalTo(afterProcessBindingTitle.snp.bottom)
-//            $0.leading.equalTo(afterProcessBindingTitle)
-//        }
     }
 }

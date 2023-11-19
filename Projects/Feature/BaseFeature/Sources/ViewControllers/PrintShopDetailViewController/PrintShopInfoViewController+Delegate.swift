@@ -27,8 +27,4 @@ extension PrintShopInfoViewController: UITableViewDataSource {
         cell.update(model: viewModel.printShop, index: indexPath.row)
         return cell
     }
-//    
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        309
-//    }
 }

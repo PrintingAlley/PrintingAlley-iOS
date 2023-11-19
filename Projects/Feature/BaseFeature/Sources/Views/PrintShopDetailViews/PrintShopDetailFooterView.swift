@@ -11,6 +11,7 @@ import SnapKit
 import Then
 import DesignSystem
 import UtilityModule
+import BaseDomainInterface
 
 final class PrintShopDetailFooterView: UIView {
     
@@ -21,16 +22,41 @@ final class PrintShopDetailFooterView: UIView {
         $0.contentMode = .scaleToFill
     }
     
-    private let introductionLabel = AlleyLabel("인트로덕션", textColor: .sub(.black), font: .body2)
+    private let introductionLabel = AlleyLabel(" ", textColor: .sub(.black), font: .body2).then {
+        $0.numberOfLines = 0
+    }
     
     private let separateLine = UIView().then {
         $0.backgroundColor = .setColor(.grey(.grey100))
     }
     
-    private lazy var printTypeInfoTableView = UITableView().then { // grey 배경 포함
-        $0.delegate = self
-        $0.dataSource = self
-        $0.register(PrintTypeInfoTableViewCell.self, forCellReuseIdentifier: PrintTypeInfoTableViewCell.identifier)
+    private let greyRoundView = UIView().then {
+        $0.backgroundColor = .setColor(.grey(.grey50))
+        $0.setRound(.allCorners, radius: RADIUS1())
+    }
+    
+    private let printTypeTitle = AlleyLabel("인쇄 방식", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
+        $0.sizeToFit()
+    }
+    public lazy var printTypeLabel = AlleyLabel("-", textColor: .grey(.grey500), font: .body2).then {
+        $0.sizeToFit()
+        $0.numberOfLines = 0
+    }
+    
+    private let afterProcessTitle = AlleyLabel("후가공", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
+        $0.sizeToFit()
+    }
+    public lazy var afterProcessLabel = AlleyLabel("-", textColor: .grey(.grey500), font: .body2).then {
+        $0.sizeToFit()
+        $0.numberOfLines = 0
+    }
+    
+    private let afterProcessBindingTitle = AlleyLabel("후가공(제본)", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
+        $0.sizeToFit()
+    }
+    public lazy var afterProcessBindingLabel = AlleyLabel("-", textColor: .grey(.grey500), font: .body2).then {
+        $0.sizeToFit()
+        $0.numberOfLines = 0
     }
     
     override init(frame: CGRect) {
@@ -46,7 +72,8 @@ final class PrintShopDetailFooterView: UIView {
 
 extension PrintShopDetailFooterView {
     private func addSubviews() {
-        self.addSubviews(introductionIcon, introductionLabel, separateLine, printTypeInfoTableView)
+        self.addSubviews(introductionIcon, introductionLabel, separateLine, greyRoundView)
+        greyRoundView.addSubviews(printTypeTitle, printTypeLabel, afterProcessTitle, afterProcessLabel, afterProcessBindingTitle, afterProcessBindingLabel)
     }
     
     private func makeConstraints() {
@@ -56,38 +83,71 @@ extension PrintShopDetailFooterView {
         }
         
         introductionLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(6)
+            $0.top.equalToSuperview().inset(10)
             $0.leading.equalTo(introductionIcon.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
         }
         
         separateLine.snp.makeConstraints {
-            $0.bottom.equalTo(introductionIcon.snp.bottom).offset(8)
+            $0.bottom.equalTo(introductionLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.height.equalTo(0.8)
         }
         
-        printTypeInfoTableView.snp.makeConstraints {
+        greyRoundView.snp.makeConstraints {
             $0.top.equalTo(separateLine.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
-            $0.height.equalTo(200) // 높이 다시 잡기
+            $0.height.equalTo(100)
+        }
+        
+        printTypeTitle.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(16)
+        }
+        
+        printTypeLabel.snp.makeConstraints {
+            $0.top.equalTo(printTypeTitle.snp.bottom)
+            $0.leading.equalTo(printTypeTitle)
+            $0.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
+        }
+        
+        afterProcessTitle.snp.makeConstraints {
+            $0.top.equalTo(printTypeLabel.snp.bottom).offset(16)
+            $0.leading.equalTo(printTypeLabel)
+        }
+        
+        afterProcessLabel.snp.makeConstraints {
+            $0.top.equalTo(afterProcessTitle.snp.bottom)
+            $0.leading.equalTo(afterProcessTitle)
+            $0.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
+        }
+        
+        afterProcessBindingTitle.snp.makeConstraints {
+            $0.top.equalTo(afterProcessLabel.snp.bottom).offset(16)
+            $0.leading.equalTo(afterProcessTitle)
+        }
+        
+        afterProcessBindingLabel.snp.makeConstraints {
+            $0.top.equalTo(afterProcessBindingTitle.snp.bottom)
+            $0.leading.equalTo(afterProcessBindingTitle)
+            $0.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
         }
     }
-}
-
-extension PrintShopDetailFooterView: UITableViewDelegate {
     
-}
-
-extension PrintShopDetailFooterView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PrintTypeInfoTableViewCell.identifier, for: indexPath) as? PrintTypeInfoTableViewCell else {
-            return UITableViewCell()
+    public func update(model: PrintShopEntity) {
+        let dividingBy = APP_WIDTH() - 16 * 4
+        
+        introductionLabel.text = model.introduction
+        printTypeLabel.text = model.printType.isEmpty ? "-" : model.printType
+        afterProcessLabel.text = model.afterProcess.isEmpty ? "-" : model.afterProcess
+        afterProcessBindingLabel.text = model.afterProcessBinding.isEmpty ? "-" : model.afterProcessBinding
+        
+        separateLine.snp.updateConstraints {
+            $0.bottom.equalTo(introductionLabel.snp.bottom).offset(10)
         }
-        return cell
+        
+        greyRoundView.snp.updateConstraints {
+            $0.height.equalTo(printTypeTitle.frame.height * 3 + printTypeLabel.frame.height *  (ceil(printTypeLabel.frame.height / dividingBy) + ceil(afterProcessLabel.frame.height / dividingBy) + ceil(afterProcessBindingLabel.frame.height / dividingBy)) + 52)
+        }
     }
-
 }
