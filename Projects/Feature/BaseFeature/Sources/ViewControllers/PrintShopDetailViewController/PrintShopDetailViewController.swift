@@ -58,12 +58,12 @@ class PrintShopDetailViewController: UIViewController {
         $0.addTarget(self, action: #selector(pop), for: .touchUpInside)
     }
 
-    lazy var titleLabel = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .header3).then {
+    lazy var titleLabel = AlleyLabel(" ", textColor: .sub(.black), font: .header3).then {
         $0.lineBreakMode = .byTruncatingTail
         $0.numberOfLines = 1
     }
 
-    lazy var typeLabel = AlleyLabel("인쇄", textColor: .yellow(.yellow600), font: .subtitle3) // TODO: - 색상 변경
+    lazy var typeLabel = AlleyLabel(" ", textColor: .yellow(.yellow600), font: .subtitle3)
 
     lazy var callButton: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.callBlack.image, for: .normal)
