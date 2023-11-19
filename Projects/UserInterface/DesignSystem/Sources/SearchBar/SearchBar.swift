@@ -72,7 +72,7 @@ extension SearchBar {
         }
         
         searchButton.snp.makeConstraints {
-            $0.width.height.equalTo(18)
+            $0.width.height.equalTo(24)
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(23)
         }
@@ -96,7 +96,8 @@ extension SearchBar {
     @objc
     private func textFieldDidChange() {
         if searchTextField.hasText {
-            searchButton.setImage(DesignSystemAsset.Icon.close.image, for: .normal) // TODO: 이미지 변경?!
+            searchButton.setImage(DesignSystemAsset.Icon.mediumClose.image, for: .normal)
+            
             delegate?.resetPage()
         }
     }
