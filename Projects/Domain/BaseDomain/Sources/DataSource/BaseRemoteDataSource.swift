@@ -50,9 +50,7 @@ private extension BaseRemoteDataSource {
             .timeout(.seconds(10), scheduler: MainScheduler.asyncInstance)
             .catch { error in
                 
-                if error.localizedDescription.contains("401") { // 임시 토큰 만료 확인용 코드
-                    return Single.error(api.errorMap[401] ?? error)
-                }
+               
                 
                 guard let errorCode = (error as? MoyaError)?.response?.statusCode else {
 
@@ -64,6 +62,9 @@ private extension BaseRemoteDataSource {
                     return Single.error(error)
                 }
                 // AlleyError에 있으면 해당 코드 사용
+                
+                return Single.error(error.tempAlleyError)
+                
                 return Single.error(api.errorMap[errorCode] ?? error)
             }
     }
