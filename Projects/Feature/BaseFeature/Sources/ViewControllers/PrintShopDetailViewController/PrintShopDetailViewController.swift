@@ -86,7 +86,6 @@ class PrintShopDetailViewController: UIViewController {
         $0.setChildren([UIViewController(),UIViewController()])
     }
 
-    
     init(printShopInfoFactory: PrintShopInfoFactory, printShopProductsFactory: PrintShopProductsFactory, viewModel: PrintShopDetailViewModel) {
         self.printShopInfoFactory = printShopInfoFactory
         self.printShopProductsFactory = printShopProductsFactory
