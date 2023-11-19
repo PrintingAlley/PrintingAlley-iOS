@@ -16,7 +16,7 @@ final class PrintShopInfoViewController: UIViewController {
     
     let cellHeight: CGFloat = 41
     let cellCount: CGFloat = 5
-    let tableViewInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    let tableViewInsets = UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0)
     
     private lazy var footerView = PrintShopDetailFooterView().then {
         $0.update(model: viewModel.printShop)
@@ -53,7 +53,6 @@ final class PrintShopInfoViewController: UIViewController {
         configureCommonUI()
         addSubviews()
         makeConstraints()
-
     }
 }
 
@@ -65,9 +64,7 @@ extension PrintShopInfoViewController {
     
     private func makeConstraints() {
         tableView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(tableView.frame.height + footerView.frame.height + 42) // 42만ㅋ
-            $0.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
 }

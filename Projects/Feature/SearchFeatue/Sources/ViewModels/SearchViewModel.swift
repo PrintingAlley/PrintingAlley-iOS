@@ -54,10 +54,10 @@ public class SearchViewModel: ViewModelType {
         })
         .disposed(by: disposeBag)
         
-        input.textString
-            .distinctUntilChanged()
+        Observable
+            .combineLatest(input.textString.distinctUntilChanged(), input.pageID.distinctUntilChanged())
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
-            .withLatestFrom(input.pageID){ ($0, $1) }
+            .map { ($0, $1) }
             .flatMap { [weak self] (text, pageID) -> Observable<PrintShopListEntity> in
                 guard let self else { return Observable.empty() }
                 
@@ -81,7 +81,7 @@ public class SearchViewModel: ViewModelType {
                 output.canLoadMore.accept(!model.isEmpty)
             }, onError: { _ in
                 output.canLoadMore.accept(false)
-            }) // withLatestFrom 으로 안 넘어감 그래서 bind 가 안됨
+            })
             .withLatestFrom(refresh, resultSelector: { (newModels, datasources) -> [PrintShopEntity] in
                 
                 return datasources + newModels

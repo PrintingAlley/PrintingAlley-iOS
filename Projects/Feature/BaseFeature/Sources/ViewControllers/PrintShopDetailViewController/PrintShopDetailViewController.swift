@@ -179,12 +179,11 @@ extension PrintShopDetailViewController {
         controllerView.snp.makeConstraints {
             $0.top.equalTo(separateLine.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalTo(view)
+            $0.bottom.equalToSuperview()
         }
 
         pageViewController.view.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalToSuperview()
+            $0.top.leading.trailing.bottom.equalToSuperview()
         }
     }
 }
