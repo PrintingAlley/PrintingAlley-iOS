@@ -84,7 +84,7 @@ extension BookMarkDetailViewController {
                 
                 
                 if result.statusCode == 200 {
-                    owner.view.showToast(text: "성공적으로 제거했습니다.")
+                    owner.view.showToast(text: "저장을 취소했어요.")
                     input.fetchDataSource.onNext(()) // 업데이트
                 }
                 

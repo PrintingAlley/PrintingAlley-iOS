@@ -142,9 +142,9 @@ extension SignInViewModel {
             guard let self else {return}
             
             if let error = error {
-                print(error)
+                DEBUG_LOG(error)
             } else {
-                print("loginWithKakaoTalk() success.")
+                DEBUG_LOG("loginWithKakaoTalk() success.")
 
                 guard let accessToken = oauthToken?.accessToken else {
                     return
@@ -163,9 +163,9 @@ extension SignInViewModel {
             guard let self else {return}
             
             if let error = error {
-                print(error)
+                DEBUG_LOG(error)
             } else {
-                print("loginWithKakaoAccount() success.")
+                DEBUG_LOG("loginWithKakaoAccount() success.")
 
                 // do something
                 guard let accessToken = oauthToken?.accessToken else {

@@ -114,7 +114,7 @@ final class ProductDetailViewModel: ViewModelType {
                 return owner.removeBookMarkUseCase
                     .execute(id: owner.bookMarkId)
                     .catchAndReturn(BaseEntity(statusCode: 400, message: "페이지를 나갔다 들어와주세요."))
-                    .map{ $0.statusCode != 400 ? BaseEntity(statusCode: 200, message: "성공적으로 삭제했습니다.") : $0 }
+                    .map{ $0.statusCode != 400 ? BaseEntity(statusCode: 200, message: "저장을 취소했어요.") : $0 }
                     .asObservable()
             
             })
