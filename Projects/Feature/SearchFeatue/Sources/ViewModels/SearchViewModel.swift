@@ -30,35 +30,64 @@ public class SearchViewModel: ViewModelType {
     
     public struct Input {
         let textString: BehaviorRelay<String> = BehaviorRelay(value: "")
+        var pageID: PublishRelay<(Int)> = .init()
+        var loadMore: PublishSubject<Void> = .init()
     }
     
     public struct Output {
         let runIndicator: BehaviorRelay<Void> = .init(value: ())
-        let dataSource: PublishSubject<[PrintShopEntity]> = .init()
+        let dataSource: BehaviorRelay<[PrintShopEntity]> = .init(value: [])
+        var canLoadMore: BehaviorRelay<Bool> = .init(value: true)
     }
     
     public func transform(input: Input) -> Output {
         let output = Output()
-        input.textString
-            .distinctUntilChanged()
+        
+        let refresh = Observable.combineLatest(output.dataSource, input.pageID) { (dataSource, pageID) -> [PrintShopEntity] in
+            return pageID == 1 ? [] : dataSource
+        }
+        
+        input.loadMore
+            .withLatestFrom(input.pageID)
+            .subscribe(onNext: {
+                input.pageID.accept($0+1)
+        })
+        .disposed(by: disposeBag)
+        
+        Observable
+            .combineLatest(input.textString.distinctUntilChanged(), input.pageID.distinctUntilChanged())
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
-            .flatMapLatest { [unowned self] text in
+            .map { ($0, $1) }
+            .flatMap { [weak self] (text, pageID) -> Observable<PrintShopListEntity> in
+                guard let self else { return Observable.empty() }
+                
                 return self.fetchPrintShopListUseCase
-                    .execute(page: 1, searchText: text)
-                    .asObservable()
+                    .execute(page: pageID, searchText: text)
                     .catchError { error in
                         
                         print("WWW4 \(error.localizedDescription)")
-                        let alertError = error.asAlleyError
+                        let alleyError = error.asAlleyError
                         
-                        return .just(PrintShopListEntity(printShops: [], statusCode: 0, message: ""))
+                        return Single<PrintShopListEntity>.create { single in
+                            single(.success(PrintShopListEntity(printShops: [], totalCount: 0, statusCode: 0, message: alleyError.errorDescription ?? "")))
+                            return Disposables.create()
+                        }
                     }
+                    .asObservable()
             }
             .debug("WWW4")
-            .map{$0.printShops}
+            .map{ $0.printShops }
+            .do(onNext: { (model) in
+                output.canLoadMore.accept(!model.isEmpty)
+            }, onError: { _ in
+                output.canLoadMore.accept(false)
+            })
+            .withLatestFrom(refresh, resultSelector: { (newModels, datasources) -> [PrintShopEntity] in
+                
+                return datasources + newModels
+            })
             .bind(to: output.dataSource)
             .disposed(by: disposeBag)
-        print("\(output.dataSource)")
         
         return output
     }

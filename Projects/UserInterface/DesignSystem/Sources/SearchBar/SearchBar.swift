@@ -12,6 +12,7 @@ import SnapKit
 
 public protocol SearchBarDelegate: AnyObject {
     func press()
+    func resetPage()
 }
 
 public final class SearchBar: UIView {
@@ -29,7 +30,11 @@ public final class SearchBar: UIView {
     private lazy var searchButton = UIButton().then {
         $0.addTarget(self, action: #selector(touchSearchIcon), for: .touchUpInside)
         $0.setImage(DesignSystemAsset.Icon.search.image, for: .normal)
-        $0.setImage(DesignSystemAsset.Icon.smallclose.image, for: .highlighted)
+    }
+    
+    private lazy var touchField = UIView().then {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchSearchBar))
+        $0.addGestureRecognizer(tapGesture)
     }
     
     override public func layoutSubviews() {
@@ -57,7 +62,7 @@ extension SearchBar {
     }
     
     private func addSubviews() {
-        self.addSubviews(searchTextField, searchButton)
+        self.addSubviews(searchTextField, searchButton, touchField)
     }
     
     private func makeConstraints() {
@@ -67,9 +72,14 @@ extension SearchBar {
         }
         
         searchButton.snp.makeConstraints {
-            $0.width.height.equalTo(18)
+            $0.width.height.equalTo(24)
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(23)
+        }
+        
+        touchField.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview()
+            $0.trailing.equalTo(searchButton.snp.leading)
         }
     }
 }
@@ -78,18 +88,23 @@ extension SearchBar {
 extension SearchBar {
     @objc
     private func touchSearchIcon() {
-        if searchButton.isHighlighted {
             searchTextField.text?.removeAll()
-            searchButton.isHighlighted = false
+            searchButton.setImage(DesignSystemAsset.Icon.search.image, for: .normal)
             delegate?.press()
-        } else {
-            print("검색")
-        }
     }
     
     @objc
     private func textFieldDidChange() {
-        searchButton.isHighlighted = searchTextField.hasText
+        if searchTextField.hasText {
+            searchButton.setImage(DesignSystemAsset.Icon.mediumClose.image, for: .normal)
+            
+            delegate?.resetPage()
+        }
+    }
+    
+    @objc
+    private func touchSearchBar() {
+        searchTextField.becomeFirstResponder()
     }
 }
 

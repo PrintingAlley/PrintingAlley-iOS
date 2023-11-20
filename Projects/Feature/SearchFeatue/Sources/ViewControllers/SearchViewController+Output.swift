@@ -16,12 +16,12 @@ extension SearchViewController {
         output.dataSource
             .do { [weak self] dataSource in
                 guard let self else { return }
-                
+                DEBUG_LOG("DS: \(dataSource.count)")
                 self.indicator.stopAnimating()
                 self.printingTableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
             }
             .bind(to: printingTableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
-                
+
                 guard let self else { return UITableViewCell() }
                 
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: PrintShopTableViewCell.identifier) as? PrintShopTableViewCell else { return UITableViewCell() }

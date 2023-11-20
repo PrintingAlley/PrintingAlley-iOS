@@ -164,7 +164,7 @@ extension CategorySearchViewController {
         }
         
         gridCollectionView.snp.makeConstraints {
-            $0.top.equalTo(filterButton.snp.bottom).offset(12)
+            $0.top.equalTo(filterButton.snp.bottom).offset(4)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }

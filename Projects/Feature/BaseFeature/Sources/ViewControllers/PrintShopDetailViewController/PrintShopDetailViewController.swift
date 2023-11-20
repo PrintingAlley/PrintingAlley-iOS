@@ -58,12 +58,12 @@ class PrintShopDetailViewController: UIViewController {
         $0.addTarget(self, action: #selector(pop), for: .touchUpInside)
     }
 
-    lazy var titleLabel = AlleyLabel("정다운 인쇄소", textColor: .sub(.black), font: .header3).then {
+    lazy var titleLabel = AlleyLabel(" ", textColor: .sub(.black), font: .header3).then {
         $0.lineBreakMode = .byTruncatingTail
         $0.numberOfLines = 1
     }
 
-    lazy var typeLabel = AlleyLabel("인쇄", textColor: .yellow(.yellow600), font: .subtitle3) // TODO: - 색상 변경
+    lazy var typeLabel = AlleyLabel(" ", textColor: .yellow(.yellow600), font: .subtitle3)
 
     lazy var callButton: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.callBlack.image, for: .normal)
@@ -86,7 +86,6 @@ class PrintShopDetailViewController: UIViewController {
         $0.setChildren([UIViewController(),UIViewController()])
     }
 
-    
     init(printShopInfoFactory: PrintShopInfoFactory, printShopProductsFactory: PrintShopProductsFactory, viewModel: PrintShopDetailViewModel) {
         self.printShopInfoFactory = printShopInfoFactory
         self.printShopProductsFactory = printShopProductsFactory
@@ -180,12 +179,11 @@ extension PrintShopDetailViewController {
         controllerView.snp.makeConstraints {
             $0.top.equalTo(separateLine.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalTo(view)
+            $0.bottom.equalToSuperview()
         }
 
         pageViewController.view.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalToSuperview()
+            $0.top.leading.trailing.bottom.equalToSuperview()
         }
     }
 }

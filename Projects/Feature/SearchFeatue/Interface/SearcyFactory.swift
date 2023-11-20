@@ -13,10 +13,3 @@ public protocol SearchFactory {
     func makeView() -> UIViewController
 }
 
-public protocol AfterSearchFactory {
-    func makeView(dataSource: [PrintShopEntity]) -> UIViewController
-}
-
-public protocol BeforeSearchFactory {
-    func makeView() -> UIViewController
-}

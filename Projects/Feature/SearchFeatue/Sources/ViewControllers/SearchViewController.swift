@@ -79,6 +79,8 @@ extension SearchViewController {
         bindDataSource(input: input, output: output)
         bindIndicator(output: output)
         bindItemSelected()
+        bindTableView()
+        input.pageID.accept(1)
     }
 }
 
@@ -131,5 +133,10 @@ extension SearchViewController: UITableViewDelegate {
 extension SearchViewController: SearchBarDelegate {
     func press() {
         input.textString.accept("")
+        input.pageID.accept(1)
+    }
+    
+    func resetPage() {
+        input.pageID.accept(1)
     }
 }

@@ -10,14 +10,14 @@ import Foundation
 import BaseDomainInterface
 
 public struct PrintShopListEntity {
-   public let printShops: [PrintShopEntity]
-   public let statusCode: Int
-   public let message: String
+    public let printShops: [PrintShopEntity]
+    public let totalCount: Int
+    public let statusCode: Int
+    public let message: String
     
-    
-    
-    public init(printShops: [PrintShopEntity], statusCode: Int, message: String) {
+    public init(printShops: [PrintShopEntity], totalCount: Int, statusCode: Int, message: String) {
         self.printShops = printShops
+        self.totalCount = totalCount
         self.statusCode = statusCode
         self.message = message
     }

@@ -102,11 +102,6 @@ extension PrintShopInfoTableViewCell {
             label.text = model.businessHours
             copyButton.isHidden = true
 
-        case 4:
-            iconImage.image = DesignSystemAsset.Icon.dotTextBubble.image
-            label.text = model.introduction
-            copyButton.isHidden = true
-
         default:
             return
         }

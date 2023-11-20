@@ -14,12 +14,4 @@ extension AppComponent {
     var searchFactory: any SearchFactory {
         SearchComponent(parent: self)
     }
-    
-    var afterSearchFactory: any AfterSearchFactory {
-        AfterSearchComponent(parent: self)
-    }
-    
-    var beforeSearchFactory: any BeforeSearchFactory {
-        BeforeSearchComponent(parent: self)
-    }
 }

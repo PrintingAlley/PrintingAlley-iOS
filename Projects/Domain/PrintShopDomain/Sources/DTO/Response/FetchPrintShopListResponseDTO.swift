@@ -12,11 +12,11 @@ import BaseDomain
 
 struct FetchPrintShopListResponseDTO: Decodable {
     let printShops: [PrintShopResponseDTO]
+    let totalCount: Int
     let statusCode: Int?
     let message: String?
     
-    
     public func toDomain() -> PrintShopListEntity {
-        PrintShopListEntity(printShops: printShops.map{$0.toDomain()}, statusCode: statusCode ?? 0 , message: message ?? "")
+        PrintShopListEntity(printShops: printShops.map{$0.toDomain()}, totalCount: totalCount, statusCode: statusCode ?? 0 , message: message ?? "")
     }
 }

@@ -32,7 +32,7 @@ public final class PinterestCollectionViewCell: UICollectionViewCell {
     
     public var imageHeight: CGFloat = 171
     
-    public var title = AlleyLabel("Print Alley", textColor: .sub(.black), font: .caption1).then {
+    public var title = AlleyLabel("Print Alley", textColor: .sub(.black), font: .body2).then {
         $0.numberOfLines = 1
         $0.lineBreakMode = .byTruncatingTail
     }

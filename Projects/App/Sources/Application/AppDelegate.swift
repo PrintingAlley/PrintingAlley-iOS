@@ -25,7 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         naverInstance?.consumerSecret = NAVER_SECRET() // 시크릿 아이디
         naverInstance?.appName = "인쇄골목" // 앱이름
         
-        UITabBar.appearance().unselectedItemTintColor = {.setColor(.grey(.grey900))}()
+        UITabBar.appearance().unselectedItemTintColor = {.setColor(.grey(.grey600))}()
+        UITabBar.appearance().tintColor = {.setColor(.grey(.grey900))}()
         
         return true
     }
