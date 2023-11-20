@@ -13,6 +13,16 @@ import RxDataSources
 import UIKit
 
 extension PrintShopDetailViewController {
+    func bindToast(output: PrintShopDetailViewModel.Output) {
+        
+        output.showToast
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, toast) in
+                owner.view.showToast(text: toast.message)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func bindDataSource(output: PrintShopDetailViewModel.Output) {
         
         imageCollectionView.rx.setDelegate(self)

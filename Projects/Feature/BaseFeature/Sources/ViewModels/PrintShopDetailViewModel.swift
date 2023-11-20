@@ -32,6 +32,7 @@ final class PrintShopDetailViewModel: ViewModelType {
     struct Output {
         let dataSource: BehaviorRelay<PrintShopEntity> = .init(value: .init(id: 0, name: "", address: "", phone: "", email: "", homepage: "", type: "", printType: "", afterProcess: "", afterProcessBinding: "", businessHours: "", introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "", products: []))
         let runIndicator: BehaviorRelay<Void> = .init(value: ())
+        let showToast: PublishSubject<BaseEntity> = .init()
     }
     
     func transform(input: Input) -> Output {
@@ -42,6 +43,8 @@ final class PrintShopDetailViewModel: ViewModelType {
                 let error = error.asAlleyError
                 
                 DEBUG_LOG(error.localizedDescription)
+                
+                output.showToast.onNext(BaseEntity(statusCode: 0, message: "\(error.errorDescription!)"))
                 
                 return Single<PrintShopEntity>.create { single in
                     single(.success(PrintShopEntity.makeErrorEntity()))

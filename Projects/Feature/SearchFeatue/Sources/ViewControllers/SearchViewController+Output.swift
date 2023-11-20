@@ -12,8 +12,19 @@ import UtilityModule
 import BaseFeature
 
 extension SearchViewController {
+    func bindToast(output: SearchViewModel.Output) {
+        
+        output.showToast
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, toast) in
+                owner.view.showToast(text: toast.message)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func bindDataSource(input: SearchViewModel.Input, output: SearchViewModel.Output) {
         output.dataSource
+            .skip(1)
             .do { [weak self] dataSource in
                 guard let self else { return }
                 DEBUG_LOG("DS: \(dataSource.count)")
@@ -40,7 +51,6 @@ extension SearchViewController {
             .asDriver()
             .drive(onNext: { [weak self] _ in
                 guard let self else {return}
-                
                 self.indicator.startAnimating()
             })
             .disposed(by: disposeBag)

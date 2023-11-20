@@ -101,6 +101,10 @@ extension CategorySearchViewController: AutoHeightLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         let product = output.dataSource.value[indexPath.row]
         
+        if product.width == 0 {
+            return 171
+        }
+        
         return CGFloat(product.height * 171 / product.width)
     }
 }

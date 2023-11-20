@@ -37,7 +37,7 @@ extension FilterButtonCollectionViewCell {
     
     private func makeConstraints() {
         filterButton.snp.makeConstraints {
-            $0.top.leading.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
     

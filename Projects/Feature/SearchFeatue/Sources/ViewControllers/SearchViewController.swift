@@ -80,6 +80,7 @@ extension SearchViewController {
         bindIndicator(output: output)
         bindItemSelected()
         bindTableView()
+        bindToast(output: output)
         input.pageID.accept(1)
     }
 }

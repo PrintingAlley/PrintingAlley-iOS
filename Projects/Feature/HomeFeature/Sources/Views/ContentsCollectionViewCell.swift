@@ -59,6 +59,20 @@ extension ContentsCollectionViewCell {
     
     public func update(model: ContentEntity) {
         image.kf.setImage(with: URL(string: model.thumbnail))
-        label.text = model.title
+        
+        let startIndex = model.title.startIndex
+        let endIndex = model.title.endIndex
+        if model.title.count < 16 { // 행간 맞추기
+            label.text = model.title
+        } else {
+            
+            let newLineIndex = model.title.index(startIndex, offsetBy: 16)
+            
+            let firstLabel = model.title.substring(with: startIndex..<newLineIndex)
+            
+            let secondLabel = model.title.substring(with: newLineIndex..<endIndex)
+            label.text = firstLabel+"\n"+secondLabel
+            label.setLineSpacing(lineSpacing: 5)
+        }
     }
 }

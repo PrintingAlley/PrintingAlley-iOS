@@ -16,8 +16,19 @@ import DesignSystem
 import UtilityModule
 
 extension CategorySearchViewController {
+    func bindToast(output: CategorySearchViewModel.Output) {
+        
+        output.showToast
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, toast) in
+                owner.view.showToast(text: toast.message)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func bindDataSource(output: CategorySearchViewModel.Output) {
         output.dataSource
+            .skip(1)
             .do(onNext: { [weak self] dataSource in
                 guard let self else { return }
                 self.indicator.stopAnimating()
