@@ -12,6 +12,16 @@ import UtilityModule
 import BaseFeature
 
 extension SearchViewController {
+    func bindToast(output: SearchViewModel.Output) {
+        
+        output.showToast
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, toast) in
+                owner.view.showToast(text: toast.message)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func bindDataSource(input: SearchViewModel.Input, output: SearchViewModel.Output) {
         output.dataSource
             .skip(1)

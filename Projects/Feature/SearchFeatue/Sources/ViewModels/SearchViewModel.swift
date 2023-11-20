@@ -38,6 +38,7 @@ public class SearchViewModel: ViewModelType {
         let runIndicator: BehaviorRelay<Void> = .init(value: ())
         let dataSource: BehaviorRelay<[PrintShopEntity]> = .init(value: [])
         var canLoadMore: BehaviorRelay<Bool> = .init(value: true)
+        let showToast: PublishSubject<BaseEntity> = .init()
     }
     
     public func transform(input: Input) -> Output {
@@ -67,6 +68,8 @@ public class SearchViewModel: ViewModelType {
                         
                         print("WWW4 \(error.localizedDescription)")
                         let alleyError = error.asAlleyError
+                        
+                        output.showToast.onNext(BaseEntity(statusCode: 0, message: "\(alleyError.errorDescription!)"))
                         
                         return Single<PrintShopListEntity>.create { single in
                             single(.success(PrintShopListEntity(printShops: [], totalCount: 0, statusCode: 0, message: alleyError.errorDescription ?? "")))
