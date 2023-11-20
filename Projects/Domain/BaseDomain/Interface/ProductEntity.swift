@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UtilityModule
+
 
 public struct ProductEntity {
     

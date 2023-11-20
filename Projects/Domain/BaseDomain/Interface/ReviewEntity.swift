@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UtilityModule
 
 public struct ReviewEntity {
     let id: Int

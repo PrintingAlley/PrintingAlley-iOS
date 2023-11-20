@@ -1,7 +1,7 @@
 
 
 import Foundation
-import UtilityModule
+
 
 public struct UserInfoEntity {
     public let id: Int

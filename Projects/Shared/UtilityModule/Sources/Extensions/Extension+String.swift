@@ -17,6 +17,7 @@ public extension String {
     {
         return self.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed)
     }
+    
     func decodeUrl() -> String?
     {
         return self.removingPercentEncoding

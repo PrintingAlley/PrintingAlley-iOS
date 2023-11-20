@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UtilityModule
 
 // MARK: - PrintShop
 public struct PrintShopDetailEntity {

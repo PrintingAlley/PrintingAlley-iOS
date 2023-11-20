@@ -8,7 +8,6 @@
 
 
 import Foundation
-import UtilityModule
 
 public struct CategoryEntity {
     let id: Int
