@@ -15,7 +15,7 @@ import MessageUI // import For MailSystem
 extension MyPageContentViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let alertVc = AlertViewController(title:"준비중입니다.", content: "조금만 기다려주세요!", type:  .onlyConfirm)
+        let alertVc = AlertViewController(title:"준비 중입니다.", content: "조금만 기다려주세요!", type:  .onlyConfirm)
         
         alertVc.modalPresentationStyle = .overFullScreen
         
@@ -44,7 +44,7 @@ extension MyPageContentViewController: MyPageHeaderViewDelegate {
         
         
         
-        let vc = AlertViewController(title:"준비중입니다.", content: "조금만 기다려주세요!", type:  .onlyConfirm)
+        let vc = AlertViewController(title:"준비 중입니다.", content: "조금만 기다려주세요!", type:  .onlyConfirm)
         
         vc.modalPresentationStyle = .overFullScreen
         
@@ -77,7 +77,7 @@ extension MyPageContentViewController: MyPageFooterViewDelegate {
             input.tapLogOut.onNext(())
         case .withdraw:
             
-            let vc = AlertViewController(title:"탈퇴하시나요?", content: "저장목록, 리뷰 등 활동 정보가 전부 사라지고 다시 복구할 수 없어요", type:  .delete, completion: { [weak self] in
+            let vc = AlertViewController(title:"탈퇴하시나요?", content: "저장목록, 리뷰 등 활동 정보가 전부 사라지고 다시 복구할 수 없어요", type:  .withDraw, completion: { [weak self] in
                 
                 guard let self else {return}
                 

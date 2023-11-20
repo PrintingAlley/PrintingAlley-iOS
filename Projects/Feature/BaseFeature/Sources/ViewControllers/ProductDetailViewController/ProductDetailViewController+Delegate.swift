@@ -58,7 +58,7 @@ extension ProductDetailViewController: ProductDetailTableHeaderViewDelegate {
         
         if PreferenceManager.user == nil { // 로그인 안되어있음
             
-            input.askToast.onNext(BaseEntity(statusCode: 0, message: "로그인이 필요한 서비스입니다."))
+            input.askToast.onNext(BaseEntity(statusCode: 0, message: "로그인 후 이용해주세요."))
             
             return
         }

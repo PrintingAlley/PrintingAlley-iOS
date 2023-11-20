@@ -29,7 +29,7 @@ extension BookMarkDetailViewController {
                 self.countLabel.setTitle(title: "작품 \(dataSource.bookmarks.count)개", textColor: .grey(.grey400), font: .caption1, alignment: .center)
                 
                 if dataSource.bookmarks.isEmpty {
-                    self.gridCollectionView.setEmptyMessage("저장된 작품이 없습니다.")
+                    self.gridCollectionView.setEmptyMessage("저장된 작품이 없어요.")
                 }
                 
                 else {
