@@ -28,6 +28,7 @@ class SecondFilterTableViewCell: UITableViewCell {
     
     var model: ChildrenTagEntity = ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: [])
     
+    var preTags: Set<Tag> = .init()
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -53,9 +54,9 @@ class SecondFilterTableViewCell: UITableViewCell {
     }
     
     
-    public func update(model: ChildrenTagEntity) {
+    public func update(model: ChildrenTagEntity, preTags: Set<Tag>) {
         self.model = model
-        
+        self.preTags = preTags
         self.subtitleLabel.setTitle(title: model.name, textColor: .grey(.grey300), font: .subtitle3)
         
         
@@ -104,7 +105,7 @@ extension SecondFilterTableViewCell: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.update(model: model)
+        cell.update(model: model, preTags: preTags)
         cell.selectionStyle = .none
         return cell
     }

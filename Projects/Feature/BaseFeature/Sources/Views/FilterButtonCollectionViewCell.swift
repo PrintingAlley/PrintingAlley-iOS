@@ -16,7 +16,7 @@ public final class FilterButtonCollectionViewCell: UICollectionViewCell {
     
     public static let identifier = "RecommendCollectionViewCell"
     
-    private var filterButton = FilterButton(title: "기본버튼", id: 0, type: .basic, willChangeUI: false)
+    private var filterButton = FilterButton(title: "기본버튼", id: 0, type: .basic, willChangeUI: true)
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,10 +41,15 @@ extension FilterButtonCollectionViewCell {
         }
     }
     
-    public func update(model: ChildrenTagEntity, type: FilterButtonType, willChangeUI: Bool) {
+    public func update(model: ChildrenTagEntity, type: FilterButtonType, willChangeUI: Bool, preSelected: Bool =  false) {
+
         filterButton.title = model.name
         filterButton.id = model.id
         filterButton.type = type
         filterButton.willChangeUI = willChangeUI
+        
+        if preSelected {
+            filterButton.preSelected()
+        }
     }
 }

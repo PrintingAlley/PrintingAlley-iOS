@@ -20,7 +20,7 @@ extension FilterViewController {
     
     @objc func tapFind() {
         self.dismiss(animated: true)
-        self.deleagte?.receive(result: Array<Tag>(viewModel.fillterIdSet))
+        self.deleagte?.receive(result: viewModel.fillterIdSet.toArray())
     }
     
     @objc func tapClose() {

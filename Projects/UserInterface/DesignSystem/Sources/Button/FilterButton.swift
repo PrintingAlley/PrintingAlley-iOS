@@ -20,6 +20,15 @@ public enum FilterButtonType {
 public struct Tag: Hashable {
     public let name: String
     public let id: Int
+    
+    public init(name: String, id: Int) {
+        self.name = name
+        self.id = id
+    }
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 public final class FilterButton: UIButton {
@@ -122,6 +131,11 @@ extension FilterButton {
       
         toggle()
         
+    }
+    
+    public func preSelected() {
+        self.isSelected = true
+        configureUI(.selected)
     }
     
     private func toggle() {

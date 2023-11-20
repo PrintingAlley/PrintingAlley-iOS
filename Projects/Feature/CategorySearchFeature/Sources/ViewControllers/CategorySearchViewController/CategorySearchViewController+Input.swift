@@ -27,6 +27,7 @@ extension CategorySearchViewController {
                 
                 filterVc.modalPresentationStyle = .overFullScreen
                 filterVc.deleagte = owner
+                filterVc.setPreTags(preTags: owner.output.tags.value)
                 
                 owner.present(filterVc, animated: true)
                 

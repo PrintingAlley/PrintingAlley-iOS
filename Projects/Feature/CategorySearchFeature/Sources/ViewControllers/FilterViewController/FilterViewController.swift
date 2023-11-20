@@ -19,7 +19,7 @@ public protocol FilterViewControllerDelegate: AnyObject {
     func receive(result: [Tag])
 }
 
-class FilterViewController: UIViewController {
+public class FilterViewController: UIViewController {
 
     lazy var titleLabel: AlleyLabel = AlleyLabel("필터", textColor: .sub(.black), font: .subtitle1)
     lazy var closeButton: UIButton = UIButton().then {
@@ -29,7 +29,6 @@ class FilterViewController: UIViewController {
      
     lazy var tableView: UITableView = UITableView(frame: .zero, style: .grouped).then {
         $0.backgroundColor = .setColor(.sub(.white))
-        $0.register(FilterTableViewCell.self, forCellReuseIdentifier: FilterTableViewCell.identifier)
         $0.register(SecondFilterTableViewCell.self, forCellReuseIdentifier: SecondFilterTableViewCell.identifier)
         $0.register(FilterSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: FilterSectionHeaderView.identifer)
         $0.delegate = self
@@ -85,7 +84,7 @@ class FilterViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         makeConstraints()
@@ -166,5 +165,12 @@ extension FilterViewController {
         })
         .disposed(by: disposeBag)
         
+    }
+}
+
+
+public extension FilterViewController {
+    func setPreTags(preTags: [Tag]) {
+        viewModel.fillterIdSet = Set(preTags)
     }
 }
