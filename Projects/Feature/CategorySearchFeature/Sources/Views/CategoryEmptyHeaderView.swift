@@ -34,7 +34,8 @@ class CategoryEmptyHeaderView: UIView {
         $0.layer.borderWidth = 1
         
         $0.addTarget(self, action: #selector(press), for: .touchUpInside)
-        
+        $0.addTarget(self, action: #selector(touchDown), for: .touchDown) // 애니메이션 효과
+        $0.addTarget(self, action: #selector(touchCancel), for: .touchUpOutside)
     }
     
     public weak var delegate: CategoryEmptyHeaderViewDelegate?
@@ -72,5 +73,17 @@ class CategoryEmptyHeaderView: UIView {
     
     @objc func press() {
         delegate?.press()
+    }
+    
+    @objc func touchDown() {
+        UIView.animate(withDuration: 0.2) {
+            self.button.alpha = 0.4
+        }
+    }
+    
+    @objc func touchCancel() {
+        UIView.animate(withDuration: 0.2) {
+            self.button.alpha = 1.0
+        }
     }
 }
