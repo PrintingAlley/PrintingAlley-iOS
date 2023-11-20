@@ -29,7 +29,7 @@ extension BookMarkDetailViewController {
                 self.countLabel.setTitle(title: "작품 \(dataSource.bookmarks.count)개", textColor: .grey(.grey400), font: .caption1, alignment: .center)
                 
                 if dataSource.bookmarks.isEmpty {
-                    self.gridCollectionView.setEmptyMessage("저장된 작품이 없습니다.")
+                    self.gridCollectionView.setEmptyMessage("저장된 작품이 없어요.")
                 }
                 
                 else {
@@ -84,7 +84,7 @@ extension BookMarkDetailViewController {
                 
                 
                 if result.statusCode == 200 {
-                    owner.view.showToast(text: "성공적으로 제거했습니다.")
+                    owner.view.showToast(text: "저장을 취소했어요.")
                     input.fetchDataSource.onNext(()) // 업데이트
                 }
                 
