@@ -123,8 +123,7 @@ extension FilterTableViewCell: UICollectionViewDataSource {
         
         let model = items[indexPath.row]
         
-        
-        DEBUG_LOG("KWKW: \(preTags) \(Tag(name: model.name, id: model.id)) \(preTags.contains(Tag(name: model.name, id: model.id)))")
+    
         cell.update(model: model, type: .basic, willChangeUI: true, preSelected: preTags.contains(Tag(name: model.name, id: model.id)))
     
         return cell

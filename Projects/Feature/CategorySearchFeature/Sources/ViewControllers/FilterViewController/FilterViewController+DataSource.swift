@@ -86,7 +86,7 @@ extension FilterViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             
-            DEBUG_LOG("KKKK: \(viewModel.fillterIdSet)")
+        
             cell.update(model: viewModel.dataSource.value[section].children[row], preTags: viewModel.fillterIdSet)
             
             cell.selectionStyle = .none
