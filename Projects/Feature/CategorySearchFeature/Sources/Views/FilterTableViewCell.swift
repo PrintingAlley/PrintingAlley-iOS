@@ -20,8 +20,13 @@ class FilterTableViewCell: UITableViewCell {
     
     var preTags: Set<Tag> = .init()
     
+    lazy var layout = LeftAlignedCollectionViewFlowLayout().then{
+        $0.minimumLineSpacing = 8
+        $0.minimumInteritemSpacing = 6
+    }
     
-    lazy var collectionView: UICollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .vertical).then {
+    
+    lazy var collectionView: UICollectionView = makeCollectionView(layout: layout, scrollDirection: .vertical).then {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
         $0.bounces = false
@@ -93,20 +98,11 @@ extension FilterTableViewCell: UICollectionViewDelegateFlowLayout {
         // 셀 크기
         let tempLabel = AlleyLabel(items[indexPath.row].name, font: .body1).then {
             $0.sizeToFit()
-            
         }
+        
   
-        return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
+        return CGSize(width: tempLabel.frame.width+20, height: tempLabel.frame.height + 8)
     }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        6
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { //셀 층간의 간격 (세로)
-        8
-    }
-    
 
 }
 
