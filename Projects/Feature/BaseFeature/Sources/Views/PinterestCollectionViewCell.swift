@@ -88,7 +88,7 @@ extension PinterestCollectionViewCell {
         self.id = id // 북마크에서 사용될 값
         self.bookmarkButton.isHidden = !isBookMark
         
-        self.imageHeight = CGFloat(171 * model.height / model.width)
+        self.imageHeight = model.width == 0 ? CGFloat(171) : CGFloat(171 * model.height / model.width)
         
         self.imageView.snp.updateConstraints {
             $0.top.leading.equalToSuperview()

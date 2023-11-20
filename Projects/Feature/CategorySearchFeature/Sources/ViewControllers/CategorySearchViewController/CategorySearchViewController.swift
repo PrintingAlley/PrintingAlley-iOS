@@ -182,6 +182,7 @@ extension CategorySearchViewController {
         bindFilterButton()
         bindItemSelected()
         bindGridView()
+        bindToast(output: output)
         input.pageID.accept(1)
     }
     

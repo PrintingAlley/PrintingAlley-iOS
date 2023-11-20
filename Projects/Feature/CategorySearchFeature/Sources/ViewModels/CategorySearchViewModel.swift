@@ -45,6 +45,7 @@ class CategorySearchViewModel: ViewModelType {
         let runIndicator: BehaviorRelay<Void> = .init(value: ())
         let tags: BehaviorRelay<[Tag]> = .init(value: []) // 카테고리 id 제외한 필터 태그값
         var canLoadMore: BehaviorRelay<Bool> = .init(value: true)
+        let showToast: PublishSubject<BaseEntity> = .init()
     }
      
     public func transform(input: Input) -> Output {
@@ -69,7 +70,18 @@ class CategorySearchViewModel: ViewModelType {
                 
                 return self.fetchProductListUseCase
                     .execute(page: page, text: "", tagIds: tags + [self.id])
-                    .catchAndReturn(.makeErrorEntity())
+                    .catch({ error in
+                        
+                        let alleyError = error.tempAlleyError
+                        
+                        output.showToast.onNext(BaseEntity(statusCode: 0, message: "\(alleyError.errorDescription!)"))
+                        
+                        return Single<ProductListEntity>.create { single in
+                            single(.success(.makeErrorEntity()))
+
+                            return Disposables.create()
+                        }
+                    })
                     .asObservable()
             }
             .map { $0.products }
