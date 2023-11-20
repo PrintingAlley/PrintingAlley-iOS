@@ -24,6 +24,7 @@ class FilterSectionHeaderView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         self.contentView.backgroundColor = .white
         
+        
         self.addSubviews(label, baseLine)
         
         baseLine.snp.makeConstraints {
@@ -34,7 +35,8 @@ class FilterSectionHeaderView: UITableViewHeaderFooterView {
         label.snp.makeConstraints {
                 $0.left.equalToSuperview().inset(24)
                 $0.top.equalTo(baseLine.snp.bottom).offset(16)
-                $0.bottom.right.equalToSuperview()
+                $0.right.equalToSuperview()
+                $0.bottom.equalToSuperview().offset(-16)
 
         }
     
@@ -45,6 +47,9 @@ class FilterSectionHeaderView: UITableViewHeaderFooterView {
     }
 
     public func update(name: String) {
+        
+        baseLine.isHidden = name == "인쇄 방식"
+        
         self.label.setTitle(title: name, textColor: .sub(.black), font: .subtitle2)
     }
     

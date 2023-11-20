@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UtilityModule
 
 
 // MARK: - PrintShop
@@ -32,8 +33,8 @@ public struct PrintShopEntity {
         self.afterProcessBinding = afterProcessBinding
         self.businessHours = businessHours
         self.introduction = introduction
-        self.logoImage = logoImage
-        self.backgroundImage = backgroundImage
+        self.logoImage = logoImage.encodeUrl()!
+        self.backgroundImage = backgroundImage.encodeUrl()!
         self.latitude = latitude
         self.longitude = longitude
         self.products = products

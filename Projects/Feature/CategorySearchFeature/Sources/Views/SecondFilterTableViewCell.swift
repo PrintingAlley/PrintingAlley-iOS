@@ -24,6 +24,10 @@ class SecondFilterTableViewCell: UITableViewCell {
         $0.dataSource = self
         $0.separatorStyle = .none
         $0.delegate = self
+        $0.bounces = false
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
+        $0.isScrollEnabled = false
     }
     
     var model: ChildrenTagEntity = ChildrenTagEntity(id: 0, name: "", image: "", parentID: 0, children: [])
@@ -41,7 +45,7 @@ class SecondFilterTableViewCell: UITableViewCell {
         }
         
         subtitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
+            $0.top.equalToSuperview().inset(6)
             $0.right.equalToSuperview()
             $0.left.equalToSuperview().inset(24)
         }
@@ -57,7 +61,7 @@ class SecondFilterTableViewCell: UITableViewCell {
     public func update(model: ChildrenTagEntity, preTags: Set<Tag>) {
         self.model = model
         self.preTags = preTags
-        self.subtitleLabel.setTitle(title: model.name, textColor: .grey(.grey300), font: .subtitle3)
+        self.subtitleLabel.setTitle(title: model.name, textColor: .grey(.grey600), font: .subtitle3)
         
         
         tableView.reloadData()
