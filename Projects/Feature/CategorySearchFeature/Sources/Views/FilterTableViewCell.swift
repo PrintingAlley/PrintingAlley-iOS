@@ -18,10 +18,7 @@ class FilterTableViewCell: UITableViewCell {
     
     public static let identifier = "FirstFillterTableViewCell"
     
-//    var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
-//        $0.scrollDirection = .vertical
-//        
-//    }
+    var preTags: Set<Tag> = .init()
     
     
     lazy var collectionView: UICollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .vertical).then {
@@ -75,9 +72,9 @@ extension FilterTableViewCell {
         }
     }
     
-    func update(model: ChildrenTagEntity) {
+    func update(model: ChildrenTagEntity, preTags: Set<Tag>) {
         self.items = model.children.filter({$0.children.isEmpty}) // 2,3층 상관 없이 최종 계층은 children이 비어있으
-        
+        self.preTags = preTags
         collectionView.reloadData()
     }
 }
@@ -123,8 +120,11 @@ extension FilterTableViewCell: UICollectionViewDataSource {
             return UICollectionViewCell()
             
         }
-
-        cell.update(model: items[indexPath.row], type: .basic, willChangeUI: true)
+        
+        let model = items[indexPath.row]
+        
+    
+        cell.update(model: model, type: .basic, willChangeUI: true, preSelected: preTags.contains(Tag(name: model.name, id: model.id)))
     
         return cell
     }

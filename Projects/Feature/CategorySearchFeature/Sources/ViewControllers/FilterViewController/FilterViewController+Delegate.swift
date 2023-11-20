@@ -12,7 +12,7 @@ import DesignSystem
 
 extension FilterViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let section = indexPath.section
         let row = indexPath.row
@@ -51,12 +51,12 @@ extension FilterViewController: UITableViewDelegate {
 
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
             UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         section != .zero ? 16 : UITableView.automaticDimension
     }
     
