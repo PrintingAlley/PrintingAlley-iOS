@@ -14,6 +14,7 @@ import BaseFeature
 extension SearchViewController {
     func bindDataSource(input: SearchViewModel.Input, output: SearchViewModel.Output) {
         output.dataSource
+            .skip(1)
             .do { [weak self] dataSource in
                 guard let self else { return }
                 DEBUG_LOG("DS: \(dataSource.count)")
@@ -40,7 +41,6 @@ extension SearchViewController {
             .asDriver()
             .drive(onNext: { [weak self] _ in
                 guard let self else {return}
-                
                 self.indicator.startAnimating()
             })
             .disposed(by: disposeBag)
