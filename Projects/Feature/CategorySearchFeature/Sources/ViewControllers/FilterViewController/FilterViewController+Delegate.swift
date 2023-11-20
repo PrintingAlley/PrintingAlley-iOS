@@ -17,9 +17,9 @@ extension FilterViewController: UITableViewDelegate {
         let section = indexPath.section
         let row = indexPath.row
         
-        let numberOfItem = viewModel.dataSource.value[section].children[row].children.isEmpty ? viewModel.dataSource.value[section].children.count : viewModel.dataSource.value[section].children[row].children.count
+        let numberOfItem =  viewModel.dataSource.value[section].children[row].children.count
          
-        let tempLabel = AlleyLabel("않입값히ㅁㄴㅇ", font: .body1).then {
+        let tempLabel = AlleyLabel("마스터 인쇄", font: .body1).then {
             $0.sizeToFit()
         }
         
@@ -36,17 +36,11 @@ extension FilterViewController: UITableViewDelegate {
         let offset1: CGFloat = 16.0
         let offset2: CGFloat = 6.0
 
-        if viewModel.dataSource.value[section].children[row].children.isEmpty {
-            
-            // (row 수 * 셀크기 ) + (row-1 셀간격) + 하단에서 보정값
-            return CGFloat(numberOfrow) * h1 + (CGFloat(numberOfrow-1)*offset2) + offset1
-        }
-        
-        else  {
+
              
             // 셀 상단부터 제목까지 거리(offset1) + 제목 크기(h2) + (행 * 필터크기) + ( 행-1 * 간격) +  하단에서 보정값
-            return offset2 + h2 + offset2 + (CGFloat(numberOfrow) * h1 ) + (CGFloat(numberOfrow-1) * offset2) + offset1
-        }
+        return offset2 + h2 + offset2 + (CGFloat(numberOfrow) * h1 ) + (CGFloat(numberOfrow-1) * offset2) + offset2
+        
         
 
     }

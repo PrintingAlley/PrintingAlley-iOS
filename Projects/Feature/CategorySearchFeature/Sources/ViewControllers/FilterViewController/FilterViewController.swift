@@ -116,7 +116,7 @@ extension FilterViewController {
         
         tableView.snp.makeConstraints {
             $0.left.right.equalToSuperview()
-            $0.top.equalTo(titleLabel.snp.bottom).offset(24)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
             $0.bottom.equalTo(baseLine.snp.top)
         }
         

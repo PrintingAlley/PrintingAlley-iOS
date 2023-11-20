@@ -30,6 +30,9 @@ class FilterTableViewCell: UITableViewCell {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
         $0.bounces = false
+        $0.isScrollEnabled = false
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false 
     }
     
    
