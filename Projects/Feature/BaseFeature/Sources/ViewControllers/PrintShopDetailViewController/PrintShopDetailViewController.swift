@@ -193,6 +193,7 @@ extension PrintShopDetailViewController {
         bindButton()
         bindDataSource(output: output)
         bindIndicator(output: output)
+        bindToast(output: output)
     }
     
     @objc func moveBack() {
