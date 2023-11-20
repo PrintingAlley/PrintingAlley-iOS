@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import UtilityModule
 
-public struct ReviewEntity{
+public struct ReviewEntity {
     let id: Int
     let content: String
     let rating: Int
@@ -21,7 +22,7 @@ public struct ReviewEntity{
         self.id = id
         self.content = content
         self.rating = rating
-        self.images = images
+        self.images = images.map{$0.encodeUrl()!}
         self.statusCode = statusCode
         self.message = message
     }

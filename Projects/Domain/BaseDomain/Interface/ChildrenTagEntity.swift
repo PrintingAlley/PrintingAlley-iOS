@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UtilityModule
 
 public struct ChildrenTagEntity {
     public let id: Int
@@ -19,7 +20,7 @@ public struct ChildrenTagEntity {
     public init(id: Int, name: String, image: String, parentID: Int, children: [ChildrenTagEntity]) {
         self.id = id
         self.name = name
-        self.image = image
+        self.image = image.encodeUrl()!
         self.parentID = parentID
         self.children = children
     }

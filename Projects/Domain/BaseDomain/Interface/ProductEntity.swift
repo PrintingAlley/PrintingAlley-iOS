@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UtilityModule
 
 public struct ProductEntity {
     
@@ -38,8 +39,8 @@ public struct ProductEntity {
         self.designer = designer
         self.introduction = introduction
         self.description = description
-        self.mainImage = mainImage
-        self.images = images
+        self.mainImage = mainImage.encodeUrl()!
+        self.images = images.map{$0.encodeUrl()!}
         self.category = category
         self.printShop = printShop
         self.tags = tags

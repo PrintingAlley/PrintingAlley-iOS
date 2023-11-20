@@ -8,6 +8,7 @@
 
 
 import Foundation
+import UtilityModule
 
 public struct CategoryEntity {
     let id: Int
@@ -19,7 +20,7 @@ public struct CategoryEntity {
     public init(id: Int, name: String, image: String, statusCode: Int, message: String) {
         self.id = id
         self.name = name
-        self.image = image
+        self.image = image.encodeUrl()!
         self.statusCode = statusCode
         self.message = message
     }

@@ -1,6 +1,7 @@
 
 
 import Foundation
+import UtilityModule
 
 public struct UserInfoEntity {
     public let id: Int
@@ -15,7 +16,7 @@ public struct UserInfoEntity {
         self.id = id
         self.provider = provider
         self.name = name
-        self.profileImage = profileImage
+        self.profileImage = profileImage.encodeUrl()!
         self.email = email
         self.statusCode = statusCode
         self.message = message
