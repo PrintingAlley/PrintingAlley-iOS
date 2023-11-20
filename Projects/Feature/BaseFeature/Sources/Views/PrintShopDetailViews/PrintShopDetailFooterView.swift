@@ -17,13 +17,16 @@ final class PrintShopDetailFooterView: UIView {
     
     static let identifier = "PrintShopDetailFooterView"
     
+    public var footerHeight: CGFloat = 0
+    
     private let introductionIcon = UIImageView().then {
         $0.image = DesignSystemAsset.Icon.dotTextBubble.image
         $0.contentMode = .scaleToFill
     }
     
-    private let introductionLabel = AlleyLabel(" ", textColor: .sub(.black), font: .body2).then {
+    private let introductionLabel = AlleyLabel("-", textColor: .sub(.black), font: .body2).then {
         $0.numberOfLines = 0
+        $0.sizeToFit()
     }
     
     private let separateLine = UIView().then {
@@ -77,7 +80,8 @@ extension PrintShopDetailFooterView {
     }
     
     private func makeConstraints() {
-        introductionIcon.snp.makeConstraints {            $0.top.equalToSuperview().inset(8)
+        introductionIcon.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(8)
             $0.leading.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.width.height.equalTo(24)
         }
@@ -149,5 +153,7 @@ extension PrintShopDetailFooterView {
         greyRoundView.snp.updateConstraints {
             $0.height.equalTo(printTypeTitle.frame.height * 3 + printTypeLabel.frame.height *  (ceil(printTypeLabel.frame.height / dividingBy) + ceil(afterProcessLabel.frame.height / dividingBy) + ceil(afterProcessBindingLabel.frame.height / dividingBy)) + 52)
         }
+        
+        footerHeight += greyRoundView.frame.size.height + introductionLabel.frame.height * (ceil(introductionLabel.frame.height / (APP_WIDTH() - HORIZON_MARGIN1() * 2 - introductionIcon.frame.width - 10))) + 9 + 16 + 8
     }
 }
