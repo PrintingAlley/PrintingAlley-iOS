@@ -23,7 +23,6 @@ public struct PrintShopOneResponseDTO: Decodable {
     let name, address, phone, email: String
     let homepage: String
     let type, businessHours, introduction: String
-    let logoImage, backgroundImage: String
     let latitude, longitude: String
     let products: [ProductResponseDTO]?
     let printType, afterProcess, afterProcessBinding: String?

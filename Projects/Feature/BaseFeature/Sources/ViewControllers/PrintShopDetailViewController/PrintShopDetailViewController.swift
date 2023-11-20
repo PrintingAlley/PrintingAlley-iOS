@@ -135,14 +135,14 @@ extension PrintShopDetailViewController {
         }
         
         backButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(22)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(19)
             $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
-            $0.width.height.equalTo(24)
+            $0.width.height.equalTo(32)
         }
         
         homeButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(17)
-            $0.width.height.equalTo(34)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(19)
+            $0.width.height.equalTo(32)
             $0.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
         }
         

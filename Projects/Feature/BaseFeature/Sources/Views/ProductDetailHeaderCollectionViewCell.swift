@@ -19,6 +19,7 @@ class ProductDetailHeaderCollectionViewCell: UICollectionViewCell {
     
     lazy var imageView: UIImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
     }
     
     
@@ -40,6 +41,7 @@ class ProductDetailHeaderCollectionViewCell: UICollectionViewCell {
 
 extension ProductDetailHeaderCollectionViewCell {
     public func update(image: String) {
-        imageView.kf.setImage(with: URL(string: image),placeholder: DesignSystemAsset.PlaceHolder.largePH.image)
+        
+        imageView.kf.setImage(with: URL(string: image),placeholder: DesignSystemAsset.PlaceHolder.productPH.image)
     }
 }

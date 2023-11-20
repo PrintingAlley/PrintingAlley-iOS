@@ -83,7 +83,42 @@ extension AlleyError: LocalizedError {
 public extension Error {
     var asAlleyError: AlleyError {
     
-        
         self as? AlleyError ?? .unknown
+    }
+    
+    var tempAlleyError: AlleyError {
+        
+        let s = self.localizedDescription
+        
+        if s.contains("400") {
+            return  .badRequest
+        } else if s.contains("401") {
+            
+            return .tokenExpired
+            
+        } else if s.contains("404") {
+            
+            return .notFound
+            
+        } else if s.contains("409") {
+            
+            return .conflict
+            
+        } else if s.contains("429") {
+            
+            return .tooManyRequest
+            
+        } else if s.contains("500") {
+            
+            return .internalServerError
+            
+        } else if s.contains("1009") {
+            return .offline
+            
+        } else {
+            return .internalServerError
+        }
+            
+        
     }
 }
