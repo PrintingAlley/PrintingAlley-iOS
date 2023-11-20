@@ -13,11 +13,12 @@ import Then
 
 public enum AlertType {
     case onlyConfirm    // 확인 버튼
-    case delete
+    case withDraw
     case offerUpdate
     case forceUpdate
     case logout
     case exit
+    case delete
     
     var confirmText: String {
         
@@ -25,6 +26,8 @@ public enum AlertType {
             
         case .onlyConfirm, .logout:
             return "확인"
+        case .withDraw:
+            return "탈퇴하기"
         case .delete:
             return "삭제"
         case .offerUpdate,.forceUpdate:
@@ -38,7 +41,7 @@ public enum AlertType {
         
         switch self {
             
-        case .onlyConfirm, .delete:
+        case .onlyConfirm, .withDraw,.delete:
             return "취소"
         case .offerUpdate:
             return "다음에"
@@ -53,7 +56,7 @@ public enum AlertType {
             
         case .onlyConfirm, .forceUpdate, .logout, .exit:
             return true
-        case .delete, .offerUpdate:
+        case .withDraw, .offerUpdate,.delete:
             return false
 
         }
@@ -151,11 +154,11 @@ extension AlertViewController {
         
         confirmButton.setTitle(self.type.confirmText, for: .normal)
         confirmButton.titleLabel?.font = .setFont(.subtitle3)
-        confirmButton.setTitleColor(DesignSystemAsset.MainBlue.blue500.color, for: .normal)
+        confirmButton.setTitleColor(type == .withDraw ? .setColor(.sub(.red500))  : .setColor(.mainBlue(.blue500)), for: .normal)
         confirmButton.contentHorizontalAlignment = .center
         
         cancelButton.setTitle(self.type.cancelText, for: .normal)
-        cancelButton.setTitleColor(DesignSystemAsset.Grey.grey400.color, for: .normal)
+        cancelButton.setTitleColor(.setColor(.grey(.grey400)), for: .normal)
         cancelButton.titleLabel?.font = .setFont(.body2)
         cancelButton.contentHorizontalAlignment = .center
         
