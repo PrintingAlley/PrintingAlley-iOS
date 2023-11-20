@@ -138,7 +138,6 @@ extension PrintShopInfoViewController {
         greyRoundView.snp.makeConstraints {
             $0.top.equalTo(separateLine.snp.bottom).offset(16)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
-            $0.height.equalTo(140)
             $0.bottom.equalToSuperview().inset(42)
         }
         
@@ -173,23 +172,15 @@ extension PrintShopInfoViewController {
             $0.top.equalTo(afterProcessBindingTitle.snp.bottom)
             $0.leading.equalTo(afterProcessBindingTitle)
             $0.trailing.equalToSuperview().inset(HORIZON_MARGIN1())
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
     
     func update(model: PrintShopEntity) {
-        let dividingBy = APP_WIDTH() - 16 * 4
         
         introductionLabel.text = model.introduction
         printTypeLabel.text = model.printType.isEmpty ? "-" : model.printType
         afterProcessLabel.text = model.afterProcess.isEmpty ? "-" : model.afterProcess
         afterProcessBindingLabel.text = model.afterProcessBinding.isEmpty ? "-" : model.afterProcessBinding
-        
-        separateLine.snp.updateConstraints {
-            $0.bottom.equalTo(introductionLabel.snp.bottom).offset(10)
-        }
-        
-        greyRoundView.snp.updateConstraints {
-            $0.height.equalTo(printTypeTitle.frame.height * 3 + printTypeLabel.frame.height *  (ceil(printTypeLabel.frame.height / dividingBy) + ceil(afterProcessLabel.frame.height / dividingBy) + ceil(afterProcessBindingLabel.frame.height / dividingBy)) + 52)
-        }
     }
 }
