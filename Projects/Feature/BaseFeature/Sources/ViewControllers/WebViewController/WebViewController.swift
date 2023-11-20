@@ -116,7 +116,7 @@ extension WebViewController {
         }
         
         backButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(22)
             $0.left.equalToSuperview().inset(HORIZON_MARGIN1())
             $0.width.height.equalTo(24)
         }
