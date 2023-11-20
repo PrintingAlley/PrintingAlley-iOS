@@ -13,12 +13,12 @@ import UtilityModule
 
 extension FilterViewController: UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.dataSource.value.count
     }
     
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
         var thirdFloor: Int = 0
         var secondFloor: Int = 0
@@ -39,7 +39,7 @@ extension FilterViewController: UITableViewDataSource {
         
     }
      
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
           
 //        if section == .zero {
 //            return nil
@@ -55,7 +55,7 @@ extension FilterViewController: UITableViewDataSource {
         
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         if section == .zero {
             guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: TopCellSectionFooterView.identifer) as? TopCellSectionFooterView else {
@@ -75,34 +75,24 @@ extension FilterViewController: UITableViewDataSource {
                 
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let section = indexPath.section
         let row = indexPath.row
              
-        if viewModel.dataSource.value[section].children[row].children.isEmpty {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: FilterTableViewCell.identifier, for: indexPath) as? FilterTableViewCell else {
-                return UITableViewCell()
-            }
-            
-            cell.update(model: viewModel.dataSource.value[section])
-            cell.selectionStyle = .none
-         
-            return cell
-        }
-        
-        else {
+
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SecondFilterTableViewCell.identifier, for: indexPath) as? SecondFilterTableViewCell else {
                 
                 return UITableViewCell()
             }
             
-            cell.update(model: viewModel.dataSource.value[section].children[row])
+        
+            cell.update(model: viewModel.dataSource.value[section].children[row], preTags: viewModel.fillterIdSet)
             
             cell.selectionStyle = .none
             return cell
             
-        }
+        
         
         
     }

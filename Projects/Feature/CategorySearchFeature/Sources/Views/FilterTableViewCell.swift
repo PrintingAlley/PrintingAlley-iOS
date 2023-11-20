@@ -18,16 +18,21 @@ class FilterTableViewCell: UITableViewCell {
     
     public static let identifier = "FirstFillterTableViewCell"
     
-//    var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
-//        $0.scrollDirection = .vertical
-//        
-//    }
+    var preTags: Set<Tag> = .init()
+    
+    lazy var layout = LeftAlignedCollectionViewFlowLayout().then{
+        $0.minimumLineSpacing = 8
+        $0.minimumInteritemSpacing = 6
+    }
     
     
-    lazy var collectionView: UICollectionView = makeCollectionView(layout: LeftAlignedCollectionViewFlowLayout(), scrollDirection: .vertical).then {
+    lazy var collectionView: UICollectionView = makeCollectionView(layout: layout, scrollDirection: .vertical).then {
         $0.backgroundColor = .setColor(.sub(.white))
         $0.register(FilterButtonCollectionViewCell.self, forCellWithReuseIdentifier: FilterButtonCollectionViewCell.identifier)
         $0.bounces = false
+        $0.isScrollEnabled = false
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false 
     }
     
    
@@ -75,9 +80,9 @@ extension FilterTableViewCell {
         }
     }
     
-    func update(model: ChildrenTagEntity) {
+    func update(model: ChildrenTagEntity, preTags: Set<Tag>) {
         self.items = model.children.filter({$0.children.isEmpty}) // 2,3층 상관 없이 최종 계층은 children이 비어있으
-        
+        self.preTags = preTags
         collectionView.reloadData()
     }
 }
@@ -88,7 +93,7 @@ extension FilterTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
-        return UIEdgeInsets(top: 0, left: 0.0, bottom: 0, right: 20.0)
+        return UIEdgeInsets(top: 0, left: 0.0, bottom: 0, right: 0.0)
     }
     
     
@@ -96,20 +101,11 @@ extension FilterTableViewCell: UICollectionViewDelegateFlowLayout {
         // 셀 크기
         let tempLabel = AlleyLabel(items[indexPath.row].name, font: .body1).then {
             $0.sizeToFit()
-            
         }
+        
   
-        return CGSize(width: tempLabel.frame.width + 20, height: tempLabel.frame.height + 8)
+        return CGSize(width: tempLabel.frame.width+20, height: tempLabel.frame.height + 8)
     }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        6
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { //셀 층간의 간격 (세로)
-        8
-    }
-    
 
 }
 
@@ -123,8 +119,11 @@ extension FilterTableViewCell: UICollectionViewDataSource {
             return UICollectionViewCell()
             
         }
-
-        cell.update(model: items[indexPath.row], type: .basic, willChangeUI: true)
+        
+        let model = items[indexPath.row]
+        
+    
+        cell.update(model: model, type: .basic, willChangeUI: true, preSelected: preTags.contains(Tag(name: model.name, id: model.id)))
     
         return cell
     }

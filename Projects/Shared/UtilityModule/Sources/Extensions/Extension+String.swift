@@ -12,4 +12,14 @@ public extension String {
     var isWhiteSpace: Bool{
               return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
     }
+    
+    func encodeUrl() -> String?
+    {
+        return self.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed)
+    }
+    func decodeUrl() -> String?
+    {
+        return self.removingPercentEncoding
+    }
+
 }

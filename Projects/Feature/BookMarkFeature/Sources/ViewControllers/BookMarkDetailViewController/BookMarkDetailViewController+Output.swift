@@ -23,7 +23,6 @@ extension BookMarkDetailViewController {
                 
                 guard let self else {return}
                 
-                DEBUG_LOG("KWKW :\(dataSource.bookmarks)")
                 
                 self.naviTitleLabel.setTitle(title: dataSource.name, textColor: .sub(.black), font: .header3,alignment: .center)
                 self.countLabel.setTitle(title: "작품 \(dataSource.bookmarks.count)개", textColor: .grey(.grey400), font: .caption1, alignment: .center)

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UtilityModule
 
 
 // MARK: - PrintShop
@@ -32,14 +33,14 @@ public struct PrintShopEntity {
         self.afterProcessBinding = afterProcessBinding
         self.businessHours = businessHours
         self.introduction = introduction
-        self.logoImage = logoImage
-        self.backgroundImage = backgroundImage
+        self.logoImage = logoImage.encodeUrl()!
+        self.backgroundImage = backgroundImage.encodeUrl()!
         self.latitude = latitude
         self.longitude = longitude
         self.products = products
     }
     
     public static func makeErrorEntity() -> PrintShopEntity {
-        PrintShopEntity(id: 0, name: "Error Entity", address: "", phone: "", email: "", homepage: "",type: "",printType: "",afterProcess: "", afterProcessBinding: "", businessHours: "" ,introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "",products: [])
+        PrintShopEntity(id: 0, name: "", address: "", phone: "", email: "", homepage: "",type: "",printType: "",afterProcess: "", afterProcessBinding: "", businessHours: "" ,introduction: "", logoImage: "", backgroundImage: "", latitude: "", longitude: "",products: [])
     }
 }
