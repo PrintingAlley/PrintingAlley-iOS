@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import DesignSystem
+import UtilityModule
 
 extension FilterViewController: UITableViewDelegate {
     
@@ -23,13 +24,14 @@ extension FilterViewController: UITableViewDelegate {
             $0.sizeToFit()
         }
         
-        let subtitleLabel = AlleyLabel("소제목 소제목",font: .subtitle3).then {
+        let subtitleLabel = AlleyLabel("소제목 소제목", font: .subtitle3).then {
             $0.sizeToFit()
         }
         
         let h1: CGFloat = tempLabel.frame.height + 8
         
         let h2: CGFloat = subtitleLabel.frame.height
+        
         
         let numberOfrow = numberOfItem % 4 == .zero ?  numberOfItem / 4 : (numberOfItem / 4 + 1) // 필터 줄
         
