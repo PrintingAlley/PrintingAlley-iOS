@@ -73,6 +73,9 @@ class CategoryEmptyHeaderView: UIView {
     
     @objc func press() {
         delegate?.press()
+        UIView.animate(withDuration: 0.2) {
+            self.button.alpha = 1.0
+        }
     }
     
     @objc func touchDown() {
