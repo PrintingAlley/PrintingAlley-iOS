@@ -39,6 +39,7 @@ public class SearchViewModel: ViewModelType {
         let dataSource: BehaviorRelay<[PrintShopEntity]> = .init(value: [])
         var canLoadMore: BehaviorRelay<Bool> = .init(value: true)
         let showToast: PublishSubject<BaseEntity> = .init()
+        var showErrorView: BehaviorRelay<Bool> = .init(value: false) // empty Error View
     }
     
     public func transform(input: Input) -> Output {
@@ -56,7 +57,7 @@ public class SearchViewModel: ViewModelType {
         .disposed(by: disposeBag)
         
         Observable
-            .combineLatest(input.textString.distinctUntilChanged(), input.pageID.distinctUntilChanged())
+            .combineLatest(input.textString.distinctUntilChanged(), input.pageID)
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .map { ($0, $1) }
             .flatMap { [weak self] (text, pageID) -> Observable<PrintShopListEntity> in
@@ -70,6 +71,7 @@ public class SearchViewModel: ViewModelType {
                         let alleyError = error.asAlleyError
                         
                         output.showToast.onNext(BaseEntity(statusCode: 0, message: "\(alleyError.errorDescription!)"))
+                        output.showErrorView.accept(true)
                         
                         return Single<PrintShopListEntity>.create { single in
                             single(.success(PrintShopListEntity(printShops: [], totalCount: 0, statusCode: 0, message: alleyError.errorDescription ?? "")))

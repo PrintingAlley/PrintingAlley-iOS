@@ -87,7 +87,7 @@ extension SearchBar {
 // MARK: - Objc 함수
 extension SearchBar {
     @objc
-    private func touchSearchIcon() {
+    public func touchSearchIcon() {
             searchTextField.text?.removeAll()
             searchButton.setImage(DesignSystemAsset.Icon.search.image, for: .normal)
             delegate?.press()
