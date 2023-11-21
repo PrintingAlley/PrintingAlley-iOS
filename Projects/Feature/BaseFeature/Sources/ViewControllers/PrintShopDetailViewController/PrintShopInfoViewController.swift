@@ -124,7 +124,7 @@ extension PrintShopInfoViewController {
         }
         
         introductionLabel.snp.makeConstraints {
-            $0.top.equalTo(tableView.snp.bottom).offset(10)
+            $0.top.equalTo(tableView.snp.bottom).offset(7)
             $0.leading.equalTo(introductionIcon.snp.trailing).offset(10)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
         }
