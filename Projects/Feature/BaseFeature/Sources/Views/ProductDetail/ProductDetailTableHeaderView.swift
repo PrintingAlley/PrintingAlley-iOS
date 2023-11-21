@@ -31,6 +31,8 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
 
     }
     
+    lazy var carouselCountLabel: CarouselCountLabel = CarouselCountLabel()
+    
     lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.isPagingEnabled = true // 컨텐츠 만큼 스크롤
         $0.dataSource = self
@@ -91,7 +93,7 @@ class ProductDetailTableHeaderView: UITableViewHeaderFooterView {
 
 extension ProductDetailTableHeaderView {
     func addSubviews() {
-        self.addSubviews(collectionView, infoView, emptyView, infoLabel)
+        self.addSubviews(collectionView, infoView, emptyView, infoLabel, carouselCountLabel)
         self.infoView.addSubviews(titleLabel, saveButton, printShopLabel, designerLabel, movePrintShopButton )
     }
     
@@ -99,6 +101,11 @@ extension ProductDetailTableHeaderView {
         collectionView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
             $0.height.equalTo(390)
+        }
+        
+        carouselCountLabel.snp.makeConstraints {
+            $0.right.equalToSuperview().inset(36)
+            $0.bottom.equalTo(infoView.snp.top).offset(-31)
         }
         
         infoView.snp.makeConstraints {
@@ -161,6 +168,7 @@ extension ProductDetailTableHeaderView {
     func update(model: ProductHeaderInfo, isSaved: Bool) { 
         self.model = model
         self.isSaved = isSaved
+        self.carouselCountLabel.setCount(1, model.images.count)
         titleLabel.setTitle(title: model.title, textColor: .sub(.black), font: .header3)
         
         printShopLabel.setMultipleAttributeText(text1: "담당 인쇄사  ", text2: model.printShop.name, color1: DesignSystemAsset.Grey.grey300.color, color2: DesignSystemAsset.MainBlue.blue500.color, font1: .subtitle3, font2: .subtitle3)
@@ -179,7 +187,7 @@ extension ProductDetailTableHeaderView {
 
 extension ProductDetailTableHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        model.images.count
+        return model.images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -198,5 +206,13 @@ extension ProductDetailTableHeaderView: UICollectionViewDataSource {
 extension ProductDetailTableHeaderView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: APP_WIDTH(), height: 390)
+    }
+}
+
+extension ProductDetailTableHeaderView: UIScrollViewDelegate {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let i = Int(scrollView.contentOffset.x / APP_WIDTH())
+
+        self.carouselCountLabel.setCount(i+1, model.images.count)
     }
 }

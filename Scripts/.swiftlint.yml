@@ -13,6 +13,7 @@ disabled_rules: # Default Rules에서 비활성화할 규칙
     - line_length
     - multiline_arguments_brackets
     - identifier_name 
+    - duplicate_conditions
 
 opt_in_rules:
     - closing_brace

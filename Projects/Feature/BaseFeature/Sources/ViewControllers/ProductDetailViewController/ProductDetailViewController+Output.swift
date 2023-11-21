@@ -24,7 +24,7 @@ extension ProductDetailViewController {
                     owner.tableView.reloadData()
                 }
                 
-                owner.view.showToast(text: toast.message)
+                owner.view.showBottomToast(text: toast.message)
             })
             .disposed(by: disposeBag)
         

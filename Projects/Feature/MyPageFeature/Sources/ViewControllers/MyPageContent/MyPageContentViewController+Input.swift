@@ -9,6 +9,7 @@
 import Foundation
 import UtilityModule
 import RxCocoa
+import BaseFeature
 
 extension MyPageContentViewController {
     
@@ -31,7 +32,7 @@ extension MyPageContentViewController {
             .withUnretained(self)
             .subscribe(onNext: { (owner, _ ) in
                 
-                let vc = owner.editModalFactory.makeView(id: -1, title: "이름 수정", type: .reNameprofileName)
+                let vc = owner.editModalFactory.makeView(id: -1, type: .reNameprofileName)
                 
                 vc.modalPresentationStyle = .overFullScreen
                 

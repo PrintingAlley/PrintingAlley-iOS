@@ -20,8 +20,8 @@ public protocol EditModalDependency: Dependency {
 }
 
 public final class EditModalComponent: Component<EditModalDependency>, EditModalFactory {
-    public func makeView(id: Int, title: String, type: EditType) -> UIViewController {
-        EditModalViewController(title: title, viewModel: EditModalViewModel(id: id, type: type, generateBookMarkUseCase: dependency.bookMarkDomainFactory.generateBookMarkUseCase, renameBookMarkGroupUseCase: dependency.bookMarkDomainFactory.renameBookMarkGroupUseCase, renameUserUseCase: dependency.userDomainFactory.renameUserUseCase))
+    public func makeView(id: Int, type :EditType) -> UIViewController {
+        EditModalViewController(viewModel: EditModalViewModel(id: id, type: type, generateBookMarkUseCase: dependency.bookMarkDomainFactory.generateBookMarkUseCase, renameBookMarkGroupUseCase: dependency.bookMarkDomainFactory.renameBookMarkGroupUseCase, renameUserUseCase: dependency.userDomainFactory.renameUserUseCase))
     }
     
 }

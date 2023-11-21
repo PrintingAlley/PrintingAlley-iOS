@@ -156,7 +156,7 @@ extension BookMarkBottomSheetViewController {
 extension BookMarkBottomSheetViewController: NewListHeaderViewDelegate {
     public func generateNewList() {
         
-        let vc = editModalFactory.makeView(id: -1, title: "저장 목록 만들기", type: .newBookMark)
+        let vc = editModalFactory.makeView(id: -1, type: .newBookMark)
         
         vc.modalPresentationStyle = .overFullScreen
         

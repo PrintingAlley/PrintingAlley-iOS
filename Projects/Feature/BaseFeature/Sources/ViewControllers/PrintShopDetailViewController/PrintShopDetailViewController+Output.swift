@@ -18,7 +18,7 @@ extension PrintShopDetailViewController {
         output.showToast
             .withUnretained(self)
             .subscribe(onNext: { (owner, toast) in
-                owner.view.showToast(text: toast.message)
+                owner.view.showBottomToast(text: toast.message)
             })
             .disposed(by: disposeBag)
     }
@@ -36,7 +36,7 @@ extension PrintShopDetailViewController {
                 self.indicator.stopAnimating()
                 update(model: dataSource)
             })
-                .map { [$0.logoImage, $0.backgroundImage] }
+            .map { $0.backgroundImage.isEmpty ? [$0.logoImage] : [$0.logoImage,$0.backgroundImage] }
             .bind(to: imageCollectionView.rx.items) { [weak self] (collectionView, indexPath, model) -> UICollectionViewCell in
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PrintShopPhotosCollectionViewCell.identifier, for: IndexPath(index: indexPath)) as? PrintShopPhotosCollectionViewCell else {
                     return UICollectionViewCell()

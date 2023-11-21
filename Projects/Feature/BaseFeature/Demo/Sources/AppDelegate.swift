@@ -11,7 +11,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = WebViewController(naviTitle: "헬로", url: "https://web.printingstreets.com/content-webview/1")
+        let viewController = ViewController()
 
         
         window?.rootViewController = viewController
