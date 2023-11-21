@@ -108,9 +108,7 @@ class PrintShopDetailViewController: UIViewController {
         addSubviews()
         makeConstraints()
         bindViewModel()
-        // 캐러셀 초기
-        let total = output.dataSource.value.backgroundImage.isEmpty ? 0 : 1
-        carouselCountLabel.setCount(1, total+1)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -216,6 +214,9 @@ extension PrintShopDetailViewController {
     func update(model: PrintShopEntity) {
         self.titleLabel.text = model.name
         self.typeLabel.text = model.type
+        
+        let total = output.dataSource.value.backgroundImage.isEmpty ? 0 : 1
+        carouselCountLabel.setCount(1, total+1)
         
         let vc1 = printShopInfoFactory.makeView(printShop: output.dataSource.value)
         let vc2 = printShopProductsFactory.makeView(products: output.dataSource.value.products)

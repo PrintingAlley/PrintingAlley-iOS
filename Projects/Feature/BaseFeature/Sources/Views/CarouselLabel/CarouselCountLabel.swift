@@ -11,7 +11,7 @@ public class CarouselCountLabel: UIView {
         $0.layer.cornerRadius = 12
         $0.clipsToBounds = true
     }
-    lazy var label: AlleyLabel = AlleyLabel("\(1)/\(10)", textColor: .sub(.white), font: .caption1)
+    lazy var label: AlleyLabel = AlleyLabel()
     
     
     
