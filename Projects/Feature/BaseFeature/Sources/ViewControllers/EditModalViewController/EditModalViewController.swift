@@ -199,11 +199,14 @@ extension EditModalViewController {
             .subscribe(onNext: { [weak self] result in
                 
                 
+                
+                
                 guard let self else {return}
+                self.hideKeyboard()
                 
                 
                 if result.statusCode == 0 {
-                    self.view.showTopToast(text: result.message)
+                    self.view.showBottomToast(text: result.message)
                 }
                 
                 else {
@@ -339,5 +342,14 @@ extension EditModalViewController : UITextFieldDelegate {
         return false
         
     
+    }
+}
+
+
+extension EditModalViewController {
+    func hideKeyboard() {
+        if textField.isFirstResponder {
+               textField.resignFirstResponder()
+           }
     }
 }
