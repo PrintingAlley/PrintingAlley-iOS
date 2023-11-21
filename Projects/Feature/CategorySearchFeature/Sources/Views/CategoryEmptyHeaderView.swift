@@ -68,8 +68,13 @@ class CategoryEmptyHeaderView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-
     }
+    
+    public func setTitle(title: String, subtitle: String) {
+        self.titleLabel.text = title
+        self.subtitleLabel.text = subtitle
+    }
+    
     
     @objc func press() {
         delegate?.press()

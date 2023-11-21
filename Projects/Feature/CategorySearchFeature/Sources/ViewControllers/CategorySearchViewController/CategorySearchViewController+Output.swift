@@ -33,10 +33,14 @@ extension CategorySearchViewController {
                 guard let self else { return }
                 self.indicator.stopAnimating()
                 DEBUG_LOG("DS: \(dataSource.count)")
-                if dataSource.isEmpty {
+                if output.tags.value.count < 1, dataSource.isEmpty { // 선택한 필터 태그가 없는 상황
+                    gridCollectionView.backgroundView = CategoryEmptyHeaderView().then {
+                        $0.setTitle(title: "등록된 작품이 아직 없어요.", subtitle: "멋진 작품으로 곧 찾아올게요!")
+                        $0.button.isHidden = true
+                    }
+                } else if dataSource.isEmpty {
                     gridCollectionView.backgroundView = emptyHeaderView
-                }
-                else {
+                } else {
                     self.gridCollectionView.restore()
                 }
             })
