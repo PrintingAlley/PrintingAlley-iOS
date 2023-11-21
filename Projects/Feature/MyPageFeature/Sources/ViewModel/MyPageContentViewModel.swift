@@ -19,11 +19,12 @@ public enum MyPageCategory: String {
     case faq = "자주 묻는 질문"
     case request = "1:1 문의하기"
     case service = "서비스 이용약관"
+    case copyright = "인쇄골목 저작권보호방침"
 }
 
 final class MyPageContentViewModel : ViewModelType {
  
-    let categories:[MyPageCategory] = [.pushAlarmSetting, .faq, .request, .service]
+    let categories:[MyPageCategory] = [.pushAlarmSetting, .faq, .request, .service,.copyright]
     
     let disposeBag = DisposeBag()
     
