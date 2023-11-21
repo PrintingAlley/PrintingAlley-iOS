@@ -83,12 +83,12 @@ extension BookMarkDetailViewController {
                 
                 
                 if result.statusCode == 200 {
-                    owner.view.showToast(text: "저장을 취소했어요.")
+                    owner.view.showBottomToast(text: "저장을 취소했어요.")
                     input.fetchDataSource.onNext(()) // 업데이트
                 }
                 
                 else {
-                    owner.view.showToast(text: result.message)
+                    owner.view.showBottomToast(text: result.message)
                 }
                 
             })

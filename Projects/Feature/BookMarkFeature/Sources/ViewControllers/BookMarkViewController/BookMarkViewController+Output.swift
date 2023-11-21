@@ -88,11 +88,11 @@ extension BookMarkViewController {
                 
                 
                 if result.statusCode == 0 {
-                    self.view.showToast(text: result.message)
+                    self.view.showBottomToast(text: result.message)
                 }
                 
                 else if result.statusCode == 401 {
-                    self.view.showToast(text: result.message)
+                    self.view.showBottomToast(text: result.message)
                    
                 }
                 

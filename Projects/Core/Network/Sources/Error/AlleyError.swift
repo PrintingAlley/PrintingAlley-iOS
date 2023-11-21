@@ -68,7 +68,7 @@ extension AlleyError: LocalizedError {
         case .notFound: // 404
             return "요청한 것을 찾을 수 없습니다."
         case .conflict: // 409
-            return "요청이 이미 존재합니다."
+            return "이미 사용 중인 이름이에요!"
         case .tooManyRequest: // 429
             return "요청 횟수를 초과했습니다.\n잠시 후 다시 시도해주세요!"
         case .internalServerError: // 500

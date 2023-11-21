@@ -13,6 +13,30 @@ public enum EditType {
     case reNameBookMark
     case reNameprofileName
     
+    
+    public var limit: Int {
+        switch self {
+            
+        case .reNameprofileName:
+            return 14
+
+        case .reNameBookMark,.newBookMark:
+            return 10
+        }
+    }
+    
+    public var titleString: String {
+        switch self {
+            
+        case .reNameprofileName:
+            "이름 수정"
+        case .newBookMark:
+            "저장 목록 만들기"
+        case .reNameBookMark:
+            "저장목록 이름 수정"
+        }
+    }
+    
     public var placeHolder: String {
         switch self {
             

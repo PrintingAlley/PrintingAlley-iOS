@@ -123,7 +123,7 @@ extension SignInViewController {
         output.showToast
             .withUnretained(self)
             .subscribe(onNext: { (owner,content) in
-                owner.view.showToast(text: content.message)
+                owner.view.showBottomToast(text: content.message)
             })
             .disposed(by: disposeBag)
     }

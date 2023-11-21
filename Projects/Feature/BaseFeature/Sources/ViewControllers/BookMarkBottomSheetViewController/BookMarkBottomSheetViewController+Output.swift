@@ -42,12 +42,12 @@ extension BookMarkBottomSheetViewController {
             .subscribe(onNext: { (owner,result) in
                 
                 if result.statusCode == 400 {
-                    owner.view.showToast(text: "알 수 없는 에러가 발생 했습니다.")
+                    owner.view.showBottomToast(text: "알 수 없는 에러가 발생 했습니다.")
                     owner.dismiss(animated: true)
                 }
                 
                 else if result.statusCode == 401 {
-                    owner.view.showToast(text: result.message)
+                    owner.view.showBottomToast(text: result.message)
                     owner.dismiss(animated: true)
                 }
                 
@@ -71,7 +71,7 @@ extension BookMarkBottomSheetViewController {
                 }
                 
                 else {
-                    owner.view.showToast(text: "알 수 없는 에러가 발생 했습니다.")
+                    owner.view.showBottomToast(text: "알 수 없는 에러가 발생 했습니다.")
                 }
                 
                 

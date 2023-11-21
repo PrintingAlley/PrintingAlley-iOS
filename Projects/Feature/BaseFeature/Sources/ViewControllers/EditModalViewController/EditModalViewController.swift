@@ -16,10 +16,10 @@ import RxKeyboard
 import UtilityModule
 
 
+
 public class EditModalViewController: UIViewController {
 
     var viewModel: EditModalViewModel!
-    var titleString: String = ""
     
     let disposeBag = DisposeBag()
     
@@ -76,11 +76,10 @@ public class EditModalViewController: UIViewController {
         $0.distribution = .fillEqually
     }
     
-    public init(title: String = "",viewModel: EditModalViewModel) {
+    public init(viewModel: EditModalViewModel) {
         
         super.init(nibName: nil, bundle: nil)
      
-        self.titleString =  title
         self.viewModel = viewModel
 
     }
@@ -157,7 +156,7 @@ extension EditModalViewController {
                 guard let self else {return}
                 
                 self.confirmButton.isEnabled  = !((str.first?.isWhitespace ?? true)) // 앞에 시작이 공백일 때
-                self.limitLabel.setTitle(title: "\(str.count)/14자", textColor: .grey(.grey400), font: .caption1)
+                self.limitLabel.setTitle(title: "\(str.count)/\(viewModel.type.limit)자", textColor: .grey(.grey400), font: .caption1)
                
             })
             .bind(to:input.text)
@@ -204,7 +203,7 @@ extension EditModalViewController {
                 
                 
                 if result.statusCode == 0 {
-                    self.view.showToast(text: result.message)
+                    self.view.showTopToast(text: result.message)
                 }
                 
                 else {
@@ -246,7 +245,7 @@ extension EditModalViewController {
     func preProcessing() {
         textField.setPlaceHolder(text: viewModel.type.placeHolder, textColor: .setColor(.grey(.grey300)), font: .body1)
         self.view.backgroundColor = .black.withAlphaComponent(0.4)
-        titleLabel.setTitle(title: self.titleString, textColor: .sub(.black), font: .header3, alignment: .center)
+        titleLabel.setTitle(title: viewModel.type.titleString, textColor: .sub(.black), font: .header3, alignment: .center)
     }
     
     func makeConstraints() {
@@ -308,9 +307,37 @@ extension EditModalViewController : UITextFieldDelegate {
                   if isBackSpace == -92 {
                       return true
                   }
-            }
+           }
         
-        guard textField.text!.count < 14 else { return false } // 15 글자로 제한
-             return true
+            // 공백만으로 이루어진 문자열인지 확인
+             if string.isWhiteSpace {
+                 return false
+             }
+        
+           if string.hasCharacters() {
+
+               guard let textFieldText = textField.text,
+                   let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                       return false
+               }
+
+               var tcount : Int = 0
+               if string.isEmpty {
+                   tcount = textField.text!.count - 1
+               }
+               else
+               {
+                   tcount = textField.text!.count + string.count
+               }
+              
+
+               let substringToReplace = textFieldText[rangeOfTextToReplace]
+               let count = textFieldText.count - substringToReplace.count + string.count
+               return count <= viewModel.type.limit
+           }
+        
+        return false
+        
+    
     }
 }
