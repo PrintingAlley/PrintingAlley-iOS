@@ -37,6 +37,7 @@ class PrintShopDetailViewController: UIViewController {
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = .zero
     }
+    lazy var carouselCountLabel: CarouselCountLabel = CarouselCountLabel()
 
     public lazy var imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.backgroundColor = .setColor(.sub(.white))

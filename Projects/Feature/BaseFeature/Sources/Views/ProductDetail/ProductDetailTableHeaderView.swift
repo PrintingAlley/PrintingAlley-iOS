@@ -104,8 +104,8 @@ extension ProductDetailTableHeaderView {
         }
         
         carouselCountLabel.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(32)
-            $0.bottom.equalTo(infoView.snp.top).offset(-32)
+            $0.right.equalToSuperview().inset(36)
+            $0.bottom.equalTo(infoView.snp.top).offset(-31)
         }
         
         infoView.snp.makeConstraints {
