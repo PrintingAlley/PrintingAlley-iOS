@@ -24,7 +24,7 @@ public struct ProductListEntity {
     }
     
     public static func makeErrorEntity() -> Self {
-        ProductListEntity(statusCode: 400, message: "", products: [.makeErrorEntity(message: "")], totalCount: 0)
+        ProductListEntity(statusCode: 400, message: "", products: [], totalCount: 0)
     }
     
 }
