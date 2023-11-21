@@ -73,9 +73,7 @@ class CategorySearchViewModel: ViewModelType {
                     .catch({ error in
                         
                         let alleyError = error.tempAlleyError
-                        
                         output.showToast.onNext(BaseEntity(statusCode: 0, message: "\(alleyError.errorDescription!)"))
-                        
                         return Single<ProductListEntity>.create { single in
                             single(.success(.makeErrorEntity()))
 
@@ -87,6 +85,7 @@ class CategorySearchViewModel: ViewModelType {
             .map { $0.products }
             .do(onNext: { (model) in
                 output.canLoadMore.accept(!model.isEmpty)
+                
             }, onError: { _ in
                 output.canLoadMore.accept(false)
             })

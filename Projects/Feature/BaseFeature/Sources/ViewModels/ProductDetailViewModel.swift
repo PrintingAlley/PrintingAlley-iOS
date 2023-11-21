@@ -75,8 +75,10 @@ final class ProductDetailViewModel: ViewModelType {
                     .catch({ error in
                         DEBUG_LOG(error)
                         
+                        
+                        
                         return Single<ProductDetailEntity>.create { single in
-                            single(.success(ProductDetailEntity.makeErrorEntity()))
+                            single(.success(ProductDetailEntity(product: .makeErrorEntity(message: ""), statusCode: 400, message: error.tempAlleyError.errorDescription ?? "알 수 없는 에러가 발생했습니다.", bookmarkId: 0)))
                             return Disposables.create()
                         }
                     })
@@ -87,7 +89,7 @@ final class ProductDetailViewModel: ViewModelType {
                 guard let self else { return }
                 
                 if dataSource.statusCode == 400 {
-                    input.askToast.onNext(BaseEntity(statusCode: 0, message: "알 수 없는 에러가 발생했습니다."))
+                    input.askToast.onNext(BaseEntity(statusCode: 400, message: dataSource.message))
                 }
                 else {
                     self.bookMarkId = dataSource.bookmarkId

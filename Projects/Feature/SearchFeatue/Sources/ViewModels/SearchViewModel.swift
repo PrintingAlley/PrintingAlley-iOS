@@ -80,7 +80,6 @@ public class SearchViewModel: ViewModelType {
                     }
                     .asObservable()
             }
-            .debug("WWW4")
             .map{ $0.printShops }
             .do(onNext: { (model) in
                 output.canLoadMore.accept(!model.isEmpty)
