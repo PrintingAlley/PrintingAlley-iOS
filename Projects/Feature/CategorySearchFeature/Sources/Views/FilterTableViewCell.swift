@@ -88,7 +88,6 @@ extension FilterTableViewCell {
 }
 
 
-
 extension FilterTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -99,7 +98,7 @@ extension FilterTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // 셀 크기
-        let tempLabel = AlleyLabel(items[indexPath.row].name, font: .body1).then {
+        let tempLabel = AlleyLabel(items[indexPath.row].name, font: .subtitle2).then {
             $0.sizeToFit()
         }
         
