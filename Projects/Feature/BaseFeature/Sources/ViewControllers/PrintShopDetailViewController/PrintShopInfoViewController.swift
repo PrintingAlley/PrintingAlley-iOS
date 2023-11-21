@@ -124,7 +124,7 @@ extension PrintShopInfoViewController {
         }
         
         introductionLabel.snp.makeConstraints {
-            $0.top.equalTo(tableView.snp.bottom).offset(10)
+            $0.top.equalTo(tableView.snp.bottom).offset(7)
             $0.leading.equalTo(introductionIcon.snp.trailing).offset(10)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
         }
@@ -138,7 +138,7 @@ extension PrintShopInfoViewController {
         greyRoundView.snp.makeConstraints {
             $0.top.equalTo(separateLine.snp.bottom).offset(16)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
-            $0.bottom.equalToSuperview().inset(42)
+            $0.bottom.equalToSuperview().inset(8)
         }
         
         printTypeTitle.snp.makeConstraints {

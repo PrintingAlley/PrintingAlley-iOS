@@ -22,7 +22,7 @@ public final class SearchBar: UIView {
     public lazy var searchTextField = UITextField().then {
         let attributedPlaceholder = NSAttributedString(string: "플레이스 홀더 색상 바꾸기!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey400)), NSAttributedString.Key.font: UIFont.setFont(.body1)])
         $0.attributedPlaceholder = attributedPlaceholder
-        $0.placeholder = "인쇄사, 후가공, 인쇄방식 검색"
+        $0.placeholder = "인쇄사 이름을 검색해보세요"
         $0.textColor = .setColor(.sub(.black))
         $0.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
@@ -87,7 +87,7 @@ extension SearchBar {
 // MARK: - Objc 함수
 extension SearchBar {
     @objc
-    private func touchSearchIcon() {
+    public func touchSearchIcon() {
             searchTextField.text?.removeAll()
             searchButton.setImage(DesignSystemAsset.Icon.search.image, for: .normal)
             delegate?.press()

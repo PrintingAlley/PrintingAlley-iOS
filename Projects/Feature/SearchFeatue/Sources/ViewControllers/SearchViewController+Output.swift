@@ -22,14 +22,27 @@ extension SearchViewController {
             .disposed(by: disposeBag)
     }
     
+    func bindShowErrorView(output: SearchViewModel.Output) {
+        output.showErrorView
+            .withUnretained(self)
+            .subscribe { (owner, showErrorView) in
+                owner.printingTableView.tableHeaderView = showErrorView ? self.emptyErrorView : nil
+            }
+            .disposed(by: disposeBag)
+    }
+    
     func bindDataSource(input: SearchViewModel.Input, output: SearchViewModel.Output) {
         output.dataSource
             .skip(1)
             .do { [weak self] dataSource in
                 guard let self else { return }
+                if !dataSource.isEmpty { output.showErrorView.accept(false) }
                 DEBUG_LOG("DS: \(dataSource.count)")
                 self.indicator.stopAnimating()
-                self.printingTableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
+                if !output.showErrorView.value {
+                    self.printingTableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
+                }
+                
             }
             .bind(to: printingTableView.rx.items) { [weak self] (tableView, index, model) -> UITableViewCell in
 

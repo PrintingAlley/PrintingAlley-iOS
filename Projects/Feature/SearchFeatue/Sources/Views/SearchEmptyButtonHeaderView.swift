@@ -1,8 +1,8 @@
 //
-//  CategoryEmptyHeaderView.swift
-//  CategorySearchFeatureDemo
+//  SearchEmptyButtonHeaderView.swift
+//  SearchFeatue
 //
-//  Created by yongbeomkwak on 10/26/23.
+//  Created by 박의서 on 11/21/23.
 //  Copyright © 2023 com. All rights reserved.
 //
 
@@ -11,13 +11,15 @@ import DesignSystem
 import SnapKit
 import Then
 
-public protocol CategoryEmptyHeaderViewDelegate: AnyObject {
-    func press()
+public protocol SearchEmptyButtonHeaderDelegate: AnyObject {
+    func pressSearchEmptyButton()
 }
 
-class CategoryEmptyHeaderView: UIView {
+final class SearchEmptyButtonHeaderView: UIView {
     
     public let identifier = "CategoryEmptyHeaderView"
+    
+    public weak var delegate: SearchEmptyButtonHeaderDelegate?
 
     lazy var titleLabel: AlleyLabel = AlleyLabel("설정한 필터에 맞는 검색 결과가 없어요.", textColor: .sub(.black), font: .subtitle2, alignment: .center)
     
@@ -37,8 +39,6 @@ class CategoryEmptyHeaderView: UIView {
         $0.addTarget(self, action: #selector(touchDown), for: .touchDown) // 애니메이션 효과
         $0.addTarget(self, action: #selector(touchCancel), for: .touchUpOutside)
     }
-    
-    public weak var delegate: CategoryEmptyHeaderViewDelegate?
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,10 +76,10 @@ class CategoryEmptyHeaderView: UIView {
     }
     
     @objc func press() {
-        delegate?.press()
         UIView.animate(withDuration: 0.2) {
             self.button.alpha = 1.0
         }
+        delegate?.pressSearchEmptyButton()
     }
     
     @objc func touchDown() {

@@ -37,6 +37,11 @@ final class SearchViewController: UIViewController, ContainerViewType {
     }
     
     lazy var emptyHeaderView = SearchEmptyHeaderView()
+    lazy var emptyErrorView = SearchEmptyButtonHeaderView(frame: CGRect(x: .zero, y: .zero, width: APP_WIDTH(), height: APP_HEIGHT())).then {
+        $0.setTitle(title: "알 수 없는 오류가 발생했습니다.", subtitle: "아래 버튼을 눌러 다시 시도해주세요.")
+        $0.button.setTitle("다시 시도하기", for: .normal)
+        $0.delegate = self
+    }
     
     private var viewModel: SearchViewModel!
     
@@ -81,6 +86,7 @@ extension SearchViewController {
         bindItemSelected()
         bindTableView()
         bindToast(output: output)
+        bindShowErrorView(output: output)
         input.pageID.accept(1)
     }
 }
@@ -131,7 +137,7 @@ extension SearchViewController: UITableViewDelegate {
     }
 }
 
-extension SearchViewController: SearchBarDelegate {
+extension SearchViewController: SearchBarDelegate, SearchEmptyButtonHeaderDelegate {
     func press() {
         input.textString.accept("")
         input.pageID.accept(1)
@@ -139,5 +145,11 @@ extension SearchViewController: SearchBarDelegate {
     
     func resetPage() {
         input.pageID.accept(1)
+    }
+    
+    func pressSearchEmptyButton() {
+        input.pageID.accept(1)
+        input.textString.accept("")
+        searchBar.touchSearchIcon()
     }
 }
