@@ -57,11 +57,12 @@ final class SignInViewModel: NSObject, ViewModelType {
                     
                     // 카카오톡 실행 가능 여부 확인
                     // 카카오톡 실행 가능 여부 확인
-                    if  UserApi.isKakaoTalkLoginAvailable() {
-                        owner.loginWithKakaoTalk()
-                    } else {
-                        owner.loginWithOutKakaoTalk()
-                    }
+//                    if  UserApi.isKakaoTalkLoginAvailable() {
+//                        owner.loginWithKakaoTalk()
+//                    } else {
+//                        
+//                    }
+                    owner.loginWithOutKakaoTalk()
                     
                 case .naver:
                     owner.naverLogin()
