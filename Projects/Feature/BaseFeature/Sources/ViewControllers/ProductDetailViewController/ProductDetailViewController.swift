@@ -18,7 +18,7 @@ import RxSwift
 class ProductDetailViewController: UIViewController {
 
 
-    lazy var tableView: UITableView = UITableView().then {
+    lazy var tableView: UITableView = UITableView(frame: .zero,style: .grouped).then {
         $0.register(ProductDetailTableHeaderView.self, forHeaderFooterViewReuseIdentifier: ProductDetailTableHeaderView.identifer)
         $0.register(ProductDetailTableViewCell.self, forCellReuseIdentifier: ProductDetailTableViewCell.identifer)
         $0.bounces = false
