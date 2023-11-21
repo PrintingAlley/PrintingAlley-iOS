@@ -23,4 +23,16 @@ public extension String {
         return self.removingPercentEncoding
     }
 
+    
+    func hasCharacters() -> Bool {
+            do {
+                let regex = try NSRegularExpression(pattern: "^[0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ`~!@#$%^&*()\\-_=+\\[{\\]}\\\\|;:'\",<.>/?\\s]$", options: .caseInsensitive)
+                if let _ = regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: NSMakeRange(0, self.count)) {
+                    return true
+                }
+            }catch {
+                return false
+            }
+            return false
+        }
 }

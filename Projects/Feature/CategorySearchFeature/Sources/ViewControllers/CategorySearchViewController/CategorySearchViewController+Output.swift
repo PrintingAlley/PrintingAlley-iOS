@@ -21,7 +21,7 @@ extension CategorySearchViewController {
         output.showToast
             .withUnretained(self)
             .subscribe(onNext: { (owner, toast) in
-                owner.view.showToast(text: toast.message)
+                owner.view.showBottomToast(text: toast.message)
             })
             .disposed(by: disposeBag)
     }

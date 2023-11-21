@@ -12,7 +12,7 @@ import SwiftEntryKit
 import DesignSystem
 
 public extension UIView {
-    public func showToast(text: String) {
+    public func showBottomToast(text: String) {
             var attributes = EKAttributes.bottomFloat
             attributes.displayDuration = 2
         attributes.entryBackground = .color(color: EKColor(rgb: 0x000000).with(alpha: 1.0))
@@ -33,4 +33,6 @@ public extension UIView {
             contentView.verticalOffset = 10
             SwiftEntryKit.display(entry: contentView, using: attributes)
         }
+    
+
 }

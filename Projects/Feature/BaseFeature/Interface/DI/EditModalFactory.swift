@@ -11,5 +11,5 @@ import UIKit
 
 public protocol EditModalFactory {
    
-    func makeView(id:Int, title: String, type: EditType) -> UIViewController
+    func makeView(id:Int,type: EditType) -> UIViewController
 }
