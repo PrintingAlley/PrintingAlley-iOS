@@ -15,7 +15,9 @@ let project = Project.module(
             .domain(target: .BookMarkDomain, type: .interface),
             .domain(target: .UserDomain, type: .interface),
             .domain(target: .ProductDomain, type: .interface),
-            .core(target: .Network)
+            .domain(target: .PrintShopDomain, type: .interface),
+            .core(target: .Network),
+            
         ]),
         .tests(module: .feature(.BaseFeature), dependencies: [
             .feature(target: .BaseFeature)
