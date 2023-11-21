@@ -212,7 +212,7 @@ extension ProductDetailTableHeaderView: UICollectionViewDelegateFlowLayout {
 extension ProductDetailTableHeaderView: UIScrollViewDelegate {
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let i = Int(scrollView.contentOffset.x / APP_WIDTH())
-        DEBUG_LOG("PAGE \(model.images.count)")
+
         self.carouselCountLabel.setCount(i+1, model.images.count)
     }
 }

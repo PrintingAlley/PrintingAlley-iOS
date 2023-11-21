@@ -108,6 +108,9 @@ class PrintShopDetailViewController: UIViewController {
         addSubviews()
         makeConstraints()
         bindViewModel()
+        // 캐러셀 초기
+        let total = output.dataSource.value.backgroundImage.isEmpty ? 0 : 1
+        carouselCountLabel.setCount(1, total+1)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,7 +123,7 @@ class PrintShopDetailViewController: UIViewController {
 // MARK: - UI 함수들
 extension PrintShopDetailViewController {
     func addSubviews() {
-        view.addSubviews(imageCollectionView, navigationView, titleLabel, typeLabel, callButton, separateLine, controllerView)
+        view.addSubviews(imageCollectionView, navigationView, titleLabel, typeLabel, callButton, separateLine, controllerView,carouselCountLabel)
         navigationView.addSubviews(backButton, homeButton)
         controllerView.addSubviews(pageViewController.view)
         
@@ -133,6 +136,11 @@ extension PrintShopDetailViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(12)
             $0.height.equalTo(44)
             $0.left.right.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        carouselCountLabel.snp.makeConstraints {
+            $0.right.equalToSuperview().inset(36)
+            $0.bottom.equalTo(imageCollectionView.snp.bottom).offset(-31)
         }
         
         backButton.snp.makeConstraints {
@@ -222,3 +230,14 @@ extension PrintShopDetailViewController: UICollectionViewDelegateFlowLayout {
         CGSize(width: APP_WIDTH(), height: 251)
     }
 }
+
+extension PrintShopDetailViewController: UIScrollViewDelegate {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let i = Int(scrollView.contentOffset.x / APP_WIDTH())
+        
+        let total = output.dataSource.value.backgroundImage.isEmpty ? 0 : 1
+        
+        self.carouselCountLabel.setCount(i+1, total+1)
+    }
+}
+
