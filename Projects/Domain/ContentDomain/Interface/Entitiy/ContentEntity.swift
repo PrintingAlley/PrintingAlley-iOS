@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BaseDomainInterface
 
 public struct ContentEntity {
     public let id: Int
@@ -15,7 +16,7 @@ public struct ContentEntity {
     public init(id: Int, title: String, thumbnail: String, webViewUrl: String) {
         self.id = id
         self.title = title
-        self.thumbnail = thumbnail
+        self.thumbnail = thumbnail.encodeUrl()!
         self.webViewUrl = webViewUrl
     }
     

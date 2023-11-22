@@ -9,7 +9,7 @@
 import Foundation
 
 extension String {
-    func encodeUrl() -> String?
+   public func encodeUrl() -> String?
     {
         return self.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed)
     }
