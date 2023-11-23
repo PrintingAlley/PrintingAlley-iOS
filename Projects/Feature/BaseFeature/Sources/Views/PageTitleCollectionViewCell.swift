@@ -41,6 +41,6 @@ extension PageTitleCollectionViewCell {
     }
     
     func update(title: String, isSelectedIndex: Bool) {
-        isSelectedIndex ? label.setTitle(title: title, textColor: .sub(.black), font: .body1, alignment: .center) : label.setTitle(title: title, textColor: .grey(.grey500), font: .body1, alignment: .center)
+        label.setTitle(title: title, textColor: isSelectedIndex ? .sub(.black) : .grey(.grey500), font: .body1, alignment: .center)
     }
 }

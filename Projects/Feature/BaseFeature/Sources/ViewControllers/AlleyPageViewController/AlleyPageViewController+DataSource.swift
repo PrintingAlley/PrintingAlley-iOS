@@ -68,7 +68,5 @@ extension AlleyPageViewController: UICollectionViewDataSource {
         cell.update(title: viewModel.titles[indexPath.row], isSelectedIndex: indexPath.row == input.selectedIndex.value)
         return cell
     }
-        
-    
 
 }

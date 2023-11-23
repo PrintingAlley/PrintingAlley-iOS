@@ -31,11 +31,10 @@ extension AlleyPageViewController: UICollectionViewDelegateFlowLayout {
         
            return CGSize(width: width, height: 58)
        }
-    
-
 }
 
-
 extension AlleyPageViewController: UICollectionViewDelegate {
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.reloadData()
+    }
 }
