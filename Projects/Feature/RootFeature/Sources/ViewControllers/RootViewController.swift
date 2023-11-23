@@ -111,7 +111,7 @@ extension RootViewController {
                         
                     case 3:
                         alertVc = AlertViewController(title: "서버 점검 중", content: entity.message, type: .exit,completion: {
-                            owner.goAppStore()
+                            exit(0)
                         })
                         
                     
