@@ -304,44 +304,105 @@ extension EditModalViewController {
 extension EditModalViewController : UITextFieldDelegate {
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        // 백스페이스 처리
-           if let char = string.cString(using: String.Encoding.utf8) {
-                  let isBackSpace = strcmp(char, "\\b") //  백스페이스는 UInt32값으로  -92
-                  if isBackSpace == -92 {
-                      return true
-                  }
-           }
+        let maxLength = viewModel.type.limit // 원하는 글자 수를 설정해 줍니다.
+        let oldText = textField.text ?? "" // 입력하기 전 textField에 표시되어있던 text 입니다.
+        let addedText = string // 입력한 text 입니다.
+        let newText = oldText + addedText // 입력하기 전 text와 입력한 후 text를 합칩니다.
+        let newTextLength = newText.count // 합쳐진 text의 길이 입니다.
         
-            // 공백만으로 이루어진 문자열인지 확인
-             if string.isWhiteSpace {
-                 return false
-             }
-        
-           if string.hasCharacters() {
-
-               guard let textFieldText = textField.text,
-                   let rangeOfTextToReplace = Range(range, in: textFieldText) else {
-                       return false
-               }
-
-               var tcount : Int = 0
-               if string.isEmpty {
-                   tcount = textField.text!.count - 1
-               }
-               else
-               {
-                   tcount = textField.text!.count + string.count
-               }
-              
-
-               let substringToReplace = textFieldText[rangeOfTextToReplace]
-               let count = textFieldText.count - substringToReplace.count + string.count
-               return count <= viewModel.type.limit
-           }
-        
-        return false
+  
         
     
+        
+        
+         //글자수 제한
+           if newTextLength <= maxLength {
+               
+               // 백스페이스 처리
+              if let char = string.cString(using: String.Encoding.utf8) {
+                     let isBackSpace = strcmp(char, "\\b") //  백스페이스는 UInt32값으로  -92
+                     if isBackSpace == -92 {
+                         return true
+                     }
+              }
+               
+               if addedText.hasCharacters() { // 이모지 싫어
+                 
+                   return true
+               }
+               
+               return false
+        }
+        
+        let lastWordOfOldText = String(oldText[oldText.index(before: oldText.endIndex)]) // 입력하기 전 text의 마지막 글자 입니다.
+        let separatedCharacters = lastWordOfOldText.decomposedStringWithCanonicalMapping.unicodeScalars.map{ String($0) } // 입력하기 전 text의 마지막 글자를 자음과 모음으로 분리해줍니다.
+        let separatedCharactersCount = separatedCharacters.count // 분리된 자음, 모음의 개수입니다.
+        
+  
+        
+    
+            
+        
+            
+            if separatedCharactersCount == 1 && !addedText.isConsonant { // -- A
+                
+                /*
+                 입력되어 있는 마지막 글자의 자음 + 모음 개수가 1개이고, 새로 입력되는 글자가 자음이 아닐 경우 입력이 되도록합니다.
+
+                 입력되어 있는 마지막 글자가 모음 혹은 알파벳일 경우에도 해당 조건을 만족합니다. 하지만 이렇게 되면 설정한 최대 글자 수 + 1 이 됩니다. 이를 방지하기 위한 방법은 2번째 함수에서 다루겠습니다.
+                 
+                 */
+                  return true
+              }
+              
+              if separatedCharactersCount == 2 && addedText.isConsonant { // -- B
+                  
+                  /*
+                   입력되어 있는 마지막 글자의 자음 + 모음 개수가 2개이고, 새로 입력되는 글자가 자음일 경우 입력이 되도록합니다.
+
+                   즉, 자음과 모음이 각 1개씩 있는 상태입니다. 해당 상태일 경우에는 조건에 있는 것 처럼 자음을 받아야만 글자 수를 넘지 않고 글자가 완성되기 때문에 자음만 입력받을 수 있도록 합니다.
+                   
+                   */
+                  return true
+              }
+              
+              if separatedCharactersCount == 3 && addedText.isConsonant { // -- C
+                  
+                  /*
+                   입력되어 있는 마지막 글자의 자음 + 모음 개수가 3개이고, 새로 입력되는 글자가 자음일 경우 입력이 되도록합니다.
+
+                   겹받침을 허용하기 위한 로직입니다. 자음 + 모음 개수가 3인 경우는 자음 + 모음 + 자음(받침) 인 경우 입니다.
+
+                   이 경우에는 새로운 글자가 겹받침이 되는 글자만을 허용해야하며, 그러기 위해서는 자음만 입력 받아야합니다.
+
+                   하지만 모든 자음 + 자음이 겹받침이 되는 것이 아니기 때문에 추가적인 설정이 필요합니다. 겹받침이 성립하지 않는 자음은 독립적인 글자가 되며, 이렇게 되면 설정한 최대 글자 수 + 1 이 됩니다. 이를 방지하기 위한 방법 또한 2번째 함수에서 다루겠습니다.
+                   
+                   */
+                  return true
+              }
+        
+        
+        
+              return false
+        
+    
+    }
+
+    public func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        /*
+         func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool 함수에서 처리해주었지만 미처 잡지 못한 케이스를 잡기 위해 사용합니다
+         
+         */
+        
+        var text = textField.text ?? "" // textField에 수정이 반영된 후의 text 입니다.
+        let maxLength = viewModel.type.limit // 원하는 글자 수를 설정해 줍니다. (위 함수에서 설정한 값과 동일하게 해주세요.)
+        if text.count > maxLength {
+            let startIndex = text.startIndex
+            let endIndex = text.index(startIndex, offsetBy: maxLength - 1)
+            let fixedText = String(text[startIndex...endIndex])
+            textField.text = fixedText
+        }
     }
 }
 
