@@ -16,7 +16,7 @@ import BaseDomainInterface
 final class PrintShopInfoViewController: UIViewController {
     
     let cellHeight: CGFloat = 41
-    let cellCount: CGFloat = 4
+    let cellCount: CGFloat = 3
     let tableViewInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
     private let scrollView = UIScrollView()
@@ -31,6 +31,19 @@ final class PrintShopInfoViewController: UIViewController {
         $0.register(PrintShopInfoTableViewCell.self, forCellReuseIdentifier: PrintShopInfoTableViewCell.identifier)
     }
     
+    private let businessHoursIcon = UIImageView().then {
+        $0.image = DesignSystemAsset.Icon.clockGrey.image
+        $0.contentMode = .scaleToFill
+    }
+    
+    private let businessHoursLabel = AlleyLabel("-", textColor: .sub(.black), font: .body2).then {
+        $0.numberOfLines = 0
+    }
+    
+    private let firstSeparateLine = UIView().then {
+        $0.backgroundColor = .setColor(.grey(.grey100))
+    }
+    
     private let introductionIcon = UIImageView().then {
         $0.image = DesignSystemAsset.Icon.dotTextBubble.image
         $0.contentMode = .scaleToFill
@@ -38,10 +51,9 @@ final class PrintShopInfoViewController: UIViewController {
     
     private let introductionLabel = AlleyLabel("-", textColor: .sub(.black), font: .body2).then {
         $0.numberOfLines = 0
-        $0.sizeToFit()
     }
     
-    private let separateLine = UIView().then {
+    private let secondSeparateLine = UIView().then {
         $0.backgroundColor = .setColor(.grey(.grey100))
     }
     
@@ -50,27 +62,21 @@ final class PrintShopInfoViewController: UIViewController {
         $0.setRound(.allCorners, radius: RADIUS1())
     }
     
-    private let printTypeTitle = AlleyLabel("인쇄 방식", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
-        $0.sizeToFit()
-    }
+    private let printTypeTitle = AlleyLabel("인쇄 방식", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left)
+
     public lazy var printTypeLabel = AlleyLabel("-", textColor: .grey(.grey500), font: .body2).then {
-        $0.sizeToFit()
         $0.numberOfLines = 0
     }
     
-    private let afterProcessTitle = AlleyLabel("후가공", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
-        $0.sizeToFit()
-    }
+    private let afterProcessTitle = AlleyLabel("후가공", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left)
+
     public lazy var afterProcessLabel = AlleyLabel("-", textColor: .grey(.grey500), font: .body2).then {
-        $0.sizeToFit()
         $0.numberOfLines = 0
     }
     
-    private let afterProcessBindingTitle = AlleyLabel("후가공(제본)", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left).then {
-        $0.sizeToFit()
-    }
+    private let afterProcessBindingTitle = AlleyLabel("후가공(제본)", textColor: .grey(.grey1000), font: .subtitle3, alignment: .left)
+    
     public lazy var afterProcessBindingLabel = AlleyLabel("-", textColor: .grey(.grey500), font: .body2).then {
-        $0.sizeToFit()
         $0.numberOfLines = 0
     }
     
@@ -103,7 +109,7 @@ final class PrintShopInfoViewController: UIViewController {
 extension PrintShopInfoViewController {
     private func addSubviews() {
         view.addSubview(scrollView)
-        scrollView.addSubviews(tableView, introductionIcon, introductionLabel, separateLine, greyRoundView)
+        scrollView.addSubviews(tableView, businessHoursIcon, businessHoursLabel, firstSeparateLine, introductionIcon, introductionLabel, secondSeparateLine, greyRoundView)
         greyRoundView.addSubviews(printTypeTitle, printTypeLabel, afterProcessTitle, afterProcessLabel, afterProcessBindingTitle, afterProcessBindingLabel)
     }
     
@@ -117,26 +123,45 @@ extension PrintShopInfoViewController {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(cellHeight * cellCount + tableViewInsets.top + tableViewInsets.bottom)
         }
-        introductionIcon.snp.makeConstraints {
+        
+        businessHoursIcon.snp.makeConstraints {
             $0.top.equalTo(tableView.snp.bottom).offset(8)
             $0.leading.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
             $0.width.height.equalTo(24)
         }
         
-        introductionLabel.snp.makeConstraints {
+        businessHoursLabel.snp.makeConstraints {
             $0.top.equalTo(tableView.snp.bottom).offset(7)
+            $0.leading.equalTo(businessHoursIcon.snp.trailing).offset(10)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
+        }
+        
+        firstSeparateLine.snp.makeConstraints {
+            $0.bottom.equalTo(businessHoursLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
+            $0.height.equalTo(0.8)
+        }
+        
+        introductionIcon.snp.makeConstraints {
+            $0.top.equalTo(firstSeparateLine.snp.bottom).offset(8)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
+            $0.width.height.equalTo(24)
+        }
+        
+        introductionLabel.snp.makeConstraints {
+            $0.top.equalTo(firstSeparateLine.snp.bottom).offset(7)
             $0.leading.equalTo(introductionIcon.snp.trailing).offset(10)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
         }
         
-        separateLine.snp.makeConstraints {
+        secondSeparateLine.snp.makeConstraints {
             $0.bottom.equalTo(introductionLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
             $0.height.equalTo(0.8)
         }
         
         greyRoundView.snp.makeConstraints {
-            $0.top.equalTo(separateLine.snp.bottom).offset(16)
+            $0.top.equalTo(secondSeparateLine.snp.bottom).offset(16)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(HORIZON_MARGIN1())
             $0.bottom.equalToSuperview().inset(8)
         }
@@ -178,6 +203,7 @@ extension PrintShopInfoViewController {
     
     func update(model: PrintShopEntity) {
         
+        businessHoursLabel.text = model.businessHours
         introductionLabel.text = model.introduction
         printTypeLabel.text = model.printType.isEmpty ? "-" : model.printType
         afterProcessLabel.text = model.afterProcess.isEmpty ? "-" : model.afterProcess
