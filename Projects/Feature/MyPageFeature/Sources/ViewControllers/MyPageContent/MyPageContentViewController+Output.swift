@@ -27,7 +27,9 @@ extension MyPageContentViewController {
             .withUnretained(self)
             .subscribe(onNext: { (owner,result) in
                 
-                LOGOUT()
+                owner.view.showBottomToast(text: result.message)
+                
+                //LOGOUT()
                 
             })
             .disposed(by: disposeBag)
