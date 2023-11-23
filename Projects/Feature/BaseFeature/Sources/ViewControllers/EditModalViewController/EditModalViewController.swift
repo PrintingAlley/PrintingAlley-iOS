@@ -311,7 +311,7 @@ extension EditModalViewController : UITextFieldDelegate {
         let newTextLength = newText.count // 합쳐진 text의 길이 입니다.
         
   
-        
+      
     
         
         
@@ -338,7 +338,7 @@ extension EditModalViewController : UITextFieldDelegate {
         let separatedCharacters = lastWordOfOldText.decomposedStringWithCanonicalMapping.unicodeScalars.map{ String($0) } // 입력하기 전 text의 마지막 글자를 자음과 모음으로 분리해줍니다.
         let separatedCharactersCount = separatedCharacters.count // 분리된 자음, 모음의 개수입니다.
         
-  
+        DEBUG_LOG("HELLO: \(separatedCharactersCount)")
         
     
             
@@ -365,6 +365,7 @@ extension EditModalViewController : UITextFieldDelegate {
                    */
                   return true
               }
+        
               
               if separatedCharactersCount == 3 && addedText.isConsonant { // -- C
                   
@@ -381,8 +382,30 @@ extension EditModalViewController : UITextFieldDelegate {
                   return true
               }
         
+                if separatedCharactersCount == 2 && !addedText.isConsonant {
+                    
+                   
+                    
+                    let lastWord = String(oldText.last!)
+                    DEBUG_LOG("")
+                    if lastWord.endsWithVowel("ㅗ") {
+                        if addedText == "ㅏ" || addedText == "ㅐ" || addedText == "ㅣ" {
+                            return true
+                        }
+                
+                    }
+                    
+                    else if lastWord.endsWithVowel("ㅜ") {
+                        if addedText == "ㅓ" || addedText == "ㅔ" || addedText == "ㅣ" {
+                            return true
+                        }
+                    } else if lastWord.endsWithVowel("ㅡ") , addedText == "ㅣ" {
+                        return true
+                    }
+
+                }
         
-        
+
               return false
         
     
