@@ -97,11 +97,6 @@ extension PrintShopInfoTableViewCell {
             label.text = model.email
             copyObject = "이메일 주소"
 
-        case 3:
-            iconImage.image = DesignSystemAsset.Icon.clockGrey.image
-            label.text = model.businessHours
-            copyButton.isHidden = true
-
         default:
             return
         }
