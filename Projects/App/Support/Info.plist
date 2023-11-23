@@ -51,7 +51,7 @@
 			<string>naverlogin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>naverlogin</string>
+				<string>printAlleynaverlogin</string>
 			</array>
 		</dict>
 	</array>

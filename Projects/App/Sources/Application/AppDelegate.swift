@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         naverInstance?.isInAppOauthEnable = true // 사파리 로그인 설정
         naverInstance?.setOnlyPortraitSupportInIphone(true)
         
-        naverInstance?.serviceUrlScheme = "naverlogin" // URL Scheme
+        naverInstance?.serviceUrlScheme = "printAlleynaverlogin" // URL Scheme
         naverInstance?.consumerKey = NAVER_CLIENT_ID() // 클라이언트 아이디
         naverInstance?.consumerSecret = NAVER_SECRET() // 시크릿 아이디
         naverInstance?.appName = "인쇄골목" // 앱이름
