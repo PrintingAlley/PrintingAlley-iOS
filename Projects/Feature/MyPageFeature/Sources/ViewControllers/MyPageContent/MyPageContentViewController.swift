@@ -147,7 +147,7 @@ extension MyPageContentViewController {
         }
         else {
             
-            output.showToast.onNext(BaseEntity(statusCode: 200, message: "메일 계정이 설정되어 있지 않습니다.\n설정 > Mail 앱 > 계정을 설정해주세요."))
+            output.showToast.onNext(BaseEntity(statusCode: 400, message: "메일 계정이 설정되어 있지 않습니다.\n설정 > Mail 앱 > 계정을 설정해주세요."))
         }
         
     }

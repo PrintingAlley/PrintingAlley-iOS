@@ -64,7 +64,6 @@ final class MyPageContentViewModel : ViewModelType {
                     .catch{ err in
                         
                         let alleryError = err.asAlleyError
-                        DEBUG_LOG(err.localizedDescription)
                         
                         return Single<UserInfoEntity>.create { single in
                             single(.success(UserInfoEntity(id: 0, provider: "apple", name: "", profileImage: "", email: "", statusCode: 401, message: "")))
@@ -102,6 +101,13 @@ final class MyPageContentViewModel : ViewModelType {
                     }
                     .asObservable()
             })
+            .do(onNext: {
+                
+                if $0.statusCode == 200 {
+                    LOGOUT()
+                }
+                
+            })
             .bind(to: output.showToast)
             .disposed(by: disposeBag)
         
@@ -123,6 +129,13 @@ final class MyPageContentViewModel : ViewModelType {
                         }
                     }
                     .asObservable()
+            })
+            .do(onNext: {
+                
+                if $0.statusCode == 200 {
+                    LOGOUT()
+                }
+                
             })
             .bind(to: output.showToast)
             .disposed(by: disposeBag)
