@@ -16,6 +16,7 @@ import BookMarkFeatureInterface
 import RxSwift
 import BaseFeatureInterface
 import AuthDomainInterface
+import BaseDomainInterface
 
 public class MyPageContentViewController: UIViewController {
 
@@ -26,6 +27,7 @@ public class MyPageContentViewController: UIViewController {
     var viewModel: MyPageContentViewModel!
     let disposeBag = DisposeBag()
     let input = MyPageContentViewModel.Input()
+    lazy var output = viewModel.transform(input: input)
     lazy var profileImage: UIButton = UIButton().then {
         $0.setImage(DesignSystemAsset.Icon.profilePlaceHolder.image, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFill
@@ -131,7 +133,7 @@ extension MyPageContentViewController {
         
     }
     
-    func showMail() {
+    func showMail(output: MyPageContentViewModel.Output) {
         if MFMailComposeViewController.canSendMail() {
             
             let preBody: String = "\n\n닉네임: 익명의 제보자\n앱 버전: \(APP_VERSION())\nOS: \(OS_NAME()) \(OS_VERSION())"
@@ -144,14 +146,15 @@ extension MyPageContentViewController {
             self.present(composeVC, animated: true)
         }
         else {
-            DEBUG_LOG("메일 계정이 설정되어 있지 않습니다.\n설정 > Mail 앱 > 계정을 설정해주세요.")
+            
+            output.showToast.onNext(BaseEntity(statusCode: 200, message: "메일 계정이 설정되어 있지 않습니다.\n설정 > Mail 앱 > 계정을 설정해주세요."))
         }
         
     }
     
     func bindViewModel() {
         
-        let output = viewModel.transform(input: input)
+
         
         bindRefresh(input: input)
         bindPreference()

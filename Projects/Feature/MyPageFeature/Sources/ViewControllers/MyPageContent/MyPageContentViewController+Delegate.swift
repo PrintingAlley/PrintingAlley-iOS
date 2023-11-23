@@ -26,7 +26,7 @@ extension MyPageContentViewController: UITableViewDelegate {
         case .faq:
             self.present(alertVc, animated: false)
         case .request:
-            showMail()
+                showMail(output: output)
             
         case .service:
             let vc = webViewFactory.makeView(title: viewModel.categories[indexPath.row].rawValue, url: "\(WEB_URL())/policy/service")
