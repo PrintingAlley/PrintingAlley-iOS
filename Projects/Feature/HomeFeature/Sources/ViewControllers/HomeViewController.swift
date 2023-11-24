@@ -26,14 +26,6 @@ final class HomeViewController: UIViewController {
     let disposeBag = DisposeBag()
     var output: HomeViewModel.Output!
     
-    private let blueBackgroundView = UIView().then {
-        $0.backgroundColor = .setColor(.sub(.white)) // HERE
-    }
-    
-    private let whiteBackgroundView = UIView().then {
-        $0.backgroundColor = .setColor(.sub(.white))
-    }
-    
     private let logoImage = UIImageView().then {
         $0.image = DesignSystemAsset.Logo.homeLogo.image
         $0.contentMode = .scaleAspectFit
@@ -59,9 +51,9 @@ final class HomeViewController: UIViewController {
     public let contentsCellSpacing: CGFloat = 16
     public let contentLineSpacing: CGFloat = 36
     
-    public let contentsCount = 4 // 더미
+    public let contentsCount = 4
     
-    public let headerViewHeight: CGFloat = 284
+    public let headerViewHeight: CGFloat = 284 + 46 + 22 // 46-카테고리 타이틀 + 섭타이틀 높이, 22-컨텐츠타이틀과 컨텐츠컬렉션뷰 사이 거리
     
     init(viewModel: HomeViewModel, categorySearchFactory: CategorySearchFactory, webviewFacotry: WebViewFactory) {
         self.categorySearchFactory = categorySearchFactory
@@ -98,33 +90,24 @@ extension HomeViewController {
 // MARK: - UI 관련 함수
 extension HomeViewController {
     private func addSubViews() {
-        view.addSubviews(blueBackgroundView, whiteBackgroundView, containerView)
+        view.addSubviews(containerView)
         containerView.addSubviews(logoImage, scrollview)
         scrollview.addSubviews(contentsCollectionView)
     }
     
     private func makeConstraints() {
-        blueBackgroundView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(APP_HEIGHT() / 5 * 3)
-        }
-
-        whiteBackgroundView.snp.makeConstraints {
-            $0.top.equalTo(blueBackgroundView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
         
         containerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
         logoImage.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(33)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(24)
             $0.centerX.equalToSuperview()
         }
         
         scrollview.snp.makeConstraints {
-            $0.top.equalTo(logoImage.snp.bottom).offset(47)
+            $0.top.equalTo(logoImage.snp.bottom).offset(30)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
 
