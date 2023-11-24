@@ -25,6 +25,7 @@ public final class SearchBar: UIView {
         $0.placeholder = "인쇄사, 인쇄 방식, 후가공 검색"
         $0.textColor = .setColor(.sub(.black))
         $0.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        $0.returnKeyType = .search
     }
     
     private lazy var searchButton = UIButton().then {
