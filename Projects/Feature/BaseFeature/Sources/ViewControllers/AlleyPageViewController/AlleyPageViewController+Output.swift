@@ -19,15 +19,18 @@ extension AlleyPageViewController {
             .subscribe(onNext: { [weak self] newConstraint in
                 
                 guard let self else {return}
+                self.collectionView.reloadData()
                 
-                self.indicatorBar.snp.updateConstraints {
-                    $0.left.equalToSuperview().offset(newConstraint)
-                }
-                
-                UIView.animate(withDuration: 0.3, delay: .zero, options: .curveEaseOut) { // 인디케이터 바
-                    
+                UIView.animate(withDuration: 0.3) {
+                    self.indicatorBar.snp.updateConstraints {
+                        $0.left.equalToSuperview().offset(newConstraint)
+                    }
+                    UIView.performWithoutAnimation {
+                        self.collectionView.performBatchUpdates(nil, completion: nil)
+                    } // 글씨 깜빡거림 애니메이션 제거
                     self.view.layoutIfNeeded()
                 }
+
             })
             .disposed(by: disposeBag)
     }

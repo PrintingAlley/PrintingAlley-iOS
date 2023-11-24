@@ -22,9 +22,10 @@ public final class SearchBar: UIView {
     public lazy var searchTextField = UITextField().then {
         let attributedPlaceholder = NSAttributedString(string: "플레이스 홀더 색상 바꾸기!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.setColor(.grey(.grey400)), NSAttributedString.Key.font: UIFont.setFont(.body1)])
         $0.attributedPlaceholder = attributedPlaceholder
-        $0.placeholder = "인쇄사, 인쇄 방식, 후가공 검색"
+        $0.placeholder = "인쇄 방식, 후가공, 인쇄사 이름 검색"
         $0.textColor = .setColor(.sub(.black))
         $0.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        $0.returnKeyType = .search
     }
     
     private lazy var searchButton = UIButton().then {
