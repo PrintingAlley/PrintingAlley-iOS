@@ -23,11 +23,8 @@ extension AlleyPageViewController {
                 self.indicatorBar.snp.updateConstraints {
                     $0.left.equalToSuperview().offset(newConstraint)
                 }
-                
-                UIView.animate(withDuration: 0.3, delay: .zero, options: .curveEaseOut) { // 인디케이터 바
-                    
-                    self.view.layoutIfNeeded()
-                }
+                self.collectionView.reloadData()
+                self.view.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
     }
