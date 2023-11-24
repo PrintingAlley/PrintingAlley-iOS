@@ -47,7 +47,7 @@ final class ContentsHeaderView: UICollectionReusableView {
         $0.backgroundColor = .setColor(.grey(.grey50))
     }
     
-    private let contentsTitle = AlleyLabel("인쇄가 어려운 당신에게", textColor: .sub(.black),font: .subtitle1)
+    private let contentsTitle = AlleyLabel("인쇄 콘텐츠 둘러보기", textColor: .sub(.black),font: .subtitle1)
     
     private lazy var showMoreTouchButton = UIButton().then {
         $0.backgroundColor = .none
