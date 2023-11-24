@@ -28,6 +28,11 @@ final class ContentsHeaderView: UICollectionReusableView {
     private lazy var cellSize = CGSize(width: (APP_WIDTH() - 30 - 30 - cellSpacing * 3) / 4, height: 78)
     private let lineSpacing: CGFloat = 32
     
+    private let logoImage = UIImageView().then {
+        $0.image = DesignSystemAsset.Logo.homeLogo.image
+        $0.contentMode = .scaleAspectFit
+    }
+    
     private let categoryTitle = AlleyLabel("어떤 작품을 찾으시나요?", textColor: .grey(.grey700), font: .subtitle1)
     
     private let categorySubTitle = AlleyLabel("다양한 인쇄 장인들의 작품을 만나보세요", textColor: .grey(.grey300), font: .subtitle3)
@@ -74,14 +79,19 @@ final class ContentsHeaderView: UICollectionReusableView {
 
 extension ContentsHeaderView {
     private func addSubviews() {
-        addSubviews(categoryTitle, categorySubTitle, categoryCollectionView, contentsTitle, sectionLine, showMoreContainer)
+        addSubviews(logoImage, categoryTitle, categorySubTitle, categoryCollectionView, contentsTitle, sectionLine, showMoreContainer)
 //        showMoreContainer.addSubviews(showMoreText, showMoreIcon)
 //        showMoreContainer.addSubviews(showMoreTouchButton)
     }
     
     private func makeConstraints() {
+        logoImage.snp.makeConstraints { // 수퍼뷰: view.safeArea
+            $0.top.equalToSuperview().inset(24)
+            $0.centerX.equalToSuperview()
+        }
+        
         categoryTitle.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(logoImage.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(HORIZON_MARGIN1())
         }
         

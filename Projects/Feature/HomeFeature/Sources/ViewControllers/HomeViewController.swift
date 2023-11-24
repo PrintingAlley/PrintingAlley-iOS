@@ -25,23 +25,8 @@ final class HomeViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     var output: HomeViewModel.Output!
-    
-    private let logoImage = UIImageView().then {
-        $0.image = DesignSystemAsset.Logo.homeLogo.image
-        $0.contentMode = .scaleAspectFit
-    }
-    
-    private let containerView = UIView().then {
-        $0.backgroundColor = .setColor(.sub(.white))
-    }
-    
-    private let scrollview = UIScrollView().then {
-        $0.setRound([.topLeft, .topRight], radius: 12)
-        $0.backgroundColor = .none
-    }
 
     public lazy var contentsCollectionView = makeCollectionView(layout: UICollectionViewFlowLayout(), scrollDirection: .vertical, delegate: self, dataSource: self).then {
-        $0.setRound([.topLeft, .topRight], radius: 12)
         $0.backgroundColor = .setColor(.sub(.white))
         $0.register(ContentsCollectionViewCell.self, forCellWithReuseIdentifier: ContentsCollectionViewCell.identifier)
         $0.register(ContentsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ContentsHeaderView.identifier)
@@ -53,7 +38,7 @@ final class HomeViewController: UIViewController {
     
     public let contentsCount = 4
     
-    public let headerViewHeight: CGFloat = 284 + 46 + 22 // 46-카테고리 타이틀 + 섭타이틀 높이, 22-컨텐츠타이틀과 컨텐츠컬렉션뷰 사이 거리
+    public let headerViewHeight: CGFloat = 427 // safearea의 top ~ 컨텐츠타이틀
     
     init(viewModel: HomeViewModel, categorySearchFactory: CategorySearchFactory, webviewFacotry: WebViewFactory) {
         self.categorySearchFactory = categorySearchFactory
@@ -69,6 +54,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
+        configureCommonUI()
         addSubViews()
         makeConstraints()
         bindViewModel()
@@ -90,29 +76,12 @@ extension HomeViewController {
 // MARK: - UI 관련 함수
 extension HomeViewController {
     private func addSubViews() {
-        view.addSubviews(containerView)
-        containerView.addSubviews(logoImage, scrollview)
-        scrollview.addSubviews(contentsCollectionView)
+        view.addSubviews(contentsCollectionView)
     }
     
     private func makeConstraints() {
-        
-        containerView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        logoImage.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(24)
-            $0.centerX.equalToSuperview()
-        }
-        
-        scrollview.snp.makeConstraints {
-            $0.top.equalTo(logoImage.snp.bottom).offset(30)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-
         contentsCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(calculateHeight(count: contentsCount, dividingBy: 2, cellHeight: 201, lineSpacing: contentLineSpacing, insets: contentsInsets) + headerViewHeight) // 유동적으로
             $0.bottom.equalToSuperview()
