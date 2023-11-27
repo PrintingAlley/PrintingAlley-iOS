@@ -9,6 +9,7 @@ fastlane/screenshots/**/*.png
 fastlane/screenshots/screenshots.html
 fastlane/test_output
 fastlane/FastlaneRunner
+fastlane/.env
 
 ### Git ###
 *.orig
