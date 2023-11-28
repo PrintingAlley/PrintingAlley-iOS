@@ -38,7 +38,7 @@ final class HomeViewController: UIViewController {
     
     public let contentsCount = 4
     
-    public let headerViewHeight: CGFloat = 427 // safearea의 top ~ 컨텐츠타이틀
+    public let headerViewHeight: CGFloat = 408 // safearea의 top ~ 컨텐츠타이틀
     
     init(viewModel: HomeViewModel, categorySearchFactory: CategorySearchFactory, webviewFacotry: WebViewFactory) {
         self.categorySearchFactory = categorySearchFactory
