@@ -28,14 +28,9 @@ final class ContentsHeaderView: UICollectionReusableView {
     private lazy var cellSize = CGSize(width: (APP_WIDTH() - 30 - 30 - cellSpacing * 3) / 4, height: 78)
     private let lineSpacing: CGFloat = 32
     
-    private let logoImage = UIImageView().then {
-        $0.image = DesignSystemAsset.Logo.homeLogo.image
-        $0.contentMode = .scaleAspectFit
-    }
+    private let categoryTitle = AlleyLabel("어떤 작품을 찾으시나요?", textColor: .sub(.black), font: .subtitle1)
     
-    private let categoryTitle = AlleyLabel("어떤 작품을 찾으시나요?", textColor: .grey(.grey700), font: .subtitle1)
-    
-    private let categorySubTitle = AlleyLabel("다양한 인쇄 장인들의 작품을 만나보세요", textColor: .grey(.grey300), font: .subtitle3)
+    private let categorySubTitle = AlleyLabel("다양한 인쇄 장인들의 작품을 만나보세요", textColor: .grey(.grey400), font: .body2)
     
     public lazy var categoryCollectionView = makeCollectionView(scrollDirection: .vertical).then {
         $0.backgroundColor = .setColor(.sub(.white))
@@ -79,19 +74,14 @@ final class ContentsHeaderView: UICollectionReusableView {
 
 extension ContentsHeaderView {
     private func addSubviews() {
-        addSubviews(logoImage, categoryTitle, categorySubTitle, categoryCollectionView, contentsTitle, sectionLine, showMoreContainer)
+        addSubviews(categoryTitle, categorySubTitle, categoryCollectionView, contentsTitle, sectionLine, showMoreContainer)
 //        showMoreContainer.addSubviews(showMoreText, showMoreIcon)
 //        showMoreContainer.addSubviews(showMoreTouchButton)
     }
     
-    private func makeConstraints() {
-        logoImage.snp.makeConstraints { // 수퍼뷰: view.safeArea
-            $0.top.equalToSuperview().inset(24)
-            $0.centerX.equalToSuperview()
-        }
-        
+    private func makeConstraints() { // 수퍼뷰: view.safeArea
         categoryTitle.snp.makeConstraints {
-            $0.top.equalTo(logoImage.snp.bottom).offset(30)
+            $0.top.equalToSuperview().inset(48)
             $0.leading.equalToSuperview().inset(HORIZON_MARGIN1())
         }
         
@@ -101,7 +91,7 @@ extension ContentsHeaderView {
         }
         
         categoryCollectionView.snp.makeConstraints {
-            $0.top.equalTo(categorySubTitle.snp.bottom)
+            $0.top.equalTo(categorySubTitle.snp.bottom).offset(6)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(188 + categoryCollectionView.contentInset.top + categoryCollectionView.contentInset.bottom)
         }
