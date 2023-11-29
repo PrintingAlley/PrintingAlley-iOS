@@ -71,6 +71,6 @@ platform :ios do
       scheme: "#{DEV_SCHEME}",
       export_method: "app-store" #  앱 스토어에 앱을 제출하기 위한 목적으로 아카이브를 내보냅니다.
     )
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_to_testflight(skip_waiting_for_build_processing: true) # 올리는거 기다리지 않음
   end
 end
