@@ -6,10 +6,16 @@ on:  # 워크플로우가 언제 실행되야할지 설정해줘야 합니다. (
 
 jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 통해서 설정 , jobs 키에는 여러 개의 작업을 작업 식별자(ID)와 작업 세부 내용 간의 맵핑(mapping) 형태로 표시를 합니다.
   upload_testflight: # upload_testflight라는 식별자를 갖는 작업을 생성
-    runs-on: macos-14 # runs-on 키를 통해 해당 작업이 어느 환경에서 돌아가는지 
+    runs-on: macos-latest # runs-on 키를 통해 해당 작업이 어느 환경에서 돌아가는지
+    
     steps: #steps 키를 통해 순차적인 수행할 작업 단계를 적어도 하나는 명시해야합니다.
 
       - uses: actions/checkout@v4 # 소스 코드 내려받기
+
+      - name: Setup Xcode version
+        uses: maxim-lobanov/setup-xcode@v1 # xcode 버전 15.0.0으로 셋팅하기
+        with:
+          xcode-version: latest-stable
 
       - name: Bring ignored files # job 이름 설정
         uses: actions/checkout@v4 # 소스 코드 내려받기
