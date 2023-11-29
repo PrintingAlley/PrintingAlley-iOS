@@ -34,6 +34,35 @@ jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 �
         run: | 
           echo ✅ Install Fastlane.
           brew install fastlane
+          
+      - name: Tuist clean
+        run: tuist clean
+
+      - name: Tuist fetch
+        run: tuist fetch
+      
+      - name: Tuist Signing Decrypt
+        run: tuist signing decrypt
+
+      - name: Set Keychain
+        run: fastlane set_keychain
+        env:
+            KEYCHAIN_NAME: ${{ secrets.KEYCHAIN_NAME }}
+            KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      
+      - name: Tuist generate
+        run: tuist generate
+          
+      - run: fastlane beta
+        env:
+            KEYCHAIN_NAME: ${{ secrets.KEYCHAIN_NAME }}
+            KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+            TEAM_ID: ${{ secrets.TEAM_ID }}
+            MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+            MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
+            APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
+            APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+            APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
         
         
       
