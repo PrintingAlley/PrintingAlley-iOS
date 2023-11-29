@@ -35,6 +35,12 @@ platform :ios do
         keychain_password: "#{KEYCHAIN_PASSWORD}" # 키체인의 비밀번호를 제공합니다. 이 비밀번호는 키체인을 언락하는 데 사용됩니다.
       )
 
+      import_certificate(
+        certificate_path: "Tuist/Signing/#{APP_NAME}.DEV.p12",
+        keychain_name: "#{KEYCHAIN_NAME}",
+        keychain_password: "#{KEYCHAIN_PASSWORD}"
+      )
+
       # ✅ 프로비저닝 프로파일을 특정 위치에 설치하는 데 사용됩니다
       #install_provisioning_profile(path: "Tuist/Signing/#{APP_NAME}.PROD.mobileprovision")
       install_provisioning_profile(path: "Tuist/Signing/#{APP_NAME}.DEV.mobileprovision")
