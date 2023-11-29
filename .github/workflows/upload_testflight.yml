@@ -20,8 +20,8 @@ jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 �
           
       - name: Setting Master Key # tuist singing에서 사용한 master.key 생성하는 job
         run: | # 실행 명령 여러 명렁어 한번 그룹으로 실행하기 위한 파이프 구문
-          echo: 
-            "$MASTER_KEY" > Tuist/master.key
+          echo ✅ Run Setting Master Key.
+          echo "$MASTER_KEY" > Tuist/master.key
           env: #Repository secrets에 저장했던 변수들을 불러옴
             MASTER_KEY: ${{secrets.MASTER_KEY}} # 불러온 값을 MASTER_KEY라는 변수에 담아 $MASTER_KEY로 바로 쓸 수 있음
         
