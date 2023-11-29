@@ -23,6 +23,8 @@ jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 �
           echo ✅ Run Setting Master Key.
           echo ✅ $MASTER_KEY
           echo "$MASTER_KEY" > Tuist/master.key
+        env: #Repository secrets에 저장했던 변수들을 불러옴
+          MASTER_KEY: ${{secrets.MASTER_KEY}} # 불러온 값을 MASTER_KEY라는 변수에 담아 $MASTER_KEY로 바로 쓸 수 있음
         
         
       
