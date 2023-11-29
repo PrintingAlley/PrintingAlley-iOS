@@ -104,5 +104,4 @@ Tuist/Dependencies
 Derived/
 *.xcworkspace
 *.xcodeproj
-Tuist/Signing
 master.key
