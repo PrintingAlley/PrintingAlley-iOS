@@ -39,7 +39,6 @@ platform :ios do
       install_provisioning_profile(path: "Tuist/Signing/#{APP_NAME}.DEV.mobileprovision")
       install_provisioning_profile(path: "Tuist/Signing/#{APP_NAME}.PROD.mobileprovision")
     end
-  end
 
       
       #key_id: App Store Connect API 키의 ID입니다. 이는 Apple Developer 계정에서 생성된 키에 대한 고유 식별자입니다.
@@ -52,9 +51,6 @@ platform :ios do
       
       #in_house: 선택적 매개변수로, true로 설정하면 In-House 앱 배포를 위한 키를 생성합니다. 기본값은 false입니다.
       
-      
-
-platform :ios do 
   desc "Push a new beta build to TestFlight"
   lane :beta do 
 
@@ -63,13 +59,18 @@ platform :ios do
     app_store_connect_api_key(is_key_content_base64: true, in_house: false)
 
     # ✅ 빌드 넘버 증가
-    increment_build_number({ build_number: latest_testflight_build_number() + 1 })
+    increment_build_number(
+        skip_info_plist: true,
+        build_number: latest_testflight_build_number()+1,
+        xcodeproj: "Projects/App/#{APP_NAME}.xcodeproj"
+    )
+  
 
     build_app(
       workspace: "#{APP_NAME}.xcworkspace",
       scheme: "#{DEV_SCHEME}",
       export_method: "app-store" #  앱 스토어에 앱을 제출하기 위한 목적으로 아카이브를 내보냅니다.
     )
-    upload_to_testflight
+    upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 end
