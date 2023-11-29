@@ -11,7 +11,7 @@ default_platform(:ios)
 platform :ios do 
   # ✅ 인증서를 키체인에 저장하기
   desc "Save To Keychain"
-  lane :keychain do
+  lane :set_keychain do
     create_keychain(
       name: "#{KEYCHAIN_NAME}", # 새로 생성될 키체인의 이름을 지정합니다. 
       password: "#{KEYCHAIN_PASSWORD}", # 새로운 키체인을 만들 때 설정할 비밀번호를 지정합니다
