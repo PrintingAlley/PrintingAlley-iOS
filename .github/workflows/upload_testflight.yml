@@ -15,7 +15,7 @@ jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 �
       - name: Setup Xcode version
         uses: maxim-lobanov/setup-xcode@v1 # xcode 버전 15.0.0으로 셋팅하기
         with:
-          xcode-version: 15.0.0
+          xcode-version: latest-stable
 
       - name: Bring ignored files # job 이름 설정
         uses: actions/checkout@v4 # 소스 코드 내려받기
