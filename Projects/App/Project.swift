@@ -15,7 +15,9 @@ let settings: Settings = .settings(
 
 let scripts: [TargetScript] = generateEnvironment.scripts
 
-let projectDevScripts: [TargetScript] = [.needleScript,.swiftLint,.firebaseCrashlytics]
+let isForDev = (ProcessInfo.processInfo.environment["TUIST_DEV"] ?? "0") == "1" ? true : false
+
+let projectDevScripts: [TargetScript] =  isForDev ? [.needleScript,.swiftLint] : [.firebaseCrashlytics]
 let targets: [Target] = [
     .init(
         name: env.name,
