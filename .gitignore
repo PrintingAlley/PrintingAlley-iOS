@@ -81,12 +81,12 @@ playground.xcworkspace
 **/node_modules/*
 **/.firebaserc
 Google
-#GoogleService-Info.plist
+GoogleService-Info.plist
 
 ### Firebase Patch ###
 .runtimeconfig.json
 .firebase/
-# GoogleService-Info.plist
+GoogleService-Info.plist
 # End of https://www.toptal.com/developers/gitignore/api/firebase
 
 # Accio dependency management
