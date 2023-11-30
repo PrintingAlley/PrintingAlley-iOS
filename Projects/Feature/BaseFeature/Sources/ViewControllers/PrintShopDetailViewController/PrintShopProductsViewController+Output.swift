@@ -20,7 +20,7 @@ extension PrintShopProductsViewController {
                 
                 guard let self else {return}
                 
-                let vc = self.productDetailFactory.makeView(id: viewModel.products[index].id)
+                let vc = self.productDetailFactory.makeView(id: self.viewModel.products[index].id)
                 
                 self.navigationController?.pushViewController(vc, animated: true)
             })

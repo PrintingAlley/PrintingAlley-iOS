@@ -156,7 +156,7 @@ extension EditModalViewController {
                 guard let self else {return}
                 
                 self.confirmButton.isEnabled  = !((str.first?.isWhitespace ?? true)) // 앞에 시작이 공백일 때
-                self.limitLabel.setTitle(title: "\(str.count)/\(viewModel.type.limit)자", textColor: .grey(.grey400), font: .caption1)
+                self.limitLabel.setTitle(title: "\(str.count)/\(self.viewModel.type.limit)자", textColor: .grey(.grey400), font: .caption1)
                
             })
             .bind(to:input.text)
@@ -211,7 +211,7 @@ extension EditModalViewController {
                 
                 else {
                     
-                    switch viewModel.type {
+                    switch self.viewModel.type {
                     
                     case .newBookMark:
                         NotificationCenter.default.post(name: .refreshBookMarkGroup, object: nil) // 리프래쉬 그룹

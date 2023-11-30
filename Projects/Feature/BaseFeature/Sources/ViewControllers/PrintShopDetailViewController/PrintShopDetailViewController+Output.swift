@@ -34,7 +34,7 @@ extension PrintShopDetailViewController {
                 guard let self else { return }
 
                 self.indicator.stopAnimating()
-                update(model: dataSource)
+                self.update(model: dataSource)
             })
             .map { $0.backgroundImage.isEmpty ? [$0.logoImage] : [$0.logoImage,$0.backgroundImage] }
             .bind(to: imageCollectionView.rx.items) { [weak self] (collectionView, indexPath, model) -> UICollectionViewCell in
