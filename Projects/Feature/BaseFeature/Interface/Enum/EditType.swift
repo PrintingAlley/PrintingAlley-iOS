@@ -29,11 +29,11 @@ public enum EditType {
         switch self {
             
         case .reNameprofileName:
-            "이름 수정"
+            return "이름 수정"
         case .newBookMark:
-            "저장 목록 만들기"
+            return "저장 목록 만들기"
         case .reNameBookMark:
-            "저장목록 이름 수정"
+            return "저장목록 이름 수정"
         }
     }
     
