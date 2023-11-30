@@ -40,7 +40,8 @@ extension SearchViewController {
                 DEBUG_LOG("DS: \(dataSource.count)")
                 self.indicator.stopAnimating()
                 if !output.showErrorView.value {
-                    self.printingTableView.tableHeaderView = dataSource.isEmpty ? emptyHeaderView : nil
+
+                    self.printingTableView.tableHeaderView = dataSource.isEmpty ? self.emptyHeaderView : nil
                 }
                 
             }
