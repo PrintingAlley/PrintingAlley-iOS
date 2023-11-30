@@ -45,7 +45,7 @@ jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 �
         run: tuist clean
 
       - name: Tuist fetch
-        run: tuist fetch
+        run: TUIST_DEV=0 TUIST_ROOT_DIR=${PWD} tuist generate fetch
       
       - name: Tuist Signing Decrypt
         run: tuist signing decrypt
