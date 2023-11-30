@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import DesignSystem
 
 public extension UIColor.AlleyColorSystem {
     enum Grey: PrintingAlleyColorable {

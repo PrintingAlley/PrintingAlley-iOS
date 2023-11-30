@@ -69,7 +69,7 @@ public final class FilterButton: UIButton {
             .subscribe(onNext: { [weak self] _ in
                 
                 guard let self else {return}
-                configureUI(self.type)
+                self.configureUI(self.type)
                 self.isSelected = false
             })
             .disposed(by: disposeBag)
