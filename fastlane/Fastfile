@@ -66,7 +66,7 @@ platform :ios do
     app_store_connect_api_key(is_key_content_base64: true, in_house: false)
 
     # ✅ 빌드 넘버 증가
-    increment_build_number({ build_number: latest_testflight_build_number + 1 })
+    increment_build_number({ build_number: "1" })
   
 
     build_app(
