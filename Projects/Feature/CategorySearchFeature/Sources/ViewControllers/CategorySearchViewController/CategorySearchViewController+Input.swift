@@ -76,7 +76,7 @@ extension CategorySearchViewController {
             .map { _ in return }
             .do(onNext: { [weak self] _ in
                 guard let self else {return }
-                input.isFetchByScroll.accept(true)
+                self.input.isFetchByScroll.accept(true)
             })
             .bind(to: input.loadMore)
             .disposed(by: disposeBag)
