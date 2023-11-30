@@ -39,7 +39,7 @@ extension CategorySearchViewController {
                         $0.button.isHidden = true
                     }
                 } else if dataSource.isEmpty {
-                    self.gridCollectionView.backgroundView = emptyHeaderView
+                    self.gridCollectionView.backgroundView = self.emptyHeaderView
                 } else {
                     self.gridCollectionView.restore()
                 }

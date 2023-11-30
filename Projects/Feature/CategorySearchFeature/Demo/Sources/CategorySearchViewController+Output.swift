@@ -22,7 +22,7 @@ extension CategorySearchViewController {
                 guard let self else {return}
                 
                 if dataSource.isEmpty {
-                    self.tableView.tableHeaderView = headerView
+                    self.tableView.tableHeaderView = self.headerView
                 } else {
                     self.tableView.tableHeaderView = nil
                 }
