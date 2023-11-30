@@ -45,7 +45,7 @@ jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 �
         run: tuist clean
 
       - name: Tuist fetch
-        run: TUIST_DEV=0 TUIST_ROOT_DIR=${PWD} tuist generate fetch
+        run: tuist fetch
       
       - name: Tuist Signing Decrypt
         run: tuist signing decrypt
@@ -57,7 +57,7 @@ jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 �
             KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
       
       - name: Tuist generate
-        run: tuist generate
+        run: TUIST_DEV=0 TUIST_ROOT_DIR=${PWD} tuist generate
           
       - run: fastlane beta
         env:
