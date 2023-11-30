@@ -71,7 +71,7 @@ final class ProductDetailViewModel: ViewModelType {
                 guard let  self else {return Observable.empty()}
                 
                 return self.fetchProductUseCase
-                    .execute(id: id)
+                    .execute(id: self.id)
                     .catch({ error in
                         DEBUG_LOG(error)
                         
