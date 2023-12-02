@@ -4,6 +4,17 @@ on:  # 워크플로우가 언제 실행되야할지 설정해줘야 합니다. (
   push:
    branches: [ develop ] # develop 브랜치에
 
+env:
+  GPG_KEY: ${{secrets.GPG_KEY}}
+  ENCRYPTED_MASTER_KEY_PATH: ${{secrets.ENCRYPTED_MASTER_KEY_PATH}}
+  DECRYPTED_MASTER_KEY_PATH: ${{secrets.DECRYPTED_MASTER_KEY_PATH}}
+  ENCRYPTED_FASTLANE_ENV_PATH: ${{secrets.ENCRYPTED_FASTLANE_ENV_PATH}}
+  DECRYPTED_FASTLANE_ENV_PATH: ${{secrets.DECRYPTED_FASTLANE_ENV_PATH}}
+  ENCRYPTED_GOOGLE_SERVICE_PATH: ${{ENCRYPTED_GOOGLE_SERVICE_PATH}}
+  DECRYPTED_GOOGLE_SERVICE_PATH: ${{DECRYPTED_GOOGLE_SERVICE_PATH}}
+  
+  
+
 jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 통해서 설정 , jobs 키에는 여러 개의 작업을 작업 식별자(ID)와 작업 세부 내용 간의 맵핑(mapping) 형태로 표시를 합니다.
   upload_testflight: # upload_testflight라는 식별자를 갖는 작업을 생성
     runs-on: macos-latest # runs-on 키를 통해 해당 작업이 어느 환경에서 돌아가는지
@@ -11,6 +22,10 @@ jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 �
     steps: #steps 키를 통해 순차적인 수행할 작업 단계를 적어도 하나는 명시해야합니다.
 
       - uses: actions/checkout@v4 # 소스 코드 내려받기
+
+      - name: Decrypt encrypted files
+        run: sh .github/workflows/Shell/Decrypt.sh
+        shell: bash
 
       - name: Setup Xcode version
         uses: maxim-lobanov/setup-xcode@v1 # xcode 버전 15.0.0으로 셋팅하기
@@ -24,13 +39,6 @@ jobs: # 워크플로우에서 어떤 작업들을 수행할지는 jobs 키를 �
           path: XCConfig # 끌어와서 현재 레포에 배치할 위치
           token: ${{ secrets.ACTION_TOKEN }} # private Repository 접근을 위한 토큰
           
-      - name: Setting Master Key # tuist singing에서 사용한 master.key 생성하는 job
-        run: | # 실행 명령 여러 명렁어 한번 그룹으로 실행하기 위한 파이프 구문
-          echo ✅ Run Setting Master Key.
-          echo "$MASTER_KEY" > Tuist/master.key
-        env: #Repository secrets에 저장했던 변수들을 불러옴 , run과 같은 계층으로 인덴트 
-          MASTER_KEY: ${{secrets.MASTER_KEY}} # 불러온 값을 MASTER_KEY라는 변수에 담아 $MASTER_KEY로 바로 쓸 수 있음
-
       - name: Install Tuist
         run: | 
           echo ✅ Install Tuist.
