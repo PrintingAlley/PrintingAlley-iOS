@@ -64,7 +64,7 @@ platform :ios do
         xcodeproj: "Projects/App/#{APP_NAME}.xcodeproj"
   })
   
-   echo(message:"✅ build_number =#{build_number}") # 출력
+   echo(message:"✅ build_number = #{build_number}") # 출력
 
     build_app(
       workspace: "#{APP_NAME}.xcworkspace",
@@ -78,7 +78,13 @@ platform :ios do
       build_number: "#{build_number}",
       groups: ["외부 테스트 그룹1"],
       changelog: "- 테스트"
+    )
 
-    ) # 올리는거 기다리지 않음
+    discord_notifier(
+      webhook_url: ENV["WEBHOOK_URL"],
+      title: "🚀 인쇄골목 iOS 테스트 플라잇 자동화 성공",
+      thumbnail_url: "https://github.com/PrintingAlley/PrintingAlley-asset/assets/48616183/0d585385-8522-4fc3-bbed-8e628e4936ae",
+      description: "인쇄골목 iOS #{build_number}을 앱스토어에 성공적으로 배포하였습니다 !"
+    )
   end
 end
