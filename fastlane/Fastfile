@@ -64,7 +64,7 @@ platform :ios do
         xcodeproj: "Projects/App/#{APP_NAME}.xcodeproj"
   })
   
-   echo(message:"✅ build_number =#{build_number}")
+   echo(message:"✅ build_number =#{build_number}") # 출력
 
     build_app(
       workspace: "#{APP_NAME}.xcworkspace",
@@ -76,7 +76,8 @@ platform :ios do
       api_key: api_key,
       distribute_external: true,
       build_number: "#{build_number}",
-      groups: ["외부 테스트 그룹1"]
+      groups: ["외부 테스트 그룹1"],
+      changelog: "- 테스트"
 
     ) # 올리는거 기다리지 않음
   end
