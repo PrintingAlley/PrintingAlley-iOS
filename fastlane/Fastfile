@@ -73,7 +73,7 @@ platform :ios do
     )
 
     upload_to_testflight(
-      api_key: api_key
+      api_key: api_key,
       distribute_external: true,
       build_number: "#{build_number}",
       groups: ["외부 테스트 그룹1"]
