@@ -55,7 +55,7 @@ platform :ios do
 
     # ✅ 앱스토어 커넥트 키 연결
     # App Store Connect API를 사용하기 위한 API 키를 로드하는 데 사용됩니다. 이를 사용하여 다른 fastlane 도구 및 액션에서 Apple 계정과 상호 작용할 수 있습니다. 
-    app_store_connect_api_key(is_key_content_base64: true, in_house: false)
+    api_key = app_store_connect_api_key(is_key_content_base64: true, in_house: false)
 
     build_number = latest_testflight_build_number(app_identifier: ENV["APP_IDENTIFIER"]) + 1
     # ✅ 빌드 넘버 증가
@@ -64,8 +64,8 @@ platform :ios do
         xcodeproj: "Projects/App/#{APP_NAME}.xcodeproj"
   })
   
+   echo(message:"✅ build_number =#{build_number}")
 
-    
     build_app(
       workspace: "#{APP_NAME}.xcworkspace",
       scheme: "#{PROD_SCHEME}",
@@ -73,6 +73,7 @@ platform :ios do
     )
 
     upload_to_testflight(
+      api_key: api_key
       distribute_external: true,
       build_number: "#{build_number}",
       groups: ["외부 테스트 그룹1"]
