@@ -24,7 +24,7 @@ public enum MyPageCategory: String {
 
 final class MyPageContentViewModel : ViewModelType {
  
-    let categories:[MyPageCategory] = [.pushAlarmSetting, .faq, .request, .service,.copyright]
+    let categories:[MyPageCategory] = [.pushAlarmSetting,.request, .service,.copyright]
     
     let disposeBag = DisposeBag()
     
