@@ -40,25 +40,25 @@ platform :ios do
     end
 
       
-      #key_id: App Store Connect API 키의 ID입니다. 이는 Apple Developer 계정에서 생성된 키에 대한 고유 식별자입니다.
+  #     #key_id: App Store Connect API 키의 ID입니다. 이는 Apple Developer 계정에서 생성된 키에 대한 고유 식별자입니다.
       
-      #issuer_id: App Store Connect API 키의 발행자 ID입니다. 이는 Apple Developer 계정에서 생성된 키에 대한 발행자를 나타내는 고유 식별자입니다.
+  #     #issuer_id: App Store Connect API 키의 발행자 ID입니다. 이는 Apple Developer 계정에서 생성된 키에 대한 발행자를 나타내는 고유 식별자입니다.
       
-      #key_filepath: App Store Connect API 키 파일의 경로입니다. 이 파일은 개인 키로, .p8 확장자를 가진 키 파일일 것입니다.
+  #     #key_filepath: App Store Connect API 키 파일의 경로입니다. 이 파일은 개인 키로, .p8 확장자를 가진 키 파일일 것입니다.
       
-      #duration: 선택적 매개변수로, 생성된 API 토큰의 수명을 지정합니다. 기본값은 1200초(20분)입니다. 필요에 따라 조정할 수 있습니다.
+  #     #duration: 선택적 매개변수로, 생성된 API 토큰의 수명을 지정합니다. 기본값은 1200초(20분)입니다. 필요에 따라 조정할 수 있습니다.
       
-      #in_house: 선택적 매개변수로, true로 설정하면 In-House 앱 배포를 위한 키를 생성합니다. 기본값은 false입니다.
+  #     #in_house: 선택적 매개변수로, true로 설정하면 In-House 앱 배포를 위한 키를 생성합니다. 기본값은 false입니다.
       
   desc "Push a new beta build to TestFlight"
   lane :beta do 
 
-    # ✅ 앱스토어 커넥트 키 연결
-    # App Store Connect API를 사용하기 위한 API 키를 로드하는 데 사용됩니다. 이를 사용하여 다른 fastlane 도구 및 액션에서 Apple 계정과 상호 작용할 수 있습니다. 
+  #   # ✅ 앱스토어 커넥트 키 연결
+  #   # App Store Connect API를 사용하기 위한 API 키를 로드하는 데 사용됩니다. 이를 사용하여 다른 fastlane 도구 및 액션에서 Apple 계정과 상호 작용할 수 있습니다. 
     api_key = app_store_connect_api_key(is_key_content_base64: true, in_house: false)
 
     build_number = latest_testflight_build_number(app_identifier: ENV["APP_IDENTIFIER"]) + 1
-    # ✅ 빌드 넘버 증가
+  #   # ✅ 빌드 넘버 증가
     increment_build_number({
         build_number: build_number,
         xcodeproj: "Projects/App/#{APP_NAME}.xcodeproj"
@@ -80,10 +80,10 @@ platform :ios do
       changelog: "- 테스트"
     )
 
-    discord_notifier(
+  discord_notifier(
       webhook_url: ENV["WEBHOOK_URL"],
       title: "🚀 인쇄골목 iOS 테스트 플라잇 자동화 성공",
-      thumbnail_url: "https://github.com/PrintingAlley/PrintingAlley-asset/assets/48616183/0d585385-8522-4fc3-bbed-8e628e4936ae",
+      thumbnail_url: "https://github.com/PrintingAlley/PrintingAlley-iOS/assets/48616183/ccfab207-7ae8-4aa5-8f7c-c0e56ba8206e",
       description: "인쇄골목 iOS #{build_number}을 앱스토어에 성공적으로 배포하였습니다 !"
     )
   end

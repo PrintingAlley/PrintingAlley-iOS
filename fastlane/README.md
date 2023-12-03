@@ -15,14 +15,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios keychain
-
-```sh
-[bundle exec] fastlane ios keychain
-```
-
-Save To Keychain
-
 ### ios beta
 
 ```sh
